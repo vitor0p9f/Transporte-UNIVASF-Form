@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Levantamento Transporte UNIVASF 2026.1</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
       --bg: #f7f6f2;
@@ -99,8 +108,15 @@
     }
 
     @keyframes slideIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .trip-card-header {
@@ -131,8 +147,15 @@
       cursor: pointer;
       transition: opacity 0.15s;
     }
-    .btn-remove:hover { opacity: 0.75; }
-    .btn-remove svg { width: 12px; height: 12px; }
+
+    .btn-remove:hover {
+      opacity: 0.75;
+    }
+
+    .btn-remove svg {
+      width: 12px;
+      height: 12px;
+    }
 
     /* Fields row */
     .fields-row {
@@ -143,7 +166,9 @@
     }
 
     @media (max-width: 500px) {
-      .fields-row { grid-template-columns: 1fr; }
+      .fields-row {
+        grid-template-columns: 1fr;
+      }
     }
 
     .field-group {
@@ -177,11 +202,17 @@
       background-repeat: no-repeat;
       background-position: right 10px center;
     }
-    select:focus { border-color: var(--border-focus); }
-    select option[value=""] { color: var(--text-muted); }
+
+    select:focus {
+      border-color: var(--border-focus);
+    }
+
+    select option[value=""] {
+      color: var(--text-muted);
+    }
 
     /* Lotação */
-    .lotacao-section { }
+    .lotacao-section {}
 
     .lotacao-label-row {
       margin-bottom: 8px;
@@ -211,7 +242,9 @@
       gap: 14px;
     }
 
-    .lotacao-scale input[type="radio"] { display: none; }
+    .lotacao-scale input[type="radio"] {
+      display: none;
+    }
 
     .lotacao-scale label {
       display: flex;
@@ -231,7 +264,7 @@
       letter-spacing: 0;
     }
 
-    .lotacao-scale input[type="radio"]:checked + label {
+    .lotacao-scale input[type="radio"]:checked+label {
       background: var(--text);
       border-color: var(--text);
       color: #fff;
@@ -260,16 +293,22 @@
       transition: all 0.15s;
       margin-bottom: 32px;
     }
+
     .btn-add:hover:not(:disabled) {
       border-color: var(--accent);
       color: var(--accent);
       background: var(--accent-light);
     }
+
     .btn-add:disabled {
       opacity: 0.4;
       cursor: not-allowed;
     }
-    .btn-add svg { width: 15px; height: 15px; }
+
+    .btn-add svg {
+      width: 15px;
+      height: 15px;
+    }
 
     /* Submit */
     .btn-submit {
@@ -287,7 +326,10 @@
       transition: opacity 0.15s;
       letter-spacing: 0.02em;
     }
-    .btn-submit:hover { opacity: 0.85; }
+
+    .btn-submit:hover {
+      opacity: 0.85;
+    }
 
     /* Divider */
     .divider {
@@ -306,11 +348,28 @@
       border-radius: var(--radius);
       margin-top: 16px;
     }
-    .success-msg.visible { display: block; }
-    .success-msg p { font-size: 14px; color: var(--text-muted); }
-    .success-icon { font-size: 28px; margin-bottom: 10px; }
+
+    .success-msg.visible {
+      display: block;
+    }
+
+    .success-msg p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .success-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
   </style>
+
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Config script for credentials -->
+  <script src="config.js"></script>
 </head>
+
 <body>
   <div class="wrapper">
     <div class="form-header">
@@ -328,8 +387,11 @@
     <div class="trips-container" id="tripsContainer"></div>
 
     <button class="btn-add" id="btnAdd" onclick="addTrip()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="8" x2="12" y2="16" />
+        <line x1="8" y1="12" x2="16" y2="12" />
       </svg>
       Adicionar viagem
     </button>
@@ -346,9 +408,9 @@
 
   <script>
     const TURNOS = [
-      { value: "manha",  label: "Manhã" },
-      { value: "tarde",  label: "Tarde" },
-      { value: "noite",  label: "Noite" },
+      { value: "manha", label: "Manhã" },
+      { value: "tarde", label: "Tarde" },
+      { value: "noite", label: "Noite" },
     ];
 
     const PARADAS = [
@@ -406,7 +468,7 @@
     }
 
     function buildLotacao(tripId, selected) {
-      return [1,2,3,4,5].map(n => `
+      return [1, 2, 3, 4, 5].map(n => `
         <input type="radio" id="lot_${tripId}_${n}" name="lotacao_${tripId}" value="${n}" ${selected == n ? "checked" : ""} onchange="updateField(${tripId}, 'lotacao', '${n}')"/>
         <label for="lot_${tripId}_${n}">${n}</label>
       `).join("");
@@ -470,18 +532,50 @@
       btnAdd.disabled = trips.length >= TURNOS.length;
     }
 
-    function submitForm() {
+    // Initialize Supabase Client
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function submitForm() {
       const incomplete = trips.some(t => !t.turno || !t.embarque || !t.desembarque || !t.lotacao);
       if (incomplete) {
         alert("Por favor, preencha todos os campos antes de enviar.");
         return;
       }
-      document.querySelector(".btn-submit").style.display = "none";
-      document.getElementById("successMsg").classList.add("visible");
+
+      const btnSubmit = document.querySelector(".btn-submit");
+      const originalText = btnSubmit.innerText;
+      btnSubmit.disabled = true;
+      btnSubmit.innerText = "Enviando...";
+
+      try {
+        // Prepara os dados para envio
+        const dataToInsert = trips.map(t => ({
+          turno: t.turno,
+          embarque: t.embarque,
+          desembarque: t.desembarque,
+          lotacao: parseInt(t.lotacao)
+        }));
+
+        // ATENÇÃO: Substitua 'viagens' pelo nome correto da sua tabela no banco de dados
+        const { error } = await supabaseClient
+          .from('viagens')
+          .insert(dataToInsert);
+
+        if (error) throw error;
+
+        btnSubmit.style.display = "none";
+        document.getElementById("successMsg").classList.add("visible");
+      } catch (error) {
+        console.error("Erro ao enviar dados para o Supabase: ", error);
+        alert("Ocorreu um erro ao enviar os dados. Verifique a conexão e tente novamente.");
+        btnSubmit.disabled = false;
+        btnSubmit.innerText = originalText;
+      }
     }
 
     // Init with one trip
     addTrip();
   </script>
 </body>
+
 </html>
