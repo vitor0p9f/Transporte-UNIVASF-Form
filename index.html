@@ -532,8 +532,7 @@
       btnAdd.disabled = trips.length >= TURNOS.length;
     }
 
-    // Initialize Supabase Client
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // (Cliente do Supabase será inicializado dentro da função para evitar erros de escopo/carregamento no Pages)
 
     async function submitForm() {
       const incomplete = trips.some(t => !t.turno || !t.embarque || !t.desembarque || !t.lotacao);
@@ -548,6 +547,13 @@
       btnSubmit.innerText = "Enviando...";
 
       try {
+        // Inicializa o cliente Supabase aqui dentro para garantir que os scripts CDN e config carregaram
+        if (typeof supabase === 'undefined') {
+          throw new Error("Supabase CDN não foi carregado corretamente.");
+        }
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // Prepara os dados para envio
         const dataToInsert = trips.map(t => ({
           turno: t.turno,
@@ -556,12 +562,20 @@
           lotacao: parseInt(t.lotacao)
         }));
 
-        // ATENÇÃO: Substitua 'viagens' pelo nome correto da sua tabela no banco de dados
-        const { error } = await supabaseClient
-          .from('viagens')
-          .insert(dataToInsert);
+        console.log("Tentando enviar:", dataToInsert); // Log para ajudar a debugar no console do navegador
 
-        if (error) throw error;
+        // ATENÇÃO: Substitua 'viagens' pelo nome correto da sua tabela no banco de dados
+        const { data, error } = await supabaseClient
+          .from('viagens')
+          .insert(dataToInsert)
+          .select(); // Adicionado select() para forçar o retorno e sabermos se gravou
+
+        if (error) {
+          console.error("Supabase Error Details:", error);
+          throw error;
+        }
+
+        console.log("Inserção bem sucedida:", data);
 
         btnSubmit.style.display = "none";
         document.getElementById("successMsg").classList.add("visible");
