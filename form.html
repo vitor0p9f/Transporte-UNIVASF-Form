@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Levantamento Transporte UNIVASF 2026.1</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f2;
+      --surface: #ffffff;
+      --border: #e0ddd5;
+      --border-focus: #1a1a1a;
+      --text: #1a1a1a;
+      --text-muted: #7a7670;
+      --accent: #2d5be3;
+      --accent-light: #eef1fc;
+      --danger: #c0392b;
+      --danger-light: #fdf0ee;
+      --tag-bg: #f0ede6;
+      --radius: 8px;
+      --radius-sm: 5px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 16px 80px;
+    }
+
+    .wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .form-header {
+      margin-bottom: 36px;
+      padding-bottom: 28px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--tag-bg);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(18px, 3vw, 22px);
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .description {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* Section */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    /* Trip card */
+    .trips-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .trip-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      animation: slideIn 0.18s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .trip-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .trip-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .btn-remove {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--danger);
+      background: var(--danger-light);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-remove:hover { opacity: 0.75; }
+    .btn-remove svg { width: 12px; height: 12px; }
+
+    /* Fields row */
+    .fields-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 500px) {
+      .fields-row { grid-template-columns: 1fr; }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 32px 9px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7670' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    select:focus { border-color: var(--border-focus); }
+    select option[value=""] { color: var(--text-muted); }
+
+    /* Lotação */
+    .lotacao-section { }
+
+    .lotacao-label-row {
+      margin-bottom: 8px;
+    }
+
+    .lotacao-label-row label {
+      display: block;
+    }
+
+    .lotacao-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      gap: 0;
+    }
+
+    .lotacao-legend {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 300;
+      font-style: italic;
+      white-space: nowrap;
+    }
+
+    .lotacao-scale {
+      display: flex;
+      gap: 14px;
+    }
+
+    .lotacao-scale input[type="radio"] { display: none; }
+
+    .lotacao-scale label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.12s;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .lotacao-scale input[type="radio"]:checked + label {
+      background: var(--text);
+      border-color: var(--text);
+      color: #fff;
+    }
+
+    .lotacao-scale label:hover {
+      border-color: var(--text);
+      color: var(--text);
+    }
+
+    /* Add button */
+    .btn-add {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px;
+      background: transparent;
+      border: 1.5px dashed var(--border);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 32px;
+    }
+    .btn-add:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+    .btn-add:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .btn-add svg { width: 15px; height: 15px; }
+
+    /* Submit */
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-submit:hover { opacity: 0.85; }
+
+    /* Divider */
+    .divider {
+      height: 1.5px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    /* Success */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      margin-top: 16px;
+    }
+    .success-msg.visible { display: block; }
+    .success-msg p { font-size: 14px; color: var(--text-muted); }
+    .success-icon { font-size: 28px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="form-header">
+      <span class="badge">UNIVASF · 2026.1</span>
+      <h1>Levantamento de utilização do transporte universitário da UNIVASF em 2026.1</h1>
+      <p class="description">
+        Este formulário procura realizar um levantamento sobre os números acerca do transporte estudantil
+        da UNIVASF no primeiro semestre de 2026. Os dados serão utilizados para uma pesquisa acadêmica
+        voltada para possíveis soluções das problemáticas de superlotação nos transportes.
+      </p>
+    </div>
+
+    <div class="section-label">Viagens realizadas</div>
+
+    <div class="trips-container" id="tripsContainer"></div>
+
+    <button class="btn-add" id="btnAdd" onclick="addTrip()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+      </svg>
+      Adicionar viagem
+    </button>
+
+    <div class="divider"></div>
+
+    <button class="btn-submit" onclick="submitForm()">Enviar respostas</button>
+
+    <div class="success-msg" id="successMsg">
+      <div class="success-icon">✓</div>
+      <p>Respostas enviadas com sucesso. Obrigado pela sua participação!</p>
+    </div>
+  </div>
+
+  <script>
+    const TURNOS = [
+      { value: "manha",  label: "Manhã" },
+      { value: "tarde",  label: "Tarde" },
+      { value: "noite",  label: "Noite" },
+    ];
+
+    const PARADAS = [
+      "Petrolina Centro",
+      "Petrolina Norte",
+      "Juazeiro Centro",
+      "Juazeiro Sul",
+      "Campus UNIVASF",
+      "Terminal Rodoviário",
+      "Bairro Industrial",
+    ];
+
+    let trips = [];
+    let nextId = 1;
+
+    function getUsedTurnos() {
+      return trips.map(t => t.turno).filter(Boolean);
+    }
+
+    function getAvailableTurnos(currentTripId) {
+      const used = trips.filter(t => t.id !== currentTripId).map(t => t.turno).filter(Boolean);
+      return TURNOS.filter(t => !used.includes(t.value));
+    }
+
+    function addTrip() {
+      trips.push({ id: nextId++, turno: "", embarque: "", desembarque: "", lotacao: "" });
+      render();
+    }
+
+    function removeTrip(id) {
+      trips = trips.filter(t => t.id !== id);
+      render();
+    }
+
+    function updateField(id, field, value) {
+      const trip = trips.find(t => t.id === id);
+      if (trip) trip[field] = value;
+      if (field === "turno") render(); // re-render to update available options
+    }
+
+    function buildParadasOptions(selected) {
+      return `<option value="">Selecionar</option>` +
+        PARADAS.map(p => `<option value="${p}" ${selected === p ? "selected" : ""}>${p}</option>`).join("");
+    }
+
+    function buildTurnoOptions(tripId, selected) {
+      const available = getAvailableTurnos(tripId);
+      return `<option value="">Selecionar</option>` +
+        TURNOS.map(t => {
+          const isAvailable = available.some(a => a.value === t.value);
+          const isSelected = t.value === selected;
+          if (!isAvailable && !isSelected) return `<option value="${t.value}" disabled>${t.label}</option>`;
+          return `<option value="${t.value}" ${isSelected ? "selected" : ""}>${t.label}</option>`;
+        }).join("");
+    }
+
+    function buildLotacao(tripId, selected) {
+      return [1,2,3,4,5].map(n => `
+        <input type="radio" id="lot_${tripId}_${n}" name="lotacao_${tripId}" value="${n}" ${selected == n ? "checked" : ""} onchange="updateField(${tripId}, 'lotacao', '${n}')"/>
+        <label for="lot_${tripId}_${n}">${n}</label>
+      `).join("");
+    }
+
+    function render() {
+      const container = document.getElementById("tripsContainer");
+      const showRemove = trips.length > 1;
+
+      container.innerHTML = trips.map((trip, i) => `
+        <div class="trip-card" id="trip-${trip.id}">
+          <div class="trip-card-header">
+            <span class="trip-number">VIAGEM ${String(i + 1).padStart(2, "0")}</span>
+            ${showRemove ? `
+              <button class="btn-remove" onclick="removeTrip(${trip.id})">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                </svg>
+                Excluir
+              </button>
+            ` : ""}
+          </div>
+
+          <div class="fields-row">
+            <div class="field-group">
+              <label>Turno</label>
+              <select onchange="updateField(${trip.id}, 'turno', this.value)">
+                ${buildTurnoOptions(trip.id, trip.turno)}
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Embarque</label>
+              <select onchange="updateField(${trip.id}, 'embarque', this.value)">
+                ${buildParadasOptions(trip.embarque)}
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Desembarque</label>
+              <select onchange="updateField(${trip.id}, 'desembarque', this.value)">
+                ${buildParadasOptions(trip.desembarque)}
+              </select>
+            </div>
+          </div>
+
+          <div class="lotacao-section">
+            <div class="lotacao-label-row">
+              <label>Lotação</label>
+            </div>
+            <div class="lotacao-row">
+              <span class="lotacao-legend">Há poltronas vagas</span>
+              <div class="lotacao-scale">
+                ${buildLotacao(trip.id, trip.lotacao)}
+              </div>
+              <span class="lotacao-legend">Muitas pessoas em pé</span>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      const btnAdd = document.getElementById("btnAdd");
+      btnAdd.disabled = trips.length >= TURNOS.length;
+    }
+
+    function submitForm() {
+      const incomplete = trips.some(t => !t.turno || !t.embarque || !t.desembarque || !t.lotacao);
+      if (incomplete) {
+        alert("Por favor, preencha todos os campos antes de enviar.");
+        return;
+      }
+      document.querySelector(".btn-submit").style.display = "none";
+      document.getElementById("successMsg").classList.add("visible");
+    }
+
+    // Init with one trip
+    addTrip();
+  </script>
+</body>
+</html>
