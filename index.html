@@ -567,8 +567,7 @@
         // ATENÇÃO: Substitua 'viagens' pelo nome correto da sua tabela no banco de dados
         const { data, error } = await supabaseClient
           .from('viagens')
-          .insert(dataToInsert)
-          .select(); // Adicionado select() para forçar o retorno e sabermos se gravou
+          .insert(dataToInsert);
 
         if (error) {
           console.error("Supabase Error Details:", error);
