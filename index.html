@@ -580,8 +580,20 @@
         btnSubmit.style.display = "none";
         document.getElementById("successMsg").classList.add("visible");
       } catch (error) {
-        console.error("Erro ao enviar dados para o Supabase: ", error);
-        alert("Ocorreu um erro ao enviar os dados. Verifique a conexão e tente novamente.");
+        console.error("ERRO COMPLETO DO SUPABASE:", error);
+
+        let errorMsg = "Ocorreu um erro desconhecido.";
+
+        if (error.message) {
+          errorMsg = error.message;
+        } else if (typeof error === 'string') {
+          errorMsg = error;
+        } else {
+          errorMsg = JSON.stringify(error);
+        }
+
+        alert(`Erro ao salvar no banco:\n${errorMsg}\n\nVerifique o console (F12) para mais detalhes.`);
+
         btnSubmit.disabled = false;
         btnSubmit.innerText = originalText;
       }
