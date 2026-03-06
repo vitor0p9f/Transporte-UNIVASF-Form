@@ -9,13 +9,7 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap"
     rel="stylesheet" />
   <style>
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --bg: #f7f6f2;
@@ -43,10 +37,7 @@
       padding: 48px 16px 80px;
     }
 
-    .wrapper {
-      max-width: 680px;
-      margin: 0 auto;
-    }
+    .wrapper { max-width: 680px; margin: 0 auto; }
 
     /* Header */
     .form-header {
@@ -83,7 +74,6 @@
       line-height: 1.75;
     }
 
-    /* Section label */
     .section-label {
       font-family: 'DM Mono', monospace;
       font-size: 10px;
@@ -93,18 +83,14 @@
       margin-bottom: 14px;
     }
 
-    /* Email section */
+    /* Email */
     .email-section {
       margin-bottom: 32px;
       padding-bottom: 28px;
       border-bottom: 1.5px solid var(--border);
     }
 
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
 
     label {
       font-size: 11px;
@@ -145,12 +131,7 @@
     .email-hint.ok    { color: var(--success); }
 
     /* Trip card */
-    .trips-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
+    .trips-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
 
     .trip-card {
       background: var(--surface);
@@ -209,12 +190,9 @@
       .fields-row { grid-template-columns: 1fr; }
     }
 
-    .fields-row .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .fields-row .field-group { display: flex; flex-direction: column; gap: 6px; }
 
+    /* Native select (turno) */
     select {
       appearance: none;
       -webkit-appearance: none;
@@ -236,9 +214,119 @@
     select:focus { border-color: var(--border-focus); }
     select option[value=""] { color: var(--text-muted); }
 
-    /* Lotação */
-    .lotacao-section {}
+    /* ── Searchable dropdown ─────────────────────────────────────────── */
+    .sd-wrapper {
+      position: relative;
+    }
 
+    .sd-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 10px 9px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+      text-align: left;
+      user-select: none;
+    }
+
+    .sd-trigger.open,
+    .sd-trigger:focus { border-color: var(--border-focus); }
+
+    .sd-trigger-text {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sd-trigger-text.placeholder { color: var(--text-muted); }
+
+    .sd-chevron {
+      flex-shrink: 0;
+      width: 12px;
+      height: 12px;
+      color: var(--text-muted);
+      transition: transform 0.15s;
+    }
+
+    .sd-trigger.open .sd-chevron { transform: rotate(180deg); }
+
+    /* Dropdown panel */
+    .sd-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border: 1.5px solid var(--border-focus);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.09);
+      z-index: 100;
+      overflow: hidden;
+    }
+
+    .sd-panel.open { display: block; }
+
+    .sd-search-wrap {
+      padding: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sd-search {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 7px 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .sd-search:focus { border-color: var(--border-focus); }
+    .sd-search::placeholder { color: #bbb9b3; }
+
+    .sd-list {
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .sd-option {
+      padding: 9px 12px;
+      font-size: 13.5px;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .sd-option:hover   { background: var(--accent-light); color: var(--accent); }
+    .sd-option.selected { background: var(--tag-bg); font-weight: 500; }
+    .sd-option.hidden  { display: none; }
+
+    .sd-empty {
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      display: none;
+    }
+
+    .sd-empty.visible { display: block; }
+
+    /* Lotação */
     .lotacao-label-row { margin-bottom: 8px; }
     .lotacao-label-row label { display: block; }
 
@@ -246,7 +334,6 @@
       display: flex;
       align-items: center;
       justify-content: space-evenly;
-      gap: 0;
     }
 
     .lotacao-legend {
@@ -257,11 +344,7 @@
       white-space: nowrap;
     }
 
-    .lotacao-scale {
-      display: flex;
-      gap: 14px;
-    }
-
+    .lotacao-scale { display: flex; gap: 14px; }
     .lotacao-scale input[type="radio"] { display: none; }
 
     .lotacao-scale label {
@@ -288,12 +371,9 @@
       color: #fff;
     }
 
-    .lotacao-scale label:hover {
-      border-color: var(--text);
-      color: var(--text);
-    }
+    .lotacao-scale label:hover { border-color: var(--text); color: var(--text); }
 
-    /* Add button */
+    /* Add / Submit */
     .btn-add {
       display: flex;
       align-items: center;
@@ -312,20 +392,10 @@
       margin-bottom: 32px;
     }
 
-    .btn-add:hover:not(:disabled) {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-light);
-    }
-
-    .btn-add:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
+    .btn-add:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .btn-add:disabled { opacity: 0.4; cursor: not-allowed; }
     .btn-add svg { width: 15px; height: 15px; }
 
-    /* Submit */
     .btn-submit {
       display: block;
       width: 100%;
@@ -344,14 +414,8 @@
 
     .btn-submit:hover { opacity: 0.85; }
 
-    /* Divider */
-    .divider {
-      height: 1.5px;
-      background: var(--border);
-      margin: 28px 0;
-    }
+    .divider { height: 1.5px; background: var(--border); margin: 28px 0; }
 
-    /* Success */
     .success-msg {
       display: none;
       text-align: center;
@@ -383,7 +447,6 @@
       </p>
     </div>
 
-    <!-- E-mail -->
     <div class="email-section">
       <div class="section-label">Identificação</div>
       <div class="field-group">
@@ -405,11 +468,10 @@
     <div class="trips-container" id="tripsContainer"></div>
 
     <button class="btn-add" id="btnAdd" onclick="addTrip()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <line x1="12" y1="8" x2="12" y2="16" />
-        <line x1="8" y1="12" x2="16" y2="12" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="16"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
       </svg>
       Adicionar viagem
     </button>
@@ -441,7 +503,7 @@
       "Bairro Industrial",
     ];
 
-    let trips = [];
+    let trips  = [];
     let nextId = 1;
 
     // ── Email ─────────────────────────────────────────────────────────
@@ -477,7 +539,74 @@
       return false;
     }
 
-    // ── Trips ─────────────────────────────────────────────────────────
+    // ── Searchable dropdown logic ──────────────────────────────────────
+    // Opens a panel; closes all others first.
+    function sdOpen(wrapperId) {
+      document.querySelectorAll('.sd-panel.open').forEach(p => {
+        if (p.closest('.sd-wrapper').id !== wrapperId) sdClose(p.closest('.sd-wrapper').id);
+      });
+      const wrapper = document.getElementById(wrapperId);
+      wrapper.querySelector('.sd-trigger').classList.add('open');
+      const panel = wrapper.querySelector('.sd-panel');
+      panel.classList.add('open');
+      const search = panel.querySelector('.sd-search');
+      search.value = '';
+      sdFilter(wrapperId);
+      search.focus();
+    }
+
+    function sdClose(wrapperId) {
+      const wrapper = document.getElementById(wrapperId);
+      if (!wrapper) return;
+      wrapper.querySelector('.sd-trigger').classList.remove('open');
+      wrapper.querySelector('.sd-panel').classList.remove('open');
+    }
+
+    function sdToggle(wrapperId) {
+      const panel = document.getElementById(wrapperId).querySelector('.sd-panel');
+      panel.classList.contains('open') ? sdClose(wrapperId) : sdOpen(wrapperId);
+    }
+
+    function sdFilter(wrapperId) {
+      const wrapper = document.getElementById(wrapperId);
+      const query   = wrapper.querySelector('.sd-search').value.toLowerCase();
+      const options = wrapper.querySelectorAll('.sd-option');
+      const empty   = wrapper.querySelector('.sd-empty');
+      let anyVisible = false;
+
+      options.forEach(opt => {
+        const match = opt.textContent.toLowerCase().includes(query);
+        opt.classList.toggle('hidden', !match);
+        if (match) anyVisible = true;
+      });
+
+      empty.classList.toggle('visible', !anyVisible);
+    }
+
+    function sdSelect(wrapperId, value, tripId, field) {
+      updateField(tripId, field, value);
+      const wrapper     = document.getElementById(wrapperId);
+      const triggerText = wrapper.querySelector('.sd-trigger-text');
+      triggerText.textContent = value || 'Selecionar';
+      triggerText.classList.toggle('placeholder', !value);
+
+      wrapper.querySelectorAll('.sd-option').forEach(opt => {
+        opt.classList.toggle('selected', opt.dataset.value === value);
+      });
+
+      sdClose(wrapperId);
+    }
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.sd-wrapper')) {
+        document.querySelectorAll('.sd-panel.open').forEach(p => {
+          sdClose(p.closest('.sd-wrapper').id);
+        });
+      }
+    });
+
+    // ── Trip helpers ───────────────────────────────────────────────────
     function getAvailableTurnos(currentTripId) {
       const used = trips.filter(t => t.id !== currentTripId).map(t => t.turno).filter(Boolean);
       return TURNOS.filter(t => !used.includes(t.value));
@@ -499,11 +628,6 @@
       if (field === "turno") render();
     }
 
-    function buildParadasOptions(selected) {
-      return `<option value="">Selecionar</option>` +
-        PARADAS.map(p => `<option value="${p}" ${selected === p ? "selected" : ""}>${p}</option>`).join("");
-    }
-
     function buildTurnoOptions(tripId, selected) {
       const available = getAvailableTurnos(tripId);
       return `<option value="">Selecionar</option>` +
@@ -513,6 +637,37 @@
           if (!isAvailable && !isSelected) return `<option value="${t.value}" disabled>${t.label}</option>`;
           return `<option value="${t.value}" ${isSelected ? "selected" : ""}>${t.label}</option>`;
         }).join("");
+    }
+
+    function buildSearchableDropdown(wrapperId, tripId, field, selected) {
+      const options = PARADAS.map(p => `
+        <div class="sd-option ${selected === p ? 'selected' : ''}"
+             data-value="${p}"
+             onclick="sdSelect('${wrapperId}', '${p}', ${tripId}, '${field}')">
+          ${p}
+        </div>
+      `).join('');
+
+      return `
+        <div class="sd-wrapper" id="${wrapperId}">
+          <button type="button" class="sd-trigger" onclick="sdToggle('${wrapperId}')">
+            <span class="sd-trigger-text ${selected ? '' : 'placeholder'}">${selected || 'Selecionar'}</span>
+            <svg class="sd-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div class="sd-panel">
+            <div class="sd-search-wrap">
+              <input class="sd-search" type="text" placeholder="Pesquisar parada..."
+                     oninput="sdFilter('${wrapperId}')" onclick="event.stopPropagation()" />
+            </div>
+            <div class="sd-list">
+              ${options}
+              <div class="sd-empty">Nenhuma parada encontrada.</div>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     function buildLotacao(tripId, selected) {
@@ -533,7 +688,8 @@
             ${showRemove ? `
               <button class="btn-remove" onclick="removeTrip(${trip.id})">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                  <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>
+                  <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
                 </svg>
                 Excluir
               </button>
@@ -549,15 +705,11 @@
             </div>
             <div class="field-group">
               <label>Embarque</label>
-              <select onchange="updateField(${trip.id}, 'embarque', this.value)">
-                ${buildParadasOptions(trip.embarque)}
-              </select>
+              ${buildSearchableDropdown(`sd-emb-${trip.id}`, trip.id, 'embarque', trip.embarque)}
             </div>
             <div class="field-group">
               <label>Desembarque</label>
-              <select onchange="updateField(${trip.id}, 'desembarque', this.value)">
-                ${buildParadasOptions(trip.desembarque)}
-              </select>
+              ${buildSearchableDropdown(`sd-des-${trip.id}`, trip.id, 'desembarque', trip.desembarque)}
             </div>
           </div>
 
@@ -579,7 +731,7 @@
       document.getElementById("btnAdd").disabled = trips.length >= TURNOS.length;
     }
 
-    // ── Submit ────────────────────────────────────────────────────────
+    // ── Submit ─────────────────────────────────────────────────────────
     async function submitForm() {
       if (!validateEmail(true)) {
         document.getElementById("emailInput").focus();
@@ -594,7 +746,7 @@
 
       const btnSubmit    = document.querySelector(".btn-submit");
       const originalText = btnSubmit.innerText;
-      btnSubmit.disabled = true;
+      btnSubmit.disabled  = true;
       btnSubmit.innerText = "Enviando...";
 
       try {
