@@ -28,6 +28,8 @@
       --accent-light: #eef1fc;
       --danger: #c0392b;
       --danger-light: #fdf0ee;
+      --success: #1a6b3a;
+      --success-light: #edf7f1;
       --tag-bg: #f0ede6;
       --radius: 8px;
       --radius-sm: 5px;
@@ -81,7 +83,7 @@
       line-height: 1.75;
     }
 
-    /* Section */
+    /* Section label */
     .section-label {
       font-family: 'DM Mono', monospace;
       font-size: 10px;
@@ -90,6 +92,57 @@
       color: var(--text-muted);
       margin-bottom: 14px;
     }
+
+    /* Email section */
+    .email-section {
+      margin-bottom: 32px;
+      padding-bottom: 28px;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .input-email {
+      appearance: none;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+      width: 100%;
+    }
+
+    .input-email::placeholder { color: #bbb9b3; }
+    .input-email:focus        { border-color: var(--border-focus); }
+    .input-email.invalid      { border-color: var(--danger); background: var(--danger-light); }
+    .input-email.valid        { border-color: var(--success); background: var(--success-light); }
+
+    .email-hint {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 300;
+      min-height: 16px;
+      transition: color 0.15s;
+    }
+
+    .email-hint.error { color: var(--danger); }
+    .email-hint.ok    { color: var(--success); }
 
     /* Trip card */
     .trips-container {
@@ -108,15 +161,8 @@
     }
 
     @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-6px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .trip-card-header {
@@ -148,14 +194,8 @@
       transition: opacity 0.15s;
     }
 
-    .btn-remove:hover {
-      opacity: 0.75;
-    }
-
-    .btn-remove svg {
-      width: 12px;
-      height: 12px;
-    }
+    .btn-remove:hover { opacity: 0.75; }
+    .btn-remove svg   { width: 12px; height: 12px; }
 
     /* Fields row */
     .fields-row {
@@ -166,23 +206,13 @@
     }
 
     @media (max-width: 500px) {
-      .fields-row {
-        grid-template-columns: 1fr;
-      }
+      .fields-row { grid-template-columns: 1fr; }
     }
 
-    .field-group {
+    .fields-row .field-group {
       display: flex;
       flex-direction: column;
       gap: 6px;
-    }
-
-    label {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-      text-transform: uppercase;
     }
 
     select {
@@ -203,24 +233,14 @@
       background-position: right 10px center;
     }
 
-    select:focus {
-      border-color: var(--border-focus);
-    }
-
-    select option[value=""] {
-      color: var(--text-muted);
-    }
+    select:focus { border-color: var(--border-focus); }
+    select option[value=""] { color: var(--text-muted); }
 
     /* Lotação */
     .lotacao-section {}
 
-    .lotacao-label-row {
-      margin-bottom: 8px;
-    }
-
-    .lotacao-label-row label {
-      display: block;
-    }
+    .lotacao-label-row { margin-bottom: 8px; }
+    .lotacao-label-row label { display: block; }
 
     .lotacao-row {
       display: flex;
@@ -242,9 +262,7 @@
       gap: 14px;
     }
 
-    .lotacao-scale input[type="radio"] {
-      display: none;
-    }
+    .lotacao-scale input[type="radio"] { display: none; }
 
     .lotacao-scale label {
       display: flex;
@@ -264,7 +282,7 @@
       letter-spacing: 0;
     }
 
-    .lotacao-scale input[type="radio"]:checked+label {
+    .lotacao-scale input[type="radio"]:checked + label {
       background: var(--text);
       border-color: var(--text);
       color: #fff;
@@ -305,10 +323,7 @@
       cursor: not-allowed;
     }
 
-    .btn-add svg {
-      width: 15px;
-      height: 15px;
-    }
+    .btn-add svg { width: 15px; height: 15px; }
 
     /* Submit */
     .btn-submit {
@@ -327,9 +342,7 @@
       letter-spacing: 0.02em;
     }
 
-    .btn-submit:hover {
-      opacity: 0.85;
-    }
+    .btn-submit:hover { opacity: 0.85; }
 
     /* Divider */
     .divider {
@@ -349,24 +362,12 @@
       margin-top: 16px;
     }
 
-    .success-msg.visible {
-      display: block;
-    }
-
-    .success-msg p {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .success-icon {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
+    .success-msg.visible { display: block; }
+    .success-msg p { font-size: 14px; color: var(--text-muted); }
+    .success-icon { font-size: 28px; margin-bottom: 10px; }
   </style>
 
-  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Config script for credentials -->
   <script src="config.js"></script>
 </head>
 
@@ -380,6 +381,23 @@
         da UNIVASF no primeiro semestre de 2026. Os dados serão utilizados para uma pesquisa acadêmica
         voltada para possíveis soluções das problemáticas de superlotação nos transportes.
       </p>
+    </div>
+
+    <!-- E-mail -->
+    <div class="email-section">
+      <div class="section-label">Identificação</div>
+      <div class="field-group">
+        <label for="emailInput">E-mail discente</label>
+        <input
+          class="input-email"
+          type="email"
+          id="emailInput"
+          placeholder="seunome@discente.univasf.edu.br"
+          oninput="validateEmail()"
+          onblur="validateEmail(true)"
+        />
+        <span class="email-hint" id="emailHint">Informe seu e-mail institucional da UNIVASF.</span>
+      </div>
     </div>
 
     <div class="section-label">Viagens realizadas</div>
@@ -426,10 +444,40 @@
     let trips = [];
     let nextId = 1;
 
-    function getUsedTurnos() {
-      return trips.map(t => t.turno).filter(Boolean);
+    // ── Email ─────────────────────────────────────────────────────────
+    const ALLOWED_DOMAIN = "discente.univasf.edu.br";
+
+    function validateEmail(showError = false) {
+      const input = document.getElementById("emailInput");
+      const hint  = document.getElementById("emailHint");
+      const val   = input.value.trim();
+
+      if (!val) {
+        input.className  = "input-email";
+        hint.className   = "email-hint";
+        hint.textContent = "Informe seu e-mail institucional da UNIVASF.";
+        return false;
+      }
+
+      const parts = val.split("@");
+      const valid = parts.length === 2 && parts[1] === ALLOWED_DOMAIN && parts[0].length > 0;
+
+      if (valid) {
+        input.className  = "input-email valid";
+        hint.className   = "email-hint ok";
+        hint.textContent = "E-mail válido.";
+        return true;
+      }
+
+      if (showError) {
+        input.className  = "input-email invalid";
+        hint.className   = "email-hint error";
+        hint.textContent = `O e-mail deve terminar em @${ALLOWED_DOMAIN}.`;
+      }
+      return false;
     }
 
+    // ── Trips ─────────────────────────────────────────────────────────
     function getAvailableTurnos(currentTripId) {
       const used = trips.filter(t => t.id !== currentTripId).map(t => t.turno).filter(Boolean);
       return TURNOS.filter(t => !used.includes(t.value));
@@ -448,7 +496,7 @@
     function updateField(id, field, value) {
       const trip = trips.find(t => t.id === id);
       if (trip) trip[field] = value;
-      if (field === "turno") render(); // re-render to update available options
+      if (field === "turno") render();
     }
 
     function buildParadasOptions(selected) {
@@ -461,7 +509,7 @@
       return `<option value="">Selecionar</option>` +
         TURNOS.map(t => {
           const isAvailable = available.some(a => a.value === t.value);
-          const isSelected = t.value === selected;
+          const isSelected  = t.value === selected;
           if (!isAvailable && !isSelected) return `<option value="${t.value}" disabled>${t.label}</option>`;
           return `<option value="${t.value}" ${isSelected ? "selected" : ""}>${t.label}</option>`;
         }).join("");
@@ -475,7 +523,7 @@
     }
 
     function render() {
-      const container = document.getElementById("tripsContainer");
+      const container  = document.getElementById("tripsContainer");
       const showRemove = trips.length > 1;
 
       container.innerHTML = trips.map((trip, i) => `
@@ -528,51 +576,45 @@
         </div>
       `).join("");
 
-      const btnAdd = document.getElementById("btnAdd");
-      btnAdd.disabled = trips.length >= TURNOS.length;
+      document.getElementById("btnAdd").disabled = trips.length >= TURNOS.length;
     }
 
-    // (Cliente do Supabase será inicializado dentro da função para evitar erros de escopo/carregamento no Pages)
-
+    // ── Submit ────────────────────────────────────────────────────────
     async function submitForm() {
+      if (!validateEmail(true)) {
+        document.getElementById("emailInput").focus();
+        return;
+      }
+
       const incomplete = trips.some(t => !t.turno || !t.embarque || !t.desembarque || !t.lotacao);
       if (incomplete) {
         alert("Por favor, preencha todos os campos antes de enviar.");
         return;
       }
 
-      const btnSubmit = document.querySelector(".btn-submit");
+      const btnSubmit    = document.querySelector(".btn-submit");
       const originalText = btnSubmit.innerText;
       btnSubmit.disabled = true;
       btnSubmit.innerText = "Enviando...";
 
       try {
-        // Inicializa o cliente Supabase aqui dentro para garantir que os scripts CDN e config carregaram
-        if (typeof supabase === 'undefined') {
-          throw new Error("Supabase CDN não foi carregado corretamente.");
-        }
+        if (typeof supabase === 'undefined') throw new Error("Supabase CDN não foi carregado corretamente.");
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const email = document.getElementById("emailInput").value.trim();
 
-        // Prepara os dados para envio
         const dataToInsert = trips.map(t => ({
-          turno: t.turno,
-          embarque: t.embarque,
+          email,
+          turno:       t.turno,
+          embarque:    t.embarque,
           desembarque: t.desembarque,
-          lotacao: parseInt(t.lotacao)
+          lotacao:     parseInt(t.lotacao)
         }));
 
-        console.log("Tentando enviar:", dataToInsert); // Log para ajudar a debugar no console do navegador
+        console.log("Tentando enviar:", dataToInsert);
 
-        // ATENÇÃO: Substitua 'viagens' pelo nome correto da sua tabela no banco de dados
-        const { data, error } = await supabaseClient
-          .from('viagens')
-          .insert(dataToInsert);
-
-        if (error) {
-          console.error("Supabase Error Details:", error);
-          throw error;
-        }
+        const { data, error } = await supabaseClient.from('viagens').insert(dataToInsert);
+        if (error) throw error;
 
         console.log("Inserção bem sucedida:", data);
 
@@ -580,25 +622,14 @@
         document.getElementById("successMsg").classList.add("visible");
       } catch (error) {
         console.error("ERRO COMPLETO DO SUPABASE:", error);
-
-        let errorMsg = "Ocorreu um erro desconhecido.";
-
-        if (error.message) {
-          errorMsg = error.message;
-        } else if (typeof error === 'string') {
-          errorMsg = error;
-        } else {
-          errorMsg = JSON.stringify(error);
-        }
-
+        const errorMsg = error.message || JSON.stringify(error);
         alert(`Erro ao salvar no banco:\n${errorMsg}\n\nVerifique o console (F12) para mais detalhes.`);
-
-        btnSubmit.disabled = false;
+        btnSubmit.disabled  = false;
         btnSubmit.innerText = originalText;
       }
     }
 
-    // Init with one trip
+    // Init
     addTrip();
   </script>
 </body>
