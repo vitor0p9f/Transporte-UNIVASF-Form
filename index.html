@@ -181,7 +181,7 @@
     /* Fields row */
     .fields-row {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1.35fr;
       gap: 12px;
       margin-bottom: 18px;
     }
@@ -190,12 +190,20 @@
       .fields-row { grid-template-columns: 1fr; }
     }
 
-    .fields-row .field-group { display: flex; flex-direction: column; gap: 6px; }
+    .fields-row .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
 
-    /* Native select (turno) */
+    /* Native select (turno, embarque, desembarque) */
     select {
       appearance: none;
       -webkit-appearance: none;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
       background: var(--bg);
       border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
