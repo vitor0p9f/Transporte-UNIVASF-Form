@@ -407,24 +407,14 @@
   </div>
 
   <script>
-    const TURNOS = [
-      { value: "manha", label: "Manhã" },
-      { value: "tarde", label: "Tarde" },
-      { value: "noite", label: "Noite" },
-    ];
-
-    const PARADAS = [
-      "Petrolina Centro",
-      "Petrolina Norte",
-      "Juazeiro Centro",
-      "Juazeiro Sul",
-      "Campus UNIVASF",
-      "Terminal Rodoviário",
-      "Bairro Industrial",
-    ];
+    // Turnos e paradas carregados do Supabase (preenchidos em loadTurnosEParadas)
+    let TURNOS = [];
+    let PARADAS_BY_TURNO = {}; // { turno_id: [ { nome }, ... ] }
+    let turnosById = {}; // { id: { slug, label } } para buscar slug a partir do id
 
     let trips = [];
     let nextId = 1;
+    let dataLoaded = false;
 
     function getUsedTurnos() {
       return trips.map(t => t.turno).filter(Boolean);
@@ -433,6 +423,17 @@
     function getAvailableTurnos(currentTripId) {
       const used = trips.filter(t => t.id !== currentTripId).map(t => t.turno).filter(Boolean);
       return TURNOS.filter(t => !used.includes(t.value));
+    }
+
+    function getTurnoIdBySlug(slug) {
+      const t = TURNOS.find(x => x.value === slug);
+      return t ? t.id : null;
+    }
+
+    function getParadasForTrip(trip) {
+      if (!trip || !trip.turno) return [];
+      const turnoId = getTurnoIdBySlug(trip.turno);
+      return (turnoId && PARADAS_BY_TURNO[turnoId]) ? PARADAS_BY_TURNO[turnoId] : [];
     }
 
     function addTrip() {
@@ -447,16 +448,26 @@
 
     function updateField(id, field, value) {
       const trip = trips.find(t => t.id === id);
-      if (trip) trip[field] = value;
+      if (trip) {
+        trip[field] = value;
+        if (field === "turno") {
+          trip.embarque = "";
+          trip.desembarque = "";
+        }
+      }
       if (field === "turno") render(); // re-render to update available options
     }
 
-    function buildParadasOptions(selected) {
+    function buildParadasOptions(paradasList, selected) {
+      if (!paradasList || paradasList.length === 0) {
+        return `<option value="">Selecione o turno primeiro</option>`;
+      }
       return `<option value="">Selecionar</option>` +
-        PARADAS.map(p => `<option value="${p}" ${selected === p ? "selected" : ""}>${p}</option>`).join("");
+        paradasList.map(p => `<option value="${p}" ${selected === p ? "selected" : ""}>${p}</option>`).join("");
     }
 
     function buildTurnoOptions(tripId, selected) {
+      if (!TURNOS.length) return `<option value="">Carregando...</option>`;
       const available = getAvailableTurnos(tripId);
       return `<option value="">Selecionar</option>` +
         TURNOS.map(t => {
@@ -474,8 +485,27 @@
       `).join("");
     }
 
+    async function loadTurnosEParadas() {
+      const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const { data: turnosData, error: errTurnos } = await client.from("turnos").select("id, slug, label").order("id");
+      if (errTurnos) throw new Error("Turnos: " + errTurnos.message);
+      const { data: paradasData, error: errParadas } = await client.from("paradas").select("turno_id, nome, ordem").order("turno_id").order("ordem");
+      if (errParadas) throw new Error("Paradas: " + errParadas.message);
+
+      TURNOS = (turnosData || []).map(t => ({ id: t.id, value: t.slug, label: t.label }));
+      PARADAS_BY_TURNO = {};
+      (paradasData || []).forEach(p => {
+        if (!PARADAS_BY_TURNO[p.turno_id]) PARADAS_BY_TURNO[p.turno_id] = [];
+        PARADAS_BY_TURNO[p.turno_id].push(p.nome);
+      });
+    }
+
     function render() {
       const container = document.getElementById("tripsContainer");
+      if (!dataLoaded) {
+        container.innerHTML = '<div class="trip-card" style="text-align:center;color:var(--text-muted);">Carregando turnos e paradas...</div>';
+        return;
+      }
       const showRemove = trips.length > 1;
 
       container.innerHTML = trips.map((trip, i) => `
@@ -502,13 +532,13 @@
             <div class="field-group">
               <label>Embarque</label>
               <select onchange="updateField(${trip.id}, 'embarque', this.value)">
-                ${buildParadasOptions(trip.embarque)}
+                ${buildParadasOptions(getParadasForTrip(trip), trip.embarque)}
               </select>
             </div>
             <div class="field-group">
               <label>Desembarque</label>
               <select onchange="updateField(${trip.id}, 'desembarque', this.value)">
-                ${buildParadasOptions(trip.desembarque)}
+                ${buildParadasOptions(getParadasForTrip(trip), trip.desembarque)}
               </select>
             </div>
           </div>
@@ -598,8 +628,26 @@
       }
     }
 
-    // Init with one trip
-    addTrip();
+    // Init: carregar turnos e paradas do Supabase, depois exibir formulário
+    (function init() {
+      if (typeof supabase === "undefined" || typeof SUPABASE_URL === "undefined") {
+        document.getElementById("tripsContainer").innerHTML =
+          '<div class="trip-card" style="text-align:center;color:var(--danger);">Erro: Supabase não carregado. Verifique config.js e a conexão.</div>';
+        return;
+      }
+      render(); // mostra "Carregando..."
+      loadTurnosEParadas()
+        .then(() => {
+          dataLoaded = true;
+          addTrip();
+          render();
+        })
+        .catch((err) => {
+          console.error(err);
+          document.getElementById("tripsContainer").innerHTML =
+            '<div class="trip-card" style="text-align:center;color:var(--danger);">Não foi possível carregar turnos e paradas. Verifique o console (F12).</div>';
+        });
+    })();
   </script>
 </body>
 
