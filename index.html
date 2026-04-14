@@ -810,12 +810,8 @@
           lotacao:     parseInt(t.lotacao)
         }));
 
-        console.log("Tentando enviar:", dataToInsert);
-
         const { data, error } = await supabaseClient.from('viagens').insert(dataToInsert);
         if (error) throw error;
-
-        console.log("Inserção bem sucedida:", data);
 
         btnSubmit.style.display = "none";
         document.getElementById("successMsg").classList.add("visible");
