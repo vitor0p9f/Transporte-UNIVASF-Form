@@ -1,0 +1,33 @@
+{
+  "nodes": [
+    {
+      "label": "A",
+      "departure_time": "",
+      "arrival_time": "",
+      "boarding": {
+        "morning_1": 0,
+        "morning_2": 0,
+        "afternoon_1": 0,
+        "afternoon_2": 0,
+        "night_1": 0,
+        "night_2": 0
+      },
+      "alighting": {
+        "morning_1": 0,
+        "morning_2": 0,
+        "afternoon_1": 0,
+        "afternoon_2": 0,
+        "night_1": 0,
+        "night_2": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "origin": "A",
+      "destination": "B",
+      "distance": 0,
+      "estimated_travel_time": 0
+    }
+  ]
+}
