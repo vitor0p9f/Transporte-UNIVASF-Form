@@ -1,25 +1,327 @@
 {
   "nodes": [
     {
-      "label": "A",
-      "departure_time": "",
-      "arrival_time": "",
-      "boarding": {
-        "morning_1": 0,
-        "morning_2": 0,
-        "afternoon_1": 0,
-        "afternoon_2": 0,
-        "night_1": 0,
-        "night_2": 0
-      },
-      "alighting": {
-        "morning_1": 0,
-        "morning_2": 0,
-        "afternoon_1": 0,
-        "afternoon_2": 0,
-        "night_1": 0,
-        "night_2": 0
-      }
+      
+      "label": "UNIVASF / CAMPUS JUAZEIRO",
+      "latitude": -9.41270880409493,
+      "longitude": -40.515239903982,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "ESTAÇÃO VELHA / JUAZEIRO",
+      "latitude": -9.430183442036553,
+      "longitude": -40.50319928939573,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "VERDÃO / JUAZEIRO",
+      "latitude": -9.442428704751944,
+      "longitude": -40.49321481808982,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "POSTO RAUL LINS / JUAZEIRO",
+      "latitude": -9.43864993509342,
+      "longitude": -40.49467866207603,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "LUCAS PNEUS / JUAZEIRO",
+      "latitude": -9.428669196739664,
+      "longitude": -40.49861831012946,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "G BARBOSA / JUAZEIRO",
+      "latitude": 0,
+      "longitude": 0,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "CANTEIRO DE OBRAS / JUAZEIRO",
+      "latitude": 0,
+      "longitude": 0,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+      "latitude": -9.415125196617117,
+      "longitude": -40.50369817390067,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "UNIVASF / CAMPUS PETROLINA",
+      "latitude": -9.389670029335674,
+      "longitude": -40.49470121071095,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "SUPERMERCADO REGENTE / PETROLINA",
+      "latitude": -9.394485604349281,
+      "longitude": -40.49859601674124,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "ISAÍAS VEÍCULOS / PETROLINA",
+      "latitude": -9.186344710954016,
+      "longitude": -40.09575687755518,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+      "latitude": -9.385622112284489,
+      "longitude": -40.52806653654278,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "IZABELA CONSTRUÇÕES / PETROLINA",
+      "latitude": -9.36179541779947,
+      "longitude": -40.54335957197187,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+      "latitude": -9.330289451179802,
+      "longitude": -40.55566406277759,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "UNIVASF / CAMPUS CCA",
+      "latitude": -9.323851386469267,
+      "longitude": -40.54751004203416,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "ALOJAMENTO ESTUDANTIL DO CCA / PETROLINA",
+      "latitude": -9.322052322187494,
+      "longitude": -40.56196560459645,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "BLOCO DE SALAS DO CCA / PETROLINA",
+      "latitude": -9.32247199181709,
+      "longitude": -40.547410766570586,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "SEMENTEIRA / PETROLINA",
+      "latitude": -9.38510121013218,
+      "longitude": -40.50934648284959,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "PETRAPE / PETROLINA",
+      "latitude": -9.388384203109215,
+      "longitude": -40.51736345430485,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "PLANTE BEM / PETROLINA",
+      "latitude": -9.394623516682989,
+      "longitude": -40.5196766892553,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "BANCO ITAÚ / PETROLINA",
+      "latitude": -9.399486294653384,
+      "longitude": -40.498698128504735,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "PRAÇA DAS ALGAROBAS / PETROLINA",
+      "latitude": -9.40008395995164,
+      "longitude": -40.49452969135634,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "G BARBOSA / PETROLINA",
+      "latitude": -9.389675484345263,
+      "longitude": -40.48817547523554,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "SUCATÃO MORAES / PETROLINA",
+      "latitude": -9.361827506735196, 
+      "longitude": -40.476850476975294,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "AMR AREIAS/ PETROLINA",
+      "latitude": -9.344819791253903,
+      "longitude": -40.471017836590654,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "MECÂNICA DO EDUARDO/ PETROLINA",
+      "latitude": -9.349882814073016, 
+      "longitude": -40.50252807475884,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "NUTIVA AGRO / PETROLINA",
+      "latitude": -9.370783106189924, 
+      "longitude": -40.53360098314013,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "MECÂNICA OURO DIESEL / PETROLINA",
+      "latitude": -9.385428941313773,  
+      "longitude": -40.52120814779302,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "DELEGACIA DE POLÍCIA CIVIL / PETROLINA",
+      "latitude": -9.383014920318901,
+      "longitude": -40.5153415808926,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+      "latitude": -9.396734041981833, 
+      "longitude": -40.491388007020994,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "MUNDO DA LUA / PETROLINA",
+      "latitude": -9.3856210273608,
+      "longitude": -40.497230812555856,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "ESTAÇÃO VELHA / PETROLINA",
+      "latitude": -9.396825834578861,
+      "longitude": -40.50556494308592,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "LOJAS AMERICANAS / JUAZEIRO",
+      "latitude": -9.411046849131958, 
+      "longitude": -40.50615391004569,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "RESTAURANTE DONA BRANCA / PETROLINA",
+      "latitude": -9.366936826189024,
+      "longitude": -40.51454685624434,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "POSTO SÃO FRANCISCO / PETROLINA",
+      "latitude": -9.385618693082726,
+      "longitude": -40.52314828557597,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "DETRAN / PETROLINA",
+      "latitude": -9.380336497995572,
+      "longitude": -40.489063948055716,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "CONSTRUTEO / PETROLINA",
+      "latitude": -9.389572293104667,
+      "longitude": -40.54385694122477,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "ABARÉ RADIADORES / PETROLINA",
+      "latitude": -9.377798666048655,
+      "longitude": -40.501997492574446,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "DEL VEÍCULOS / PETROLINA",
+      "latitude": -9.39382375871874,
+      "longitude": -40.51030170298728,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "BAR DA TRIPA / PETROLINA",
+      "latitude": -9.397180806959808,
+      "longitude": -40.49111344118367,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "EREM CLEMENTINO COELHO / PETROLINA",
+      "latitude": -9.386283132922605,
+      "longitude": -40.51500852550361,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "ZENILTON AUTOMÓVEIS / PETROLINA",
+      "latitude": -9.391321215136976,
+      "longitude": -40.51833981805292,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "EQUIPADORA CORDEIRO / JUAZEIRO",
+      "latitude": -9.431124183219303,
+      "longitude": -40.498105838117276,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "PARQUE MUNICIPAL LAGOA DE CALU / JUAZEIRO",
+      "latitude": -9.42472943976332,
+      "longitude": -40.50209305925725,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "TERMINAL RODOVIÁRIO / PETROLINA",
+      "latitude": -9.391745227898708,
+      "longitude": -40.50928169611692,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
+    },
+    {
+      "label": "POUSADA PARAÍSO / PETROLINA",
+      "latitude": -9.377972934079953,
+      "longitude": -40.54019093526129,
+      "boardings": [0, 0, 0, 0, 0, 0],
+      "alightings": [0, 0, 0, 0, 0, 0]
     }
   ],
   "edges": [
