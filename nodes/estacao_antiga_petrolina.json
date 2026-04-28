@@ -1,0 +1,133 @@
+{
+    "label": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 3,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 2.2,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 12.5,
+            "estimated_travel_time": 19
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 11.3,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 2.6,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 11,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 6.7,
+            "estimated_travel_time": 11
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 5,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 4.1,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 3.1,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 6.7,
+            "estimated_travel_time": 11
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 1.8,
+            "estimated_travel_time": 4
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 2.3,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 2.9,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 2.1,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 5.6,
+            "estimated_travel_time": 13
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 1.5,
+            "estimated_travel_time": 4
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 0.9,
+            "estimated_travel_time": 3
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 2.2,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 12.4,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 5.8,
+            "estimated_travel_time": 13
+        }
+    ]
+}

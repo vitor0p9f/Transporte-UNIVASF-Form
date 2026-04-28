@@ -1,0 +1,133 @@
+{
+    "label": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 2.7,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 3.9,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 14.7,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 13.4,
+            "estimated_travel_time": 21
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 2.4,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 13.1,
+            "estimated_travel_time": 21
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 8.4,
+            "estimated_travel_time": 17
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 2.7,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 6.6,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 4.8,
+            "estimated_travel_time": 11
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 8.8,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 1.1,
+            "estimated_travel_time": 5
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 4.6,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 5.6,
+            "estimated_travel_time": 13
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 4.6,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 3.2,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 4.3,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 3,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 4.3,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 14.5,
+            "estimated_travel_time": 23
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 4,
+            "estimated_travel_time": 11
+        }
+    ]
+}
