@@ -1,0 +1,133 @@
+{
+    "label": "POSTO RAUL LINS / JUAZEIRO",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 3.6,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 5.9,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 9.4,
+            "estimated_travel_time": 17
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 11.7,
+            "estimated_travel_time": 19
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 15.9,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 17.5,
+            "estimated_travel_time": 27
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 7.1,
+            "estimated_travel_time": 13
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 7.5,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 7.6,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 7.4,
+            "estimated_travel_time": 15
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 8.5,
+            "estimated_travel_time": 15
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 5.6,
+            "estimated_travel_time": 11
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 11.3,
+            "estimated_travel_time": 19
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 16.3,
+            "estimated_travel_time": 25
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 0.55,
+            "estimated_travel_time": 2
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 6.7,
+            "estimated_travel_time": 13
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 3.9,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 4.2,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 7.2,
+            "estimated_travel_time": 15
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "UNIVASF CCA/ PETROLINA",
+            "distance": 17.4,
+            "estimated_travel_time": 26
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 1.4,
+            "estimated_travel_time": 3
+        }
+    ]
+}

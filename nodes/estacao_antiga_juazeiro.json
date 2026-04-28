@@ -110,6 +110,24 @@
             "destination": "LOJAS AMERICANAS / JUAZEIRO",
             "distance": 2.5,
             "estimated_travel_time": 5
+        },
+        {
+            "origin": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 2.8,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 5.8,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "destination": "UNIVASF CCA/ PETROLINA",
+            "distance": 16,
+            "estimated_travel_time": 24
         }
     ]
 }
