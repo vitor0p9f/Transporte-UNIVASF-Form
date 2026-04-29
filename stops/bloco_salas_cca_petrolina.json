@@ -1,0 +1,133 @@
+{
+    "label": "BLOCO DE SALAS DO CCA / PETROLINA",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 13.8,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 14.8,
+            "estimated_travel_time": 28
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 15.5,
+            "estimated_travel_time": 28
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 2.1,
+            "estimated_travel_time": 5
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 15.1,
+            "estimated_travel_time": 26
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 1.6,
+            "estimated_travel_time": 4
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 16.8,
+            "estimated_travel_time": 28
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 17.5,
+            "estimated_travel_time": 35
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 9.8,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 15.1,
+            "estimated_travel_time": 28
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 6.6,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 14.3,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 15.5,
+            "estimated_travel_time": 30
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 13.9,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 11.4,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 18.1,
+            "estimated_travel_time": 35
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 12.6,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 13.9,
+            "estimated_travel_time": 26
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 15.1,
+            "estimated_travel_time": 26
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 0.22,
+            "estimated_travel_time": 1
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 18.4,
+            "estimated_travel_time": 35
+        }
+    ]
+}

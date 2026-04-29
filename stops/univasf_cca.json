@@ -7,13 +7,13 @@
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
             "distance": 13.7,
-            "estimated_travel_time": 20
+            "estimated_travel_time": 24
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
             "distance": 14.6,
-            "estimated_travel_time": 22
+            "estimated_travel_time": 26
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
@@ -31,7 +31,7 @@
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
             "distance": 15,
-            "estimated_travel_time": 22
+            "estimated_travel_time": 26
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
@@ -43,91 +43,91 @@
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "DR DISTRIBUIDORA / PETROLINA",
             "distance": 16.7,
-            "estimated_travel_time": 23
+            "estimated_travel_time": 28
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
             "distance": 17.4,
-            "estimated_travel_time": 27
+            "estimated_travel_time": 35
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
             "distance": 9.7,
-            "estimated_travel_time": 14
+            "estimated_travel_time": 16
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "G BARBOSA / PETROLINA",
             "distance": 15.1,
-            "estimated_travel_time": 23
+            "estimated_travel_time": 28
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
             "distance": 6.5,
-            "estimated_travel_time": 8
+            "estimated_travel_time": 9
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "LOJAS AMERICANAS / JUAZEIRO",
             "distance": 14.2,
-            "estimated_travel_time": 20
+            "estimated_travel_time": 24
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
-            "distance": 15.3,
-            "estimated_travel_time": 24
+            "distance": 15.4,
+            "estimated_travel_time": 30
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "PARK MUNDO DA LUA / PETROLINA",
             "distance": 13.9,
-            "estimated_travel_time": 20
+            "estimated_travel_time": 24
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "PLANTE BEM / PETROLINA",
             "distance": 11.3,
-            "estimated_travel_time": 15
+            "estimated_travel_time": 18
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "POSTO RAUL LINS / JUAZEIRO",
             "distance": 18,
-            "estimated_travel_time": 28
+            "estimated_travel_time": 35
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "SEMENTEIRA / PETROLINA",
             "distance": 12.5,
-            "estimated_travel_time": 18
+            "estimated_travel_time": 22
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "SUPERMERCADO REGENTE / PETROLINA",
             "distance": 13.8,
-            "estimated_travel_time": 21
+            "estimated_travel_time": 24
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 15.4,
-            "estimated_travel_time": 23
+            "estimated_travel_time": 28
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "UNIVASF / PETROLINA",
             "distance": 15.1,
-            "estimated_travel_time": 22
+            "estimated_travel_time": 26
         },
         {
             "origin": "UNIVASF CCA/ PETROLINA",
             "destination": "VERDÃO / JUAZEIRO",
             "distance": 18.3,
-            "estimated_travel_time": 28
+            "estimated_travel_time": 35
         }
     ]
 }
