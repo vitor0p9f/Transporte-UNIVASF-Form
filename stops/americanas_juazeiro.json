@@ -1,0 +1,133 @@
+{
+    "label": "LOJAS AMERICANAS / JUAZEIRO",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 2,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 3.1,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 13.9,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 12.7,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 0.8,
+            "estimated_travel_time": 2
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 12.3,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 7.7,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 3.2,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 5.8,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 4,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 8.1,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 1.3,
+            "estimated_travel_time": 4
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 3.8,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 4.6,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 3.5,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 3.8,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 3.3,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 2.3,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 3.6,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 13.8,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 4,
+            "estimated_travel_time": 9
+        }
+    ]
+}
