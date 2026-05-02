@@ -1,0 +1,133 @@
+{
+    "label": "SUPERMERCADO REGENTE / PETROLINA",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 0.65,
+            "estimated_travel_time": 3
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 1.9,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 13,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 11.7,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 3,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 11.4,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 5.9,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 5.4,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 4.5,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 2.2,
+            "estimated_travel_time": 5
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 7.1,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 2.2,
+            "estimated_travel_time": 4
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 1.8,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 2.1,
+            "estimated_travel_time": 5
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 2.6,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 6,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 2,
+            "estimated_travel_time": 5
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 3.6,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 1.6,
+            "estimated_travel_time": 4
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 12.9,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 6.3,
+            "estimated_travel_time": 14
+        }
+    ]
+}

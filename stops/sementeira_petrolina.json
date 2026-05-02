@@ -1,0 +1,133 @@
+{
+    "label": "SEMENTEIRA / PETROLINA",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 1.9,
+            "estimated_travel_time": 5
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 3.4,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 12.3,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 11.1,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 4.5,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 10.8,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 5.2,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 7.3,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 4.3,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 2.5,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 6.5,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 3.7,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 2.7,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 1.4,
+            "estimated_travel_time": 2
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 2.2,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 7.5,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 5.4,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 1.9,
+            "estimated_travel_time": 4
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 2.4,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 12.2,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 7.7,
+            "estimated_travel_time": 18
+        }
+    ]
+}

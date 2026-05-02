@@ -1,0 +1,133 @@
+{
+    "label": "VERDÃO / JUAZEIRO",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 5.8,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 7,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 17.8,
+            "estimated_travel_time": 35
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 16.5,
+            "estimated_travel_time": 30
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 3.8,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 16.2,
+            "estimated_travel_time": 30
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 11.5,
+            "estimated_travel_time": 26
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 1.7,
+            "estimated_travel_time": 3
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 9.7,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 7.8,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 11.9,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 4.2,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 7.7,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 8.7,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 7.7,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 0.55,
+            "estimated_travel_time": 2
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 7.1,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 6.1,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 7.4,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 22.3,
+            "estimated_travel_time": 45
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 4.5,
+            "estimated_travel_time": 12
+        }
+    ]
+}
