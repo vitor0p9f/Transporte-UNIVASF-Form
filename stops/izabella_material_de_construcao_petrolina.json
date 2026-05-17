@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 4.8,
             "estimated_travel_time": 10
+        },
+        {
+            "origin": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 8.5,
+            "estimated_travel_time": 18
         }
     ]
 }

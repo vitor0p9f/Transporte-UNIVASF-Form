@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 4.9,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "UNIVASF / JUAZEIRO",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 5.5,
+            "estimated_travel_time": 16
         }
     ]
 }

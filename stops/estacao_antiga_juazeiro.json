@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 5.9,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 6.5,
+            "estimated_travel_time": 16
         }
     ]
 }

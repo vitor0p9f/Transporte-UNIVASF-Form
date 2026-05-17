@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 4.5,
             "estimated_travel_time": 10
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 5.3,
+            "estimated_travel_time": 14
         }
     ]
 }

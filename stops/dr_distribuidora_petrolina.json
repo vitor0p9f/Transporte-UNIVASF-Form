@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 7.3,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "DR DISTRIBUIDORA / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 4,
+            "estimated_travel_time": 9
         }
     ]
 }

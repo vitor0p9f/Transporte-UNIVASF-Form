@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 10,
             "estimated_travel_time": 16
+        },
+        {
+            "origin": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 13.5,
+            "estimated_travel_time": 24
         }
     ]
 }

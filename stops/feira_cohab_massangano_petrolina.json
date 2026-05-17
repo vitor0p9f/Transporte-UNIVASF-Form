@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 2.2,
             "estimated_travel_time": 5
+        },
+        {
+            "origin": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 5.8,
+            "estimated_travel_time": 14
         }
     ]
 }

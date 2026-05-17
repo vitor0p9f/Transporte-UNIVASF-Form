@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 0.7,
             "estimated_travel_time": 2
+        },
+        {
+            "origin": "PLANTE BEM / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 4.2,
+            "estimated_travel_time": 10
         }
     ]
 }

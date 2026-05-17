@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 9.8,
             "estimated_travel_time": 16
+        },
+        {
+            "origin": "BLOCO VELHO DO CCA / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 13.4,
+            "estimated_travel_time": 24
         }
     ]
 }

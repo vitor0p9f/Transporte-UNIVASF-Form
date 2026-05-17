@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 1.8,
             "estimated_travel_time": 4
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 2.4,
+            "estimated_travel_time": 6
         }
     ]
 }

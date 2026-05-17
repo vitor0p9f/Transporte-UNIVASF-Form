@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 2.8,
             "estimated_travel_time": 7
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 2.4,
+            "estimated_travel_time": 6
         }
     ]
 }

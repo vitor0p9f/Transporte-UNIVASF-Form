@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 7.3,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 7.9,
+            "estimated_travel_time": 20
         }
     ]
 }

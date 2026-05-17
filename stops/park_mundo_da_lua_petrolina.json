@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 3.1,
             "estimated_travel_time": 7
+        },
+        {
+            "origin": "PARK MUNDO DA LUA / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 1.1,
+            "estimated_travel_time": 3
         }
     ]
 }

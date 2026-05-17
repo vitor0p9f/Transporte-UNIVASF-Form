@@ -134,6 +134,12 @@
             "destination": "PETRAPE / PETROLINA",
             "distance": 3.8,
             "estimated_travel_time": 8
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 4.4,
+            "estimated_travel_time": 12
         }
     ]
 }

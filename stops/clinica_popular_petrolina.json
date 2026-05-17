@@ -1,0 +1,145 @@
+{
+    "label": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 3.7,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 2.2,
+            "estimated_travel_time": 6
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 14.3,
+            "estimated_travel_time": 26
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 13,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 6,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 12.7,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 3.4,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 8.5,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 6.2,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 1.2,
+            "estimated_travel_time": 3
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 8.4,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 5.3,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 2.4,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 1.2,
+            "estimated_travel_time": 3
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 4.2,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 9.1,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 2.5,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 2.8,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 1.7,
+            "estimated_travel_time": 5
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 14.1,
+            "estimated_travel_time": 26
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 8.9,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 3.8,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 6.6,
+            "estimated_travel_time": 16
+        }
+    ]
+}
