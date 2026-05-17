@@ -128,6 +128,12 @@
             "destination": "VERDÃO / JUAZEIRO",
             "distance": 18.3,
             "estimated_travel_time": 35
+        },
+        {
+            "origin": "UNIVASF CCA/ PETROLINA",
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 11.3,
+            "estimated_travel_time": 18
         }
     ]
 }

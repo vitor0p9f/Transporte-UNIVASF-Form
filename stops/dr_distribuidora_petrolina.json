@@ -128,6 +128,12 @@
             "destination": "VERDÃO / JUAZEIRO",
             "distance": 13,
             "estimated_travel_time": 28
+        },
+        {
+            "origin": "DR DISTRIBUIDORA / PETROLINA",
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 7.3,
+            "estimated_travel_time": 14
         }
     ]
 }

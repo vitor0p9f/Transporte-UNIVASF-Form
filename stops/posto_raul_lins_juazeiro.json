@@ -128,6 +128,12 @@
             "destination": "VERDÃO / JUAZEIRO",
             "distance": 0.55,
             "estimated_travel_time": 2
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 7.3,
+            "estimated_travel_time": 18
         }
     ]
 }

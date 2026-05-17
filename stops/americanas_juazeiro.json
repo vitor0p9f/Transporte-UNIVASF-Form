@@ -128,6 +128,12 @@
             "destination": "VERDÃO / JUAZEIRO",
             "distance": 4,
             "estimated_travel_time": 9
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 3.8,
+            "estimated_travel_time": 8
         }
     ]
 }

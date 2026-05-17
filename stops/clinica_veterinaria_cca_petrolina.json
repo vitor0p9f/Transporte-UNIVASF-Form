@@ -128,6 +128,12 @@
             "destination": "VERDÃO / JUAZEIRO",
             "distance": 16.9,
             "estimated_travel_time": 30
+        },
+        {
+            "origin": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 10,
+            "estimated_travel_time": 16
         }
     ]
 }
