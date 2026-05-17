@@ -140,6 +140,12 @@
             "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
             "distance": 5.8,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 3.8,
+            "estimated_travel_time": 7
         }
     ]
 }

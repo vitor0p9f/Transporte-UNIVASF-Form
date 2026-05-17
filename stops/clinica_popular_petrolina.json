@@ -140,6 +140,12 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 6.6,
             "estimated_travel_time": 16
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 8.4,
+            "estimated_travel_time": 18
         }
     ]
 }

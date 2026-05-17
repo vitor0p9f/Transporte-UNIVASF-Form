@@ -140,6 +140,12 @@
             "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
             "distance": 1.1,
             "estimated_travel_time": 3
+        },
+        {
+            "origin": "PARK MUNDO DA LUA / PETROLINA",
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 7.8,
+            "estimated_travel_time": 16
         }
     ]
 }

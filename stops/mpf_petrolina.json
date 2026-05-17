@@ -140,6 +140,12 @@
             "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
             "distance": 1.9,
             "estimated_travel_time": 6
+        },
+        {
+            "origin": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 8.6,
+            "estimated_travel_time": 18
         }
     ]
 }

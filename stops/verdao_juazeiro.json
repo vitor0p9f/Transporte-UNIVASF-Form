@@ -140,6 +140,12 @@
             "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
             "distance": 8.2,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 12.6,
+            "estimated_travel_time": 24
         }
     ]
 }

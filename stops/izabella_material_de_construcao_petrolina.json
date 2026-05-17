@@ -140,6 +140,12 @@
             "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
             "distance": 8.5,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 3.3,
+            "estimated_travel_time": 8
         }
     ]
 }
