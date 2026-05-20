@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 5.4,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 6.9,
+            "estimated_travel_time": 16
         }
     ]
 }

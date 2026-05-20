@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 3.2,
             "estimated_travel_time": 8
+        },
+        {
+            "origin": "PETRAPE / PETROLINA",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 4.7,
+            "estimated_travel_time": 12
         }
     ]
 }

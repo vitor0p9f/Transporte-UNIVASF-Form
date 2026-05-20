@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 13.7,
             "estimated_travel_time": 22
+        },
+        {
+            "origin": "SEMENTEIRA / PETROLINA",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 4.1,
+            "estimated_travel_time": 10
         }
     ]
 }

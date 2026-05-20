@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 9,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 13.1,
+            "estimated_travel_time": 26
         }
     ]
 }

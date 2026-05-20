@@ -1,0 +1,169 @@
+{
+    "label": "POSTO VALE DOURADO / PETROLINA",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 5,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 7.2,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 9.2,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 7.9,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 7.6,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 7.6,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 5.9,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 10,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 6.4,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 6.2,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 5,
+            "estimated_travel_time": 8
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 6.8,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 6.3,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 5,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 5.3,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 10.6,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 3.7,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 5.4,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 6.2,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 9,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 10.9,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 4.8,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 6.1,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 2.5,
+            "estimated_travel_time": 4
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 5,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 5.2,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 8.1,
+            "estimated_travel_time": 20
+        }
+    ]
+}

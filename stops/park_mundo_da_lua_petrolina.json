@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 1.7,
             "estimated_travel_time": 4
+        },
+        {
+            "origin": "PARK MUNDO DA LUA / PETROLINA",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 5.3,
+            "estimated_travel_time": 12
         }
     ]
 }

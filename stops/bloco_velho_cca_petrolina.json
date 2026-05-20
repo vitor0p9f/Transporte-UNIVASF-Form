@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 12.2,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "BLOCO VELHO DO CCA / PETROLINA",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 9.8,
+            "estimated_travel_time": 16
         }
     ]
 }

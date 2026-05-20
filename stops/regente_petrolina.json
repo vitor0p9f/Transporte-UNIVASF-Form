@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 3.3,
             "estimated_travel_time": 7
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 5.5,
+            "estimated_travel_time": 14
         }
     ]
 }

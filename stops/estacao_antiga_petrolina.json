@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 3.7,
             "estimated_travel_time": 8
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 5.1,
+            "estimated_travel_time": 12
         }
     ]
 }

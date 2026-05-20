@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 6.4,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 7.9,
+            "estimated_travel_time": 18
         }
     ]
 }

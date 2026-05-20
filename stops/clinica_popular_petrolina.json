@@ -158,6 +158,12 @@
             "destination": "ACADEMIA I9 / PETROLINA",
             "distance": 1.4,
             "estimated_travel_time": 4
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 5.9,
+            "estimated_travel_time": 14
         }
     ]
 }
