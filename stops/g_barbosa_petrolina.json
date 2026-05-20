@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 6.6,
             "estimated_travel_time": 16
+        },
+        {
+            "origin": "G BARBOSA / PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 9.1,
+            "estimated_travel_time": 20
         }
     ]
 }

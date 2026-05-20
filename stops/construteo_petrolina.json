@@ -1,0 +1,175 @@
+{
+    "label": "CONSTRUTEO / PETROLINA",
+    "boardings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 0, 0],
+    "edges": [
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "distance": 6.5,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "distance": 7.7,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "distance": 11,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "BLOCO VELHO DO CCA / PETROLINA",
+            "distance": 9.8,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "distance": 8.1,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "distance": 10.3,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "DR DISTRIBUIDORA / PETROLINA",
+            "distance": 10.3,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "distance": 10.5,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "distance": 3.2,
+            "estimated_travel_time": 7
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "G BARBOSA / PETROLINA",
+            "distance": 8.5,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 6.1,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 7.3,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 8.4,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 7.4,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 4.3,
+            "estimated_travel_time": 9
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 11.1,
+            "estimated_travel_time": 24
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 6.1,
+            "estimated_travel_time": 12
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 6.8,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 8.6,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 11.6,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 11.9,
+            "estimated_travel_time": 26
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 5,
+            "estimated_travel_time": 10
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 8.5,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 6.5,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 5.6,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 7.3,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "distance": 7.9,
+            "estimated_travel_time": 16
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 8.6,
+            "estimated_travel_time": 20
+        }
+    ]
+}

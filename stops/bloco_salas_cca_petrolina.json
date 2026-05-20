@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 11.4,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 10.1,
+            "estimated_travel_time": 16
         }
     ]
 }

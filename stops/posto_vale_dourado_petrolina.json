@@ -164,6 +164,12 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 8.1,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 7,
+            "estimated_travel_time": 12
         }
     ]
 }

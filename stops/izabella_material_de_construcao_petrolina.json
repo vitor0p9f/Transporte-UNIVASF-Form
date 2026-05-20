@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 5.3,
             "estimated_travel_time": 10
+        },
+        {
+            "origin": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 3.5,
+            "estimated_travel_time": 7
         }
     ]
 }

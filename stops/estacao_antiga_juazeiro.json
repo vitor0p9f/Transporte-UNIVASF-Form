@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 9.3,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 9.5,
+            "estimated_travel_time": 22
         }
     ]
 }

@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 6.2,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "NUTIVA AGRO / PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 4.4,
+            "estimated_travel_time": 8
         }
     ]
 }

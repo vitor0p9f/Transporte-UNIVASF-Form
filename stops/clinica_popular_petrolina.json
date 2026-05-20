@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 5.9,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 8.8,
+            "estimated_travel_time": 18
         }
     ]
 }

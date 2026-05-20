@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 13.1,
             "estimated_travel_time": 26
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 10.9,
+            "estimated_travel_time": 24
         }
     ]
 }

@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 5.2,
             "estimated_travel_time": 9
+        },
+        {
+            "origin": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 2.5,
+            "estimated_travel_time": 7
         }
     ]
 }

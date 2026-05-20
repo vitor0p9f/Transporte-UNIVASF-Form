@@ -164,6 +164,12 @@
             "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 4.1,
             "estimated_travel_time": 10
+        },
+        {
+            "origin": "SEMENTEIRA/ PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 6.4,
+            "estimated_travel_time": 16
         }
     ]
 }

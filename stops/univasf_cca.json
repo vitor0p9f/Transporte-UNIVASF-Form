@@ -160,10 +160,16 @@
             "estimated_travel_time": 22
         },
         {
-            "origin": "SEMENTEIRA / PETROLINA",
+            "origin": "UNIVASF CCA / PETROLINA",
             "destination": "POSTO VALE DOURADO / PETROLINA",
-            "distance": 4.1,
-            "estimated_travel_time": 10
+            "distance": 11.8,
+            "estimated_travel_time": 20
+        },
+        {
+            "origin": "SEMENTEIRA/ PETROLINA",
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 10,
+            "estimated_travel_time": 14
         }
     ]
 }
