@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 2.5,
             "estimated_travel_time": 4
+        },
+        {
+            "origin": "LOJAS AMERICANAS / JUAZEIRO",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 5.4,
+            "estimated_travel_time": 12
         }
     ]
 }

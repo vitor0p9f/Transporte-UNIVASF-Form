@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 5.4,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 7.2,
+            "estimated_travel_time": 14
         }
     ]
 }

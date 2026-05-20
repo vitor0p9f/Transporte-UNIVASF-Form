@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 12,
             "estimated_travel_time": 22
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 13.8,
+            "estimated_travel_time": 22
         }
     ]
 }

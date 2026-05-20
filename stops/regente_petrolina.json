@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 1.6,
             "estimated_travel_time": 3
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 3.3,
+            "estimated_travel_time": 7
         }
     ]
 }

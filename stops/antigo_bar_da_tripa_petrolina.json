@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 2.8,
             "estimated_travel_time": 8
+        },
+        {
+            "origin": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 3.5,
+            "estimated_travel_time": 10
         }
     ]
 }

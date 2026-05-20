@@ -152,6 +152,12 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 3.6,
             "estimated_travel_time": 8
+        },
+        {
+            "origin": "ISAÍAS VEÍCULOS / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 3.9,
+            "estimated_travel_time": 8
         }
     ]
 }

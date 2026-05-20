@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 6.1,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 9,
+            "estimated_travel_time": 20
         }
     ]
 }

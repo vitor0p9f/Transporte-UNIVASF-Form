@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 3.9,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 1.4,
+            "estimated_travel_time": 4
         }
     ]
 }

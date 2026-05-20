@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 1.3,
             "estimated_travel_time": 4
+        },
+        {
+            "origin": "PETRAPE / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 3.2,
+            "estimated_travel_time": 8
         }
     ]
 }

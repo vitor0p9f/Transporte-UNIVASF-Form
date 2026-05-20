@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 10.6,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 12.4,
+            "estimated_travel_time": 20
         }
     ]
 }

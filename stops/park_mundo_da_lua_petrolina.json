@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 2.7,
             "estimated_travel_time": 7
+        },
+        {
+            "origin": "PARK MUNDO DA LUA / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 1.7,
+            "estimated_travel_time": 4
         }
     ]
 }

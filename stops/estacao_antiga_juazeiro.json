@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 4.7,
             "estimated_travel_time": 10
+        },
+        {
+            "origin": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 7.9,
+            "estimated_travel_time": 16
         }
     ]
 }

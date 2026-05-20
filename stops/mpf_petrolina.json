@@ -152,6 +152,12 @@
             "destination": "ISAÍAS VEÍCULOS / PETROLINA",
             "distance": 3,
             "estimated_travel_time": 8
+        },
+        {
+            "origin": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 3.6,
+            "estimated_travel_time": 8
         }
     ]
 }
