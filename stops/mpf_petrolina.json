@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 8.6,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 3,
+            "estimated_travel_time": 8
         }
     ]
 }

@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 10.3,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 4.7,
+            "estimated_travel_time": 10
         }
     ]
 }

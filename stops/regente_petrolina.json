@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 7.2,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 1.6,
+            "estimated_travel_time": 3
         }
     ]
 }

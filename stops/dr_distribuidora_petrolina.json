@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 8.1,
             "estimated_travel_time": 16
+        },
+        {
+            "origin": "DR DISTRIBUIDORA / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 7.5,
+            "estimated_travel_time": 16
         }
     ]
 }

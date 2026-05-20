@@ -146,6 +146,12 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 9.9,
             "estimated_travel_time": 22
+        },
+        {
+            "origin": "NUTIVA AGRO / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 6.3,
+            "estimated_travel_time": 14
         }
     ]
 }

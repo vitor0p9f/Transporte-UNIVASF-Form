@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 8.4,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 2.8,
+            "estimated_travel_time": 8
         }
     ]
 }

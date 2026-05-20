@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 8.5,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 10.6,
+            "estimated_travel_time": 18
         }
     ]
 }

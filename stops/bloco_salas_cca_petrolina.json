@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 9.9,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "BLOCO DE SALAS DO CCA / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 12,
+            "estimated_travel_time": 22
         }
     ]
 }

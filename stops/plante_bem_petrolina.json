@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 5.1,
             "estimated_travel_time": 9
+        },
+        {
+            "origin": "PLANTE BEM / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 1.3,
+            "estimated_travel_time": 3
         }
     ]
 }

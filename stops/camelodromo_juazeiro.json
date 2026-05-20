@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 8.9,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 3.2,
+            "estimated_travel_time": 7
         }
     ]
 }

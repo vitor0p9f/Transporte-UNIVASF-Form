@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 9.2,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "G BARBOSA / PETROLINA",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 4,
+            "estimated_travel_time": 12
         }
     ]
 }

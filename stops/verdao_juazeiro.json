@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 12.6,
             "estimated_travel_time": 24
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 6.9,
+            "estimated_travel_time": 14
         }
     ]
 }

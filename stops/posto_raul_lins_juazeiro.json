@@ -146,6 +146,12 @@
             "destination": "NUTIVA AGRO / PETROLINA",
             "distance": 12.4,
             "estimated_travel_time": 24
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 6.1,
+            "estimated_travel_time": 14
         }
     ]
 }
