@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 2.5,
             "estimated_travel_time": 7
+        },
+        {
+            "origin": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 5.4,
+            "estimated_travel_time": 14
         }
     ]
 }

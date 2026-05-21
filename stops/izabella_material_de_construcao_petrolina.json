@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 3.5,
             "estimated_travel_time": 7
+        },
+        {
+            "origin": "ISAÍAS VEÍCULOS / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 5.9,
+            "estimated_travel_time": 12
         }
     ]
 }

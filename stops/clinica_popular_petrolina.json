@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 8.8,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 5.1,
+            "estimated_travel_time": 12
         }
     ]
 }

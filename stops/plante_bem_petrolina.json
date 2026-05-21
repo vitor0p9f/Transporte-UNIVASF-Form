@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 3.6,
             "estimated_travel_time": 9
+        },
+        {
+            "origin": "PLANTE BEM / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 4.4,
+            "estimated_travel_time": 9
         }
     ]
 }

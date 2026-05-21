@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 8.5,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "BLOCO VELHO DO CCA / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 10.6,
+            "estimated_travel_time": 18
         }
     ]
 }

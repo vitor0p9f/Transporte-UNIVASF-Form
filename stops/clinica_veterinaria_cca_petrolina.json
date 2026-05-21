@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 8.6,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "CLINICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 10.8,
+            "estimated_travel_time": 18
         }
     ]
 }

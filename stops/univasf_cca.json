@@ -166,10 +166,16 @@
             "estimated_travel_time": 20
         },
         {
-            "origin": "SEMENTEIRA/ PETROLINA",
+            "origin": "UNIVASF CCA / PETROLINA",
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 10,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "UNIVASF CCA / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 12.4,
+            "estimated_travel_time": 22
         }
     ]
 }

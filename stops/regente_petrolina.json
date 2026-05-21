@@ -166,10 +166,16 @@
             "estimated_travel_time": 14
         },
         {
-            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
             "destination": "CONSTRUTEO / PETROLINA",
-            "distance": 6.4,
-            "estimated_travel_time": 16
+            "distance": 6.7,
+            "estimated_travel_time": 14
+        },
+        {
+            "origin": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 4.4,
+            "estimated_travel_time": 10
         }
     ]
 }

@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 5.2,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "PETRAPE / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 3.7,
+            "estimated_travel_time": 9
         }
     ]
 }

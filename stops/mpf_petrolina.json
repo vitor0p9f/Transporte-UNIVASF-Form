@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 8.5,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 6.1,
+            "estimated_travel_time": 18
         }
     ]
 }

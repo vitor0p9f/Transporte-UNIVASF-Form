@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 8.5,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 7.1,
+            "estimated_travel_time": 18
         }
     ]
 }

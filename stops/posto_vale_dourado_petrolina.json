@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 7,
             "estimated_travel_time": 12
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 1,
+            "estimated_travel_time": 3
         }
     ]
 }

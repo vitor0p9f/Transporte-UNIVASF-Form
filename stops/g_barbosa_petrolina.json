@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 9.1,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "G BARBOSA / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 5.4,
+            "estimated_travel_time": 14
         }
     ]
 }

@@ -170,6 +170,12 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 8.6,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "CONSTRUTEO / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 8.5,
+            "estimated_travel_time": 18
         }
     ]
 }

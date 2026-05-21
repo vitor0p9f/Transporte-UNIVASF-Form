@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 6,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 4.1,
+            "estimated_travel_time": 10
         }
     ]
 }

@@ -168,8 +168,14 @@
         {
             "origin": "VERDÃO / JUAZEIRO",
             "destination": "CONSTRUTEO / PETROLINA",
-            "distance": 11.2,
-            "estimated_travel_time": 24
+            "distance": 11,
+            "estimated_travel_time": 22
+        },
+        {
+            "origin": "VERDÃO / JUAZEIRO",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 10,
+            "estimated_travel_time": 22
         }
     ]
 }

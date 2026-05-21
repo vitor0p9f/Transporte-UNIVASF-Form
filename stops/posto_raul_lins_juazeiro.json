@@ -170,6 +170,12 @@
             "destination": "CONSTRUTEO / PETROLINA",
             "distance": 10.9,
             "estimated_travel_time": 24
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 9.7,
+            "estimated_travel_time": 22
         }
     ]
 }

@@ -162,14 +162,20 @@
         {
             "origin": "UNIVASF / PETROLINA",
             "destination": "POSTO VALE DOURADO / PETROLINA",
-            "distance": 6.3,
+            "distance": 6.5,
             "estimated_travel_time": 16
         },
         {
             "origin": "UNIVASF / PETROLINA",
             "destination": "CONSTRUTEO / PETROLINA",
-            "distance": 8,
-            "estimated_travel_time": 20
+            "distance": 8.8,
+            "estimated_travel_time": 18
+        },
+        {
+            "origin": "UNIVASF / PETROLINA",
+            "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "distance": 5.5,
+            "estimated_travel_time": 12
         }
     ]
 }
