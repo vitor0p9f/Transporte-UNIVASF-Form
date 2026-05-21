@@ -1,0 +1,14 @@
+# Dados com informações pessoais — NÃO versionar
+data/*.csv
+data/*.xlsx
+
+# Resultados gerados (opcionais)
+output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
