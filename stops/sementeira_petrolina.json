@@ -158,6 +158,11 @@
             "destination": "CANTEIRO DE OBRAS / PETROLINA",
             "distance": 3,
             "estimated_travel_time": 7
+        },
+        {
+            "destination": "ABARÉ RADIADORES / PETROLINA",
+            "distance": 1.6,
+            "estimated_travel_time": 4
         }
     ]
 }

@@ -154,10 +154,14 @@
             "estimated_travel_time": 18
         },
         {
-            "origin": "DR DISTRIBUIDORA / PETROLINA",
             "destination": "CANTEIRO DE OBRAS / PETROLINA",
-            "distance": 3.3,
-            "estimated_travel_time": 7
+            "distance": 8.7,
+            "estimated_travel_time": 18
+        },
+        {
+            "destination": "ABARÉ RADIADORES / PETROLINA",
+            "distance": 7.2,
+            "estimated_travel_time": 16
         }
     ]
 }
