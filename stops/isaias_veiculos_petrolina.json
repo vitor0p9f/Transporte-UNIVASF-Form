@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 4.4,
             "estimated_travel_time": 9
+        },
+        {
+            "origin": "ISAÍAS VEÍCULOS / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 3.9,
+            "estimated_travel_time": 9
         }
     ]
 }

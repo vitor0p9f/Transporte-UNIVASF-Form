@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 8.3,
             "estimated_travel_time": 20
+        },
+        {
+            "origin": "ESTAÇÃO ANTIGA / JUAZEIRO",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 7.8,
+            "estimated_travel_time": 18
         }
     ]
 }

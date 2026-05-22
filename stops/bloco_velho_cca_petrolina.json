@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 10.6,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "BLOCO VELHO DO CCA / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 11.1,
+            "estimated_travel_time": 18
         }
     ]
 }

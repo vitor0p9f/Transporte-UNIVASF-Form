@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 10.8,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "CLINICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 11.3,
+            "estimated_travel_time": 18
         }
     ]
 }

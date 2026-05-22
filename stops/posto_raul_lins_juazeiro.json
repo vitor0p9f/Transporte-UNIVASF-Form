@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 9.7,
             "estimated_travel_time": 22
+        },
+        {
+            "origin": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 9.2,
+            "estimated_travel_time": 22
         }
     ]
 }

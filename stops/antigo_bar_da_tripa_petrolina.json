@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 6.1,
             "estimated_travel_time": 16
+        },
+        {
+            "origin": "ANTIGO BAR DA TRIPA / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 5.6,
+            "estimated_travel_time": 16
         }
     ]
 }

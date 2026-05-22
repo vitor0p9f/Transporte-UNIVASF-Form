@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 4.4,
             "estimated_travel_time": 10
+        },
+        {
+            "origin": "PARK MUNDO DA LUA / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 4,
+            "estimated_travel_time": 9
         }
     ]
 }

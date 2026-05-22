@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 5.4,
             "estimated_travel_time": 14
+        },
+        {
+            "origin": "FEIRA DA COHAB MASSANGANO / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 4.9,
+            "estimated_travel_time": 12
         }
     ]
 }

@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 1,
             "estimated_travel_time": 3
+        },
+        {
+            "origin": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 1.5,
+            "estimated_travel_time": 3
         }
     ]
 }

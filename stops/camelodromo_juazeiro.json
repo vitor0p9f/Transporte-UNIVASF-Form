@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 7.1,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 6.4,
+            "estimated_travel_time": 16
         }
     ]
 }

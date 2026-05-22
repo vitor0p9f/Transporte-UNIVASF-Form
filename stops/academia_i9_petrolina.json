@@ -176,6 +176,12 @@
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
             "distance": 4.7,
             "estimated_travel_time": 10
+        },
+        {
+            "origin": "ACADEMIA I9 / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 4.2,
+            "estimated_travel_time": 9
         }
     ]
 }

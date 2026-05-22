@@ -176,6 +176,12 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 7.2,
             "estimated_travel_time": 18
+        },
+        {
+            "origin": "CONDOMÍNIO MAIS VIVER / PETROLINA",
+            "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
+            "distance": 0.55,
+            "estimated_travel_time": 2
         }
     ]
 }
