@@ -162,6 +162,11 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 6.5,
             "estimated_travel_time": 14
+        },
+        {
+            "destination": "ALDIEGAS / PETROLINA",
+            "distance": 3.9,
+            "estimated_travel_time": 8
         }
     ]
 }

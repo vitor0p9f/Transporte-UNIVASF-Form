@@ -162,6 +162,11 @@
             "destination": "ABARÉ RADIADORES / PETROLINA",
             "distance": 5,
             "estimated_travel_time": 12
+        },
+        {
+            "destination": "ALDIEGAS / PETROLINA",
+            "distance": 4.7,
+            "estimated_travel_time": 12
         }
     ]
 }
