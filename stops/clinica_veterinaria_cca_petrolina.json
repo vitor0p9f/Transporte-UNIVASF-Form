@@ -172,6 +172,11 @@
             "destination": "ALOJAMENTO ESTUDANTIL DO CCA / PETROLINA",
             "distance": 1.4,
             "estimated_travel_time": 4
+        },
+        {
+            "destination": "DETRAN / PETROLINA",
+            "distance": 13.8,
+            "estimated_travel_time": 22
         }
     ]
 }

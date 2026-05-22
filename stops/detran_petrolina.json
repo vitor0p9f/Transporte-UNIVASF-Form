@@ -1,183 +1,182 @@
 {
-    "label": "SEMENTEIRA / PETROLINA",
+    "label": "DETRAN / PETROLINA",
     "boardings": [0, 0, 0, 0, 0, 0],
     "alightings": [0, 0, 0, 0, 0, 0],
     "edges": [
         {
             "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
-            "distance": 1.9,
-            "estimated_travel_time": 5
+            "distance": 4.3,
+            "estimated_travel_time": 12
         },
         {
             "destination": "ANTIGO BAR DA TRIPA / PETROLINA",
-            "distance": 3.4,
-            "estimated_travel_time": 7
+            "distance": 2.1,
+            "estimated_travel_time": 4
         },
         {
             "destination": "BLOCO DE SALAS DO CCA / PETROLINA",
-            "distance": 12.3,
-            "estimated_travel_time": 22
+            "distance": 15.1,
+            "estimated_travel_time": 28
         },
         {
             "destination": "BLOCO VELHO DO CCA / PETROLINA",
-            "distance": 11.1,
-            "estimated_travel_time": 20
+            "distance": 14.5,
+            "estimated_travel_time": 24
         },
         {
             "destination": "CAMELÓDROMO 2 DE JULHO / JUAZEIRO",
-            "distance": 4.5,
-            "estimated_travel_time": 12
+            "distance": 6.5,
+            "estimated_travel_time": 14
         },
         {
             "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
-            "distance": 10.8,
-            "estimated_travel_time": 18
+            "distance": 13.5,
+            "estimated_travel_time": 24
         },
         {
             "destination": "DR DISTRIBUIDORA / PETROLINA",
-            "distance": 5.2,
-            "estimated_travel_time": 9
+            "distance": 3.6,
+            "estimated_travel_time": 7
         },
         {
             "destination": "ESTAÇÃO ANTIGA / JUAZEIRO",
-            "distance": 7.3,
-            "estimated_travel_time": 16
+            "distance": 8.9,
+            "estimated_travel_time": 18
         },
         {
             "destination": "FEIRA DA COHAB MASSANGANO / PETROLINA",
-            "distance": 4.3,
-            "estimated_travel_time": 9
+            "distance": 6.7,
+            "estimated_travel_time": 16
         },
         {
             "destination": "G BARBOSA / PETROLINA",
-            "distance": 2.5,
-            "estimated_travel_time": 6
-        },
-        {
-            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
-            "distance": 6.5,
-            "estimated_travel_time": 14
-        },
-        {
-            "destination": "LOJAS AMERICANAS / JUAZEIRO",
-            "distance": 3.7,
-            "estimated_travel_time": 9
-        },
-        {
-            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
-            "distance": 2.7,
-            "estimated_travel_time": 6
-        },
-        {
-            "destination": "PARK MUNDO DA LUA / PETROLINA",
-            "distance": 1.4,
+            "distance": 1.1,
             "estimated_travel_time": 2
         },
         {
-            "destination": "PLANTE BEM / PETROLINA",
-            "distance": 2.2,
-            "estimated_travel_time": 6
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "distance": 9,
+            "estimated_travel_time": 20
         },
         {
-            "destination": "POSTO RAUL LINS / JUAZEIRO",
-            "distance": 7.5,
-            "estimated_travel_time": 18
-        },
-        {
-            "destination": "UNIVASF / JUAZEIRO",
-            "distance": 5.4,
-            "estimated_travel_time": 12
-        },
-        {
-            "destination": "SUPERMERCADO REGENTE / PETROLINA",
-            "distance": 1.9,
-            "estimated_travel_time": 4
-        },
-        {
-            "destination": "UNIVASF / PETROLINA",
-            "distance": 2.4,
-            "estimated_travel_time": 6
-        },
-        {
-            "destination": "UNIVASF CCA / PETROLINA",
-            "distance": 12.2,
-            "estimated_travel_time": 22
-        },
-        {
-            "destination": "VERDÃO / JUAZEIRO",
-            "distance": 7.7,
-            "estimated_travel_time": 18
-        },
-        {
-            "destination": "PETRAPE / PETROLINA",
-            "distance": 1.8,
-            "estimated_travel_time": 4
-        },
-        {
-            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
-            "distance": 2.4,
-            "estimated_travel_time": 6
-        },
-        {
-            "destination": "NUTIVA AGRO / PETROLINA",
-            "distance": 6.5,
+            "destination": "LOJAS AMERICANAS / JUAZEIRO",
+            "distance": 5.3,
             "estimated_travel_time": 14
         },
         {
-            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
-            "distance": 2,
+            "destination": "MINISTÉRIO PÚBLICO FEDERAL / PETROLINA",
+            "distance": 2.3,
+            "estimated_travel_time": 5
+        },
+        {
+            "destination": "PARK MUNDO DA LUA / PETROLINA",
+            "distance": 1.7,
             "estimated_travel_time": 6
         },
         {
-            "destination": "ACADEMIA I9 / PETROLINA",
-            "distance": 2.2,
-            "estimated_travel_time": 4
+            "destination": "PLANTE BEM / PETROLINA",
+            "distance": 4.7,
+            "estimated_travel_time": 12
         },
         {
-            "destination": "POSTO VALE DOURADO / PETROLINA",
-            "distance": 4.1,
+            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "distance": 9.5,
+            "estimated_travel_time": 20
+        },
+        {
+            "destination": "SEMENTEIRA / PETROLINA",
+            "distance": 3.1,
+            "estimated_travel_time": 8
+        },
+        {
+            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "distance": 3.1,
+            "estimated_travel_time": 8
+        },
+        {
+            "destination": "UNIVASF / PETROLINA",
+            "distance": 2.2,
+            "estimated_travel_time": 7
+        },
+        {
+            "destination": "UNIVASF CCA / PETROLINA",
+            "distance": 14.7,
+            "estimated_travel_time": 26
+        },
+        {
+            "destination": "VERDÃO / JUAZEIRO",
+            "distance": 9.7,
+            "estimated_travel_time": 20
+        },
+        {
+            "destination": "PETRAPE / PETROLINA",
+            "distance": 4.2,
             "estimated_travel_time": 10
         },
         {
-            "origin": "SEMENTEIRA/ PETROLINA",
-            "destination": "CONSTRUTEO / PETROLINA",
+            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "distance": 0.7,
+            "estimated_travel_time": 2
+        },
+        {
+            "destination": "NUTIVA AGRO / PETROLINA",
+            "distance": 8.7,
+            "estimated_travel_time": 18
+        },
+        {
+            "destination": "ISAÍAS VEÍCULOS / PETROLINA",
+            "distance": 4.4,
+            "estimated_travel_time": 12
+        },
+        {
+            "destination": "ACADEMIA I9 / PETROLINA",
+            "distance": 2.1,
+            "estimated_travel_time": 5
+        },
+        {
+            "destination": "POSTO VALE DOURADO / PETROLINA",
             "distance": 6.4,
             "estimated_travel_time": 16
         },
         {
+            "destination": "CONSTRUTEO / PETROLINA",
+            "distance": 8.9,
+            "estimated_travel_time": 20
+        },
+        {
             "destination": "CONDOMÍNIO MAIS VIVER / PETROLINA",
-            "distance": 3.1,
-            "estimated_travel_time": 9
+            "distance": 5.4,
+            "estimated_travel_time": 14
         },
         {
             "destination": "RESTAURANTE DONA BRANCA / PETROLINA",
-            "distance": 2.6,
-            "estimated_travel_time": 7
+            "distance": 4.9,
+            "estimated_travel_time": 12
         },
         {
             "destination": "CANTEIRO DE OBRAS / PETROLINA",
-            "distance": 3,
-            "estimated_travel_time": 7
-        },
-        {
-            "destination": "ABARÉ RADIADORES / PETROLINA",
-            "distance": 1.6,
-            "estimated_travel_time": 4
-        },
-        {
-            "destination": "ALDIEGAS / PETROLINA",
             "distance": 2.1,
             "estimated_travel_time": 7
         },
         {
-            "destination": "ALOJAMENTO ESTUDANTIL DO CCA / PETROLINA",
-            "distance": 11.4,
-            "estimated_travel_time": 20
+            "destination": "ABARÉ RADIADORES / PETROLINA",
+            "distance": 2.8,
+            "estimated_travel_time": 9
         },
         {
-            "destination": "DETRAN / PETROLINA",
-            "distance": 3.3,
-            "estimated_travel_time": 9
+            "destination": "ALDIEGAS / PETROLINA",
+            "distance": 5.2,
+            "estimated_travel_time": 12
+        },
+        {
+            "destination": "ALOJAMENTO ESTUDANTIL DO CCA / PETROLINA",
+            "distance": 13.9,
+            "estimated_travel_time": 26
+        },
+        {
+            "destination": "UNIVASF / JUAZEIRO",
+            "distance": 6.5,
+            "estimated_travel_time": 18
         }
     ]
 }
