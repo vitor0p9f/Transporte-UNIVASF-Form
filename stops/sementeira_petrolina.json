@@ -168,6 +168,11 @@
             "destination": "ALDIEGAS / PETROLINA",
             "distance": 2.1,
             "estimated_travel_time": 7
+        },
+        {
+            "destination": "ALOJAMENTO ESTUDANTIL DO CCA / PETROLINA",
+            "distance": 11.4,
+            "estimated_travel_time": 20
         }
     ]
 }
