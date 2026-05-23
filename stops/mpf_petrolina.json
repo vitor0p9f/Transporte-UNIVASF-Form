@@ -177,6 +177,11 @@
             "destination": "DETRAN / PETROLINA",
             "distance": 2.8,
             "estimated_travel_time": 10
+        },
+        {
+            "destination": "GARBOSA ADOLFO VIANA / JUAZEIRO",
+            "distance": 5.8,
+            "estimated_travel_time": 16
         }
     ]
 }

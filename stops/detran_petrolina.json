@@ -177,6 +177,11 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 6.5,
             "estimated_travel_time": 18
+        },
+        {
+            "destination": "GARBOSA ADOLFO VIANA / JUAZEIRO",
+            "distance": 7.8,
+            "estimated_travel_time": 20
         }
     ]
 }
