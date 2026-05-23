@@ -179,9 +179,14 @@
             "estimated_travel_time": 26
         },
         {
-            "destination": "GARBOSA ADOLFO VIANA / JUAZEIRO",
+            "destination": "GBARBOSA ADOLFO VIANA / JUAZEIRO",
             "distance": 16.5,
             "estimated_travel_time": 30
+        },
+        {
+            "destination": "GBARBOSA SANTO ANTONIO / JUAZEIRO",
+            "distance": 14.4,
+            "estimated_travel_time": 24
         }
     ]
 }

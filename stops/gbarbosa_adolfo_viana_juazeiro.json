@@ -1,5 +1,5 @@
 {
-    "label": "GARBOSA ADOLFO VIANA / JUAZEIRO",
+    "label": "GBARBOSA ADOLFO VIANA / JUAZEIRO",
     "boardings": [0, 0, 0, 0, 0, 0],
     "alightings": [0, 0, 0, 0, 0, 0],
     "edges": [
@@ -182,6 +182,11 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 3.2,
             "estimated_travel_time": 10
+        },
+        {
+            "destination": "GBARBOSA SANTO ANTONIO / JUAZEIRO",
+            "distance": 2.3,
+            "estimated_travel_time": 7
         }
     ]
 }
