@@ -187,6 +187,11 @@
             "destination": "GBARBOSA SANTO ANTONIO / JUAZEIRO",
             "distance": 14.4,
             "estimated_travel_time": 24
+        },
+        {
+            "destination": "HOTEL E POUSADA CARRANCA / PETROLINA",
+            "distance": 16.3,
+            "estimated_travel_time": 28
         }
     ]
 }
