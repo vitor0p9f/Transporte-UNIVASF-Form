@@ -197,6 +197,11 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 8.6,
             "estimated_travel_time": 18
+        },
+        {
+            "destination": "MECÂNICA OURO DIESEL / PETROLINA",
+            "distance": 3.8,
+            "estimated_travel_time": 8
         }
     ]
 }

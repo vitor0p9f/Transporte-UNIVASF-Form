@@ -197,6 +197,11 @@
             "destination": "IGREJA FILADÉLFIA / PETROLINA",
             "distance": 3.7,
             "estimated_travel_time": 7
+        },
+        {
+            "destination": "MECÂNICA OURO DIESEL / PETROLINA",
+            "distance": 5.1,
+            "estimated_travel_time": 9
         }
     ]
 }
