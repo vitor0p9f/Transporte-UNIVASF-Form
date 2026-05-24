@@ -192,6 +192,11 @@
             "destination": "HOTEL E POUSADA CARRANCA / PETROLINA",
             "distance": 4.8,
             "estimated_travel_time": 14
+        },
+        {
+            "destination": "IGREJA FILADÉLFIA / PETROLINA",
+            "distance": 8.5,
+            "estimated_travel_time": 18
         }
     ]
 }
