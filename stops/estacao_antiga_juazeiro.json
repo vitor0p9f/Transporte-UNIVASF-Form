@@ -202,6 +202,11 @@
             "destination": "MECÂNICA OURO DIESEL / PETROLINA",
             "distance": 6.8,
             "estimated_travel_time": 14
+        },
+        {
+            "destination": "POSTO ALE / PETROLINA",
+            "distance": 8.8,
+            "estimated_travel_time": 18
         }
     ]
 }
