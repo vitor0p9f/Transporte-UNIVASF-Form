@@ -207,6 +207,11 @@
             "destination": "POSTO ALE / PETROLINA",
             "distance": 4.2,
             "estimated_travel_time": 9
+        },
+        {
+            "destination": "POSTO BBB / PETROLINA",
+            "distance": 4.9,
+            "estimated_travel_time": 12
         }
     ]
 }

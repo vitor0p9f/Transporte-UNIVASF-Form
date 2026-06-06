@@ -207,6 +207,11 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 8.1,
             "estimated_travel_time": 20
+        },
+        {
+            "destination": "POSTO BBB / PETROLINA",
+            "distance": 8.8,
+            "estimated_travel_time": 18
         }
     ]
 }
