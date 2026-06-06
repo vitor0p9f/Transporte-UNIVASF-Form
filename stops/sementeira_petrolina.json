@@ -213,6 +213,11 @@
             "destination": "POSTO BBB / PETROLINA",
             "distance": 3.6,
             "estimated_travel_time": 9
+        },
+        {
+            "destination": "POSTO SÃO FRANCISCO / PETROLINA",
+            "distance": 2.3,
+            "estimated_travel_time": 8
         }
     ]
 }
