@@ -227,6 +227,11 @@
             "destination": "TERMINAL RODOVIÁRIO / PETROLINA",
             "distance": 1.2,
             "estimated_travel_time": 4
+        },
+        {
+            "destination": "REVENDA AMBEV / PETROLINA",
+            "distance": 4.1,
+            "estimated_travel_time": 10
         }
     ]
 }

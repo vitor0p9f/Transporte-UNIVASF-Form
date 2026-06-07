@@ -227,6 +227,11 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 3.8,
             "estimated_travel_time": 10
+        },
+        {
+            "destination": "REVENDA AMBEV / PETROLINA",
+            "distance": 5.6,
+            "estimated_travel_time": 14
         }
     ]
 }
