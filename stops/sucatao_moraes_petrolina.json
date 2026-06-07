@@ -222,6 +222,11 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 11,
             "estimated_travel_time": 24
+        },
+        {
+            "destination": "TERMINAL RODOVIÁRIO / PETROLINA",
+            "distance": 6.7,
+            "estimated_travel_time": 16
         }
     ]
 }

@@ -222,6 +222,11 @@
             "destination": "SUCATÃO MORÃES / PETROLINA",
             "distance": 4.5,
             "estimated_travel_time": 12
+        },
+        {
+            "destination": "TERMINAL RODOVIÁRIO / PETROLINA",
+            "distance": 3.3,
+            "estimated_travel_time": 10
         }
     ]
 }
