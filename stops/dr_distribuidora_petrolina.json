@@ -217,6 +217,11 @@
             "destination": "POSTO SÃO FRANCISCO / PETROLINA",
             "distance": 6.5,
             "estimated_travel_time": 12
+        },
+        {
+            "destination": "SUCATÃO MORÃES / PETROLINA",
+            "distance": 1.3,
+            "estimated_travel_time": 5
         }
     ]
 }

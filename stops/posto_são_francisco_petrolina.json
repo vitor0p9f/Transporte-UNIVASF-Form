@@ -217,6 +217,11 @@
             "destination": "UNIVASF / JUAZEIRO",
             "distance": 5.9,
             "estimated_travel_time": 12
+        },
+        {
+            "destination": "SUCATÃO MORÃES / PETROLINA",
+            "distance": 5.8,
+            "estimated_travel_time": 12
         }
     ]
 }
