@@ -1,0 +1,470 @@
+{
+  "label": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+  "lat": -9.40244,
+  "lon": -40.48215,
+  "edges": [
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Abaré",
+      "distance": 6.841,
+      "estimated_travel_time": 14.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Academia I9",
+      "distance": 5.077,
+      "estimated_travel_time": 10.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Academia I9 – Av. 7 de Setembro",
+      "distance": 5.092,
+      "estimated_travel_time": 10.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Academia Well",
+      "distance": 4.706,
+      "estimated_travel_time": 10.1
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. 7 de Setembro – Aldiegas",
+      "distance": 4.039,
+      "estimated_travel_time": 8.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. Transnordestina – Entrada Bairro Dom Avelar",
+      "distance": 11.56,
+      "estimated_travel_time": 24.8
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. Transnordestina – Entrada Dom Avelar",
+      "distance": 8.733,
+      "estimated_travel_time": 18.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. Transnordestina – Nutiva Agro",
+      "distance": 10.129,
+      "estimated_travel_time": 21.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. Transnordestina – Posto Pedra Linda",
+      "distance": 8.707,
+      "estimated_travel_time": 18.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
+      "distance": 9.707,
+      "estimated_travel_time": 20.8
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. da Integração – Mundo da Lua",
+      "distance": 1.626,
+      "estimated_travel_time": 3.5
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. da Integração – Petrape",
+      "distance": 11.912,
+      "estimated_travel_time": 25.5
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. da Integração – Secretaria de Obras",
+      "distance": 5.091,
+      "estimated_travel_time": 10.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Av. da Integração – Sementeira",
+      "distance": 8.355,
+      "estimated_travel_time": 17.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "BR 407 – Isaías Automóveis / Posto Delta",
+      "distance": 9.287,
+      "estimated_travel_time": 19.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "BR 407 – Izabela Construções",
+      "distance": 9.353,
+      "estimated_travel_time": 20.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Bloco Antigo CCA",
+      "distance": 14.862,
+      "estimated_travel_time": 31.8
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Bloco de Salas de Aula CCA",
+      "distance": 16.886,
+      "estimated_travel_time": 36.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Canteiro de Obras",
+      "distance": 3.576,
+      "estimated_travel_time": 7.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Canteiro de Obras Av. 7 de Setembro",
+      "distance": 4.041,
+      "estimated_travel_time": 8.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Canteiro de Obras – Av. 7 de Setembro",
+      "distance": 3.91,
+      "estimated_travel_time": 8.4
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Canteiro de Obras – Juazeiro",
+      "distance": 4.239,
+      "estimated_travel_time": 9.1
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
+      "distance": 6.394,
+      "estimated_travel_time": 13.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Costrutéo (ponto de ônibus)",
+      "distance": 5.998,
+      "estimated_travel_time": 12.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "DETRAN – Av. Monsenhor (via principal)",
+      "distance": 4.124,
+      "estimated_travel_time": 8.8
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Distribuidora de Bebidas Revalle",
+      "distance": 3.992,
+      "estimated_travel_time": 8.6
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Estação Velha / Cooperativa Brasil",
+      "distance": 4.688,
+      "estimated_travel_time": 10.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Estação Velha Juazeiro",
+      "distance": 4.242,
+      "estimated_travel_time": 9.1
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Estrada da Banana – Antiga Distribuidora Camaleão",
+      "distance": 7.132,
+      "estimated_travel_time": 15.3
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Estrada da Banana – Condomínio Mais Viver",
+      "distance": 10.807,
+      "estimated_travel_time": 23.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Estrada da Banana – Primeira Rotatória",
+      "distance": 10.042,
+      "estimated_travel_time": 21.5
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Estrada da Banana – Restaurante Dona Branca",
+      "distance": 9.267,
+      "estimated_travel_time": 19.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Farmácia Popular",
+      "distance": 3.841,
+      "estimated_travel_time": 8.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Feira da COHAB Massangano",
+      "distance": 8.441,
+      "estimated_travel_time": 18.1
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Final da proteção de metal – Bairro Quati",
+      "distance": 6.535,
+      "estimated_travel_time": 14.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
+      "distance": 2.186,
+      "estimated_travel_time": 4.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "GBarbosa Juazeiro",
+      "distance": 1.982,
+      "estimated_travel_time": 4.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
+      "distance": 4.012,
+      "estimated_travel_time": 8.6
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "GBarbosa Petrolina",
+      "distance": 3.614,
+      "estimated_travel_time": 7.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
+      "distance": 1.987,
+      "estimated_travel_time": 4.3
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Hospital Veterinário",
+      "distance": 15.221,
+      "estimated_travel_time": 32.6
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Hospital Veterinário CCA",
+      "distance": 16.297,
+      "estimated_travel_time": 34.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Igreja Filadélfia",
+      "distance": 5.402,
+      "estimated_travel_time": 11.6
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
+      "distance": 12.719,
+      "estimated_travel_time": 27.3
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Mecânica Ouro Diesel",
+      "distance": 4.123,
+      "estimated_travel_time": 8.8
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
+      "distance": 1.243,
+      "estimated_travel_time": 2.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Ministério Público Federal",
+      "distance": 5.248,
+      "estimated_travel_time": 11.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Parque Mundo da Lua",
+      "distance": 5.637,
+      "estimated_travel_time": 12.1
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Petrape",
+      "distance": 11.06,
+      "estimated_travel_time": 23.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Petrape – Av. da Integração",
+      "distance": 10.821,
+      "estimated_travel_time": 23.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Plante Bem",
+      "distance": 8.81,
+      "estimated_travel_time": 18.9
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Ponto Aldiegas",
+      "distance": 1.63,
+      "estimated_travel_time": 3.5
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
+      "distance": 9.837,
+      "estimated_travel_time": 21.1
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Ponto BR 428 – PRF",
+      "distance": 8.061,
+      "estimated_travel_time": 17.3
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Ponto BR 428 – Posto Carranca",
+      "distance": 11.419,
+      "estimated_travel_time": 24.5
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
+      "distance": 6.748,
+      "estimated_travel_time": 14.5
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Ponto em frente à Abaré",
+      "distance": 5.241,
+      "estimated_travel_time": 11.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Posto ALE",
+      "distance": 3.906,
+      "estimated_travel_time": 8.4
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Posto Raul Lins / Bairro Castelo Branco",
+      "distance": 3.955,
+      "estimated_travel_time": 8.5
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Posto Raul Lins – Entrada Castelo Branco",
+      "distance": 2.897,
+      "estimated_travel_time": 6.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Posto São Francisco Av. 7 de Setembro",
+      "distance": 5.44,
+      "estimated_travel_time": 11.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Posto de Gasolina Big Brother",
+      "distance": 2.136,
+      "estimated_travel_time": 4.6
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Residência Estudantil CCA",
+      "distance": 13.533,
+      "estimated_travel_time": 29.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Rodoviária de Petrolina",
+      "distance": 1.96,
+      "estimated_travel_time": 4.2
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Rua do Paraíso ao lado das Lojas Americanas",
+      "distance": 5.114,
+      "estimated_travel_time": 11.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Secretaria de Obras",
+      "distance": 6.087,
+      "estimated_travel_time": 13.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Secretaria de Obras – Av. da Integração",
+      "distance": 5.026,
+      "estimated_travel_time": 10.8
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Sementeira",
+      "distance": 5.605,
+      "estimated_travel_time": 12.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Sementeira – Av. da Integração",
+      "distance": 10.542,
+      "estimated_travel_time": 22.6
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Supermercado Regente",
+      "distance": 6.718,
+      "estimated_travel_time": 14.4
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
+      "distance": 1.551,
+      "estimated_travel_time": 3.3
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "UNIVASF Campus CCA",
+      "distance": 14.612,
+      "estimated_travel_time": 31.3
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "UNIVASF Campus CCA – Bloco Antigo",
+      "distance": 18.412,
+      "estimated_travel_time": 39.5
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
+      "distance": 16.792,
+      "estimated_travel_time": 36.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "UNIVASF Campus Juazeiro",
+      "distance": 5.6,
+      "estimated_travel_time": 12.0
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "UNIVASF Campus Petrolina",
+      "distance": 5.458,
+      "estimated_travel_time": 11.7
+    },
+    {
+      "origin": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "destination": "Verdão Juazeiro",
+      "distance": 5.4,
+      "estimated_travel_time": 11.6
+    }
+  ],
+  "_sintetico": true
+}

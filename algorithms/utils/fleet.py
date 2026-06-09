@@ -31,6 +31,8 @@ class ModeloOnibus:
     capacidade:    int
     consumo_km_l:  float
     custo_litro:   float
+    capacidade_conforto: Optional[int] = None   # lotação confortável (sentados);
+                                                 # None → usa `capacidade`
     observacoes:   str = ""
 
     @property
@@ -56,9 +58,10 @@ class ModeloOnibus:
 
 ONIBUS_GENERICO = ModeloOnibus(
     nome         = "Genérico (substituir pelos dados reais)",
-    capacidade   = 48,          # passageiros sentados — padrão ônibus urbano
+    capacidade   = 48,          # lotação MÁXIMA (sentados + em pé)
     consumo_km_l = 2.8,         # km/litro — média urbano/rodoviário diesel
     custo_litro  = 6.80,        # R$/litro — diesel S-10 referência Mai/2026
+    capacidade_conforto = 36,   # lotação confortável (~todos sentados)
     observacoes  = (
         "Modelo placeholder. Substituir por: fabricante, modelo, ano, "
         "capacidade real, consumo real do veículo e preço do combustível "

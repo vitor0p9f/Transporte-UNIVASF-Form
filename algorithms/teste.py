@@ -12,7 +12,9 @@ Uso:
 """
 
 import argparse
-from clarke_wright import clarke_wright_ovrp, imprimir_solucao, salvar_resultado
+from clarke_wright import (
+    clarke_wright_ovrp, imprimir_solucao, salvar_resultado, analise_pareto,
+)
 from utils.fleet import ONIBUS_GENERICO
 
 # ── Paradas dos turnos (subconjunto real do database.sql) ─────────────────────
@@ -302,6 +304,15 @@ def main():
                         help="Executa só CW-1 (mais rápido)")
     parser.add_argument("--sem-postimprove",action="store_true",
                         help="Pula post-improvement (mais rápido)")
+    parser.add_argument("--sentido",        default="auto",
+                        choices=["auto", "ida", "volta"],
+                        help="ida=carga por embarque; volta=carga por desembarque")
+    parser.add_argument("--conforto",       type=int, default=None,
+                        help="Lotação confortável por ônibus (padrão: do modelo)")
+    parser.add_argument("--peso-superlotacao", type=float, default=0.0,
+                        help="Penalidade R$ por passageiro acima do conforto (0 = custo puro)")
+    parser.add_argument("--pareto",         action="store_true",
+                        help="Varre capacidades: trade-off custo × superlotação")
     parser.add_argument("--salvar",         action="store_true",
                         help="Salva resultado em output/")
     parser.add_argument("--todos",          action="store_true",
@@ -315,6 +326,13 @@ def main():
         nos, matriz = montar_nos_e_matriz(turno)
         demanda = DEMANDA_SINTETICA[turno]
 
+        if args.pareto:
+            analise_pareto(
+                nos=nos, matriz=matriz, demanda=demanda, deposito=deposito,
+                modelo=ONIBUS_GENERICO, sentido=args.sentido, verbose=True,
+            )
+            continue
+
         rotas, lam_usado = clarke_wright_ovrp(
             nos              = nos,
             matriz           = matriz,
@@ -325,6 +343,9 @@ def main():
             lam              = args.lambda_val,
             usar_two_phase   = not args.sem_two_phase,
             usar_postimprove = not args.sem_postimprove,
+            sentido          = args.sentido,
+            conforto         = args.conforto,
+            peso_superlotacao = args.peso_superlotacao,
             verbose          = True,
         )
 
@@ -335,6 +356,7 @@ def main():
             modelo     = ONIBUS_GENERICO,
             turno      = turno,
             lam        = lam_usado,
+            conforto   = args.conforto,
         )
 
         if args.salvar:

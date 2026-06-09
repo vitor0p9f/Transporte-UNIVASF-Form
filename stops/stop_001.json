@@ -1,0 +1,470 @@
+{
+  "label": "Academia I9",
+  "lat": -9.38381,
+  "lon": -40.51233,
+  "edges": [
+    {
+      "origin": "Academia I9",
+      "destination": "Abaré",
+      "distance": 2.052,
+      "estimated_travel_time": 4.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Academia I9 – Av. 7 de Setembro",
+      "distance": 1.062,
+      "estimated_travel_time": 2.3
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Academia Well",
+      "distance": 2.831,
+      "estimated_travel_time": 6.1
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "distance": 5.077,
+      "estimated_travel_time": 10.9
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. 7 de Setembro – Aldiegas",
+      "distance": 1.472,
+      "estimated_travel_time": 3.2
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. Transnordestina – Entrada Bairro Dom Avelar",
+      "distance": 6.506,
+      "estimated_travel_time": 13.9
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. Transnordestina – Entrada Dom Avelar",
+      "distance": 4.11,
+      "estimated_travel_time": 8.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. Transnordestina – Nutiva Agro",
+      "distance": 5.078,
+      "estimated_travel_time": 10.9
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. Transnordestina – Posto Pedra Linda",
+      "distance": 4.143,
+      "estimated_travel_time": 8.9
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
+      "distance": 5.115,
+      "estimated_travel_time": 11.0
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. da Integração – Mundo da Lua",
+      "distance": 5.402,
+      "estimated_travel_time": 11.6
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. da Integração – Petrape",
+      "distance": 6.903,
+      "estimated_travel_time": 14.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. da Integração – Secretaria de Obras",
+      "distance": 1.687,
+      "estimated_travel_time": 3.6
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Av. da Integração – Sementeira",
+      "distance": 3.515,
+      "estimated_travel_time": 7.5
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "BR 407 – Isaías Automóveis / Posto Delta",
+      "distance": 4.75,
+      "estimated_travel_time": 10.2
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "BR 407 – Izabela Construções",
+      "distance": 4.348,
+      "estimated_travel_time": 9.3
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Bloco Antigo CCA",
+      "distance": 9.896,
+      "estimated_travel_time": 21.2
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Bloco de Salas de Aula CCA",
+      "distance": 12.158,
+      "estimated_travel_time": 26.1
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Canteiro de Obras",
+      "distance": 1.937,
+      "estimated_travel_time": 4.2
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Canteiro de Obras Av. 7 de Setembro",
+      "distance": 1.786,
+      "estimated_travel_time": 3.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Canteiro de Obras – Av. 7 de Setembro",
+      "distance": 1.593,
+      "estimated_travel_time": 3.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Canteiro de Obras – Juazeiro",
+      "distance": 6.597,
+      "estimated_travel_time": 14.1
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
+      "distance": 3.325,
+      "estimated_travel_time": 7.1
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Costrutéo (ponto de ônibus)",
+      "distance": 3.477,
+      "estimated_travel_time": 7.5
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "DETRAN – Av. Monsenhor (via principal)",
+      "distance": 1.306,
+      "estimated_travel_time": 2.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Distribuidora de Bebidas Revalle",
+      "distance": 3.525,
+      "estimated_travel_time": 7.6
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Estação Velha / Cooperativa Brasil",
+      "distance": 7.667,
+      "estimated_travel_time": 16.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Estação Velha Juazeiro",
+      "distance": 5.622,
+      "estimated_travel_time": 12.0
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Estrada da Banana – Antiga Distribuidora Camaleão",
+      "distance": 2.218,
+      "estimated_travel_time": 4.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Estrada da Banana – Condomínio Mais Viver",
+      "distance": 5.814,
+      "estimated_travel_time": 12.5
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Estrada da Banana – Primeira Rotatória",
+      "distance": 4.971,
+      "estimated_travel_time": 10.7
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Estrada da Banana – Restaurante Dona Branca",
+      "distance": 4.464,
+      "estimated_travel_time": 9.6
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Farmácia Popular",
+      "distance": 1.294,
+      "estimated_travel_time": 2.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Feira da COHAB Massangano",
+      "distance": 3.906,
+      "estimated_travel_time": 8.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Final da proteção de metal – Bairro Quati",
+      "distance": 1.726,
+      "estimated_travel_time": 3.7
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
+      "distance": 4.625,
+      "estimated_travel_time": 9.9
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "GBarbosa Juazeiro",
+      "distance": 4.289,
+      "estimated_travel_time": 9.2
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
+      "distance": 7.386,
+      "estimated_travel_time": 15.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "GBarbosa Petrolina",
+      "distance": 1.794,
+      "estimated_travel_time": 3.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
+      "distance": 5.995,
+      "estimated_travel_time": 12.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Hospital Veterinário",
+      "distance": 10.144,
+      "estimated_travel_time": 21.7
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Hospital Veterinário CCA",
+      "distance": 11.241,
+      "estimated_travel_time": 24.1
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Igreja Filadélfia",
+      "distance": 1.075,
+      "estimated_travel_time": 2.3
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
+      "distance": 7.881,
+      "estimated_travel_time": 16.9
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Mecânica Ouro Diesel",
+      "distance": 2.24,
+      "estimated_travel_time": 4.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
+      "distance": 3.856,
+      "estimated_travel_time": 8.3
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Ministério Público Federal",
+      "distance": 3.652,
+      "estimated_travel_time": 7.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Parque Mundo da Lua",
+      "distance": 1.682,
+      "estimated_travel_time": 3.6
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Petrape",
+      "distance": 6.072,
+      "estimated_travel_time": 13.0
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Petrape – Av. da Integração",
+      "distance": 5.744,
+      "estimated_travel_time": 12.3
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Plante Bem",
+      "distance": 3.9,
+      "estimated_travel_time": 8.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Ponto Aldiegas",
+      "distance": 3.478,
+      "estimated_travel_time": 7.5
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
+      "distance": 5.225,
+      "estimated_travel_time": 11.2
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Ponto BR 428 – PRF",
+      "distance": 2.992,
+      "estimated_travel_time": 6.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Ponto BR 428 – Posto Carranca",
+      "distance": 6.359,
+      "estimated_travel_time": 13.6
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
+      "distance": 2.261,
+      "estimated_travel_time": 4.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Ponto em frente à Abaré",
+      "distance": 2.39,
+      "estimated_travel_time": 5.1
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Posto ALE",
+      "distance": 1.779,
+      "estimated_travel_time": 3.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Posto Raul Lins / Bairro Castelo Branco",
+      "distance": 1.947,
+      "estimated_travel_time": 4.2
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Posto Raul Lins – Entrada Castelo Branco",
+      "distance": 2.327,
+      "estimated_travel_time": 5.0
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Posto São Francisco Av. 7 de Setembro",
+      "distance": 1.815,
+      "estimated_travel_time": 3.9
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Posto de Gasolina Big Brother",
+      "distance": 2.942,
+      "estimated_travel_time": 6.3
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Residência Estudantil CCA",
+      "distance": 8.622,
+      "estimated_travel_time": 18.5
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Rodoviária de Petrolina",
+      "distance": 3.764,
+      "estimated_travel_time": 8.1
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Rua do Paraíso ao lado das Lojas Americanas",
+      "distance": 1.102,
+      "estimated_travel_time": 2.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Secretaria de Obras",
+      "distance": 1.07,
+      "estimated_travel_time": 2.3
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Secretaria de Obras – Av. da Integração",
+      "distance": 2.274,
+      "estimated_travel_time": 4.9
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Sementeira",
+      "distance": 0.746,
+      "estimated_travel_time": 1.6
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Sementeira – Av. da Integração",
+      "distance": 5.489,
+      "estimated_travel_time": 11.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Supermercado Regente",
+      "distance": 1.764,
+      "estimated_travel_time": 3.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
+      "distance": 4.836,
+      "estimated_travel_time": 10.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "UNIVASF Campus CCA",
+      "distance": 9.538,
+      "estimated_travel_time": 20.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "UNIVASF Campus CCA – Bloco Antigo",
+      "distance": 13.418,
+      "estimated_travel_time": 28.8
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
+      "distance": 11.734,
+      "estimated_travel_time": 25.1
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "UNIVASF Campus Juazeiro",
+      "distance": 6.721,
+      "estimated_travel_time": 14.4
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "UNIVASF Campus Petrolina",
+      "distance": 3.133,
+      "estimated_travel_time": 6.7
+    },
+    {
+      "origin": "Academia I9",
+      "destination": "Verdão Juazeiro",
+      "distance": 9.068,
+      "estimated_travel_time": 19.4
+    }
+  ],
+  "_sintetico": true
+}

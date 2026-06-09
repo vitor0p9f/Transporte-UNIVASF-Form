@@ -1,0 +1,470 @@
+{
+  "label": "Estação Velha / Cooperativa Brasil",
+  "lat": -9.43317,
+  "lon": -40.49265,
+  "edges": [
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Abaré",
+      "distance": 8.506,
+      "estimated_travel_time": 18.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Academia I9",
+      "distance": 7.667,
+      "estimated_travel_time": 16.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Academia I9 – Av. 7 de Setembro",
+      "distance": 8.269,
+      "estimated_travel_time": 17.7
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Academia Well",
+      "distance": 8.733,
+      "estimated_travel_time": 18.7
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "distance": 4.688,
+      "estimated_travel_time": 10.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. 7 de Setembro – Aldiegas",
+      "distance": 7.434,
+      "estimated_travel_time": 15.9
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. Transnordestina – Entrada Bairro Dom Avelar",
+      "distance": 13.721,
+      "estimated_travel_time": 29.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. Transnordestina – Entrada Dom Avelar",
+      "distance": 11.777,
+      "estimated_travel_time": 25.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. Transnordestina – Nutiva Agro",
+      "distance": 11.833,
+      "estimated_travel_time": 25.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. Transnordestina – Posto Pedra Linda",
+      "distance": 11.808,
+      "estimated_travel_time": 25.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
+      "distance": 12.781,
+      "estimated_travel_time": 27.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. da Integração – Mundo da Lua",
+      "distance": 3.105,
+      "estimated_travel_time": 6.7
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. da Integração – Petrape",
+      "distance": 14.248,
+      "estimated_travel_time": 30.5
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. da Integração – Secretaria de Obras",
+      "distance": 6.569,
+      "estimated_travel_time": 14.1
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Av. da Integração – Sementeira",
+      "distance": 11.152,
+      "estimated_travel_time": 23.9
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "BR 407 – Isaías Automóveis / Posto Delta",
+      "distance": 12.416,
+      "estimated_travel_time": 26.6
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "BR 407 – Izabela Construções",
+      "distance": 11.806,
+      "estimated_travel_time": 25.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Bloco Antigo CCA",
+      "distance": 17.255,
+      "estimated_travel_time": 37.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Bloco de Salas de Aula CCA",
+      "distance": 19.736,
+      "estimated_travel_time": 42.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Canteiro de Obras",
+      "distance": 7.175,
+      "estimated_travel_time": 15.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Canteiro de Obras Av. 7 de Setembro",
+      "distance": 5.912,
+      "estimated_travel_time": 12.7
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Canteiro de Obras – Av. 7 de Setembro",
+      "distance": 7.357,
+      "estimated_travel_time": 15.8
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Canteiro de Obras – Juazeiro",
+      "distance": 1.154,
+      "estimated_travel_time": 2.5
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
+      "distance": 6.683,
+      "estimated_travel_time": 14.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Costrutéo (ponto de ônibus)",
+      "distance": 6.077,
+      "estimated_travel_time": 13.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "DETRAN – Av. Monsenhor (via principal)",
+      "distance": 7.421,
+      "estimated_travel_time": 15.9
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Distribuidora de Bebidas Revalle",
+      "distance": 4.36,
+      "estimated_travel_time": 9.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Estação Velha Juazeiro",
+      "distance": 2.337,
+      "estimated_travel_time": 5.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Estrada da Banana – Antiga Distribuidora Camaleão",
+      "distance": 9.859,
+      "estimated_travel_time": 21.1
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Estrada da Banana – Condomínio Mais Viver",
+      "distance": 12.205,
+      "estimated_travel_time": 26.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Estrada da Banana – Primeira Rotatória",
+      "distance": 12.158,
+      "estimated_travel_time": 26.1
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Estrada da Banana – Restaurante Dona Branca",
+      "distance": 10.422,
+      "estimated_travel_time": 22.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Farmácia Popular",
+      "distance": 6.934,
+      "estimated_travel_time": 14.9
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Feira da COHAB Massangano",
+      "distance": 11.567,
+      "estimated_travel_time": 24.8
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Final da proteção de metal – Bairro Quati",
+      "distance": 9.393,
+      "estimated_travel_time": 20.1
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
+      "distance": 3.25,
+      "estimated_travel_time": 7.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "GBarbosa Juazeiro",
+      "distance": 3.656,
+      "estimated_travel_time": 7.8
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
+      "distance": 0.765,
+      "estimated_travel_time": 1.6
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "GBarbosa Petrolina",
+      "distance": 5.893,
+      "estimated_travel_time": 12.6
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
+      "distance": 2.712,
+      "estimated_travel_time": 5.8
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Hospital Veterinário",
+      "distance": 17.003,
+      "estimated_travel_time": 36.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Hospital Veterinário CCA",
+      "distance": 18.28,
+      "estimated_travel_time": 39.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Igreja Filadélfia",
+      "distance": 8.501,
+      "estimated_travel_time": 18.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
+      "distance": 15.434,
+      "estimated_travel_time": 33.1
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Mecânica Ouro Diesel",
+      "distance": 5.551,
+      "estimated_travel_time": 11.9
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
+      "distance": 5.296,
+      "estimated_travel_time": 11.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Ministério Público Federal",
+      "distance": 5.141,
+      "estimated_travel_time": 11.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Parque Mundo da Lua",
+      "distance": 7.098,
+      "estimated_travel_time": 15.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Petrape",
+      "distance": 12.415,
+      "estimated_travel_time": 26.6
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Petrape – Av. da Integração",
+      "distance": 12.706,
+      "estimated_travel_time": 27.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Plante Bem",
+      "distance": 11.489,
+      "estimated_travel_time": 24.6
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Ponto Aldiegas",
+      "distance": 5.523,
+      "estimated_travel_time": 11.8
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
+      "distance": 12.891,
+      "estimated_travel_time": 27.6
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Ponto BR 428 – PRF",
+      "distance": 10.101,
+      "estimated_travel_time": 21.6
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Ponto BR 428 – Posto Carranca",
+      "distance": 13.547,
+      "estimated_travel_time": 29.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
+      "distance": 8.113,
+      "estimated_travel_time": 17.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Ponto em frente à Abaré",
+      "distance": 6.173,
+      "estimated_travel_time": 13.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Posto ALE",
+      "distance": 7.478,
+      "estimated_travel_time": 16.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Posto Raul Lins / Bairro Castelo Branco",
+      "distance": 5.75,
+      "estimated_travel_time": 12.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Posto Raul Lins – Entrada Castelo Branco",
+      "distance": 6.487,
+      "estimated_travel_time": 13.9
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Posto São Francisco Av. 7 de Setembro",
+      "distance": 8.903,
+      "estimated_travel_time": 19.1
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Posto de Gasolina Big Brother",
+      "distance": 5.615,
+      "estimated_travel_time": 12.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Residência Estudantil CCA",
+      "distance": 16.089,
+      "estimated_travel_time": 34.5
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Rodoviária de Petrolina",
+      "distance": 4.226,
+      "estimated_travel_time": 9.1
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Rua do Paraíso ao lado das Lojas Americanas",
+      "distance": 8.307,
+      "estimated_travel_time": 17.8
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Secretaria de Obras",
+      "distance": 8.705,
+      "estimated_travel_time": 18.7
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Secretaria de Obras – Av. da Integração",
+      "distance": 6.079,
+      "estimated_travel_time": 13.0
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Sementeira",
+      "distance": 7.776,
+      "estimated_travel_time": 16.7
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Sementeira – Av. da Integração",
+      "distance": 12.761,
+      "estimated_travel_time": 27.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Supermercado Regente",
+      "distance": 9.403,
+      "estimated_travel_time": 20.1
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
+      "distance": 3.455,
+      "estimated_travel_time": 7.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "UNIVASF Campus CCA",
+      "distance": 16.453,
+      "estimated_travel_time": 35.3
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "UNIVASF Campus CCA – Bloco Antigo",
+      "distance": 20.649,
+      "estimated_travel_time": 44.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
+      "distance": 18.743,
+      "estimated_travel_time": 40.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "UNIVASF Campus Juazeiro",
+      "distance": 2.443,
+      "estimated_travel_time": 5.2
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "UNIVASF Campus Petrolina",
+      "distance": 5.785,
+      "estimated_travel_time": 12.4
+    },
+    {
+      "origin": "Estação Velha / Cooperativa Brasil",
+      "destination": "Verdão Juazeiro",
+      "distance": 1.606,
+      "estimated_travel_time": 3.4
+    }
+  ],
+  "_sintetico": true
+}

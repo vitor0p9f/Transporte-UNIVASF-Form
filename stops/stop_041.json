@@ -1,0 +1,470 @@
+{
+  "label": "Hospital Veterinário",
+  "lat": -9.34506,
+  "lon": -40.57163,
+  "edges": [
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Abaré",
+      "distance": 8.612,
+      "estimated_travel_time": 18.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Academia I9",
+      "distance": 10.144,
+      "estimated_travel_time": 21.7
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Academia I9 – Av. 7 de Setembro",
+      "distance": 10.269,
+      "estimated_travel_time": 22.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Academia Well",
+      "distance": 11.525,
+      "estimated_travel_time": 24.7
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "distance": 15.221,
+      "estimated_travel_time": 32.6
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. 7 de Setembro – Aldiegas",
+      "distance": 11.306,
+      "estimated_travel_time": 24.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. Transnordestina – Entrada Bairro Dom Avelar",
+      "distance": 3.732,
+      "estimated_travel_time": 8.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. Transnordestina – Entrada Dom Avelar",
+      "distance": 7.171,
+      "estimated_travel_time": 15.4
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. Transnordestina – Nutiva Agro",
+      "distance": 5.207,
+      "estimated_travel_time": 11.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. Transnordestina – Posto Pedra Linda",
+      "distance": 7.284,
+      "estimated_travel_time": 15.6
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
+      "distance": 6.56,
+      "estimated_travel_time": 14.1
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. da Integração – Mundo da Lua",
+      "distance": 15.408,
+      "estimated_travel_time": 33.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. da Integração – Petrape",
+      "distance": 3.607,
+      "estimated_travel_time": 7.7
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. da Integração – Secretaria de Obras",
+      "distance": 10.585,
+      "estimated_travel_time": 22.7
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Av. da Integração – Sementeira",
+      "distance": 7.153,
+      "estimated_travel_time": 15.3
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "BR 407 – Isaías Automóveis / Posto Delta",
+      "distance": 6.944,
+      "estimated_travel_time": 14.9
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "BR 407 – Izabela Construções",
+      "distance": 5.981,
+      "estimated_travel_time": 12.8
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Bloco Antigo CCA",
+      "distance": 2.341,
+      "estimated_travel_time": 5.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Bloco de Salas de Aula CCA",
+      "distance": 5.017,
+      "estimated_travel_time": 10.8
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Canteiro de Obras",
+      "distance": 11.814,
+      "estimated_travel_time": 25.3
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Canteiro de Obras Av. 7 de Setembro",
+      "distance": 11.489,
+      "estimated_travel_time": 24.6
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Canteiro de Obras – Av. 7 de Setembro",
+      "distance": 11.445,
+      "estimated_travel_time": 24.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Canteiro de Obras – Juazeiro",
+      "distance": 15.848,
+      "estimated_travel_time": 34.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
+      "distance": 10.372,
+      "estimated_travel_time": 22.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Costrutéo (ponto de ônibus)",
+      "distance": 10.981,
+      "estimated_travel_time": 23.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "DETRAN – Av. Monsenhor (via principal)",
+      "distance": 11.186,
+      "estimated_travel_time": 24.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Distribuidora de Bebidas Revalle",
+      "distance": 12.698,
+      "estimated_travel_time": 27.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Estação Velha / Cooperativa Brasil",
+      "distance": 17.003,
+      "estimated_travel_time": 36.4
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Estação Velha Juazeiro",
+      "distance": 14.674,
+      "estimated_travel_time": 31.4
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Estrada da Banana – Antiga Distribuidora Camaleão",
+      "distance": 8.188,
+      "estimated_travel_time": 17.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Estrada da Banana – Condomínio Mais Viver",
+      "distance": 4.815,
+      "estimated_travel_time": 10.3
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Estrada da Banana – Primeira Rotatória",
+      "distance": 5.183,
+      "estimated_travel_time": 11.1
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Estrada da Banana – Restaurante Dona Branca",
+      "distance": 6.61,
+      "estimated_travel_time": 14.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Farmácia Popular",
+      "distance": 11.392,
+      "estimated_travel_time": 24.4
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Feira da COHAB Massangano",
+      "distance": 7.517,
+      "estimated_travel_time": 16.1
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Final da proteção de metal – Bairro Quati",
+      "distance": 8.802,
+      "estimated_travel_time": 18.9
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
+      "distance": 14.491,
+      "estimated_travel_time": 31.1
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "GBarbosa Juazeiro",
+      "distance": 14.232,
+      "estimated_travel_time": 30.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
+      "distance": 16.963,
+      "estimated_travel_time": 36.3
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "GBarbosa Petrolina",
+      "distance": 11.765,
+      "estimated_travel_time": 25.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
+      "distance": 15.976,
+      "estimated_travel_time": 34.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Hospital Veterinário CCA",
+      "distance": 1.421,
+      "estimated_travel_time": 3.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Igreja Filadélfia",
+      "distance": 9.952,
+      "estimated_travel_time": 21.3
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
+      "distance": 3.983,
+      "estimated_travel_time": 8.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Mecânica Ouro Diesel",
+      "distance": 11.679,
+      "estimated_travel_time": 25.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
+      "distance": 13.992,
+      "estimated_travel_time": 30.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Ministério Público Federal",
+      "distance": 11.882,
+      "estimated_travel_time": 25.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Parque Mundo da Lua",
+      "distance": 10.014,
+      "estimated_travel_time": 21.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Petrape",
+      "distance": 4.626,
+      "estimated_travel_time": 9.9
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Petrape – Av. da Integração",
+      "distance": 4.415,
+      "estimated_travel_time": 9.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Plante Bem",
+      "distance": 6.647,
+      "estimated_travel_time": 14.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Ponto Aldiegas",
+      "distance": 13.609,
+      "estimated_travel_time": 29.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
+      "distance": 6.435,
+      "estimated_travel_time": 13.8
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Ponto BR 428 – PRF",
+      "distance": 7.181,
+      "estimated_travel_time": 15.4
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Ponto BR 428 – Posto Carranca",
+      "distance": 3.846,
+      "estimated_travel_time": 8.2
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
+      "distance": 8.925,
+      "estimated_travel_time": 19.1
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Ponto em frente à Abaré",
+      "distance": 10.858,
+      "estimated_travel_time": 23.3
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Posto ALE",
+      "distance": 11.524,
+      "estimated_travel_time": 24.7
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Posto Raul Lins / Bairro Castelo Branco",
+      "distance": 11.629,
+      "estimated_travel_time": 24.9
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Posto Raul Lins – Entrada Castelo Branco",
+      "distance": 12.392,
+      "estimated_travel_time": 26.6
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Posto São Francisco Av. 7 de Setembro",
+      "distance": 10.208,
+      "estimated_travel_time": 21.9
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Posto de Gasolina Big Brother",
+      "distance": 13.085,
+      "estimated_travel_time": 28.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Residência Estudantil CCA",
+      "distance": 3.158,
+      "estimated_travel_time": 6.8
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Rodoviária de Petrolina",
+      "distance": 13.778,
+      "estimated_travel_time": 29.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Rua do Paraíso ao lado das Lojas Americanas",
+      "distance": 10.258,
+      "estimated_travel_time": 22.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Secretaria de Obras",
+      "distance": 9.145,
+      "estimated_travel_time": 19.6
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Secretaria de Obras – Av. da Integração",
+      "distance": 10.981,
+      "estimated_travel_time": 23.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Sementeira",
+      "distance": 9.675,
+      "estimated_travel_time": 20.7
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Sementeira – Av. da Integração",
+      "distance": 4.73,
+      "estimated_travel_time": 10.1
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Supermercado Regente",
+      "distance": 8.556,
+      "estimated_travel_time": 18.3
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
+      "distance": 14.848,
+      "estimated_travel_time": 31.8
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "UNIVASF Campus CCA",
+      "distance": 0.622,
+      "estimated_travel_time": 1.3
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "UNIVASF Campus CCA – Bloco Antigo",
+      "distance": 3.935,
+      "estimated_travel_time": 8.4
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
+      "distance": 1.796,
+      "estimated_travel_time": 3.8
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "UNIVASF Campus Juazeiro",
+      "distance": 15.166,
+      "estimated_travel_time": 32.5
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "UNIVASF Campus Petrolina",
+      "distance": 11.222,
+      "estimated_travel_time": 24.0
+    },
+    {
+      "origin": "Hospital Veterinário",
+      "destination": "Verdão Juazeiro",
+      "distance": 18.576,
+      "estimated_travel_time": 39.8
+    }
+  ],
+  "_sintetico": true
+}

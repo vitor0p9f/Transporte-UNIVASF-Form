@@ -1,0 +1,470 @@
+{
+  "label": "Parque Mundo da Lua",
+  "lat": -9.39236,
+  "lon": -40.52033,
+  "edges": [
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Abaré",
+      "distance": 1.415,
+      "estimated_travel_time": 3.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Academia I9",
+      "distance": 1.682,
+      "estimated_travel_time": 3.6
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Academia I9 – Av. 7 de Setembro",
+      "distance": 2.742,
+      "estimated_travel_time": 5.9
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Academia Well",
+      "distance": 4.485,
+      "estimated_travel_time": 9.6
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "distance": 5.637,
+      "estimated_travel_time": 12.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. 7 de Setembro – Aldiegas",
+      "distance": 2.961,
+      "estimated_travel_time": 6.3
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. Transnordestina – Entrada Bairro Dom Avelar",
+      "distance": 6.625,
+      "estimated_travel_time": 14.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. Transnordestina – Entrada Dom Avelar",
+      "distance": 5.071,
+      "estimated_travel_time": 10.9
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. Transnordestina – Nutiva Agro",
+      "distance": 4.807,
+      "estimated_travel_time": 10.3
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. Transnordestina – Posto Pedra Linda",
+      "distance": 5.15,
+      "estimated_travel_time": 11.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
+      "distance": 6.017,
+      "estimated_travel_time": 12.9
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. da Integração – Mundo da Lua",
+      "distance": 5.463,
+      "estimated_travel_time": 11.7
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. da Integração – Petrape",
+      "distance": 7.152,
+      "estimated_travel_time": 15.3
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. da Integração – Secretaria de Obras",
+      "distance": 0.579,
+      "estimated_travel_time": 1.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Av. da Integração – Sementeira",
+      "distance": 4.313,
+      "estimated_travel_time": 9.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "BR 407 – Isaías Automóveis / Posto Delta",
+      "distance": 5.725,
+      "estimated_travel_time": 12.3
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "BR 407 – Izabela Construções",
+      "distance": 4.758,
+      "estimated_travel_time": 10.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Bloco Antigo CCA",
+      "distance": 10.157,
+      "estimated_travel_time": 21.8
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Bloco de Salas de Aula CCA",
+      "distance": 12.689,
+      "estimated_travel_time": 27.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Canteiro de Obras",
+      "distance": 3.312,
+      "estimated_travel_time": 7.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Canteiro de Obras Av. 7 de Setembro",
+      "distance": 1.6,
+      "estimated_travel_time": 3.4
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Canteiro de Obras – Av. 7 de Setembro",
+      "distance": 3.048,
+      "estimated_travel_time": 6.5
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Canteiro de Obras – Juazeiro",
+      "distance": 5.957,
+      "estimated_travel_time": 12.8
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
+      "distance": 1.65,
+      "estimated_travel_time": 3.5
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Costrutéo (ponto de ônibus)",
+      "distance": 1.885,
+      "estimated_travel_time": 4.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "DETRAN – Av. Monsenhor (via principal)",
+      "distance": 2.797,
+      "estimated_travel_time": 6.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Distribuidora de Bebidas Revalle",
+      "distance": 2.738,
+      "estimated_travel_time": 5.9
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Estação Velha / Cooperativa Brasil",
+      "distance": 7.098,
+      "estimated_travel_time": 15.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Estação Velha Juazeiro",
+      "distance": 4.837,
+      "estimated_travel_time": 10.4
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Estrada da Banana – Antiga Distribuidora Camaleão",
+      "distance": 3.127,
+      "estimated_travel_time": 6.7
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Estrada da Banana – Condomínio Mais Viver",
+      "distance": 5.327,
+      "estimated_travel_time": 11.4
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Estrada da Banana – Primeira Rotatória",
+      "distance": 5.06,
+      "estimated_travel_time": 10.8
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Estrada da Banana – Restaurante Dona Branca",
+      "distance": 3.668,
+      "estimated_travel_time": 7.9
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Farmácia Popular",
+      "distance": 2.526,
+      "estimated_travel_time": 5.4
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Feira da COHAB Massangano",
+      "distance": 4.96,
+      "estimated_travel_time": 10.6
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Final da proteção de metal – Bairro Quati",
+      "distance": 2.9,
+      "estimated_travel_time": 6.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
+      "distance": 4.499,
+      "estimated_travel_time": 9.6
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "GBarbosa Juazeiro",
+      "distance": 4.275,
+      "estimated_travel_time": 9.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
+      "distance": 6.98,
+      "estimated_travel_time": 15.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "GBarbosa Petrolina",
+      "distance": 2.037,
+      "estimated_travel_time": 4.4
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
+      "distance": 6.006,
+      "estimated_travel_time": 12.9
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Hospital Veterinário",
+      "distance": 10.014,
+      "estimated_travel_time": 21.5
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Hospital Veterinário CCA",
+      "distance": 11.239,
+      "estimated_travel_time": 24.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Igreja Filadélfia",
+      "distance": 2.706,
+      "estimated_travel_time": 5.8
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
+      "distance": 8.391,
+      "estimated_travel_time": 18.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Mecânica Ouro Diesel",
+      "distance": 1.675,
+      "estimated_travel_time": 3.6
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
+      "distance": 4.558,
+      "estimated_travel_time": 9.8
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Ministério Público Federal",
+      "distance": 2.325,
+      "estimated_travel_time": 5.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Petrape",
+      "distance": 5.566,
+      "estimated_travel_time": 11.9
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Petrape – Av. da Integração",
+      "distance": 5.642,
+      "estimated_travel_time": 12.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Plante Bem",
+      "distance": 4.549,
+      "estimated_travel_time": 9.7
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Ponto Aldiegas",
+      "distance": 4.236,
+      "estimated_travel_time": 9.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
+      "distance": 6.104,
+      "estimated_travel_time": 13.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Ponto BR 428 – PRF",
+      "distance": 3.006,
+      "estimated_travel_time": 6.4
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Ponto BR 428 – Posto Carranca",
+      "distance": 6.453,
+      "estimated_travel_time": 13.8
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
+      "distance": 1.135,
+      "estimated_travel_time": 2.4
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Ponto em frente à Abaré",
+      "distance": 0.999,
+      "estimated_travel_time": 2.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Posto ALE",
+      "distance": 3.267,
+      "estimated_travel_time": 7.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Posto Raul Lins / Bairro Castelo Branco",
+      "distance": 1.705,
+      "estimated_travel_time": 3.7
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Posto Raul Lins – Entrada Castelo Branco",
+      "distance": 3.415,
+      "estimated_travel_time": 7.3
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Posto São Francisco Av. 7 de Setembro",
+      "distance": 3.477,
+      "estimated_travel_time": 7.5
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Posto de Gasolina Big Brother",
+      "distance": 3.667,
+      "estimated_travel_time": 7.9
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Residência Estudantil CCA",
+      "distance": 9.006,
+      "estimated_travel_time": 19.3
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Rodoviária de Petrolina",
+      "distance": 3.889,
+      "estimated_travel_time": 8.3
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Rua do Paraíso ao lado das Lojas Americanas",
+      "distance": 2.78,
+      "estimated_travel_time": 6.0
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Secretaria de Obras",
+      "distance": 2.154,
+      "estimated_travel_time": 4.6
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Secretaria de Obras – Av. da Integração",
+      "distance": 1.031,
+      "estimated_travel_time": 2.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Sementeira",
+      "distance": 1.116,
+      "estimated_travel_time": 2.4
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Sementeira – Av. da Integração",
+      "distance": 5.663,
+      "estimated_travel_time": 12.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Supermercado Regente",
+      "distance": 2.722,
+      "estimated_travel_time": 5.8
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
+      "distance": 4.92,
+      "estimated_travel_time": 10.5
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "UNIVASF Campus CCA",
+      "distance": 9.44,
+      "estimated_travel_time": 20.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "UNIVASF Campus CCA – Bloco Antigo",
+      "distance": 13.568,
+      "estimated_travel_time": 29.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
+      "distance": 11.713,
+      "estimated_travel_time": 25.1
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "UNIVASF Campus Juazeiro",
+      "distance": 5.686,
+      "estimated_travel_time": 12.2
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "UNIVASF Campus Petrolina",
+      "distance": 1.678,
+      "estimated_travel_time": 3.6
+    },
+    {
+      "origin": "Parque Mundo da Lua",
+      "destination": "Verdão Juazeiro",
+      "distance": 8.627,
+      "estimated_travel_time": 18.5
+    }
+  ],
+  "_sintetico": true
+}

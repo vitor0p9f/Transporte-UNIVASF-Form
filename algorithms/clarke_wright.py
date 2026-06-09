@@ -158,6 +158,68 @@ def _atualizar_custo(rota: Rota, matriz: dict, deposito: str,
     return rota
 
 
+# ── Sentido da viagem e carga por parada ─────────────────────────────────────
+
+def detectar_sentido(demanda: dict, deposito: str) -> str:
+    """
+    Detecta se a viagem é de "ida" ou de "volta" a partir de onde a demanda
+    se concentra no depósito.
+
+      - "volta"  : o depósito é o campus de onde as pessoas SAEM (embarcam ali).
+                   A carga de cada parada é o nº de DESEMBARQUES (alighting),
+                   pois é quanta gente desce naquele ponto.
+      - "ida"    : o depósito é a origem e as pessoas embarcam nas paradas rumo
+                   ao campus. A carga é o nº de EMBARQUES (boarding).
+    """
+    dep = demanda.get(deposito, {})
+    return "volta" if dep.get("boarding", 0) > dep.get("alighting", 0) else "ida"
+
+
+def construir_carga_parada(demanda: dict, deposito: str,
+                           sentido: str = "auto") -> tuple[dict, str]:
+    """
+    Calcula a carga (passageiros que o ônibus transporta) de cada parada,
+    conforme o sentido da viagem. Retorna (carga_parada, sentido_usado).
+
+    Na ida a carga vem de 'boarding'; na volta, de 'alighting' — porque na
+    volta quase todos embarcam no campus (depósito) e a demanda real de cada
+    parada é quanta gente DESCE ali. Usar sempre 'boarding' ignorava esses
+    passageiros (bug que zerava a demanda dos turnos noturnos).
+    """
+    if sentido == "auto":
+        sentido = detectar_sentido(demanda, deposito)
+    campo = "alighting" if sentido == "volta" else "boarding"
+    carga_parada = {
+        p: v.get(campo, 0)
+        for p, v in demanda.items()
+        if p != deposito and v.get(campo, 0) > 0
+    }
+    return carga_parada, sentido
+
+
+# ── Função objetivo: combustível + penalidade de superlotação ────────────────
+
+def _excesso(carga: int, conforto: int) -> int:
+    """Passageiros acima da capacidade de conforto (0 se dentro do conforto)."""
+    return max(0, carga - conforto)
+
+
+def _obj_rota(rota: Rota, peso_superlotacao: float, conforto: int) -> float:
+    """
+    Custo de uma rota para fins de otimização:
+        custo_combustível + peso · (passageiros em desconforto)
+
+    Com peso_superlotacao = 0 recai no custo puro (comportamento original).
+    Com peso > 0 o algoritmo passa a EVITAR ônibus lotados além do conforto,
+    redistribuindo passageiros mesmo que custe um pouco mais de combustível.
+    """
+    return rota.custo_brl + peso_superlotacao * _excesso(rota.carga, conforto)
+
+
+def _obj_total(rotas: list[Rota], peso_superlotacao: float, conforto: int) -> float:
+    return sum(_obj_rota(r, peso_superlotacao, conforto) for r in rotas)
+
+
 # ── Construção OVRP (CW-2): rota aberta em dois sentidos ─────────────────────
 
 def _melhor_direcao(
@@ -184,7 +246,7 @@ def _fundir(
     savings:    list[Saving],
     paradas_ativas: set[str],
     matriz:     dict,
-    demanda:    dict,
+    carga_parada: dict,
     deposito:   str,
     capacidade: int,
     modelo:     ModeloOnibus,
@@ -203,8 +265,8 @@ def _fundir(
     rotas: dict[str, Rota] = {}
     extremo: dict[str, Rota] = {}   # extremo → rota que o contém
 
-    for p in paradas_ativas:
-        carga = demanda.get(p, {}).get("boarding", 0)
+    for p in sorted(paradas_ativas):   # ordem fixa → resultado reprodutível
+        carga = carga_parada.get(p, 0)
         r = Rota(paradas=[p], carga=carga)
         _atualizar_custo(r, matriz, deposito, modelo)
         rotas[id(r)] = r
@@ -264,9 +326,14 @@ def _roulette_wheel(savings: list[Saving], T: int) -> list[Saving]:
 
     Reconstrói a lista de savings embaralhando probabilisticamente
     os T melhores a cada iteração — explora ordens de fusão diferentes.
+
+    Probabilidade (eq. do artigo): p_n = s_n / Σ s_i, favorecendo savings
+    MAIORES. Como em OVRP s(i,j)=c(depot,j)-λ·c(i,j) pode ser negativo,
+    deslocamos a janela pelo menor valor (em vez de usar abs(), que
+    favoreceria erroneamente savings muito negativos).
     """
     if len(savings) <= 1:
-        return savings
+        return list(savings)
 
     nova_lista = []
     restantes = list(savings)
@@ -275,21 +342,20 @@ def _roulette_wheel(savings: list[Saving], T: int) -> list[Saving]:
         t = min(T, len(restantes))
         candidatos = restantes[:t]
 
-        soma = sum(abs(s.valor) for s in candidatos)
-        if soma == 0:
-            escolhido = random.choice(candidatos)
-        else:
-            r = random.random()
-            acumulado = 0.0
-            escolhido = candidatos[-1]
-            for s in candidatos:
-                acumulado += abs(s.valor) / soma
-                if r <= acumulado:
-                    escolhido = s
-                    break
+        menor = min(s.valor for s in candidatos)
+        pesos = [s.valor - menor + 1e-9 for s in candidatos]
+        soma  = sum(pesos)
 
-        nova_lista.append(escolhido)
-        restantes.remove(escolhido)
+        r = random.random() * soma
+        acumulado = 0.0
+        idx = t - 1
+        for k, w in enumerate(pesos):
+            acumulado += w
+            if r <= acumulado:
+                idx = k
+                break
+
+        nova_lista.append(restantes.pop(idx))
 
     return nova_lista
 
@@ -298,28 +364,34 @@ def two_phase_selection(
     savings:    list[Saving],
     paradas_ativas: set[str],
     matriz:     dict,
-    demanda:    dict,
+    carga_parada: dict,
     deposito:   str,
     capacidade: int,
     modelo:     ModeloOnibus,
     iteracoes:  int = ITER_TWO_PHASE,
+    peso_superlotacao: float = 0.0,
+    conforto:   int = None,
 ) -> list[Rota]:
     """
     Procedimento CW-2 do artigo: iterativamente reordena a lista de savings
     via roleta e verifica se a nova solução melhora a atual.
     """
-    melhor_rotas = _fundir(savings, paradas_ativas, matriz, demanda,
+    if conforto is None:
+        conforto = capacidade
+
+    melhor_rotas = _fundir(savings, paradas_ativas, matriz, carga_parada,
                            deposito, capacidade, modelo)
-    melhor_custo = sum(r.custo_brl for r in melhor_rotas)
+    melhor_custo = _obj_total(melhor_rotas, peso_superlotacao, conforto)
 
     savings_atual = list(savings)
 
     for _ in range(iteracoes):
-        T = random.randint(3, min(20, len(savings_atual)))
+        # Tamanho do torneio T ∈ [3, 6] conforme o artigo (seção 2.3).
+        T = random.randint(3, min(6, max(3, len(savings_atual))))
         nova_ordem = _roulette_wheel(savings_atual, T)
-        novas_rotas = _fundir(nova_ordem, paradas_ativas, matriz, demanda,
+        novas_rotas = _fundir(nova_ordem, paradas_ativas, matriz, carga_parada,
                               deposito, capacidade, modelo)
-        novo_custo = sum(r.custo_brl for r in novas_rotas)
+        novo_custo = _obj_total(novas_rotas, peso_superlotacao, conforto)
 
         if novo_custo < melhor_custo:
             melhor_custo  = novo_custo
@@ -361,26 +433,34 @@ def _2opt_rota(rota: Rota, matriz: dict, deposito: str,
 
 def _shift_10(
     rotas: list[Rota], matriz: dict, deposito: str,
-    capacidade: int, modelo: ModeloOnibus,
+    capacidade: int, modelo: ModeloOnibus, carga_parada: dict,
+    peso_superlotacao: float = 0.0, conforto: int = None,
 ) -> list[Rota]:
     """
     Shift 1-0: move uma parada de uma rota para outra.
-    Aceita somente se reduzir o custo total.
+    Aceita se reduzir o objetivo (combustível + penalidade de superlotação).
+    Atualiza corretamente a carga de ambas as rotas após o movimento.
     """
+    if conforto is None:
+        conforto = capacidade
     melhorou = True
     while melhorou:
         melhorou = False
         for a in range(len(rotas)):
             for pos_i in range(len(rotas[a].paradas)):
                 parada = rotas[a].paradas[pos_i]
+                delta  = carga_parada.get(parada, 0)
 
                 for b in range(len(rotas)):
                     if a == b:
                         continue
-                    if rotas[b].carga + 1 > capacidade:
+                    if rotas[b].carga + delta > capacidade:
                         continue
 
-                    custo_antes = rotas[a].custo_brl + rotas[b].custo_brl
+                    carga_a = rotas[a].carga - delta
+                    carga_b = rotas[b].carga + delta
+                    obj_antes = (_obj_rota(rotas[a], peso_superlotacao, conforto)
+                                 + _obj_rota(rotas[b], peso_superlotacao, conforto))
 
                     # Testa inserção no início e fim da rota b
                     for pos_j in [0, len(rotas[b].paradas)]:
@@ -397,16 +477,21 @@ def _shift_10(
 
                         dist_a = _custo_dist(novas_a, matriz, deposito)
                         dist_b = _custo_dist(novas_b, matriz, deposito)
-                        custo_depois = modelo.custo_rota(dist_a) + modelo.custo_rota(dist_b)
+                        custo_a = modelo.custo_rota(dist_a)
+                        custo_b = modelo.custo_rota(dist_b)
+                        obj_depois = (custo_a + peso_superlotacao * _excesso(carga_a, conforto)
+                                      + custo_b + peso_superlotacao * _excesso(carga_b, conforto))
 
-                        if custo_depois < custo_antes - 1e-6:
+                        if obj_depois < obj_antes - 1e-6:
                             rotas[a].paradas   = novas_a
                             rotas[a].dist_km   = dist_a
-                            rotas[a].custo_brl = modelo.custo_rota(dist_a)
+                            rotas[a].custo_brl = custo_a
+                            rotas[a].carga     = carga_a
 
                             rotas[b].paradas   = novas_b
                             rotas[b].dist_km   = dist_b
-                            rotas[b].custo_brl = modelo.custo_rota(dist_b)
+                            rotas[b].custo_brl = custo_b
+                            rotas[b].carga     = carga_b
 
                             melhorou = True
                             break
@@ -422,12 +507,16 @@ def _shift_10(
 
 def _swap_11(
     rotas: list[Rota], matriz: dict, deposito: str,
-    capacidade: int, modelo: ModeloOnibus,
+    capacidade: int, modelo: ModeloOnibus, carga_parada: dict,
+    peso_superlotacao: float = 0.0, conforto: int = None,
 ) -> list[Rota]:
     """
     Swap 1-1: troca uma parada entre duas rotas.
-    Aceita somente se não violar capacidade e reduzir custo.
+    Aceita se não violar a capacidade e reduzir o objetivo
+    (combustível + penalidade de superlotação). Atualiza a carga das rotas.
     """
+    if conforto is None:
+        conforto = capacidade
     melhorou = True
     while melhorou:
         melhorou = False
@@ -437,8 +526,16 @@ def _swap_11(
                     for pos_j in range(len(rotas[b].paradas)):
                         pi = rotas[a].paradas[pos_i]
                         pj = rotas[b].paradas[pos_j]
+                        cp_i = carga_parada.get(pi, 0)
+                        cp_j = carga_parada.get(pj, 0)
 
-                        custo_antes = rotas[a].custo_brl + rotas[b].custo_brl
+                        carga_a = rotas[a].carga - cp_i + cp_j
+                        carga_b = rotas[b].carga - cp_j + cp_i
+                        if carga_a > capacidade or carga_b > capacidade:
+                            continue
+
+                        obj_antes = (_obj_rota(rotas[a], peso_superlotacao, conforto)
+                                     + _obj_rota(rotas[b], peso_superlotacao, conforto))
 
                         novas_a = list(rotas[a].paradas)
                         novas_b = list(rotas[b].paradas)
@@ -450,16 +547,21 @@ def _swap_11(
 
                         dist_a = _custo_dist(novas_a, matriz, deposito)
                         dist_b = _custo_dist(novas_b, matriz, deposito)
-                        custo_depois = modelo.custo_rota(dist_a) + modelo.custo_rota(dist_b)
+                        custo_a = modelo.custo_rota(dist_a)
+                        custo_b = modelo.custo_rota(dist_b)
+                        obj_depois = (custo_a + peso_superlotacao * _excesso(carga_a, conforto)
+                                      + custo_b + peso_superlotacao * _excesso(carga_b, conforto))
 
-                        if custo_depois < custo_antes - 1e-6:
+                        if obj_depois < obj_antes - 1e-6:
                             rotas[a].paradas   = novas_a
                             rotas[a].dist_km   = dist_a
-                            rotas[a].custo_brl = modelo.custo_rota(dist_a)
+                            rotas[a].custo_brl = custo_a
+                            rotas[a].carga     = carga_a
 
                             rotas[b].paradas   = novas_b
                             rotas[b].dist_km   = dist_b
-                            rotas[b].custo_brl = modelo.custo_rota(dist_b)
+                            rotas[b].custo_brl = custo_b
+                            rotas[b].carga     = carga_b
 
                             melhorou = True
                             break
@@ -479,7 +581,10 @@ def post_improvement(
     deposito:   str,
     capacidade: int,
     modelo:     ModeloOnibus,
+    carga_parada: dict,
     max_iter_sem_melhora: int = ITER_POSTIMPROVE,
+    peso_superlotacao: float = 0.0,
+    conforto:   int = None,
 ) -> list[Rota]:
     """
     Procedimento CW-3 do artigo: aplica operadores de busca local
@@ -489,21 +594,29 @@ def post_improvement(
       - 2-opt intra-rota
       - shift 1-0 inter-rotas
       - swap 1-1 inter-rotas
+
+    Com peso_superlotacao > 0 os operadores inter-rotas também redistribuem
+    passageiros para aliviar ônibus lotados além do conforto.
     """
+    if conforto is None:
+        conforto = capacidade
+
     rotas = deepcopy(rotas)
-    melhor_custo = _custo_total(rotas)
+    melhor_custo = _obj_total(rotas, peso_superlotacao, conforto)
     iter_sem_melhora = 0
 
     operadores = [
         lambda r: [_2opt_rota(x, matriz, deposito, modelo) for x in r],
-        lambda r: _shift_10(r, matriz, deposito, capacidade, modelo),
-        lambda r: _swap_11(r, matriz, deposito, capacidade, modelo),
+        lambda r: _shift_10(r, matriz, deposito, capacidade, modelo,
+                            carga_parada, peso_superlotacao, conforto),
+        lambda r: _swap_11(r, matriz, deposito, capacidade, modelo,
+                           carga_parada, peso_superlotacao, conforto),
     ]
 
     while iter_sem_melhora < max_iter_sem_melhora:
         op = random.choice(operadores)
         rotas_novas = op(rotas)
-        novo_custo  = _custo_total(rotas_novas)
+        novo_custo  = _obj_total(rotas_novas, peso_superlotacao, conforto)
 
         if novo_custo < melhor_custo - 1e-6:
             melhor_custo     = novo_custo
@@ -527,6 +640,10 @@ def clarke_wright_ovrp(
     lam:        Optional[float] = None,
     usar_two_phase: bool     = True,
     usar_postimprove: bool   = True,
+    seed:       Optional[int] = 42,
+    sentido:    str          = "auto",
+    peso_superlotacao: float = 0.0,
+    conforto:   Optional[int] = None,
     verbose:    bool         = True,
 ) -> tuple[list[Rota], float]:
     """
@@ -536,13 +653,28 @@ def clarke_wright_ovrp(
     (incremento 0.1) e usa o que gerar menor custo total — conforme
     procedimento CW-1 do artigo (Tabela 1).
 
+    `seed` fixa o gerador aleatório (two-phase + post-improvement) para
+    que a execução seja reprodutível — essencial para reportar resultados
+    em um artigo. Passe seed=None para variar a cada execução.
+
+    `sentido` ("auto" | "ida" | "volta") define se a carga de cada parada
+    vem dos embarques (ida ao campus) ou dos desembarques (volta do campus).
+
+    `peso_superlotacao` (R$ por passageiro em desconforto) e `conforto`
+    (capacidade confortável; padrão = capacidade) ativam o objetivo
+    consciente de superlotação. Com peso 0 recai no custo puro.
+
     Retorna:
         (rotas, lambda_usado)
     """
-    paradas_ativas = {
-        p for p in nos
-        if p != deposito and demanda.get(p, {}).get("boarding", 0) > 0
-    }
+    if seed is not None:
+        random.seed(seed)
+
+    if conforto is None:
+        conforto = modelo.capacidade_conforto or capacidade
+
+    carga_parada, sentido_usado = construir_carga_parada(demanda, deposito, sentido)
+    paradas_ativas = set(carga_parada.keys())
 
     if not paradas_ativas:
         if verbose:
@@ -550,8 +682,9 @@ def clarke_wright_ovrp(
         return [], 0.0
 
     if verbose:
-        print(f"\n[CW-OVRP] {len(paradas_ativas)} paradas | "
-              f"depósito: {deposito} | cap: {capacidade} | modelo: {modelo.nome}")
+        print(f"\n[CW-OVRP] {len(paradas_ativas)} paradas | sentido: {sentido_usado} | "
+              f"depósito: {deposito} | cap: {capacidade} | conforto: {conforto} | "
+              f"peso_superlot: {peso_superlotacao} | modelo: {modelo.nome}")
 
     # ── CW-1: testa múltiplos λ e guarda o melhor ────────────────────────────
     lambdas = [lam] if lam is not None else [
@@ -564,19 +697,20 @@ def clarke_wright_ovrp(
     melhor_lam   = lambdas[0]
 
     for l in lambdas:
-        savings = calcular_savings_ovrp(list(paradas_ativas), matriz, deposito, l)
+        savings = calcular_savings_ovrp(sorted(paradas_ativas), matriz, deposito, l)
 
         if usar_two_phase:
             rotas_l = two_phase_selection(
-                savings, paradas_ativas, matriz, demanda,
+                savings, paradas_ativas, matriz, carga_parada,
                 deposito, capacidade, modelo,
                 iteracoes=ITER_TWO_PHASE,
+                peso_superlotacao=peso_superlotacao, conforto=conforto,
             )
         else:
-            rotas_l = _fundir(savings, paradas_ativas, matriz, demanda,
+            rotas_l = _fundir(savings, paradas_ativas, matriz, carga_parada,
                               deposito, capacidade, modelo)
 
-        custo_l = _custo_total(rotas_l)
+        custo_l = _obj_total(rotas_l, peso_superlotacao, conforto)
         if verbose:
             print(f"  lam={l:.1f} -> {len(rotas_l)} veiculos | "
                   f"R${custo_l:.2f} | {sum(r.dist_km for r in rotas_l):.1f} km")
@@ -594,15 +728,86 @@ def clarke_wright_ovrp(
         if verbose:
             print("  Aplicando post-improvement (2-opt / shift / swap)...")
         melhor_rotas = post_improvement(
-            melhor_rotas, matriz, deposito, capacidade, modelo
+            melhor_rotas, matriz, deposito, capacidade, modelo, carga_parada,
+            peso_superlotacao=peso_superlotacao, conforto=conforto,
         )
-        custo_pos = _custo_total(melhor_rotas)
+        custo_pos = _obj_total(melhor_rotas, peso_superlotacao, conforto)
         if verbose:
             reducao = round((melhor_custo - custo_pos) / melhor_custo * 100, 2)
             print(f"  [OK] Apos post-improvement: R${custo_pos:.2f} "
                   f"(-{reducao}%)")
 
     return melhor_rotas or [], melhor_lam
+
+
+# ── Análise de Pareto: custo × superlotação ──────────────────────────────────
+
+def analise_pareto(
+    nos:        list[str],
+    matriz:     dict,
+    demanda:    dict,
+    deposito:   str,
+    modelo:     ModeloOnibus,
+    capacidades: Optional[list[int]] = None,
+    sentido:    str = "auto",
+    verbose:    bool = True,
+) -> list[dict]:
+    """
+    Varre vários limites de lotação por ônibus (capacidade efetiva) e, para
+    cada um, resolve o roteamento. Mostra o trade-off entre custo (combustível)
+    e superlotação — é a curva de Pareto que responde "quanto custa cada nível
+    de conforto".
+
+    Reduzir a capacidade efetiva força o algoritmo a usar MAIS ônibus, aliviando
+    a lotação. Cada linha da tabela é uma política possível para o gestor.
+
+    Retorna uma lista de dicts (uma por capacidade testada).
+    """
+    if capacidades is None:
+        # do conforto (todos sentados) até a lotação máxima do veículo
+        cmin = modelo.capacidade_conforto or modelo.capacidade
+        cmax = modelo.capacidade
+        capacidades = sorted(set(range(cmin, cmax + 1, 4)) | {cmin, cmax})
+
+    linhas = []
+    for cap in capacidades:
+        # Varredura usa CW-1 (rápido): basta para comparar níveis de conforto.
+        rotas, lam = clarke_wright_ovrp(
+            nos=nos, matriz=matriz, demanda=demanda, deposito=deposito,
+            capacidade=cap, modelo=modelo, sentido=sentido,
+            usar_two_phase=False, usar_postimprove=False, verbose=False,
+        )
+        if not rotas:
+            continue
+        maior     = max(r.carga for r in rotas)
+        custo     = round(sum(r.custo_brl for r in rotas), 2)
+        dist      = round(sum(r.dist_km for r in rotas), 1)
+        pass_tot  = sum(r.carga for r in rotas)
+        linhas.append({
+            "cap_efetiva":  cap,
+            "veiculos":     len(rotas),
+            "dist_km":      dist,
+            "custo_brl":    custo,
+            "maior_onibus": maior,
+            "ocup_maior_%": round(maior / modelo.capacidade * 100),
+        })
+
+    if verbose:
+        print(f"\n{'=' * 70}")
+        print(f"ANÁLISE DE PARETO  —  custo (combustível) × superlotação")
+        print(f"Depósito: {deposito} | modelo: {modelo.nome} | "
+              f"máx: {modelo.capacidade} | conforto: {modelo.capacidade_conforto}")
+        print(f"{'=' * 70}")
+        print(f"  {'cap/ônibus':>11} | {'ônibus':>6} | {'km':>7} | "
+              f"{'R$ comb.':>9} | {'maior':>6} | {'% lot.':>6}")
+        print(f"  {'-'*11} | {'-'*6} | {'-'*7} | {'-'*9} | {'-'*6} | {'-'*6}")
+        for L in linhas:
+            print(f"  {L['cap_efetiva']:>11} | {L['veiculos']:>6} | "
+                  f"{L['dist_km']:>7.1f} | {L['custo_brl']:>9.2f} | "
+                  f"{L['maior_onibus']:>6} | {L['ocup_maior_%']:>5}%")
+        print()
+
+    return linhas
 
 
 # ── Relatório ─────────────────────────────────────────────────────────────────
@@ -614,26 +819,45 @@ def imprimir_solucao(
     modelo:     ModeloOnibus,
     turno:      str,
     lam:        float,
+    conforto:   Optional[int] = None,
 ) -> None:
+    if conforto is None:
+        conforto = modelo.capacidade_conforto or capacidade
+
     custo_total = _custo_total(rotas)
     dist_total  = sum(r.dist_km for r in rotas)
+    pass_total  = sum(r.carga for r in rotas)
+    ocup_media  = (pass_total / (len(rotas) * capacidade) * 100) if rotas else 0.0
+    custo_pass  = custo_total / pass_total if pass_total else 0.0
+    n_lotados   = sum(1 for r in rotas if r.carga >= capacidade)
+    desconforto = sum(_excesso(r.carga, conforto) for r in rotas)
 
     print(f"\n{'=' * 65}")
     print(f"SOLUCAO CLARKE-WRIGHT OVRP  |  Turno: {turno}  |  lam = {lam}")
     print(f"Depósito  : {deposito}")
     print(f"Modelo    : {modelo.nome}")
-    print(f"Capacidade: {capacidade} pass. | R${modelo.custo_por_km:.4f}/km")
+    print(f"Capacidade: {capacidade} máx / {conforto} conforto | R${modelo.custo_por_km:.4f}/km")
     print(f"{'=' * 65}")
     print(f"  Veículos utilizados  : {len(rotas)}")
+    print(f"  Passageiros totais   : {pass_total}")
     print(f"  Distância total      : {dist_total:.1f} km")
     print(f"  Custo total (comb.)  : R${custo_total:.2f}")
     print(f"  Custo médio/veículo  : R${custo_total / max(1, len(rotas)):.2f}")
+    print(f"  Custo por passageiro : R${custo_pass:.2f}")     # KPI de eficiência
+    print(f"  Ocupação média       : {ocup_media:.0f}% da capacidade")
+    print(f"  Veículos lotados     : {n_lotados}/{len(rotas)} (carga = capacidade)")
+    print(f"  Pass. em desconforto : {desconforto} (acima de {conforto}/ônibus)")
     print()
 
     for i, rota in enumerate(sorted(rotas, key=lambda r: -r.carga), 1):
         pct    = round(rota.carga / capacidade * 100)
         barra  = "#" * (pct // 5) + "." * (20 - pct // 5)
-        status = "[LOTADO]" if pct >= 100 else ("[alto]" if pct >= 80 else "")
+        if rota.carga >= capacidade:
+            status = "[LOTADO]"
+        elif rota.carga > conforto:
+            status = "[desconforto]"
+        else:
+            status = ""
 
         print(f"  Ônibus {i:02d}  [{barra}] {pct:3d}%  "
               f"({rota.carga}/{capacidade} pass.)  "
@@ -717,6 +941,15 @@ def main() -> None:
                         help="Desativa two-phase selection (CW-1 apenas)")
     parser.add_argument("--sem-postimprove", action="store_true",
                         help="Desativa post-improvement (CW-1+CW-2 apenas)")
+    parser.add_argument("--sentido",     default="auto",
+                        choices=["auto", "ida", "volta"],
+                        help="ida=carga por embarque; volta=carga por desembarque")
+    parser.add_argument("--conforto",    type=int, default=None,
+                        help="Lotação confortável por ônibus (padrão: do modelo)")
+    parser.add_argument("--peso-superlotacao", type=float, default=0.0,
+                        help="Penalidade R$ por passageiro acima do conforto (0 = custo puro)")
+    parser.add_argument("--pareto",      action="store_true",
+                        help="Varre capacidades e mostra o trade-off custo × superlotação")
     parser.add_argument("--salvar",      action="store_true",
                         help="Salva resultado em output/")
     parser.add_argument("--frota",       action="store_true",
@@ -748,7 +981,16 @@ def main() -> None:
         paradas_ativas = set(demanda_turno.keys()) | {args.deposito}
         nos, matriz = construir_matriz_fallback(list(paradas_ativas))
 
-    # 3. Executa CW-OVRP
+    # 3a. Modo Pareto: varre capacidades e sai
+    if args.pareto:
+        analise_pareto(
+            nos=nos, matriz=matriz, demanda=demanda_turno,
+            deposito=args.deposito, modelo=ONIBUS_GENERICO,
+            sentido=args.sentido, verbose=True,
+        )
+        return
+
+    # 3b. Executa CW-OVRP
     rotas, lam_usado = clarke_wright_ovrp(
         nos             = nos,
         matriz          = matriz,
@@ -759,6 +1001,9 @@ def main() -> None:
         lam             = args.lambda_val,
         usar_two_phase  = not args.sem_two_phase,
         usar_postimprove= not args.sem_postimprove,
+        sentido         = args.sentido,
+        conforto        = args.conforto,
+        peso_superlotacao = args.peso_superlotacao,
         verbose         = True,
     )
 
@@ -770,6 +1015,7 @@ def main() -> None:
         modelo     = ONIBUS_GENERICO,
         turno      = args.turno,
         lam        = lam_usado,
+        conforto   = args.conforto,
     )
 
     if args.salvar:

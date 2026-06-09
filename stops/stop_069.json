@@ -1,0 +1,470 @@
+{
+  "label": "Sementeira – Av. da Integração",
+  "lat": -9.35943,
+  "lon": -40.54184,
+  "edges": [
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Abaré",
+      "distance": 4.262,
+      "estimated_travel_time": 9.1
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Academia I9",
+      "distance": 5.489,
+      "estimated_travel_time": 11.8
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Academia I9 – Av. 7 de Setembro",
+      "distance": 5.542,
+      "estimated_travel_time": 11.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Academia Well",
+      "distance": 6.834,
+      "estimated_travel_time": 14.6
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "distance": 10.542,
+      "estimated_travel_time": 22.6
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. 7 de Setembro – Aldiegas",
+      "distance": 6.585,
+      "estimated_travel_time": 14.1
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. Transnordestina – Entrada Bairro Dom Avelar",
+      "distance": 1.019,
+      "estimated_travel_time": 2.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. Transnordestina – Entrada Dom Avelar",
+      "distance": 2.714,
+      "estimated_travel_time": 5.8
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. Transnordestina – Nutiva Agro",
+      "distance": 1.527,
+      "estimated_travel_time": 3.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. Transnordestina – Posto Pedra Linda",
+      "distance": 2.861,
+      "estimated_travel_time": 6.1
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
+      "distance": 2.552,
+      "estimated_travel_time": 5.5
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. da Integração – Mundo da Lua",
+      "distance": 10.853,
+      "estimated_travel_time": 23.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. da Integração – Petrape",
+      "distance": 1.491,
+      "estimated_travel_time": 3.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. da Integração – Secretaria de Obras",
+      "distance": 6.197,
+      "estimated_travel_time": 13.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Av. da Integração – Sementeira",
+      "distance": 2.475,
+      "estimated_travel_time": 5.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "BR 407 – Isaías Automóveis / Posto Delta",
+      "distance": 2.768,
+      "estimated_travel_time": 5.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "BR 407 – Izabela Construções",
+      "distance": 1.262,
+      "estimated_travel_time": 2.7
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Bloco Antigo CCA",
+      "distance": 4.496,
+      "estimated_travel_time": 9.6
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Bloco de Salas de Aula CCA",
+      "distance": 7.114,
+      "estimated_travel_time": 15.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Canteiro de Obras",
+      "distance": 7.091,
+      "estimated_travel_time": 15.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Canteiro de Obras Av. 7 de Setembro",
+      "distance": 6.985,
+      "estimated_travel_time": 15.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Canteiro de Obras – Av. 7 de Setembro",
+      "distance": 6.723,
+      "estimated_travel_time": 14.4
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Canteiro de Obras – Juazeiro",
+      "distance": 11.62,
+      "estimated_travel_time": 24.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
+      "distance": 6.467,
+      "estimated_travel_time": 13.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Costrutéo (ponto de ônibus)",
+      "distance": 7.034,
+      "estimated_travel_time": 15.1
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "DETRAN – Av. Monsenhor (via principal)",
+      "distance": 6.469,
+      "estimated_travel_time": 13.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Distribuidora de Bebidas Revalle",
+      "distance": 8.401,
+      "estimated_travel_time": 18.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Estação Velha / Cooperativa Brasil",
+      "distance": 12.761,
+      "estimated_travel_time": 27.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Estação Velha Juazeiro",
+      "distance": 10.491,
+      "estimated_travel_time": 22.5
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Estrada da Banana – Antiga Distribuidora Camaleão",
+      "distance": 3.459,
+      "estimated_travel_time": 7.4
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Estrada da Banana – Condomínio Mais Viver",
+      "distance": 2.197,
+      "estimated_travel_time": 4.7
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Estrada da Banana – Primeira Rotatória",
+      "distance": 0.628,
+      "estimated_travel_time": 1.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Estrada da Banana – Restaurante Dona Branca",
+      "distance": 3.189,
+      "estimated_travel_time": 6.8
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Farmácia Popular",
+      "distance": 6.701,
+      "estimated_travel_time": 14.4
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Feira da COHAB Massangano",
+      "distance": 3.036,
+      "estimated_travel_time": 6.5
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Final da proteção de metal – Bairro Quati",
+      "distance": 4.074,
+      "estimated_travel_time": 8.7
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
+      "distance": 9.996,
+      "estimated_travel_time": 21.4
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "GBarbosa Juazeiro",
+      "distance": 9.701,
+      "estimated_travel_time": 20.8
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
+      "distance": 12.618,
+      "estimated_travel_time": 27.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "GBarbosa Petrolina",
+      "distance": 7.192,
+      "estimated_travel_time": 15.4
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
+      "distance": 11.437,
+      "estimated_travel_time": 24.5
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Hospital Veterinário",
+      "distance": 4.73,
+      "estimated_travel_time": 10.1
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Hospital Veterinário CCA",
+      "distance": 5.755,
+      "estimated_travel_time": 12.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Igreja Filadélfia",
+      "distance": 5.225,
+      "estimated_travel_time": 11.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
+      "distance": 2.924,
+      "estimated_travel_time": 6.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Mecânica Ouro Diesel",
+      "distance": 7.253,
+      "estimated_travel_time": 15.5
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
+      "distance": 9.304,
+      "estimated_travel_time": 19.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Ministério Público Federal",
+      "distance": 7.817,
+      "estimated_travel_time": 16.8
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Parque Mundo da Lua",
+      "distance": 5.663,
+      "estimated_travel_time": 12.1
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Petrape",
+      "distance": 2.327,
+      "estimated_travel_time": 5.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Petrape – Av. da Integração",
+      "distance": 0.932,
+      "estimated_travel_time": 2.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Plante Bem",
+      "distance": 1.969,
+      "estimated_travel_time": 4.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Ponto Aldiegas",
+      "distance": 8.919,
+      "estimated_travel_time": 19.1
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
+      "distance": 2.485,
+      "estimated_travel_time": 5.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Ponto BR 428 – PRF",
+      "distance": 2.662,
+      "estimated_travel_time": 5.7
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Ponto BR 428 – Posto Carranca",
+      "distance": 0.885,
+      "estimated_travel_time": 1.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
+      "distance": 4.71,
+      "estimated_travel_time": 10.1
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Ponto em frente à Abaré",
+      "distance": 6.612,
+      "estimated_travel_time": 14.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Posto ALE",
+      "distance": 6.798,
+      "estimated_travel_time": 14.6
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Posto Raul Lins / Bairro Castelo Branco",
+      "distance": 7.136,
+      "estimated_travel_time": 15.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Posto Raul Lins – Entrada Castelo Branco",
+      "distance": 7.684,
+      "estimated_travel_time": 16.5
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Posto São Francisco Av. 7 de Setembro",
+      "distance": 5.489,
+      "estimated_travel_time": 11.8
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Posto de Gasolina Big Brother",
+      "distance": 8.41,
+      "estimated_travel_time": 18.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Residência Estudantil CCA",
+      "distance": 3.38,
+      "estimated_travel_time": 7.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Rodoviária de Petrolina",
+      "distance": 9.21,
+      "estimated_travel_time": 19.7
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Rua do Paraíso ao lado das Lojas Americanas",
+      "distance": 5.531,
+      "estimated_travel_time": 11.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Secretaria de Obras",
+      "distance": 4.455,
+      "estimated_travel_time": 9.5
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Secretaria de Obras – Av. da Integração",
+      "distance": 6.687,
+      "estimated_travel_time": 14.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Sementeira",
+      "distance": 5.108,
+      "estimated_travel_time": 10.9
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Supermercado Regente",
+      "distance": 3.838,
+      "estimated_travel_time": 8.2
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
+      "distance": 10.287,
+      "estimated_travel_time": 22.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "UNIVASF Campus CCA",
+      "distance": 4.11,
+      "estimated_travel_time": 8.8
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "UNIVASF Campus CCA – Bloco Antigo",
+      "distance": 7.955,
+      "estimated_travel_time": 17.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
+      "distance": 6.251,
+      "estimated_travel_time": 13.4
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "UNIVASF Campus Juazeiro",
+      "distance": 11.223,
+      "estimated_travel_time": 24.0
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "UNIVASF Campus Petrolina",
+      "distance": 7.128,
+      "estimated_travel_time": 15.3
+    },
+    {
+      "origin": "Sementeira – Av. da Integração",
+      "destination": "Verdão Juazeiro",
+      "distance": 14.279,
+      "estimated_travel_time": 30.6
+    }
+  ],
+  "_sintetico": true
+}

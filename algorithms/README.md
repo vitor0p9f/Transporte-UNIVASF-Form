@@ -120,8 +120,38 @@ python clarke_wright.py --frota
 | `--lambda-val`      | automático                 | Valor fixo de λ; se omitido testa 0.1 a 2.0            |
 | `--sem-two-phase`   | —                          | Desativa two-phase selection (execução mais rápida)     |
 | `--sem-postimprove` | —                          | Desativa post-improvement (execução mais rápida)        |
+| `--sentido`         | `auto`                     | `ida` (carga = embarques) / `volta` (carga = desembarques) / `auto` |
+| `--conforto`        | do modelo (`36`)           | Lotação confortável por ônibus (sentados)               |
+| `--peso-superlotacao` | `0`                      | Penalidade R$/passageiro acima do conforto (0 = custo puro) |
+| `--pareto`          | —                          | Varre capacidades e mostra o trade-off custo × superlotação |
 | `--salvar`          | —                          | Salva resultado JSON em `output/`                       |
 | `--frota`           | —                          | Exibe modelos de ônibus cadastrados e sai               |
+
+> **Windows:** rode com `python -X utf8 ...` (ou `set PYTHONUTF8=1`) para os acentos saírem corretos no terminal.
+
+---
+
+## Superlotação: sentido, conforto e Pareto
+
+O problema de superlotação é tratado por três mecanismos:
+
+1. **Carga por sentido.** Na *ida* (rumo ao campus) a carga de cada parada são os
+   **embarques**; na *volta* (saindo do campus) são os **desembarques** — porque na
+   volta quase todos embarcam no próprio campus. O `auto` detecta pelo depósito.
+   *(Antes o código usava sempre embarques e zerava a demanda dos turnos noturnos.)*
+
+2. **Objetivo consciente de superlotação.** Com `--peso-superlotacao > 0` o algoritmo
+   passa a minimizar `combustível + peso·(passageiros acima do conforto)`, preferindo
+   distribuir gente em mais ônibus a deixar veículos lotados. Com peso `0` é custo puro.
+
+3. **Curva de Pareto** (`--pareto`). Varre o limite de lotação por ônibus e mostra,
+   para cada nível de conforto, quantos ônibus são necessários e o custo — a tabela
+   que responde *"quanto custa cada nível de conforto"*:
+
+```bash
+python clarke_wright.py --turno noite_1 --deposito "UNIVASF Campus CCA" --pareto
+python clarke_wright.py --turno manha_1 --peso-superlotacao 10   # objetivo consciente
+```
 
 ---
 

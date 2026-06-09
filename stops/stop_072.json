@@ -1,0 +1,470 @@
+{
+  "label": "UNIVASF Campus CCA",
+  "lat": -9.34661,
+  "lon": -40.56756,
+  "edges": [
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Abaré",
+      "distance": 8.033,
+      "estimated_travel_time": 17.2
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Academia I9",
+      "distance": 9.538,
+      "estimated_travel_time": 20.4
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Academia I9 – Av. 7 de Setembro",
+      "distance": 9.651,
+      "estimated_travel_time": 20.7
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Academia Well",
+      "distance": 10.903,
+      "estimated_travel_time": 23.4
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
+      "distance": 14.612,
+      "estimated_travel_time": 31.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. 7 de Setembro – Aldiegas",
+      "distance": 10.69,
+      "estimated_travel_time": 22.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. Transnordestina – Entrada Bairro Dom Avelar",
+      "distance": 3.11,
+      "estimated_travel_time": 6.7
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. Transnordestina – Entrada Dom Avelar",
+      "distance": 6.553,
+      "estimated_travel_time": 14.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. Transnordestina – Nutiva Agro",
+      "distance": 4.635,
+      "estimated_travel_time": 9.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. Transnordestina – Posto Pedra Linda",
+      "distance": 6.668,
+      "estimated_travel_time": 14.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
+      "distance": 5.956,
+      "estimated_travel_time": 12.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. da Integração – Mundo da Lua",
+      "distance": 14.818,
+      "estimated_travel_time": 31.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. da Integração – Petrape",
+      "distance": 2.994,
+      "estimated_travel_time": 6.4
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. da Integração – Secretaria de Obras",
+      "distance": 10.008,
+      "estimated_travel_time": 21.4
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Av. da Integração – Sementeira",
+      "distance": 6.53,
+      "estimated_travel_time": 14.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "BR 407 – Isaías Automóveis / Posto Delta",
+      "distance": 6.336,
+      "estimated_travel_time": 13.6
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "BR 407 – Izabela Construções",
+      "distance": 5.36,
+      "estimated_travel_time": 11.5
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Bloco Antigo CCA",
+      "distance": 2.151,
+      "estimated_travel_time": 4.6
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Bloco de Salas de Aula CCA",
+      "distance": 5.042,
+      "estimated_travel_time": 10.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Canteiro de Obras",
+      "distance": 11.197,
+      "estimated_travel_time": 24.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Canteiro de Obras Av. 7 de Setembro",
+      "distance": 10.902,
+      "estimated_travel_time": 23.4
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Canteiro de Obras – Av. 7 de Setembro",
+      "distance": 10.828,
+      "estimated_travel_time": 23.2
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Canteiro de Obras – Juazeiro",
+      "distance": 15.299,
+      "estimated_travel_time": 32.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
+      "distance": 9.844,
+      "estimated_travel_time": 21.1
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Costrutéo (ponto de ônibus)",
+      "distance": 10.451,
+      "estimated_travel_time": 22.4
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "DETRAN – Av. Monsenhor (via principal)",
+      "distance": 10.57,
+      "estimated_travel_time": 22.6
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Distribuidora de Bebidas Revalle",
+      "distance": 12.136,
+      "estimated_travel_time": 26.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Estação Velha / Cooperativa Brasil",
+      "distance": 16.453,
+      "estimated_travel_time": 35.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Estação Velha Juazeiro",
+      "distance": 14.128,
+      "estimated_travel_time": 30.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Estrada da Banana – Antiga Distribuidora Camaleão",
+      "distance": 7.569,
+      "estimated_travel_time": 16.2
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Estrada da Banana – Condomínio Mais Viver",
+      "distance": 4.297,
+      "estimated_travel_time": 9.2
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Estrada da Banana – Primeira Rotatória",
+      "distance": 4.571,
+      "estimated_travel_time": 9.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Estrada da Banana – Restaurante Dona Branca",
+      "distance": 6.089,
+      "estimated_travel_time": 13.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Farmácia Popular",
+      "distance": 10.781,
+      "estimated_travel_time": 23.1
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Feira da COHAB Massangano",
+      "distance": 6.899,
+      "estimated_travel_time": 14.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Final da proteção de metal – Bairro Quati",
+      "distance": 8.183,
+      "estimated_travel_time": 17.5
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
+      "distance": 13.908,
+      "estimated_travel_time": 29.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "GBarbosa Juazeiro",
+      "distance": 13.644,
+      "estimated_travel_time": 29.2
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
+      "distance": 16.4,
+      "estimated_travel_time": 35.1
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "GBarbosa Petrolina",
+      "distance": 11.169,
+      "estimated_travel_time": 23.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
+      "distance": 15.388,
+      "estimated_travel_time": 33.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Hospital Veterinário",
+      "distance": 0.622,
+      "estimated_travel_time": 1.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Hospital Veterinário CCA",
+      "distance": 1.854,
+      "estimated_travel_time": 4.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Igreja Filadélfia",
+      "distance": 9.334,
+      "estimated_travel_time": 20.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
+      "distance": 3.478,
+      "estimated_travel_time": 7.5
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Mecânica Ouro Diesel",
+      "distance": 11.101,
+      "estimated_travel_time": 23.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
+      "distance": 13.382,
+      "estimated_travel_time": 28.7
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Ministério Público Federal",
+      "distance": 11.343,
+      "estimated_travel_time": 24.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Parque Mundo da Lua",
+      "distance": 9.44,
+      "estimated_travel_time": 20.2
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Petrape",
+      "distance": 4.123,
+      "estimated_travel_time": 8.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Petrape – Av. da Integração",
+      "distance": 3.821,
+      "estimated_travel_time": 8.2
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Plante Bem",
+      "distance": 6.024,
+      "estimated_travel_time": 12.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Ponto Aldiegas",
+      "distance": 12.998,
+      "estimated_travel_time": 27.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
+      "distance": 5.833,
+      "estimated_travel_time": 12.5
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Ponto BR 428 – PRF",
+      "distance": 6.582,
+      "estimated_travel_time": 14.1
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Ponto BR 428 – Posto Carranca",
+      "distance": 3.226,
+      "estimated_travel_time": 6.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
+      "distance": 8.36,
+      "estimated_travel_time": 17.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Ponto em frente à Abaré",
+      "distance": 10.297,
+      "estimated_travel_time": 22.1
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Posto ALE",
+      "distance": 10.906,
+      "estimated_travel_time": 23.4
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Posto Raul Lins / Bairro Castelo Branco",
+      "distance": 11.043,
+      "estimated_travel_time": 23.7
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Posto Raul Lins – Entrada Castelo Branco",
+      "distance": 11.778,
+      "estimated_travel_time": 25.2
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Posto São Francisco Av. 7 de Setembro",
+      "distance": 9.586,
+      "estimated_travel_time": 20.5
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Posto de Gasolina Big Brother",
+      "distance": 12.477,
+      "estimated_travel_time": 26.7
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Residência Estudantil CCA",
+      "distance": 2.716,
+      "estimated_travel_time": 5.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Rodoviária de Petrolina",
+      "distance": 13.185,
+      "estimated_travel_time": 28.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Rua do Paraíso ao lado das Lojas Americanas",
+      "distance": 9.64,
+      "estimated_travel_time": 20.7
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Secretaria de Obras",
+      "distance": 8.533,
+      "estimated_travel_time": 18.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Secretaria de Obras – Av. da Integração",
+      "distance": 10.415,
+      "estimated_travel_time": 22.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Sementeira",
+      "distance": 9.078,
+      "estimated_travel_time": 19.5
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Sementeira – Av. da Integração",
+      "distance": 4.11,
+      "estimated_travel_time": 8.8
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Supermercado Regente",
+      "distance": 7.94,
+      "estimated_travel_time": 17.0
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
+      "distance": 14.257,
+      "estimated_travel_time": 30.6
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "UNIVASF Campus CCA – Bloco Antigo",
+      "distance": 4.347,
+      "estimated_travel_time": 9.3
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
+      "distance": 2.294,
+      "estimated_travel_time": 4.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "UNIVASF Campus Juazeiro",
+      "distance": 14.649,
+      "estimated_travel_time": 31.4
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "UNIVASF Campus Petrolina",
+      "distance": 10.678,
+      "estimated_travel_time": 22.9
+    },
+    {
+      "origin": "UNIVASF Campus CCA",
+      "destination": "Verdão Juazeiro",
+      "distance": 18.021,
+      "estimated_travel_time": 38.6
+    }
+  ],
+  "_sintetico": true
+}
