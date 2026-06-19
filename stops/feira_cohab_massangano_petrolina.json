@@ -1,7 +1,7 @@
 {
     "label": "FEIRA DA COHAB MASSANGANO / PETROLINA",
-    "boardings": [0, 0, 0, 0, 0, 0],
-    "alightings": [0, 0, 0, 0, 0, 0],
+    "boardings" : [13, 6, 2, 1, 3, 1],
+    "alightings": [1, 0, 6, 5, 5, 7],
     "edges": [
         {
             "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",

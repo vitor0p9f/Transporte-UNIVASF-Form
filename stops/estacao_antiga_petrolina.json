@@ -1,7 +1,7 @@
 {
     "label": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",
     "boardings": [0, 0, 0, 0, 0, 0],
-    "alightings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 9, 3],
     "edges": [
         {
             "destination": "UNIVASF / JUAZEIRO",

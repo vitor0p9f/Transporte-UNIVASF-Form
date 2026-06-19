@@ -1,6 +1,6 @@
 {
     "label": "ALOJAMENTO ESTUDANTIL DO CCA / PETROLINA",
-    "boardings": [0, 0, 0, 0, 0, 0],
+    "boardings": [1, 0, 0, 0, 0, 0],
     "alightings": [0, 0, 0, 0, 0, 0],
     "edges": [
         {

@@ -1,7 +1,7 @@
 {
     "label": "LOJAS AMERICANAS / JUAZEIRO",
-    "boardings": [0, 0, 0, 0, 0, 0],
-    "alightings": [0, 0, 0, 0, 0, 0],
+    "boardings" : [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 3, 6, 16, 2],
     "edges": [
         {
             "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",

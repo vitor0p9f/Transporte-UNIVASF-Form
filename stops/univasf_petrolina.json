@@ -1,7 +1,7 @@
 {
     "label": "UNIVASF / PETROLINA",
-    "boardings": [0, 0, 0, 0, 0, 0],
-    "alightings": [0, 0, 0, 0, 0, 0],
+    "boardings" : [7, 6, 8, 8, 15, 21],
+    "alightings": [19, 8, 17, 5, 10, 3],
     "edges": [
         {
             "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",

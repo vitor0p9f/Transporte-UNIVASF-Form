@@ -1,7 +1,7 @@
 {
     "label": "CONSTRUTEO / PETROLINA",
     "boardings": [0, 0, 0, 0, 0, 0],
-    "alightings": [0, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 0, 0, 4, 1],
     "edges": [
         {
             "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",

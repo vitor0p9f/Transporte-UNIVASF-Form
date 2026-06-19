@@ -1,6 +1,6 @@
 {
     "label": "TERMINAL RODOVIÁRIO / PETROLINA",
-    "boardings": [0, 0, 0, 0, 0, 0],
+    "boardings": [0, 0, 0, 0, 0, 1],
     "alightings": [0, 0, 0, 0, 0, 0],
     "edges": [
         {

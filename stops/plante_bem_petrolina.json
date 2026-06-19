@@ -1,7 +1,7 @@
 {
     "label": "PLANTE BEM / PETROLINA",
-    "boardings": [0, 0, 0, 0, 0, 0],
-    "alightings": [0, 0, 0, 0, 0, 0],
+    "boardings" : [6, 0, 1, 0, 0, 0],
+    "alightings": [0, 0, 1, 1, 5, 0],
     "edges": [
         {
             "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",

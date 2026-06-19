@@ -1,7 +1,7 @@
 {
     "label": "ACADEMIA I9 / PETROLINA",
-    "boardings": [0, 0, 0, 0, 0, 0],
-    "alightings": [0, 0, 0, 0, 0, 0],
+    "boardings": [5, 0, 1, 0, 0, 0],
+    "alightings": [1, 0, 0, 3, 7, 2],
     "edges": [
         {
             "destination": "ANTIGA ESTAÇÃO FERROVIÁRIA / PETROLINA",

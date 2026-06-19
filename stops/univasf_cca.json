@@ -1,6 +1,6 @@
 {
-    "label": "UNIVASF CCA/ PETROLINA",
-    "boardings": [0, 0, 0, 0, 0, 0],
+    "label": "UNIVASF CCA / PETROLINA",
+    "boardings" : [0, 0, 0, 0, 44, 0],
     "alightings": [0, 0, 0, 0, 0, 0],
     "edges": [
         {
