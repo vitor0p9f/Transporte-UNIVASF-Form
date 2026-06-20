@@ -29,7 +29,7 @@
             "estimated_travel_time": 24
         },
         {
-            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA / PETROLINA",
+            "destination": "CLÍNICA VETERINÁRIA UNIVERSITÁRIA DO CCA / PETROLINA",
             "distance": 1.4,
             "estimated_travel_time": 4
         },
@@ -49,12 +49,12 @@
             "estimated_travel_time": 12
         },
         {
-            "destination": "G BARBOSA / PETROLINA",
+            "destination": "GBARBOSA AV. MONSENHOR ÂNGELO SAMPAIO / PETROLINA",
             "distance": 13.9,
             "estimated_travel_time": 24
         },
         {
-            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO / PETROLINA",
+            "destination": "IZABELLA MATERIAL DE CONSTRUÇÃO BAIRRO COSME E DAMIÃO / PETROLINA",
             "distance": 5.3,
             "estimated_travel_time": 7
         },
@@ -74,12 +74,12 @@
             "estimated_travel_time": 22
         },
         {
-            "destination": "PLANTE BEM / PETROLINA",
+            "destination": "PLANTE BEM MATRIZ / PETROLINA",
             "distance": 10.2,
             "estimated_travel_time": 16
         },
         {
-            "destination": "POSTO RAUL LINS / JUAZEIRO",
+            "destination": "POSTO RAUL LINS ENTRADA DO BAIRRO CASTELO BRANCO / JUAZEIRO",
             "distance": 16.9,
             "estimated_travel_time": 35
         },
@@ -89,7 +89,7 @@
             "estimated_travel_time": 20
         },
         {
-            "destination": "SUPERMERCADO REGENTE / PETROLINA",
+            "destination": "SUPERMERCADO REGENTE AV. SOUZA FILHO / PETROLINA",
             "distance": 12.6,
             "estimated_travel_time": 24
         },
@@ -114,7 +114,7 @@
             "estimated_travel_time": 16
         },
         {
-            "destination": "CLINICA POPULAR AREIA BRANCA / PETROLINA",
+            "destination": "CLÍNICA POPULAR BAIRRO AREIA BRANCA / PETROLINA",
             "distance": 13.8,
             "estimated_travel_time": 24
         },
@@ -134,7 +134,7 @@
             "estimated_travel_time": 20
         },
         {
-            "destination": "POSTO VALE DOURADO / PETROLINA",
+            "destination": "POSTO VALE DOURADO ENTRADA DO BAIRRO PEDRA LINDA / PETROLINA",
             "distance": 10.6,
             "estimated_travel_time": 16
         },
@@ -154,7 +154,7 @@
             "estimated_travel_time": 20
         },
         {
-            "destination": "CANTEIRO DE OBRAS / PETROLINA",
+            "destination": "LOJA DE MATERIAL DE CONSTRUÇÃO CANTEIRO DE OBRAS / PETROLINA",
             "distance": 13.3,
             "estimated_travel_time": 22
         },
@@ -229,7 +229,7 @@
             "estimated_travel_time": 20
         },
         {
-            "destination": "REVENDA AMBEV / PETROLINA",
+            "destination": "BEIRA RIO REVENDA AMBEV / PETROLINA",
             "distance": 9.4,
             "estimated_travel_time": 14
         }
