@@ -1,0 +1,688 @@
+id,turno,embarque,desembarque,lotacao,created_at,email
+17,manha_1,Av. da Integração – Sementeira,Bloco de Salas de Aula CCA,5,2026-04-14 00:43:52.734337+00,marteovan.sousa@discente.univasf.edu.br
+18,noite_1,UNIVASF Campus CCA,Sementeira,5,2026-04-14 00:43:52.734337+00,marteovan.sousa@discente.univasf.edu.br
+19,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-04-14 00:48:37.237174+00,ingrid.vitoria@discente.univasf.edu.br
+20,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,5,2026-04-14 00:49:12.90545+00,yann.ferreira@discente.univasf.edu.br
+21,noite_1,UNIVASF Campus Juazeiro,GBarbosa Av. Monsenhor Ângelo Sampaio,3,2026-04-14 00:49:12.90545+00,yann.ferreira@discente.univasf.edu.br
+22,tarde_1,Ponto BR 428 – DR Distribuidora (Vila Marcela),UNIVASF Campus Juazeiro,5,2026-04-14 00:49:12.90545+00,yann.ferreira@discente.univasf.edu.br
+23,manha_1,Estação Velha Juazeiro,Bloco de Salas de Aula CCA,5,2026-04-14 00:51:06.694344+00,dagner.lucas@discente.univasf.edu.br
+24,noite_1,UNIVASF Campus CCA,Estação Velha / Cooperativa Brasil,5,2026-04-14 00:51:06.694344+00,dagner.lucas@discente.univasf.edu.br
+25,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-04-14 00:51:29.660375+00,jadson.santos@discente.univasf.edu.br
+26,noite_1,Bloco de Salas de Aula CCA,Posto ALE,5,2026-04-14 00:51:29.660375+00,jadson.santos@discente.univasf.edu.br
+27,manha_1,Canteiro de Obras Av. 7 de Setembro,Bloco de Salas de Aula CCA,1,2026-04-14 00:51:35.20309+00,ialy.ksouza@discente.univasf.edu.br
+28,manha_1,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,5,2026-04-14 00:52:25.20579+00,lais.brandao@discente.univasf.edu.br
+29,noite_1,Bloco de Salas de Aula CCA,UNIVASF Campus Petrolina,5,2026-04-14 00:52:25.20579+00,lais.brandao@discente.univasf.edu.br
+30,manha_1,Av. da Integração – Sementeira,UNIVASF Campus Juazeiro,4,2026-04-14 00:55:03.610642+00,nemuel.severo@discente.univasf.edu.br
+31,tarde_1,UNIVASF Campus Juazeiro,Sementeira – Av. da Integração,3,2026-04-14 00:55:03.610642+00,nemuel.severo@discente.univasf.edu.br
+32,tarde_2,Sementeira – Av. da Integração,UNIVASF Campus Juazeiro,2,2026-04-14 00:55:03.610642+00,nemuel.severo@discente.univasf.edu.br
+33,noite_1,UNIVASF Campus Juazeiro,Sementeira,5,2026-04-14 00:55:03.610642+00,nemuel.severo@discente.univasf.edu.br
+34,manha_1,Estação Velha Juazeiro,Bloco de Salas de Aula CCA,5,2026-04-14 00:57:04.017939+00,ruth.gomes@discente.univasf.edu.br
+35,noite_1,Bloco de Salas de Aula CCA,Estação Velha / Cooperativa Brasil,5,2026-04-14 00:57:04.017939+00,ruth.gomes@discente.univasf.edu.br
+36,noite_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-04-14 00:58:40.263246+00,leo.florentino@discente.univasf.edu.br
+37,noite_2,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,2,2026-04-14 00:58:40.263246+00,leo.florentino@discente.univasf.edu.br
+38,manha_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-04-14 01:05:37.795341+00,clara.silvasantos@discente.univasf.edu.br
+39,tarde_1,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,5,2026-04-14 01:07:09.596996+00,clara.silvasantos@discente.univasf.edu.br
+40,noite_2,UNIVASF Campus Petrolina,Estação Velha / Cooperativa Brasil,5,2026-04-14 01:12:51.152749+00,karen.eduarda@discente.univasf.edu.br
+41,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,5,2026-04-14 01:20:52.579278+00,giovanna.lemos@discente.univasf.edu.br
+42,tarde_1,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,4,2026-04-14 01:21:19.158227+00,emanuelle.silva@discente.univasf.edu.br
+43,noite_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,5,2026-04-14 01:21:19.158227+00,emanuelle.silva@discente.univasf.edu.br
+44,manha_1,Av. da Integração – Secretaria de Obras,Bloco de Salas de Aula CCA,5,2026-04-14 01:29:21.401488+00,pedro.safeitosa@discente.univasf.edu.br
+45,noite_1,Bloco Antigo CCA,Parque Mundo da Lua,5,2026-04-14 01:29:21.401488+00,pedro.safeitosa@discente.univasf.edu.br
+46,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Izabela Construções (Cosme Damião / sentido CCA),5,2026-04-14 01:33:00.322124+00,bianca.amorim@discente.univasf.edu.br
+47,manha_1,Izabela Construções (Cosme Damião / sentido CCA),UNIVASF Campus Juazeiro,4,2026-04-14 01:40:05.366519+00,gabrielle.santana@discente.univasf.edu.br
+48,noite_1,UNIVASF Campus CCA,BR 407 – Izabela Construções,5,2026-04-14 01:40:05.366519+00,gabrielle.santana@discente.univasf.edu.br
+49,tarde_2,UNIVASF Campus Juazeiro,BR 407 – Izabela Construções,3,2026-04-14 01:40:05.366519+00,gabrielle.santana@discente.univasf.edu.br
+50,tarde_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-04-14 01:40:05.366519+00,gabrielle.santana@discente.univasf.edu.br
+51,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Juazeiro,2,2026-04-14 02:00:42.272774+00,isadora.ketlin@discente.univasf.edu.br
+52,tarde_1,Plante Bem,UNIVASF Campus Juazeiro,4,2026-04-14 02:00:42.272774+00,isadora.ketlin@discente.univasf.edu.br
+53,noite_2,UNIVASF Campus Juazeiro,Posto ALE,4,2026-04-14 02:00:42.272774+00,isadora.ketlin@discente.univasf.edu.br
+54,manha_1,GBarbosa Juazeiro,UNIVASF Campus Petrolina,5,2026-04-14 02:02:33.450719+00,ligia.medeiros@discente.univasf.edu.br
+55,noite_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-04-14 02:58:38.919345+00,kamila.vieira@discente.univasf.edu.br
+56,noite_1,Supermercado Regente,Sementeira,1,2026-04-14 03:06:13.273091+00,mireli.rodriguesl@discente.univasf.edu.br
+57,noite_2,Verdão Juazeiro,Verdão Juazeiro,5,2026-04-14 03:12:35.53165+00,neila.monteiro@discente.univasf.edu.br
+58,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,4,2026-04-14 07:27:09.639654+00,melissa.oliveira@discente.univasf.edu.br
+59,noite_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-04-14 07:27:09.639654+00,melissa.oliveira@discente.univasf.edu.br
+60,tarde_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,4,2026-04-14 07:27:09.639654+00,melissa.oliveira@discente.univasf.edu.br
+61,tarde_2,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,3,2026-04-14 07:27:09.639654+00,melissa.oliveira@discente.univasf.edu.br
+62,manha_1,Plante Bem,Bloco de Salas de Aula CCA,5,2026-04-14 07:49:36.215318+00,alysson.souza@discente.univasf.edu.br
+63,noite_1,UNIVASF Campus CCA,Plante Bem,5,2026-04-14 07:49:36.215318+00,alysson.souza@discente.univasf.edu.br
+64,manha_1,Canteiro de Obras Av. 7 de Setembro,UNIVASF Campus Juazeiro,5,2026-04-14 09:19:33.778008+00,derik.alexandre@discente.univasf.edu.br
+65,manha_1,Av. da Integração – Sementeira,Bloco de Salas de Aula CCA,5,2026-04-14 09:45:35.197688+00,ana.mariaduarte@discente.univasf.edu.br
+66,noite_1,Bloco de Salas de Aula CCA,Academia I9,5,2026-04-14 09:45:35.197688+00,ana.mariaduarte@discente.univasf.edu.br
+67,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-04-14 09:50:36.131335+00,samuel.moraisl@discente.univasf.edu.br
+68,noite_1,UNIVASF Campus CCA,Posto ALE,5,2026-04-14 09:50:36.131335+00,samuel.moraisl@discente.univasf.edu.br
+69,manha_1,Plante Bem,Feira da COHAB Massangano,1,2026-04-14 10:44:36.898157+00,stephany.hadassa@discente.univasf.edu.br
+70,manha_1,Izabela Construções (Cosme Damião / sentido CCA),UNIVASF Campus Petrolina,3,2026-04-14 11:02:35.979006+00,maysa.foliveira@discente.univasf.edu.br
+71,noite_1,UNIVASF Campus Petrolina,BR 407 – Izabela Construções,5,2026-04-14 11:02:35.979006+00,maysa.foliveira@discente.univasf.edu.br
+72,manha_1,Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,5,2026-04-14 11:38:11.521102+00,fernanda.gondim@discente.univasf.edu.br
+73,noite_1,Bloco de Salas de Aula CCA,Ministério Público Federal,5,2026-04-14 11:38:11.521102+00,fernanda.gondim@discente.univasf.edu.br
+74,manha_1,Canteiro de Obras Av. 7 de Setembro,UNIVASF Campus Juazeiro,5,2026-04-14 12:27:42.978576+00,guilherme.b@discente.univasf.edu.br
+75,noite_2,UNIVASF Campus Juazeiro,Academia I9,5,2026-04-14 12:27:42.978576+00,guilherme.b@discente.univasf.edu.br
+76,noite_2,UNIVASF Campus Juazeiro,Posto Raul Lins – Entrada Castelo Branco,1,2026-04-14 12:34:17.966243+00,phablo.pereira@discente.univasf.edu.br
+77,noite_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-04-14 12:48:20.800128+00,clara.amorim@discente.univasf.edu.br
+78,noite_2,UNIVASF Campus Juazeiro,Sementeira,3,2026-04-14 12:56:53.166548+00,helena.rasantos@discente.univasf.edu.br
+79,manha_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-04-14 13:47:50.170324+00,aline.medeiros@discente.univasf.edu.br
+80,tarde_2,UNIVASF Campus Juazeiro,Sementeira – Av. da Integração,1,2026-04-14 22:26:46.359583+00,laisa.bnunes@discente.univasf.edu.br
+81,manha_1,Supermercado Regente,Bloco de Salas de Aula CCA,5,2026-04-15 00:38:33.515099+00,gabrielly.almeida@discente.univasf.edu.br
+82,manha_2,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,4,2026-04-15 00:38:33.515099+00,gabrielly.almeida@discente.univasf.edu.br
+83,noite_1,BR 407 – Izabela Construções,BR 407 – Izabela Construções,5,2026-04-15 09:22:35.610282+00,weverton.costa@discente.univasf.edu.br
+84,noite_2,Feira da COHAB Massangano,BR 407 – Izabela Construções,4,2026-04-15 09:22:35.610282+00,weverton.costa@discente.univasf.edu.br
+85,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Hospital Veterinário CCA,5,2026-04-15 10:36:58.126365+00,hercules.joelson@discente.univasf.edu.br
+86,manha_1,Estação Velha Juazeiro,Bloco de Salas de Aula CCA,5,2026-04-15 18:39:25.499307+00,vitoria.sousaa@discente.univasf.edu.br
+87,noite_1,UNIVASF Campus CCA,Estação Velha / Cooperativa Brasil,4,2026-04-15 18:39:25.499307+00,vitoria.sousaa@discente.univasf.edu.br
+88,tarde_2,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,2,2026-04-15 18:39:25.499307+00,vitoria.sousaa@discente.univasf.edu.br
+89,tarde_1,Estação Velha Juazeiro,UNIVASF Campus Petrolina,2,2026-04-15 18:39:25.499307+00,vitoria.sousaa@discente.univasf.edu.br
+90,manha_1,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,4,2026-04-15 18:49:45.312153+00,marcos.bagagi@discente.univasf.edu.br
+91,tarde_1,Bloco de Salas de Aula CCA,Feira da COHAB Massangano,4,2026-04-15 18:49:45.312153+00,marcos.bagagi@discente.univasf.edu.br
+92,noite_1,Bloco de Salas de Aula CCA,Feira da COHAB Massangano,1,2026-04-15 18:49:45.312153+00,marcos.bagagi@discente.univasf.edu.br
+93,noite_1,Parque Mundo da Lua,Parque Mundo da Lua,3,2026-04-17 17:54:00.487098+00,anica.oliveira@discente.univasf.edu.br
+94,manha_1,Av. da Integração – Petrape,UNIVASF Campus Juazeiro,3,2026-04-21 13:52:40.080838+00,andrei.rodrigues@discente.univasf.edu.br
+95,manha_1,Av. da Integração – Petrape,UNIVASF Campus Juazeiro,3,2026-05-11 12:32:56.615724+00,andrei.rodrigues@discente.univasf.edu.br
+96,noite_2,Posto Raul Lins – Entrada Castelo Branco,UNIVASF Campus Juazeiro,3,2026-05-11 12:33:28.475899+00,ana.claragoncalves@discente.univasf.edu.br
+97,tarde_2,UNIVASF Campus Petrolina,Rua do Paraíso ao lado das Lojas Americanas,3,2026-05-11 12:34:09.720631+00,ruth.mickely@discente.univasf.edu.br
+98,noite_2,UNIVASF Campus Petrolina,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 12:34:09.720631+00,ruth.mickely@discente.univasf.edu.br
+99,noite_2,Supermercado Regente,UNIVASF Campus Juazeiro,5,2026-05-11 12:34:20.165346+00,yasmim.cardoso@discente.univasf.edu.br
+100,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 12:34:21.759283+00,nathali.doria@discente.univasf.edu.br
+101,tarde_1,UNIVASF Campus Juazeiro,Terminal de Juazeiro – Camelódromo 2 de Julho,5,2026-05-11 12:34:29.622772+00,victor.andrade@discente.univasf.edu.br
+102,noite_2,UNIVASF Campus Petrolina,GBarbosa Juazeiro,2,2026-05-11 12:34:29.622772+00,victor.andrade@discente.univasf.edu.br
+103,manha_1,Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda,Bloco de Salas de Aula CCA,5,2026-05-11 12:34:31.606237+00,joaquim.neto@discente.univasf.edu.br
+104,noite_1,UNIVASF Campus CCA,Av. Transnordestina – Posto Pedra Linda,5,2026-05-11 12:34:31.606237+00,joaquim.neto@discente.univasf.edu.br
+105,manha_1,Supermercado Regente,Supermercado Regente,5,2026-05-11 12:34:43.115742+00,fernanda.muricylopes@discente.univasf.edu.br
+106,noite_1,UNIVASF Campus CCA,Supermercado Regente,5,2026-05-11 12:34:43.115742+00,fernanda.muricylopes@discente.univasf.edu.br
+107,noite_1,UNIVASF Campus Juazeiro,Terminal de Juazeiro – Camelódromo 2 de Julho,5,2026-05-11 12:34:48.220172+00,kezia.miranda@discente.univasf.edu.br
+108,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,2,2026-05-11 12:34:48.301995+00,filipe.ssilva@discente.univasf.edu.br
+109,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,2,2026-05-11 12:34:48.301995+00,filipe.ssilva@discente.univasf.edu.br
+110,tarde_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,2,2026-05-11 12:34:48.301995+00,filipe.ssilva@discente.univasf.edu.br
+111,noite_2,UNIVASF Campus Petrolina,Canteiro de Obras – Juazeiro,3,2026-05-11 12:34:48.301995+00,filipe.ssilva@discente.univasf.edu.br
+112,manha_1,Distribuidora de Bebidas Revalle,Distribuidora de Bebidas Revalle,5,2026-05-11 12:34:50.922815+00,ingrid.vitoria@discente.univasf.edu.br
+113,manha_1,Ponto BR 428 – DR Distribuidora (Vila Marcela),UNIVASF Campus Juazeiro,5,2026-05-11 12:34:51.075142+00,vitoria.freirecavalcanti@discente.univasf.edu.br
+114,noite_2,UNIVASF Campus Juazeiro,Posto de Gasolina Big Brother,3,2026-05-11 12:34:51.075142+00,vitoria.freirecavalcanti@discente.univasf.edu.br
+115,tarde_1,Ponto BR 428 – DR Distribuidora (Vila Marcela),UNIVASF Campus Juazeiro,4,2026-05-11 12:34:51.075142+00,vitoria.freirecavalcanti@discente.univasf.edu.br
+116,noite_2,UNIVASF Campus Petrolina,Igreja Filadélfia,4,2026-05-11 12:35:51.552629+00,karina.shayene@discente.univasf.edu.br
+117,manha_1,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,4,2026-05-11 12:36:07.594489+00,marianna.moura@discente.univasf.edu.br
+118,manha_2,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,5,2026-05-11 12:36:13.044353+00,bianca.ssr@discente.univasf.edu.br
+119,tarde_1,Supermercado Regente,Bloco de Salas de Aula CCA,1,2026-05-11 12:36:13.044353+00,bianca.ssr@discente.univasf.edu.br
+120,tarde_2,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,3,2026-05-11 12:36:13.044353+00,bianca.ssr@discente.univasf.edu.br
+121,noite_1,UNIVASF Campus CCA,Supermercado Regente,5,2026-05-11 12:36:13.044353+00,bianca.ssr@discente.univasf.edu.br
+122,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Juazeiro,3,2026-05-11 12:36:19.286161+00,robert.souza@discente.univasf.edu.br
+123,noite_2,UNIVASF Campus Juazeiro,Costrutéo (ponto de ônibus),5,2026-05-11 12:36:19.286161+00,robert.souza@discente.univasf.edu.br
+124,noite_1,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,3,2026-05-11 12:36:19.286161+00,robert.souza@discente.univasf.edu.br
+125,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-11 12:36:57.241262+00,carla.emanuela@discente.univasf.edu.br
+126,tarde_2,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,2,2026-05-11 12:36:57.241262+00,carla.emanuela@discente.univasf.edu.br
+127,noite_1,UNIVASF Campus CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 12:36:57.241262+00,carla.emanuela@discente.univasf.edu.br
+128,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Juazeiro,5,2026-05-11 12:37:54.730504+00,marcos.silvafreire@discente.univasf.edu.br
+129,noite_1,UNIVASF Campus Juazeiro,Posto ALE,5,2026-05-11 12:37:54.730504+00,marcos.silvafreire@discente.univasf.edu.br
+130,tarde_2,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,2,2026-05-11 12:37:54.730504+00,marcos.silvafreire@discente.univasf.edu.br
+131,manha_1,Academia I9 – Av. 7 de Setembro,UNIVASF Campus Juazeiro,4,2026-05-11 12:38:01.393368+00,pedro.ventura@discente.univasf.edu.br
+132,noite_2,UNIVASF Campus Juazeiro,Canteiro de Obras,5,2026-05-11 12:38:01.393368+00,pedro.ventura@discente.univasf.edu.br
+133,tarde_1,UNIVASF Campus Juazeiro,Canteiro de Obras – Av. 7 de Setembro,4,2026-05-11 12:38:01.393368+00,pedro.ventura@discente.univasf.edu.br
+134,manha_1,Academia I9 – Av. 7 de Setembro,UNIVASF Campus Juazeiro,4,2026-05-11 12:38:11.855229+00,adlla.oliveira@discente.univasf.edu.br
+135,manha_1,Av. Transnordestina – Nutiva Agro,Bloco de Salas de Aula CCA,5,2026-05-11 12:39:00.131947+00,iara.rabelo@discente.univasf.edu.br
+136,tarde_1,Estrada da Banana – Condomínio Mais Viver,UNIVASF Campus Juazeiro,5,2026-05-11 12:39:31.125788+00,silvia.marcia@discente.univasf.edu.br
+137,manha_1,Supermercado Regente,UNIVASF Campus Juazeiro,5,2026-05-11 12:39:31.125788+00,silvia.marcia@discente.univasf.edu.br
+138,manha_1,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 12:39:40.074029+00,mateus.morais@discente.univasf.edu.br
+139,noite_1,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 12:39:40.074029+00,mateus.morais@discente.univasf.edu.br
+140,manha_2,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,4,2026-05-11 12:39:40.074029+00,mateus.morais@discente.univasf.edu.br
+141,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Juazeiro,1,2026-05-11 12:40:08.507875+00,erick.sousa@discente.univasf.edu.br
+142,noite_2,UNIVASF Campus Juazeiro,Posto ALE,1,2026-05-11 12:40:08.507875+00,erick.sousa@discente.univasf.edu.br
+143,tarde_2,GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,5,2026-05-11 12:40:39.764718+00,elis.sanjuan@discente.univasf.edu.br
+144,tarde_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,4,2026-05-11 12:40:40.27303+00,laiza.leao@discente.univasf.edu.br
+145,noite_2,UNIVASF Campus Petrolina,Verdão Juazeiro,4,2026-05-11 12:40:40.27303+00,laiza.leao@discente.univasf.edu.br
+146,manha_1,Estação Velha Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 12:41:20.841262+00,alana.nascimento@discente.univasf.edu.br
+147,tarde_1,Estação Velha Juazeiro,Bloco de Salas de Aula CCA,1,2026-05-11 12:41:20.841262+00,alana.nascimento@discente.univasf.edu.br
+148,tarde_2,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,3,2026-05-11 12:41:20.841262+00,alana.nascimento@discente.univasf.edu.br
+149,noite_1,Hospital Veterinário,Estação Velha / Cooperativa Brasil,4,2026-05-11 12:41:20.841262+00,alana.nascimento@discente.univasf.edu.br
+150,manha_1,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,5,2026-05-11 12:42:27.544525+00,joana.leite@discente.univasf.edu.br
+151,noite_1,UNIVASF Campus CCA,Feira da COHAB Massangano,3,2026-05-11 12:42:27.544525+00,joana.leite@discente.univasf.edu.br
+152,manha_1,Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda,Bloco de Salas de Aula CCA,1,2026-05-11 12:42:57.178355+00,luis.henriquealmeid@discente.univasf.edu.br
+153,tarde_1,Bloco de Salas de Aula CCA,Av. Transnordestina – Posto Pedra Linda,4,2026-05-11 12:42:57.178355+00,luis.henriquealmeid@discente.univasf.edu.br
+154,noite_1,Bloco de Salas de Aula CCA,Av. Transnordestina – Posto Pedra Linda,5,2026-05-11 12:42:57.178355+00,luis.henriquealmeid@discente.univasf.edu.br
+155,manha_1,Plante Bem,Hospital Veterinário CCA,5,2026-05-11 12:43:32.596043+00,raniele.rodrigues@discente.univasf.edu.br
+156,tarde_2,Hospital Veterinário,Plante Bem,5,2026-05-11 12:43:32.596043+00,raniele.rodrigues@discente.univasf.edu.br
+157,noite_1,Hospital Veterinário,Plante Bem,5,2026-05-11 12:43:32.596043+00,raniele.rodrigues@discente.univasf.edu.br
+158,manha_1,Posto Raul Lins / Bairro Castelo Branco,Bloco de Salas de Aula CCA,5,2026-05-11 12:44:05.508617+00,felipe.asouza2@discente.univasf.edu.br
+159,tarde_1,Bloco de Salas de Aula CCA,Posto Raul Lins / Bairro Castelo Branco,5,2026-05-11 12:44:05.508617+00,felipe.asouza2@discente.univasf.edu.br
+160,manha_1,Ponto BR 428 – Sucatão Moraes (Loteamento Recife),Hospital Veterinário CCA,5,2026-05-11 12:44:08.832285+00,ana.luisaloura@discente.univasf.edu.br
+161,noite_1,Hospital Veterinário,Ponto BR 428 – Posto Carranca,5,2026-05-11 12:44:08.832285+00,ana.luisaloura@discente.univasf.edu.br
+162,tarde_2,Hospital Veterinário,Canteiro de Obras – Av. 7 de Setembro,5,2026-05-11 12:44:08.832285+00,ana.luisaloura@discente.univasf.edu.br
+163,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,3,2026-05-11 12:44:13.842454+00,helen.abastos2@discente.univasf.edu.br
+164,tarde_1,UNIVASF Campus Juazeiro,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 12:44:13.842454+00,helen.abastos2@discente.univasf.edu.br
+165,tarde_2,UNIVASF Campus Juazeiro,GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio,2,2026-05-11 12:44:13.842454+00,helen.abastos2@discente.univasf.edu.br
+166,noite_2,UNIVASF Campus Juazeiro,GBarbosa Petrolina,1,2026-05-11 12:44:13.842454+00,helen.abastos2@discente.univasf.edu.br
+167,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,4,2026-05-11 12:44:32.348063+00,grazielle.sa@discente.univasf.edu.br
+168,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,2,2026-05-11 12:44:32.348063+00,grazielle.sa@discente.univasf.edu.br
+169,tarde_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,4,2026-05-11 12:44:32.348063+00,grazielle.sa@discente.univasf.edu.br
+170,noite_1,UNIVASF Campus Petrolina,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 12:44:32.348063+00,grazielle.sa@discente.univasf.edu.br
+171,manha_1,Av. da Integração – Sementeira,UNIVASF Campus Juazeiro,4,2026-05-11 12:45:37.764557+00,cicero.marcelino@discente.univasf.edu.br
+172,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,4,2026-05-11 12:46:55.723595+00,vitor.massena@discente.univasf.edu.br
+173,noite_2,UNIVASF Campus Juazeiro,GBarbosa Petrolina,4,2026-05-11 12:46:55.723595+00,vitor.massena@discente.univasf.edu.br
+174,tarde_1,Ponto BR 428 – DR Distribuidora (Vila Marcela),UNIVASF Campus Juazeiro,5,2026-05-11 12:46:55.723595+00,vitor.massena@discente.univasf.edu.br
+175,tarde_2,UNIVASF Campus Juazeiro,GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio,4,2026-05-11 12:46:55.723595+00,vitor.massena@discente.univasf.edu.br
+176,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Hospital Veterinário CCA,3,2026-05-11 12:47:01.87781+00,livia.olinda@discente.univasf.edu.br
+177,manha_1,Estrada da Banana – Restaurante Dona Branca,Bloco de Salas de Aula CCA,1,2026-05-11 12:47:27.542937+00,maria.freire@discente.univasf.edu.br
+178,noite_1,Bloco de Salas de Aula CCA,Estrada da Banana – Primeira Rotatória,1,2026-05-11 12:47:27.542937+00,maria.freire@discente.univasf.edu.br
+179,manha_1,Av. da Integração – Sementeira,UNIVASF Campus Juazeiro,5,2026-05-11 12:47:33.954289+00,nikole.javah@discente.univasf.edu.br
+180,tarde_1,UNIVASF Campus Juazeiro,GBarbosa Av. Monsenhor Ângelo Sampaio,4,2026-05-11 12:47:33.954289+00,nikole.javah@discente.univasf.edu.br
+181,noite_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Sementeira,5,2026-05-11 12:47:33.954289+00,nikole.javah@discente.univasf.edu.br
+182,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,1,2026-05-11 12:48:23.744918+00,pamela.cristinac@discente.univasf.edu.br
+183,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,5,2026-05-11 12:48:36.288546+00,italo.damasceno@discente.univasf.edu.br
+184,noite_1,Bloco de Salas de Aula CCA,DETRAN – Av. Monsenhor (via principal),5,2026-05-11 12:48:36.288546+00,italo.damasceno@discente.univasf.edu.br
+185,tarde_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,5,2026-05-11 12:48:36.288546+00,italo.damasceno@discente.univasf.edu.br
+186,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 12:48:49.262663+00,joao.pedrorosa@discente.univasf.edu.br
+187,manha_1,Canteiro de Obras Av. 7 de Setembro,Bloco de Salas de Aula CCA,5,2026-05-11 12:49:55.231166+00,anthony.alejandro@discente.univasf.edu.br
+188,noite_1,UNIVASF Campus CCA,Academia I9,5,2026-05-11 12:49:55.231166+00,anthony.alejandro@discente.univasf.edu.br
+189,manha_1,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 12:50:23.20113+00,mariane.teles@discente.univasf.edu.br
+190,noite_1,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 12:50:23.20113+00,mariane.teles@discente.univasf.edu.br
+191,tarde_1,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 12:50:23.20113+00,mariane.teles@discente.univasf.edu.br
+192,tarde_2,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 12:50:23.20113+00,mariane.teles@discente.univasf.edu.br
+193,manha_1,BR 407 – Isaías Automóveis / Posto Delta,Av. da Integração – Sementeira,5,2026-05-11 12:53:16.462265+00,natalia.pinheiro@discente.univasf.edu.br
+194,manha_1,Estrada da Banana – Restaurante Dona Branca,Bloco de Salas de Aula CCA,5,2026-05-11 12:54:12.860373+00,raissa.gsa@discente.univasf.edu.br
+195,manha_2,Sementeira,Bloco de Salas de Aula CCA,5,2026-05-11 12:54:12.860373+00,raissa.gsa@discente.univasf.edu.br
+196,tarde_2,Bloco de Salas de Aula CCA,Sementeira – Av. da Integração,4,2026-05-11 12:54:12.860373+00,raissa.gsa@discente.univasf.edu.br
+197,noite_1,Bloco de Salas de Aula CCA,Estrada da Banana – Primeira Rotatória,5,2026-05-11 12:54:12.860373+00,raissa.gsa@discente.univasf.edu.br
+198,noite_2,Sementeira,Sementeira,5,2026-05-11 12:54:12.860373+00,raissa.gsa@discente.univasf.edu.br
+199,tarde_1,Sementeira – Av. da Integração,Bloco de Salas de Aula CCA,5,2026-05-11 12:54:12.860373+00,raissa.gsa@discente.univasf.edu.br
+200,manha_1,Canteiro de Obras Av. 7 de Setembro,Bloco de Salas de Aula CCA,5,2026-05-11 12:56:05.293568+00,clara.soares@discente.univasf.edu.br
+201,manha_2,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,5,2026-05-11 12:56:05.293568+00,clara.soares@discente.univasf.edu.br
+202,tarde_1,Academia I9 – Av. 7 de Setembro,UNIVASF Campus Petrolina,5,2026-05-11 12:56:05.293568+00,clara.soares@discente.univasf.edu.br
+203,manha_1,Estação Velha Juazeiro,UNIVASF Campus Petrolina,5,2026-05-11 12:56:31.273662+00,eloisa.grangeiro@discente.univasf.edu.br
+204,noite_2,UNIVASF Campus Petrolina,Farmácia Popular,1,2026-05-11 12:56:31.273662+00,eloisa.grangeiro@discente.univasf.edu.br
+205,manha_1,Ponto BR 428 – DR Distribuidora (Vila Marcela),Bloco de Salas de Aula CCA,5,2026-05-11 12:57:14.187132+00,marcus.silva@discente.univasf.edu.br
+206,tarde_1,Bloco de Salas de Aula CCA,Ponto BR 428 – DR Distribuidora (Vila Marcela),4,2026-05-11 12:57:14.187132+00,marcus.silva@discente.univasf.edu.br
+207,noite_1,UNIVASF Campus CCA,Ponto BR 428 – PRF,5,2026-05-11 12:57:14.187132+00,marcus.silva@discente.univasf.edu.br
+208,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-11 12:57:21.456465+00,vitor.silva@discente.univasf.edu.br
+209,tarde_1,Bloco de Salas de Aula CCA,UNIVASF Campus Petrolina,5,2026-05-11 12:57:21.456465+00,vitor.silva@discente.univasf.edu.br
+210,noite_1,Bloco de Salas de Aula CCA,Posto ALE,5,2026-05-11 12:57:21.456465+00,vitor.silva@discente.univasf.edu.br
+211,manha_1,Verdão Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 12:58:14.976248+00,eldjane.silva@discente.univasf.edu.br
+212,noite_1,UNIVASF Campus CCA,GBarbosa Juazeiro – Av. Adolfo Viana,3,2026-05-11 12:58:14.976248+00,eldjane.silva@discente.univasf.edu.br
+213,manha_1,Clínica Popular Av. São Francisco (Areia Branca),Academia I9 – Av. 7 de Setembro,5,2026-05-11 12:58:30.635239+00,jarmerson.ferreira@discente.univasf.edu.br
+214,manha_1,UNIVASF Campus Petrolina,UNIVASF Campus Petrolina,2,2026-05-11 12:59:00.071886+00,davi.abreu@discente.univasf.edu.br
+215,noite_2,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,1,2026-05-11 13:01:15.08758+00,ediana.souza@discente.univasf.edu.br
+216,noite_1,BR 407 – Izabela Construções,UNIVASF Campus Juazeiro,1,2026-05-11 13:01:15.08758+00,ediana.souza@discente.univasf.edu.br
+217,manha_1,Av. da Integração – Sementeira,Bloco de Salas de Aula CCA,5,2026-05-11 13:01:36.892573+00,wesley.lacerda@discente.univasf.edu.br
+218,manha_2,Sementeira,Bloco de Salas de Aula CCA,4,2026-05-11 13:01:36.892573+00,wesley.lacerda@discente.univasf.edu.br
+219,noite_1,Bloco de Salas de Aula CCA,Sementeira,5,2026-05-11 13:01:36.892573+00,wesley.lacerda@discente.univasf.edu.br
+220,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 13:03:58.572137+00,eduarda.almeidaf@discente.univasf.edu.br
+221,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,5,2026-05-11 13:06:46.051204+00,geovana.vsilva@discente.univasf.edu.br
+222,noite_2,UNIVASF Campus Juazeiro,GBarbosa Petrolina,5,2026-05-11 13:06:46.051204+00,geovana.vsilva@discente.univasf.edu.br
+223,tarde_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,3,2026-05-11 13:06:46.051204+00,geovana.vsilva@discente.univasf.edu.br
+224,manha_1,Estação Velha Juazeiro,Bloco de Salas de Aula CCA,1,2026-05-11 13:10:02.432057+00,dagner.lucas@discente.univasf.edu.br
+225,noite_1,Bloco de Salas de Aula CCA,Estação Velha / Cooperativa Brasil,5,2026-05-11 13:10:02.432057+00,dagner.lucas@discente.univasf.edu.br
+226,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-11 13:10:05.879472+00,giselly.souza@discente.univasf.edu.br
+227,noite_1,UNIVASF Campus CCA,Costrutéo (ponto de ônibus),5,2026-05-11 13:10:05.879472+00,giselly.souza@discente.univasf.edu.br
+228,tarde_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,5,2026-05-11 13:13:21.103315+00,antonio.cbrito@discente.univasf.edu.br
+229,tarde_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,2,2026-05-11 13:13:21.103315+00,antonio.cbrito@discente.univasf.edu.br
+230,noite_2,UNIVASF Campus Petrolina,GBarbosa Juazeiro,5,2026-05-11 13:13:21.103315+00,antonio.cbrito@discente.univasf.edu.br
+231,manha_1,Av. da Integração – Sementeira,UNIVASF Campus Juazeiro,2,2026-05-11 13:14:58.475544+00,adna.esthefani@discente.univasf.edu.br
+232,noite_2,UNIVASF Campus Juazeiro,Sementeira,4,2026-05-11 13:14:58.475544+00,adna.esthefani@discente.univasf.edu.br
+233,tarde_1,UNIVASF Campus Juazeiro,Sementeira – Av. da Integração,1,2026-05-11 13:14:58.475544+00,adna.esthefani@discente.univasf.edu.br
+234,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 13:16:47.229698+00,thayla.lino@discente.univasf.edu.br
+235,noite_1,UNIVASF Campus CCA,Igreja Filadélfia,5,2026-05-11 13:16:47.229698+00,thayla.lino@discente.univasf.edu.br
+236,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,1,2026-05-11 13:24:04.739144+00,ana.luizaevangelista@discente.univasf.edu.br
+237,noite_1,UNIVASF Campus Petrolina,GBarbosa Juazeiro – Av. Adolfo Viana,4,2026-05-11 13:24:04.739144+00,ana.luizaevangelista@discente.univasf.edu.br
+238,tarde_1,GBarbosa Juazeiro,UNIVASF Campus Petrolina,1,2026-05-11 13:24:04.739144+00,ana.luizaevangelista@discente.univasf.edu.br
+239,manha_1,Verdão Juazeiro,Bloco de Salas de Aula CCA,3,2026-05-11 13:24:55.767172+00,alexandre.rayner@discente.univasf.edu.br
+240,noite_1,Bloco de Salas de Aula CCA,Verdão Juazeiro,5,2026-05-11 13:24:55.767172+00,alexandre.rayner@discente.univasf.edu.br
+241,noite_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,3,2026-05-11 13:25:08.923267+00,janilson.silva@discente.univasf.edu.br
+242,noite_2,UNIVASF Campus Petrolina,Verdão Juazeiro,5,2026-05-11 13:25:08.923267+00,janilson.silva@discente.univasf.edu.br
+243,manha_1,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,4,2026-05-11 13:25:59.021596+00,Carlos.bfr@discente.univasf.edu.br
+244,manha_2,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,2,2026-05-11 13:25:59.021596+00,Carlos.bfr@discente.univasf.edu.br
+245,noite_1,Bloco de Salas de Aula CCA,UNIVASF Campus Petrolina,5,2026-05-11 13:25:59.021596+00,Carlos.bfr@discente.univasf.edu.br
+246,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,4,2026-05-11 13:26:52.656909+00,alice.fernandes@discente.univasf.edu.br
+247,noite_1,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 13:26:52.656909+00,alice.fernandes@discente.univasf.edu.br
+248,manha_1,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,5,2026-05-11 13:29:57.181057+00,amanda.costabrito@discente.univasf.edu.br
+249,tarde_1,Bloco de Salas de Aula CCA,Feira da COHAB Massangano,5,2026-05-11 13:29:57.181057+00,amanda.costabrito@discente.univasf.edu.br
+250,manha_2,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,4,2026-05-11 13:29:57.181057+00,amanda.costabrito@discente.univasf.edu.br
+251,tarde_2,UNIVASF Campus CCA – Bloco Antigo,Feira da COHAB Massangano,3,2026-05-11 13:29:57.181057+00,amanda.costabrito@discente.univasf.edu.br
+252,noite_1,Bloco Antigo CCA,Igreja Filadélfia,5,2026-05-11 13:29:57.181057+00,amanda.costabrito@discente.univasf.edu.br
+253,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,4,2026-05-11 13:33:39.724349+00,laura.araujo@discente.univasf.edu.br
+254,noite_1,Bloco de Salas de Aula CCA,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 13:33:39.724349+00,laura.araujo@discente.univasf.edu.br
+255,manha_1,Estrada da Banana – Restaurante Dona Branca,Bloco de Salas de Aula CCA,2,2026-05-11 13:36:56.262869+00,lucas.gama@discente.univasf.edu.br
+256,noite_1,Bloco de Salas de Aula CCA,Av. Transnordestina – Posto Pedra Linda,4,2026-05-11 13:36:56.262869+00,lucas.gama@discente.univasf.edu.br
+257,manha_1,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 13:38:30.057844+00,victoria.britoe@discente.univasf.edu.br
+258,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,GBarbosa Av. Monsenhor Ângelo Sampaio,3,2026-05-11 13:38:50.027637+00,jennifer.sousa@discente.univasf.edu.br
+259,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 13:39:49.541783+00,leticia.s@discente.univasf.edu.br
+260,noite_1,UNIVASF Campus CCA,Costrutéo (ponto de ônibus),5,2026-05-11 13:39:49.541783+00,leticia.s@discente.univasf.edu.br
+261,tarde_1,UNIVASF Campus CCA – Bloco Antigo,UNIVASF Campus Juazeiro,5,2026-05-11 13:39:49.541783+00,leticia.s@discente.univasf.edu.br
+262,manha_1,Av. da Integração – Petrape,Av. da Integração – Petrape,5,2026-05-11 13:39:54.856883+00,laila.dias@discente.univasf.edu.br
+263,manha_1,Academia I9 – Av. 7 de Setembro,UNIVASF Campus Juazeiro,5,2026-05-11 13:40:55.814041+00,nicolas.galdino@discente.univasf.edu.br
+264,tarde_1,UNIVASF Campus Juazeiro,Canteiro de Obras – Av. 7 de Setembro,5,2026-05-11 13:40:55.814041+00,nicolas.galdino@discente.univasf.edu.br
+265,noite_2,UNIVASF Campus Juazeiro,Canteiro de Obras,4,2026-05-11 13:40:55.814041+00,nicolas.galdino@discente.univasf.edu.br
+266,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Bloco de Salas de Aula CCA,5,2026-05-11 13:40:56.411138+00,mikaela.brasileiro@discente.univasf.edu.br
+267,noite_1,Bloco de Salas de Aula CCA,BR 407 – Izabela Construções,5,2026-05-11 13:40:56.411138+00,mikaela.brasileiro@discente.univasf.edu.br
+268,noite_2,UNIVASF Campus Petrolina,BR 407 – Izabela Construções,5,2026-05-11 13:40:56.411138+00,mikaela.brasileiro@discente.univasf.edu.br
+269,manha_1,Av. Transnordestina – Entrada Bairro Dom Avelar,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 13:41:00.747444+00,dayane.rodriguesm@discente.univasf.edu.br
+270,manha_1,Feira da COHAB Massangano,Feira da COHAB Massangano,1,2026-05-11 13:41:11.611539+00,pryslla.ribeiro@discente.univasf.edu.br
+271,manha_2,Feira da COHAB Massangano,Feira da COHAB Massangano,5,2026-05-11 13:41:11.611539+00,pryslla.ribeiro@discente.univasf.edu.br
+272,tarde_1,Feira da COHAB Massangano,Feira da COHAB Massangano,5,2026-05-11 13:41:11.611539+00,pryslla.ribeiro@discente.univasf.edu.br
+273,noite_1,Feira da COHAB Massangano,Feira da COHAB Massangano,5,2026-05-11 13:41:11.611539+00,pryslla.ribeiro@discente.univasf.edu.br
+274,manha_1,Supermercado Regente,Hospital Veterinário CCA,5,2026-05-11 13:41:20.02797+00,luiza.paulino@discente.univasf.edu.br
+275,noite_1,UNIVASF Campus CCA,Supermercado Regente,5,2026-05-11 13:41:20.02797+00,luiza.paulino@discente.univasf.edu.br
+276,manha_1,Canteiro de Obras Av. 7 de Setembro,UNIVASF Campus Juazeiro,3,2026-05-11 13:41:20.340043+00,mariavitoria.viana@discente.univasf.edu.br
+277,tarde_1,UNIVASF Campus Juazeiro,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 13:41:20.340043+00,mariavitoria.viana@discente.univasf.edu.br
+278,tarde_2,UNIVASF Campus Juazeiro,GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio,4,2026-05-11 13:41:20.340043+00,mariavitoria.viana@discente.univasf.edu.br
+279,noite_2,UNIVASF Campus Juazeiro,Posto de Gasolina Big Brother,5,2026-05-11 13:41:20.340043+00,mariavitoria.viana@discente.univasf.edu.br
+280,tarde_2,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,1,2026-05-11 13:41:32.276014+00,marcones.rios@discente.univasf.edu.br
+281,noite_1,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,5,2026-05-11 13:41:32.276014+00,marcones.rios@discente.univasf.edu.br
+282,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,5,2026-05-11 13:41:32.276014+00,marcones.rios@discente.univasf.edu.br
+283,manha_1,Clínica Popular Av. São Francisco (Areia Branca),Bloco de Salas de Aula CCA,4,2026-05-11 13:41:35.035045+00,kerlon.brandao@discente.univasf.edu.br
+284,tarde_2,Bloco de Salas de Aula CCA,Academia I9 – Av. 7 de Setembro,1,2026-05-11 13:41:35.035045+00,kerlon.brandao@discente.univasf.edu.br
+285,noite_1,Bloco de Salas de Aula CCA,Academia I9,5,2026-05-11 13:41:35.035045+00,kerlon.brandao@discente.univasf.edu.br
+286,manha_1,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 13:41:51.910304+00,victoria.britoe@discente.univasf.edu.br
+287,manha_2,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 13:41:51.910304+00,victoria.britoe@discente.univasf.edu.br
+288,tarde_2,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 13:41:51.910304+00,victoria.britoe@discente.univasf.edu.br
+289,noite_1,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 13:41:51.910304+00,victoria.britoe@discente.univasf.edu.br
+290,manha_1,Av. da Integração – Secretaria de Obras,Bloco de Salas de Aula CCA,5,2026-05-11 13:41:53.606874+00,nicole.adriele@discente.univasf.edu.br
+291,noite_1,Bloco de Salas de Aula CCA,Parque Mundo da Lua,5,2026-05-11 13:41:53.606874+00,nicole.adriele@discente.univasf.edu.br
+292,manha_1,GBarbosa Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 13:42:49.210482+00,julia.borges@discente.univasf.edu.br
+293,noite_1,Bloco de Salas de Aula CCA,GBarbosa Juazeiro – Av. Adolfo Viana,5,2026-05-11 13:42:49.210482+00,julia.borges@discente.univasf.edu.br
+294,manha_2,UNIVASF Campus Juazeiro,Hospital Veterinário,5,2026-05-11 13:43:06.090347+00,luisa.alvest@discente.univasf.edu.br
+295,tarde_2,Hospital Veterinário,UNIVASF Campus Juazeiro,3,2026-05-11 13:43:06.090347+00,luisa.alvest@discente.univasf.edu.br
+296,noite_1,Hospital Veterinário,Parque Mundo da Lua,5,2026-05-11 13:43:06.090347+00,luisa.alvest@discente.univasf.edu.br
+297,manha_1,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,4,2026-05-11 13:43:06.090347+00,luisa.alvest@discente.univasf.edu.br
+298,tarde_1,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 13:43:06.090347+00,luisa.alvest@discente.univasf.edu.br
+299,manha_1,Av. Transnordestina – Entrada Bairro Dom Avelar,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 13:43:08.936721+00,dayane.rodriguesm@discente.univasf.edu.br
+300,noite_1,Bloco Antigo CCA,Av. Transnordestina – Entrada Dom Avelar,5,2026-05-11 13:43:08.936721+00,dayane.rodriguesm@discente.univasf.edu.br
+301,manha_1,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,2,2026-05-11 13:43:22.166999+00,malu.carvalho@discente.univasf.edu.br
+302,tarde_1,Bloco de Salas de Aula CCA,UNIVASF Campus Petrolina,5,2026-05-11 13:43:22.166999+00,malu.carvalho@discente.univasf.edu.br
+303,noite_2,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,3,2026-05-11 13:43:22.166999+00,malu.carvalho@discente.univasf.edu.br
+304,noite_1,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 13:43:22.166999+00,malu.carvalho@discente.univasf.edu.br
+305,noite_2,GBarbosa Juazeiro,UNIVASF Campus Juazeiro,3,2026-05-11 13:44:04.984459+00,eduarda.gentil@discente.univasf.edu.br
+306,manha_1,Plante Bem,Bloco de Salas de Aula CCA,5,2026-05-11 13:44:07.198299+00,gabriela.araujo@discente.univasf.edu.br
+307,manha_1,Estação Velha Juazeiro,UNIVASF Campus Petrolina,4,2026-05-11 13:44:35.668268+00,lara.kallyna@discente.univasf.edu.br
+308,tarde_1,UNIVASF Campus Petrolina,Estação Velha Juazeiro,3,2026-05-11 13:44:35.668268+00,lara.kallyna@discente.univasf.edu.br
+309,noite_2,UNIVASF Campus Petrolina,Estação Velha / Cooperativa Brasil,4,2026-05-11 13:44:35.668268+00,lara.kallyna@discente.univasf.edu.br
+310,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 13:44:42.282284+00,gabriela.diniz@discente.univasf.edu.br
+311,noite_1,UNIVASF Campus CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 13:44:42.282284+00,gabriela.diniz@discente.univasf.edu.br
+312,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,3,2026-05-11 13:44:42.282284+00,gabriela.diniz@discente.univasf.edu.br
+313,tarde_2,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,1,2026-05-11 13:44:42.282284+00,gabriela.diniz@discente.univasf.edu.br
+314,manha_1,Estação Velha Juazeiro,Estação Velha Juazeiro,5,2026-05-11 13:45:06.298903+00,mirella.freitas@discente.univasf.edu.br
+315,manha_1,Estação Velha Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 13:45:52.039966+00,alexandra.santos@discente.univasf.edu.br
+316,noite_1,UNIVASF Campus CCA,Farmácia Popular,5,2026-05-11 13:45:52.039966+00,alexandra.santos@discente.univasf.edu.br
+317,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,2,2026-05-11 13:46:41.79635+00,jorge.eduardo@discente.univasf.edu.br
+318,noite_1,Bloco de Salas de Aula CCA,GBarbosa Juazeiro – Av. Adolfo Viana,5,2026-05-11 13:46:41.79635+00,jorge.eduardo@discente.univasf.edu.br
+319,manha_1,Av. da Integração – Sementeira,Bloco de Salas de Aula CCA,2,2026-05-11 13:47:19.261227+00,julio.neves@discente.univasf.edu.br
+320,noite_1,Bloco Antigo CCA,Sementeira,1,2026-05-11 13:47:19.261227+00,julio.neves@discente.univasf.edu.br
+321,noite_1,Sementeira,UNIVASF Campus Petrolina,2,2026-05-11 13:47:41.566984+00,emille.leticia@discente.univasf.edu.br
+322,noite_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,5,2026-05-11 13:47:43.124816+00,leonardo.medeiros@discente.univasf.edu.br
+323,noite_2,UNIVASF Campus Petrolina,GBarbosa Juazeiro,2,2026-05-11 13:47:43.124816+00,leonardo.medeiros@discente.univasf.edu.br
+324,manha_1,Canteiro de Obras Av. 7 de Setembro,Bloco de Salas de Aula CCA,5,2026-05-11 13:47:57.818163+00,naara.ferreira@discente.univasf.edu.br
+325,noite_1,Bloco de Salas de Aula CCA,Academia I9,5,2026-05-11 13:47:57.818163+00,naara.ferreira@discente.univasf.edu.br
+326,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-11 13:48:41.340387+00,guilherme.rodrigussq@discente.univasf.edu.br
+327,noite_1,UNIVASF Campus CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 13:48:41.340387+00,guilherme.rodrigussq@discente.univasf.edu.br
+328,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,1,2026-05-11 13:48:41.340387+00,guilherme.rodrigussq@discente.univasf.edu.br
+329,tarde_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,3,2026-05-11 13:48:41.340387+00,guilherme.rodrigussq@discente.univasf.edu.br
+330,manha_1,Feira da COHAB Massangano,Feira da COHAB Massangano,3,2026-05-11 13:48:43.432943+00,david.carvalho@discente.univasf.edu.br
+331,manha_1,Verdão Juazeiro,Verdão Juazeiro,5,2026-05-11 13:48:49.848756+00,luiane.vitoria@discente.univasf.edu.br
+332,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Bloco de Salas de Aula CCA,5,2026-05-11 13:49:04.14871+00,dara.leticia@discente.univasf.edu.br
+333,tarde_1,Bloco de Salas de Aula CCA,BR 407 – Izabela Construções,5,2026-05-11 13:49:04.14871+00,dara.leticia@discente.univasf.edu.br
+334,tarde_2,Bloco de Salas de Aula CCA,BR 407 – Izabela Construções,5,2026-05-11 13:49:04.14871+00,dara.leticia@discente.univasf.edu.br
+335,noite_1,Bloco de Salas de Aula CCA,BR 407 – Izabela Construções,2,2026-05-11 13:49:04.14871+00,dara.leticia@discente.univasf.edu.br
+336,manha_1,Estação Velha Juazeiro,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 13:49:33.116651+00,sara.emilly@discente.univasf.edu.br
+337,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Bloco de Salas de Aula CCA,5,2026-05-11 13:49:55.401727+00,maria.azevedo@discente.univasf.edu.br
+338,noite_1,Bloco de Salas de Aula CCA,BR 407 – Izabela Construções,4,2026-05-11 13:49:55.401727+00,maria.azevedo@discente.univasf.edu.br
+339,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,2,2026-05-11 13:50:29.560752+00,andrey.ryan@discente.univasf.edu.br
+340,noite_1,Bloco de Salas de Aula CCA,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 13:50:29.560752+00,andrey.ryan@discente.univasf.edu.br
+341,manha_2,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,2,2026-05-11 13:51:11.866632+00,fernando.matos@discente.univasf.edu.br
+342,manha_1,GBarbosa Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 13:51:18.163666+00,neillyane.novais@discente.univasf.edu.br
+343,noite_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,5,2026-05-11 13:51:29.503811+00,Igor.rios@discente.univasf.edu.br
+344,noite_2,UNIVASF Campus Petrolina,GBarbosa Juazeiro,1,2026-05-11 13:51:29.503811+00,Igor.rios@discente.univasf.edu.br
+345,manha_1,Estrada da Banana – Antiga Distribuidora Camaleão,Hospital Veterinário CCA,5,2026-05-11 13:52:37.282713+00,gabriel.duarteb@discente.univasf.edu.br
+346,noite_1,Hospital Veterinário,Sementeira,4,2026-05-11 13:52:37.282713+00,gabriel.duarteb@discente.univasf.edu.br
+347,manha_1,Posto Raul Lins / Bairro Castelo Branco,UNIVASF Campus Petrolina,3,2026-05-11 13:53:23.859617+00,jessica.brito@discente.univasf.edu.br
+348,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,3,2026-05-11 13:53:23.859617+00,jessica.brito@discente.univasf.edu.br
+349,tarde_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,3,2026-05-11 13:53:23.859617+00,jessica.brito@discente.univasf.edu.br
+350,tarde_2,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,5,2026-05-11 13:53:23.859617+00,jessica.brito@discente.univasf.edu.br
+351,noite_1,UNIVASF Campus Petrolina,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 13:53:23.859617+00,jessica.brito@discente.univasf.edu.br
+352,noite_2,UNIVASF Campus Petrolina,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 13:53:23.859617+00,jessica.brito@discente.univasf.edu.br
+353,manha_1,Canteiro de Obras Av. 7 de Setembro,Bloco de Salas de Aula CCA,5,2026-05-11 13:53:45.811189+00,pedro.g@discente.univasf.edu.br
+354,noite_1,Bloco de Salas de Aula CCA,Academia I9,3,2026-05-11 13:53:45.811189+00,pedro.g@discente.univasf.edu.br
+355,manha_1,Av. da Integração – Sementeira,Av. da Integração – Sementeira,5,2026-05-11 13:54:10.884463+00,hellen.fernandes@discente.univasf.edu.br
+356,noite_1,Av. Transnordestina – Posto Pedra Linda,UNIVASF Campus Petrolina,3,2026-05-11 13:54:12.090242+00,luiz.gustavoalves@discente.univasf.edu.br
+357,manha_1,Posto São Francisco Av. 7 de Setembro,Bloco de Salas de Aula CCA,5,2026-05-11 13:57:14.280613+00,pedro.hipolito@discente.univasf.edu.br
+358,tarde_1,Bloco de Salas de Aula CCA,Av. 7 de Setembro – Aldiegas,5,2026-05-11 13:57:14.280613+00,pedro.hipolito@discente.univasf.edu.br
+359,noite_1,Bloco de Salas de Aula CCA,Mecânica Ouro Diesel,5,2026-05-11 13:57:14.280613+00,pedro.hipolito@discente.univasf.edu.br
+360,tarde_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,3,2026-05-11 13:58:11.720113+00,ianny.mb@discente.univasf.edu.br
+361,tarde_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,1,2026-05-11 13:58:11.720113+00,ianny.mb@discente.univasf.edu.br
+362,noite_2,UNIVASF Campus Petrolina,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 13:58:11.720113+00,ianny.mb@discente.univasf.edu.br
+363,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,2,2026-05-11 13:58:11.720113+00,ianny.mb@discente.univasf.edu.br
+364,manha_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,4,2026-05-11 13:59:06.299546+00,werliarlinson.teles@discente.univasf.edu.br
+365,noite_2,UNIVASF Campus Juazeiro,Sementeira,5,2026-05-11 13:59:06.299546+00,werliarlinson.teles@discente.univasf.edu.br
+366,tarde_2,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,2,2026-05-11 13:59:06.299546+00,werliarlinson.teles@discente.univasf.edu.br
+367,manha_1,Av. da Integração – Sementeira,UNIVASF Campus Juazeiro,1,2026-05-11 13:59:09.106241+00,joao.pedrooliveira@discente.univasf.edu.br
+368,noite_2,UNIVASF Campus Juazeiro,Sementeira,5,2026-05-11 13:59:09.106241+00,joao.pedrooliveira@discente.univasf.edu.br
+369,tarde_1,UNIVASF Campus Juazeiro,Sementeira – Av. da Integração,3,2026-05-11 13:59:09.106241+00,joao.pedrooliveira@discente.univasf.edu.br
+370,manha_1,Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 13:59:57.465576+00,maria.fsilva@discente.univasf.edu.br
+371,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,3,2026-05-11 14:01:13.288695+00,gabriella.bonfim@discente.univasf.edu.br
+372,tarde_2,UNIVASF Campus Petrolina,Terminal de Juazeiro – Camelódromo 2 de Julho,2,2026-05-11 14:01:13.288695+00,gabriella.bonfim@discente.univasf.edu.br
+373,noite_2,UNIVASF Campus Petrolina,Terminal de Juazeiro – Camelódromo 2 de Julho,5,2026-05-11 14:01:13.288695+00,gabriella.bonfim@discente.univasf.edu.br
+374,manha_1,Ponto BR 428 – Sucatão Moraes (Loteamento Recife),Bloco de Salas de Aula CCA,5,2026-05-11 14:02:57.237882+00,fernanda.frocha@discente.univasf.edu.br
+375,tarde_1,Bloco de Salas de Aula CCA,Ponto BR 428 – Sucatão Moraes (Loteamento Recife),5,2026-05-11 14:02:57.237882+00,fernanda.frocha@discente.univasf.edu.br
+376,noite_1,Bloco de Salas de Aula CCA,Ponto BR 428 – Posto Carranca,5,2026-05-11 14:02:57.237882+00,fernanda.frocha@discente.univasf.edu.br
+377,tarde_2,Bloco de Salas de Aula CCA,Academia I9 – Av. 7 de Setembro,5,2026-05-11 14:02:57.237882+00,fernanda.frocha@discente.univasf.edu.br
+378,manha_1,Av. da Integração – Sementeira,Av. da Integração – Sementeira,4,2026-05-11 14:03:54.631828+00,giulianna.moura@discente.univasf.edu.br
+379,noite_1,Bloco Antigo CCA,Sementeira,3,2026-05-11 14:03:54.631828+00,giulianna.moura@discente.univasf.edu.br
+380,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,3,2026-05-11 14:04:20.304218+00,polianapereira@discente.univasf.edu.br
+381,noite_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 14:04:20.304218+00,polianapereira@discente.univasf.edu.br
+382,manha_1,Plante Bem,Bloco de Salas de Aula CCA,5,2026-05-11 14:04:37.812639+00,alysson.souza@discente.univasf.edu.br
+383,noite_1,Bloco de Salas de Aula CCA,Plante Bem,5,2026-05-11 14:04:37.812639+00,alysson.souza@discente.univasf.edu.br
+384,tarde_1,UNIVASF Campus CCA – Bloco Antigo,Plante Bem,5,2026-05-11 14:04:37.812639+00,alysson.souza@discente.univasf.edu.br
+385,manha_2,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,4,2026-05-11 14:04:37.812639+00,alysson.souza@discente.univasf.edu.br
+386,manha_1,Posto São Francisco Av. 7 de Setembro,Bloco de Salas de Aula CCA,5,2026-05-11 14:05:21.498512+00,gabrielly.alice@discente.univasf.edu.br
+387,tarde_2,Bloco de Salas de Aula CCA,Mecânica Ouro Diesel – Av. 7 de Setembro,4,2026-05-11 14:05:21.498512+00,gabrielly.alice@discente.univasf.edu.br
+388,noite_1,Bloco de Salas de Aula CCA,Mecânica Ouro Diesel,5,2026-05-11 14:05:21.498512+00,gabrielly.alice@discente.univasf.edu.br
+389,manha_2,Petrape,Bloco de Salas de Aula CCA,5,2026-05-11 14:05:21.498512+00,gabrielly.alice@discente.univasf.edu.br
+390,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,GBarbosa Av. Monsenhor Ângelo Sampaio,1,2026-05-11 14:06:26.161935+00,clarisse.carvalho@discente.univasf.edu.br
+391,noite_1,Bloco de Salas de Aula CCA,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 14:06:26.161935+00,clarisse.carvalho@discente.univasf.edu.br
+392,tarde_1,Bloco de Salas de Aula CCA,GBarbosa Juazeiro,4,2026-05-11 14:06:26.161935+00,clarisse.carvalho@discente.univasf.edu.br
+393,manha_1,Posto Raul Lins / Bairro Castelo Branco,Bloco de Salas de Aula CCA,5,2026-05-11 14:07:12.499105+00,ismael.batista@discente.univasf.edu.br
+394,noite_1,UNIVASF Campus CCA,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 14:07:12.499105+00,ismael.batista@discente.univasf.edu.br
+395,tarde_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,5,2026-05-11 14:07:12.499105+00,ismael.batista@discente.univasf.edu.br
+396,noite_2,UNIVASF Campus Petrolina,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 14:07:12.499105+00,ismael.batista@discente.univasf.edu.br
+397,noite_1,Sementeira,UNIVASF Campus Petrolina,1,2026-05-11 14:09:01.556699+00,lilian.dias@discente.univasf.edu.br
+398,noite_2,UNIVASF Campus Petrolina,Sementeira,1,2026-05-11 14:09:01.556699+00,lilian.dias@discente.univasf.edu.br
+399,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-11 14:10:38.057322+00,leticia.tito@discente.univasf.edu.br
+400,manha_1,Estação Velha Juazeiro,Bloco de Salas de Aula CCA,3,2026-05-11 14:11:35.594542+00,rebeca.moreira@discente.univasf.edu.br
+401,tarde_2,Hospital Veterinário,Rua do Paraíso ao lado das Lojas Americanas,4,2026-05-11 14:11:35.594542+00,rebeca.moreira@discente.univasf.edu.br
+402,noite_1,UNIVASF Campus CCA,Estação Velha / Cooperativa Brasil,4,2026-05-11 14:11:35.594542+00,rebeca.moreira@discente.univasf.edu.br
+403,manha_1,Av. da Integração – Petrape,Bloco de Salas de Aula CCA,5,2026-05-11 14:11:35.987947+00,vitoria.clarilis@discente.univasf.edu.br
+404,tarde_1,Bloco de Salas de Aula CCA,Petrape – Av. da Integração,5,2026-05-11 14:11:35.987947+00,vitoria.clarilis@discente.univasf.edu.br
+405,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Izabela Construções (Cosme Damião / sentido CCA),5,2026-05-11 14:13:47.418923+00,hoanderson.carvalho@discente.univasf.edu.br
+406,noite_1,UNIVASF Campus Juazeiro,Abaré,5,2026-05-11 14:14:40.651863+00,fernanda.neves@discente.univasf.edu.br
+407,tarde_2,UNIVASF Campus Juazeiro,Canteiro de Obras – Av. 7 de Setembro,3,2026-05-11 14:14:40.651863+00,fernanda.neves@discente.univasf.edu.br
+408,manha_1,UNIVASF Campus Petrolina,UNIVASF Campus Petrolina,5,2026-05-11 14:15:00.382533+00,jennifer.veloso@discente.univasf.edu.br
+409,manha_1,Estação Velha Juazeiro,UNIVASF Campus Petrolina,5,2026-05-11 14:19:57.871905+00,mariaeduarda.santos@discente.univasf.edu.br
+410,noite_1,UNIVASF Campus Petrolina,Estação Velha / Cooperativa Brasil,4,2026-05-11 14:19:57.871905+00,mariaeduarda.santos@discente.univasf.edu.br
+411,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,1,2026-05-11 14:20:01.097868+00,layza.freire@discente.univasf.edu.br
+412,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-11 14:20:01.097868+00,layza.freire@discente.univasf.edu.br
+413,tarde_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 14:20:01.097868+00,layza.freire@discente.univasf.edu.br
+414,noite_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 14:20:01.097868+00,layza.freire@discente.univasf.edu.br
+415,tarde_1,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,4,2026-05-11 14:20:19.728781+00,maria.eduardao@discente.univasf.edu.br
+416,manha_1,Estrada da Banana – Restaurante Dona Branca,Estrada da Banana – Restaurante Dona Branca,5,2026-05-11 14:20:32.830037+00,joao.arthurlima@discente.univasf.edu.br
+417,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 14:21:30.863196+00,giovanna.lemos@discente.univasf.edu.br
+418,manha_1,Verdão Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 14:23:31.768997+00,iris.rhuama@discente.univasf.edu.br
+419,noite_1,UNIVASF Campus CCA,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 14:23:31.768997+00,iris.rhuama@discente.univasf.edu.br
+420,manha_1,Clínica Popular Av. São Francisco (Areia Branca),Bloco de Salas de Aula CCA,5,2026-05-11 14:25:24.893047+00,sophia.anjos@discente.univasf.edu.br
+421,manha_2,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,3,2026-05-11 14:25:24.893047+00,sophia.anjos@discente.univasf.edu.br
+422,tarde_1,Bloco de Salas de Aula CCA,Supermercado Regente,5,2026-05-11 14:25:24.893047+00,sophia.anjos@discente.univasf.edu.br
+423,noite_1,Bloco de Salas de Aula CCA,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 14:25:24.893047+00,sophia.anjos@discente.univasf.edu.br
+424,tarde_1,Petrape – Av. da Integração,UNIVASF Campus Petrolina,4,2026-05-11 14:26:23.611718+00,maria.fcosta@discente.univasf.edu.br
+425,noite_2,UNIVASF Campus Petrolina,Petrape,2,2026-05-11 14:26:23.611718+00,maria.fcosta@discente.univasf.edu.br
+426,tarde_2,UNIVASF Campus Petrolina,Petrape – Av. da Integração,1,2026-05-11 14:26:23.611718+00,maria.fcosta@discente.univasf.edu.br
+427,manha_1,Av. da Integração – Petrape,UNIVASF Campus Petrolina,3,2026-05-11 14:26:23.611718+00,maria.fcosta@discente.univasf.edu.br
+428,noite_1,Parque Mundo da Lua,UNIVASF Campus Juazeiro,4,2026-05-11 14:30:37.899866+00,ieda.rabelo@discente.univasf.edu.br
+429,noite_2,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,2,2026-05-11 14:30:37.899866+00,ieda.rabelo@discente.univasf.edu.br
+430,noite_1,Costrutéo (ponto de ônibus),Costrutéo (ponto de ônibus),5,2026-05-11 14:32:47.720807+00,alexandre.queiros@discente.univasf.edu.br
+431,manha_1,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,5,2026-05-11 14:34:42.790508+00,annaressa.vieira@discente.univasf.edu.br
+432,noite_1,UNIVASF Campus CCA,Feira da COHAB Massangano,5,2026-05-11 14:34:42.790508+00,annaressa.vieira@discente.univasf.edu.br
+433,manha_1,Av. da Integração – Sementeira,Bloco de Salas de Aula CCA,4,2026-05-11 14:40:34.402274+00,ramon.scoelho@discente.univasf.edu.br
+434,noite_1,Bloco de Salas de Aula CCA,Sementeira,5,2026-05-11 14:40:34.402274+00,ramon.scoelho@discente.univasf.edu.br
+435,manha_1,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,5,2026-05-11 14:43:33.722627+00,larissa.marques@discente.univasf.edu.br
+436,tarde_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-05-11 14:48:47.610184+00,vanessa.souzaamorim@discente.univasf.edu.br
+437,tarde_2,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,2,2026-05-11 14:48:47.610184+00,vanessa.souzaamorim@discente.univasf.edu.br
+438,noite_2,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,3,2026-05-11 14:48:47.610184+00,vanessa.souzaamorim@discente.univasf.edu.br
+439,manha_1,Posto Raul Lins / Bairro Castelo Branco,Bloco de Salas de Aula CCA,5,2026-05-11 14:49:47.11998+00,jaciane.barbosa@discente.univasf.edu.br
+440,noite_1,UNIVASF Campus CCA,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 14:49:47.11998+00,jaciane.barbosa@discente.univasf.edu.br
+441,manha_1,Av. da Integração – Petrape,UNIVASF Campus Juazeiro,2,2026-05-11 14:51:21.183928+00,joao.epifanio@discente.univasf.edu.br
+442,noite_2,UNIVASF Campus Juazeiro,Sementeira,5,2026-05-11 14:51:21.183928+00,joao.epifanio@discente.univasf.edu.br
+443,manha_1,Estrada da Banana – Restaurante Dona Branca,Bloco de Salas de Aula CCA,5,2026-05-11 14:52:32.814347+00,brendo.alessandro@discente.univasf.edu.br
+444,noite_1,UNIVASF Campus CCA,Petrape,4,2026-05-11 14:52:32.814347+00,brendo.alessandro@discente.univasf.edu.br
+445,manha_1,Posto Raul Lins / Bairro Castelo Branco,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 15:05:10.945767+00,joao.vitorgoncalves@discente.univasf.edu.br
+446,tarde_1,Bloco de Salas de Aula CCA,Posto Raul Lins / Bairro Castelo Branco,3,2026-05-11 15:05:10.945767+00,joao.vitorgoncalves@discente.univasf.edu.br
+447,noite_1,UNIVASF Campus CCA,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 15:05:10.945767+00,joao.vitorgoncalves@discente.univasf.edu.br
+448,noite_1,Supermercado Regente,UNIVASF Campus Juazeiro,5,2026-05-11 15:07:49.873865+00,mariana.gusmao@discente.univasf.edu.br
+449,noite_2,UNIVASF Campus Juazeiro,Posto de Gasolina Big Brother,4,2026-05-11 15:07:49.873865+00,mariana.gusmao@discente.univasf.edu.br
+450,manha_1,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,5,2026-05-11 15:08:36.836101+00,robson.cicero@discente.univasf.edu.br
+451,tarde_1,Bloco de Salas de Aula CCA,Feira da COHAB Massangano,5,2026-05-11 15:08:36.836101+00,robson.cicero@discente.univasf.edu.br
+452,manha_2,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,1,2026-05-11 15:14:05.215364+00,thayna.nascimento@discente.univasf.edu.br
+453,noite_1,Bloco de Salas de Aula CCA,GBarbosa Av. Monsenhor Ângelo Sampaio,1,2026-05-11 15:14:05.215364+00,thayna.nascimento@discente.univasf.edu.br
+454,manha_1,Residência Estudantil CCA,Bloco de Salas de Aula CCA,5,2026-05-11 15:16:31.369987+00,glecia.oliveira@discente.univasf.edu.br
+455,manha_1,UNIVASF Campus Juazeiro,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 15:17:30.334476+00,filipe.hollanda@discente.univasf.edu.br
+456,noite_1,UNIVASF Campus CCA,UNIVASF Campus Juazeiro,5,2026-05-11 15:17:30.334476+00,filipe.hollanda@discente.univasf.edu.br
+457,manha_1,Verdão Juazeiro,Bloco de Salas de Aula CCA,4,2026-05-11 15:18:05.191609+00,barbara.ramos@discente.univasf.edu.br
+458,tarde_1,Bloco de Salas de Aula CCA,Verdão Juazeiro,5,2026-05-11 15:18:05.191609+00,barbara.ramos@discente.univasf.edu.br
+459,noite_1,Bloco de Salas de Aula CCA,Verdão Juazeiro,4,2026-05-11 15:18:05.191609+00,barbara.ramos@discente.univasf.edu.br
+460,manha_1,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,5,2026-05-11 15:19:44.541061+00,beatriz.castro@discente.univasf.edu.br
+461,tarde_1,Bloco de Salas de Aula CCA,UNIVASF Campus Petrolina,4,2026-05-11 15:19:44.541061+00,beatriz.castro@discente.univasf.edu.br
+462,noite_1,Bloco de Salas de Aula CCA,Sementeira,5,2026-05-11 15:20:29.67883+00,thais.sousa@discente.univasf.edu.br
+463,manha_1,BR 407 – Isaías Automóveis / Posto Delta,Bloco de Salas de Aula CCA,5,2026-05-11 15:20:57.753912+00,thiago.sousa@discente.univasf.edu.br
+464,noite_1,UNIVASF Campus CCA,Plante Bem,5,2026-05-11 15:20:57.753912+00,thiago.sousa@discente.univasf.edu.br
+465,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Izabela Construções (Cosme Damião / sentido CCA),5,2026-05-11 15:27:43.0294+00,livia.rbdias@discente.univasf.edu.br
+466,manha_1,Estrada da Banana – Restaurante Dona Branca,Estrada da Banana – Restaurante Dona Branca,4,2026-05-11 15:27:46.101861+00,leticia.barros@discente.univasf.edu.br
+467,noite_1,Bloco de Salas de Aula CCA,Estrada da Banana – Primeira Rotatória,5,2026-05-11 15:27:46.101861+00,leticia.barros@discente.univasf.edu.br
+468,manha_2,Sementeira,Bloco de Salas de Aula CCA,4,2026-05-11 15:27:46.101861+00,leticia.barros@discente.univasf.edu.br
+469,manha_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-05-11 15:29:52.61214+00,willian.cesar@discente.univasf.edu.br
+470,noite_2,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,5,2026-05-11 15:29:52.61214+00,willian.cesar@discente.univasf.edu.br
+471,noite_2,UNIVASF Campus Juazeiro,Posto de Gasolina Big Brother,5,2026-05-11 15:34:53.540877+00,eduardo.medeiros@discente.univasf.edu.br
+472,manha_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,5,2026-05-11 15:34:53.540877+00,eduardo.medeiros@discente.univasf.edu.br
+473,manha_1,Academia I9 – Av. 7 de Setembro,UNIVASF Campus Juazeiro,4,2026-05-11 15:44:21.979367+00,ana.vpereira@discente.univasf.edu.br
+474,tarde_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,5,2026-05-11 15:44:21.979367+00,ana.vpereira@discente.univasf.edu.br
+475,noite_2,UNIVASF Campus Juazeiro,Posto de Gasolina Big Brother,5,2026-05-11 15:44:21.979367+00,ana.vpereira@discente.univasf.edu.br
+476,manha_1,Av. da Integração – Sementeira,Av. da Integração – Petrape,5,2026-05-11 15:45:32.707675+00,joice.campos@discente.univasf.edu.br
+477,manha_1,Av. Transnordestina – Entrada Bairro Dom Avelar,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 15:50:19.714948+00,allicia.cibely@discente.univasf.edu.br
+478,tarde_1,UNIVASF Campus CCA – Bloco Antigo,Av. Transnordestina – Entrada Dom Avelar,5,2026-05-11 15:50:19.714948+00,allicia.cibely@discente.univasf.edu.br
+479,noite_1,UNIVASF Campus CCA,Av. Transnordestina – Entrada Dom Avelar,5,2026-05-11 15:50:19.714948+00,allicia.cibely@discente.univasf.edu.br
+480,manha_1,Residência Estudantil CCA,Residência Estudantil CCA,5,2026-05-11 15:51:37.015137+00,gleyce.vitoria@discente.univasf.edu.br
+481,manha_2,BR 407 – Izabela Construções,UNIVASF Campus Juazeiro,4,2026-05-11 15:52:13.426946+00,franciely.souza@discente.univasf.edu.br
+482,tarde_1,UNIVASF Campus Juazeiro,BR 407 – Izabela Construções,3,2026-05-11 15:52:13.426946+00,franciely.souza@discente.univasf.edu.br
+483,tarde_2,UNIVASF Campus Juazeiro,BR 407 – Izabela Construções,3,2026-05-11 15:52:13.426946+00,franciely.souza@discente.univasf.edu.br
+484,noite_2,UNIVASF Campus Juazeiro,Final da proteção de metal – Bairro Quati,5,2026-05-11 15:52:13.426946+00,franciely.souza@discente.univasf.edu.br
+485,manha_2,Petrape,UNIVASF Campus Juazeiro,2,2026-05-11 16:01:14.345367+00,salomao.fmonteiro@discente.univasf.edu.br
+486,noite_2,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,5,2026-05-11 16:01:14.345367+00,salomao.fmonteiro@discente.univasf.edu.br
+487,tarde_2,UNIVASF Campus Juazeiro,Petrape – Av. da Integração,3,2026-05-11 16:01:14.345367+00,salomao.fmonteiro@discente.univasf.edu.br
+488,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Izabela Construções (Cosme Damião / sentido CCA),5,2026-05-11 16:06:01.019919+00,joao.h@discente.univasf.edu.br
+489,manha_2,UNIVASF Campus Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 16:11:19.081751+00,maria.clarapereira@discente.univasf.edu.br
+490,noite_1,UNIVASF Campus CCA,UNIVASF Campus Juazeiro,5,2026-05-11 16:11:19.081751+00,maria.clarapereira@discente.univasf.edu.br
+491,tarde_1,Bloco de Salas de Aula CCA,UNIVASF Campus Juazeiro,5,2026-05-11 16:11:19.081751+00,maria.clarapereira@discente.univasf.edu.br
+492,manha_1,Ponto BR 428 – DR Distribuidora (Vila Marcela),Bloco de Salas de Aula CCA,5,2026-05-11 16:11:45.159226+00,vitoria.mateus@discente.univasf.edu.br
+493,noite_1,UNIVASF Campus CCA,Ponto BR 428 – PRF,5,2026-05-11 16:11:45.159226+00,vitoria.mateus@discente.univasf.edu.br
+494,tarde_1,Bloco de Salas de Aula CCA,Ponto BR 428 – DR Distribuidora (Vila Marcela),4,2026-05-11 16:11:45.159226+00,vitoria.mateus@discente.univasf.edu.br
+495,manha_1,Canteiro de Obras Av. 7 de Setembro,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 16:11:50.921883+00,emanuelly.vasconcelos@discente.univasf.edu.br
+496,manha_1,Academia Well,Bloco de Salas de Aula CCA,4,2026-05-11 16:13:58.586203+00,samara.matos@discente.univasf.edu.br
+497,noite_1,UNIVASF Campus CCA,Igreja Filadélfia,5,2026-05-11 16:13:58.586203+00,samara.matos@discente.univasf.edu.br
+498,manha_2,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,2,2026-05-11 16:13:58.586203+00,samara.matos@discente.univasf.edu.br
+499,manha_1,GBarbosa Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 16:14:00.769618+00,kezia.hailla@discente.univasf.edu.br
+500,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-11 16:14:00.769618+00,kezia.hailla@discente.univasf.edu.br
+501,noite_1,UNIVASF Campus CCA,GBarbosa Juazeiro – Av. Adolfo Viana,5,2026-05-11 16:14:00.769618+00,kezia.hailla@discente.univasf.edu.br
+502,manha_1,Av. da Integração – Sementeira,UNIVASF Campus Juazeiro,4,2026-05-11 16:22:18.876469+00,andreidematossouza@discente.univasf.edu.br
+503,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Juazeiro,3,2026-05-11 16:25:09.618766+00,andressa.silva@discente.univasf.edu.br
+504,noite_2,UNIVASF Campus Juazeiro,Posto ALE,4,2026-05-11 16:25:09.618766+00,andressa.silva@discente.univasf.edu.br
+505,manha_1,Estrada da Banana – Restaurante Dona Branca,Av. da Integração – Petrape,5,2026-05-11 16:39:57.189422+00,sarah.divaribeiro@discente.univasf.edu.br
+506,noite_1,UNIVASF Campus Petrolina,Estação Velha / Cooperativa Brasil,5,2026-05-11 16:43:57.288055+00,luana.ravany@discente.univasf.edu.br
+507,manha_1,Estação Velha Juazeiro,UNIVASF Campus Petrolina,1,2026-05-11 16:43:57.288055+00,luana.ravany@discente.univasf.edu.br
+508,tarde_1,UNIVASF Campus Petrolina,Estação Velha Juazeiro,2,2026-05-11 16:43:57.288055+00,luana.ravany@discente.univasf.edu.br
+509,noite_2,Sementeira,Ponto Aldiegas,3,2026-05-11 16:47:06.260964+00,ramonny.celestino@discente.univasf.edu.br
+510,manha_1,Av. da Integração – Sementeira,Bloco de Salas de Aula CCA,4,2026-05-11 17:14:46.254283+00,caio.angelim@discente.univasf.edu.br
+511,manha_1,Av. da Integração – Sementeira,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 17:31:45.192281+00,rafaela.rmelo@discente.univasf.edu.br
+512,manha_2,Sementeira,UNIVASF Campus CCA – Bloco Antigo,5,2026-05-11 17:31:45.192281+00,rafaela.rmelo@discente.univasf.edu.br
+513,tarde_1,Sementeira – Av. da Integração,UNIVASF Campus Juazeiro,5,2026-05-11 17:31:45.192281+00,rafaela.rmelo@discente.univasf.edu.br
+514,tarde_2,UNIVASF Campus CCA – Bloco Antigo,Sementeira – Av. da Integração,5,2026-05-11 17:31:45.192281+00,rafaela.rmelo@discente.univasf.edu.br
+515,noite_1,UNIVASF Campus Juazeiro,Sementeira,4,2026-05-11 17:31:45.192281+00,rafaela.rmelo@discente.univasf.edu.br
+516,manha_1,Av. Transnordestina – Nutiva Agro,Bloco de Salas de Aula CCA,5,2026-05-11 17:40:10.115279+00,antonio.medrado@discente.univasf.edu.br
+517,manha_1,Feira da COHAB Massangano,Feira da COHAB Massangano,5,2026-05-11 17:56:36.005267+00,myssyele.santos@discente.univasf.edu.br
+518,noite_2,UNIVASF Campus Petrolina,Ponto em frente à Abaré,4,2026-05-11 18:00:23.802323+00,giovanna.silva@discente.univasf.edu.br
+519,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,5,2026-05-11 18:10:21.437717+00,clara.barbosal@discente.univasf.edu.br
+520,manha_2,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,1,2026-05-11 18:10:21.437717+00,clara.barbosal@discente.univasf.edu.br
+521,tarde_1,Bloco de Salas de Aula CCA,Supermercado Regente,5,2026-05-11 18:10:21.437717+00,clara.barbosal@discente.univasf.edu.br
+522,tarde_2,Bloco de Salas de Aula CCA,Supermercado Regente,3,2026-05-11 18:10:21.437717+00,clara.barbosal@discente.univasf.edu.br
+523,noite_1,Bloco de Salas de Aula CCA,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-11 18:10:21.437717+00,clara.barbosal@discente.univasf.edu.br
+524,manha_1,Academia Well,Academia Well,5,2026-05-11 18:13:46.912608+00,esther.almeida@discente.univasf.edu.br
+525,manha_1,Feira da COHAB Massangano,UNIVASF Campus Petrolina,3,2026-05-11 19:07:49.350183+00,Natanael.bezerra@discente.univasf.edu.br
+526,noite_2,UNIVASF Campus Petrolina,Feira da COHAB Massangano,3,2026-05-11 19:07:49.350183+00,Natanael.bezerra@discente.univasf.edu.br
+527,tarde_2,UNIVASF Campus Petrolina,Feira da COHAB Massangano,4,2026-05-11 19:07:49.350183+00,Natanael.bezerra@discente.univasf.edu.br
+528,manha_1,Verdão Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-11 19:55:29.162427+00,jadmilla.cruz@discente.univasf.edu.br
+529,tarde_1,Bloco de Salas de Aula CCA,GBarbosa Juazeiro,5,2026-05-11 19:55:29.162427+00,jadmilla.cruz@discente.univasf.edu.br
+530,noite_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 19:55:29.162427+00,jadmilla.cruz@discente.univasf.edu.br
+531,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-11 20:13:04.019276+00,thayla.lino@discente.univasf.edu.br
+532,tarde_1,UNIVASF Campus CCA – Bloco Antigo,Bloco de Salas de Aula CCA,5,2026-05-11 20:13:04.019276+00,thayla.lino@discente.univasf.edu.br
+533,noite_1,Bloco de Salas de Aula CCA,Igreja Filadélfia,5,2026-05-11 20:13:04.019276+00,thayla.lino@discente.univasf.edu.br
+534,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,4,2026-05-11 20:57:59.462972+00,karine.marques@discente.univasf.edu.br
+535,manha_1,Av. da Integração – Sementeira,Av. da Integração – Sementeira,5,2026-05-11 21:00:27.816476+00,janairis.martins@discente.univasf.edu.br
+536,manha_2,Sementeira,Sementeira,5,2026-05-11 21:00:27.816476+00,janairis.martins@discente.univasf.edu.br
+537,tarde_1,Sementeira – Av. da Integração,Sementeira – Av. da Integração,5,2026-05-11 21:00:27.816476+00,janairis.martins@discente.univasf.edu.br
+538,noite_1,Sementeira,Sementeira,5,2026-05-11 21:00:27.816476+00,janairis.martins@discente.univasf.edu.br
+539,manha_1,Academia I9 – Av. 7 de Setembro,UNIVASF Campus Juazeiro,5,2026-05-11 21:49:32.87999+00,eduardo.sousa@discente.univasf.edu.br
+540,noite_2,UNIVASF Campus Juazeiro,Academia I9,5,2026-05-11 21:49:32.87999+00,eduardo.sousa@discente.univasf.edu.br
+541,manha_1,Plante Bem,Bloco de Salas de Aula CCA,5,2026-05-11 21:52:48.7574+00,maria.crs@discente.univasf.edu.br
+542,manha_2,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,4,2026-05-11 21:52:48.7574+00,maria.crs@discente.univasf.edu.br
+543,noite_1,Bloco de Salas de Aula CCA,Plante Bem,5,2026-05-11 21:52:48.7574+00,maria.crs@discente.univasf.edu.br
+544,noite_1,UNIVASF Campus Petrolina,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-11 21:53:20.739501+00,yara.souza@discente.univasf.edu.br
+545,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-11 22:33:33.502729+00,jonas.barrosneto@discente.univasf.edu.br
+546,noite_1,UNIVASF Campus CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 22:33:33.502729+00,jonas.barrosneto@discente.univasf.edu.br
+547,tarde_1,UNIVASF Campus Juazeiro,Av. da Integração – Mundo da Lua,4,2026-05-11 22:35:08.075555+00,andre.batista@discente.univasf.edu.br
+548,tarde_2,UNIVASF Campus Juazeiro,Secretaria de Obras – Av. da Integração,2,2026-05-11 22:35:08.075555+00,andre.batista@discente.univasf.edu.br
+549,manha_1,Av. da Integração – Sementeira,UNIVASF Campus Petrolina,2,2026-05-11 22:40:13.830153+00,giovanna.sales@discente.univasf.edu.br
+550,tarde_2,UNIVASF Campus Petrolina,Sementeira – Av. da Integração,1,2026-05-11 22:40:13.830153+00,giovanna.sales@discente.univasf.edu.br
+551,manha_1,Av. Transnordestina – Entrada Bairro Dom Avelar,Bloco de Salas de Aula CCA,5,2026-05-11 23:15:57.866395+00,vanessa.gomess@discente.univasf.edu.br
+552,tarde_1,Av. Transnordestina – Entrada Dom Avelar,UNIVASF Campus Petrolina,4,2026-05-11 23:15:57.866395+00,vanessa.gomess@discente.univasf.edu.br
+553,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-11 23:19:09.538042+00,jadson.santos@discente.univasf.edu.br
+554,noite_1,Bloco de Salas de Aula CCA,Posto ALE,5,2026-05-11 23:19:09.538042+00,jadson.santos@discente.univasf.edu.br
+555,noite_2,Petrape,UNIVASF Campus Juazeiro,3,2026-05-11 23:28:44.802401+00,eliza.sfalcao@discente.univasf.edu.br
+556,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-11 23:39:24.922979+00,geiza.barbosa@discente.univasf.edu.br
+557,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-11 23:41:04.402145+00,geiza.barbosa@discente.univasf.edu.br
+558,noite_1,UNIVASF Campus CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 23:41:04.402145+00,geiza.barbosa@discente.univasf.edu.br
+559,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-11 23:43:21.900141+00,kamyle.souza@discente.univasf.edu.br
+560,noite_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-11 23:43:21.900141+00,kamyle.souza@discente.univasf.edu.br
+561,manha_1,Av. da Integração – Petrape,Bloco de Salas de Aula CCA,5,2026-05-11 23:50:21.822341+00,joao.andersonsilva@discente.univasf.edu.br
+562,noite_1,UNIVASF Campus CCA,Petrape,5,2026-05-11 23:50:21.822341+00,joao.andersonsilva@discente.univasf.edu.br
+563,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-12 00:05:53.459655+00,brena.ferreira@discente.univasf.edu.br
+564,noite_1,UNIVASF Campus CCA,Posto ALE,5,2026-05-12 00:05:53.459655+00,brena.ferreira@discente.univasf.edu.br
+565,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,5,2026-05-12 00:51:02.145736+00,jaissa.larielym@discente.univasf.edu.br
+566,tarde_1,Bloco de Salas de Aula CCA,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-12 00:51:02.145736+00,jaissa.larielym@discente.univasf.edu.br
+567,manha_1,Academia Well,Bloco de Salas de Aula CCA,5,2026-05-12 01:01:29.349297+00,amanda.amelo@discente.univasf.edu.br
+568,noite_1,UNIVASF Campus CCA,Igreja Filadélfia,5,2026-05-12 01:01:29.349297+00,amanda.amelo@discente.univasf.edu.br
+569,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,5,2026-05-12 02:21:07.847337+00,henrique.mauricio@discente.univasf.edu.br
+570,noite_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-12 02:21:07.847337+00,henrique.mauricio@discente.univasf.edu.br
+571,manha_1,Posto Raul Lins / Bairro Castelo Branco,Bloco de Salas de Aula CCA,5,2026-05-12 06:36:36.076443+00,mariafatima.barros@discente.univasf.edu.br
+572,manha_1,Feira da COHAB Massangano,UNIVASF Campus Petrolina,5,2026-05-12 07:17:48.856542+00,maria.moraes@discente.univasf.edu.br
+573,manha_2,Feira da COHAB Massangano,UNIVASF Campus Petrolina,2,2026-05-12 07:17:48.856542+00,maria.moraes@discente.univasf.edu.br
+574,noite_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,5,2026-05-12 07:17:48.856542+00,maria.moraes@discente.univasf.edu.br
+575,tarde_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,2,2026-05-12 07:17:48.856542+00,maria.moraes@discente.univasf.edu.br
+576,noite_2,UNIVASF Campus Petrolina,Igreja Filadélfia,2,2026-05-12 07:17:48.856542+00,maria.moraes@discente.univasf.edu.br
+577,manha_1,Posto Raul Lins / Bairro Castelo Branco,Bloco de Salas de Aula CCA,5,2026-05-12 09:22:45.257972+00,millena.paixao@discente.univasf.edu.br
+578,manha_1,Posto Raul Lins / Bairro Castelo Branco,Bloco de Salas de Aula CCA,5,2026-05-12 09:24:59.064336+00,millena.paixao@discente.univasf.edu.br
+579,tarde_1,Bloco de Salas de Aula CCA,Terminal de Juazeiro – Camelódromo 2 de Julho,5,2026-05-12 09:24:59.064336+00,millena.paixao@discente.univasf.edu.br
+580,noite_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-12 09:24:59.064336+00,millena.paixao@discente.univasf.edu.br
+581,manha_1,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,5,2026-05-12 10:33:10.160429+00,gabriela.manso@discente.univasf.edu.br
+582,tarde_1,Feira da COHAB Massangano,Feira da COHAB Massangano,5,2026-05-12 10:33:10.160429+00,gabriela.manso@discente.univasf.edu.br
+583,manha_1,Estrada da Banana – Antiga Distribuidora Camaleão,Estrada da Banana – Antiga Distribuidora Camaleão,1,2026-05-12 10:33:47.007054+00,geovana.evangelista@discente.univasf.edu.br
+584,manha_1,Av. da Integração – Secretaria de Obras,Bloco de Salas de Aula CCA,4,2026-05-12 10:57:06.864362+00,cailane.maia@discente.univasf.edu.br
+585,tarde_1,Bloco de Salas de Aula CCA,Av. da Integração – Mundo da Lua,5,2026-05-12 10:57:06.864362+00,cailane.maia@discente.univasf.edu.br
+586,manha_2,Secretaria de Obras,Bloco de Salas de Aula CCA,5,2026-05-12 10:57:06.864362+00,cailane.maia@discente.univasf.edu.br
+587,noite_1,Bloco de Salas de Aula CCA,Parque Mundo da Lua,5,2026-05-12 10:57:06.864362+00,cailane.maia@discente.univasf.edu.br
+588,tarde_1,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,4,2026-05-12 11:45:01.544079+00,alice.almeida@discente.univasf.edu.br
+589,manha_2,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,1,2026-05-12 11:45:01.544079+00,alice.almeida@discente.univasf.edu.br
+590,tarde_2,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,3,2026-05-12 11:45:01.544079+00,alice.almeida@discente.univasf.edu.br
+591,noite_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,5,2026-05-12 11:45:01.544079+00,alice.almeida@discente.univasf.edu.br
+592,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-12 12:11:01.642484+00,ana.ferreira@discente.univasf.edu.br
+593,tarde_1,Bloco de Salas de Aula CCA,Feira da COHAB Massangano,5,2026-05-12 12:11:01.642484+00,ana.ferreira@discente.univasf.edu.br
+594,tarde_2,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,2,2026-05-12 12:11:01.642484+00,ana.ferreira@discente.univasf.edu.br
+595,noite_1,Bloco de Salas de Aula CCA,Costrutéo (ponto de ônibus),4,2026-05-12 12:11:01.642484+00,ana.ferreira@discente.univasf.edu.br
+596,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,3,2026-05-12 12:30:14.659967+00,ana.passos@discente.univasf.edu.br
+597,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,4,2026-05-12 12:30:14.659967+00,ana.passos@discente.univasf.edu.br
+598,tarde_1,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,4,2026-05-12 12:30:14.659967+00,ana.passos@discente.univasf.edu.br
+599,noite_1,UNIVASF Campus Petrolina,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-12 12:30:14.659967+00,ana.passos@discente.univasf.edu.br
+600,manha_1,Canteiro de Obras Av. 7 de Setembro,Bloco de Salas de Aula CCA,5,2026-05-12 12:30:42.916554+00,breno.o@discente.univasf.edu.br
+601,noite_1,Bloco de Salas de Aula CCA,Academia I9,5,2026-05-12 12:30:42.916554+00,breno.o@discente.univasf.edu.br
+602,noite_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,4,2026-05-12 13:05:57.486503+00,joseane.santos@discente.univasf.edu.br
+603,noite_2,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,1,2026-05-12 13:05:57.486503+00,joseane.santos@discente.univasf.edu.br
+604,manha_1,Av. da Integração – Sementeira,Bloco de Salas de Aula CCA,4,2026-05-12 13:25:43.187461+00,iasmin.leal@discente.univasf.edu.br
+605,noite_1,Bloco de Salas de Aula CCA,Sementeira,5,2026-05-12 13:25:43.187461+00,iasmin.leal@discente.univasf.edu.br
+606,tarde_1,Bloco de Salas de Aula CCA,Sementeira – Av. da Integração,5,2026-05-12 13:25:43.187461+00,iasmin.leal@discente.univasf.edu.br
+607,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-12 13:46:26.530227+00,mariana.martinsbrito@discente.univasf.edu.br
+608,tarde_1,Bloco de Salas de Aula CCA,Av. da Integração – Mundo da Lua,3,2026-05-12 13:46:26.530227+00,mariana.martinsbrito@discente.univasf.edu.br
+609,noite_1,Bloco de Salas de Aula CCA,Posto ALE,5,2026-05-12 13:46:26.530227+00,mariana.martinsbrito@discente.univasf.edu.br
+610,manha_1,Canteiro de Obras Av. 7 de Setembro,Bloco de Salas de Aula CCA,1,2026-05-12 15:25:12.959599+00,edijani.carvalho@discente.univasf.edu.br
+611,manha_1,Academia Well,Bloco de Salas de Aula CCA,5,2026-05-12 18:14:30.62419+00,diego.rsouza@discente.univasf.edu.br
+612,tarde_1,Bloco de Salas de Aula CCA,Feira da COHAB Massangano,3,2026-05-12 18:14:30.62419+00,diego.rsouza@discente.univasf.edu.br
+613,manha_1,Av. da Integração – Petrape,UNIVASF Campus Petrolina,4,2026-05-12 19:52:46.755694+00,tatiane.loiola@discente.univasf.edu.br
+614,noite_1,UNIVASF Campus Petrolina,Petrape,2,2026-05-12 19:52:46.755694+00,tatiane.loiola@discente.univasf.edu.br
+615,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,3,2026-05-13 12:29:59.332449+00,jean.coelho@discente.univasf.edu.br
+616,noite_2,UNIVASF Campus Juazeiro,GBarbosa Petrolina,3,2026-05-13 12:29:59.332449+00,jean.coelho@discente.univasf.edu.br
+617,manha_1,Posto Raul Lins / Bairro Castelo Branco,Bloco de Salas de Aula CCA,5,2026-05-13 16:25:49.255823+00,mariana.sm@discente.univasf.edu.br
+618,tarde_1,Bloco de Salas de Aula CCA,Posto Raul Lins / Bairro Castelo Branco,3,2026-05-13 16:25:49.255823+00,mariana.sm@discente.univasf.edu.br
+619,noite_1,UNIVASF Campus CCA,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-13 16:25:49.255823+00,mariana.sm@discente.univasf.edu.br
+620,noite_2,Terminal de Juazeiro – Camelódromo 2 de Julho,UNIVASF Campus Petrolina,5,2026-05-13 23:41:59.511757+00,camila.cardoso@discente.univasf.edu.br
+621,manha_1,Estrada da Banana – Restaurante Dona Branca,Bloco de Salas de Aula CCA,3,2026-05-14 11:39:39.958637+00,layla.santana@discente.univasf.edu.br
+622,tarde_1,Bloco de Salas de Aula CCA,Estrada da Banana – Restaurante Dona Branca,5,2026-05-14 11:39:39.958637+00,layla.santana@discente.univasf.edu.br
+623,noite_1,Bloco de Salas de Aula CCA,Estrada da Banana – Primeira Rotatória,5,2026-05-14 11:39:39.958637+00,layla.santana@discente.univasf.edu.br
+624,tarde_1,UNIVASF Campus Petrolina,Estação Velha Juazeiro,2,2026-05-14 12:01:58.673616+00,malu.santos@discente.univasf.edu.br
+625,noite_2,UNIVASF Campus Petrolina,Farmácia Popular,5,2026-05-14 12:01:58.673616+00,malu.santos@discente.univasf.edu.br
+626,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-14 19:47:44.495971+00,isabele.gil@discente.univasf.edu.br
+627,tarde_1,UNIVASF Campus Petrolina,Bloco de Salas de Aula CCA,2,2026-05-14 19:47:44.495971+00,isabele.gil@discente.univasf.edu.br
+628,noite_1,Bloco de Salas de Aula CCA,Posto ALE,5,2026-05-14 19:47:44.495971+00,isabele.gil@discente.univasf.edu.br
+629,manha_1,Av. da Integração – Secretaria de Obras,Bloco de Salas de Aula CCA,5,2026-05-14 19:48:09.928957+00,evylle.ruana@discente.univasf.edu.br
+630,manha_2,Secretaria de Obras,Secretaria de Obras,5,2026-05-14 19:48:09.928957+00,evylle.ruana@discente.univasf.edu.br
+631,tarde_2,Bloco de Salas de Aula CCA,Secretaria de Obras – Av. da Integração,5,2026-05-14 19:48:09.928957+00,evylle.ruana@discente.univasf.edu.br
+632,noite_1,Bloco de Salas de Aula CCA,Parque Mundo da Lua,5,2026-05-14 19:48:09.928957+00,evylle.ruana@discente.univasf.edu.br
+633,manha_1,Av. da Integração – Secretaria de Obras,Bloco de Salas de Aula CCA,5,2026-05-14 19:59:38.706513+00,ana.renata@discente.univasf.edu.br
+634,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,5,2026-05-14 20:07:07.809909+00,deivide.moraes@discente.univasf.edu.br
+635,tarde_1,Bloco de Salas de Aula CCA,GBarbosa Av. Monsenhor Ângelo Sampaio,5,2026-05-14 20:07:07.809909+00,deivide.moraes@discente.univasf.edu.br
+636,noite_1,Bloco de Salas de Aula CCA,GBarbosa Av. Monsenhor Ângelo Sampaio,4,2026-05-14 20:07:07.809909+00,deivide.moraes@discente.univasf.edu.br
+637,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,UNIVASF Campus Juazeiro,5,2026-05-14 20:12:30.212286+00,otaviogoncalves16@discente.univasf.edu.br
+638,tarde_2,UNIVASF Campus Juazeiro,GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio,5,2026-05-14 20:12:30.212286+00,otaviogoncalves16@discente.univasf.edu.br
+639,manha_1,Verdão Juazeiro,UNIVASF Campus Petrolina,5,2026-05-14 20:13:25.956347+00,clara.amancio@discente.univasf.edu.br
+640,manha_1,Av. da Integração – Petrape,Bloco de Salas de Aula CCA,1,2026-05-14 20:16:08.902809+00,joao.psouza@discente.univasf.edu.br
+641,noite_1,Bloco de Salas de Aula CCA,Petrape,1,2026-05-14 20:16:08.902809+00,joao.psouza@discente.univasf.edu.br
+642,manha_1,Verdão Juazeiro,UNIVASF Campus Petrolina,5,2026-05-14 20:18:49.9517+00,clara.amancio@discente.univasf.edu.br
+643,tarde_1,UNIVASF Campus Petrolina,Verdão Juazeiro,3,2026-05-14 20:18:49.9517+00,clara.amancio@discente.univasf.edu.br
+644,noite_1,UNIVASF Campus Petrolina,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-14 20:18:49.9517+00,clara.amancio@discente.univasf.edu.br
+645,manha_1,Feira da COHAB Massangano,UNIVASF Campus Juazeiro,5,2026-05-14 20:49:37.760319+00,tamara.souza@discente.univasf.edu.br
+646,noite_1,UNIVASF Campus Juazeiro,Feira da COHAB Massangano,1,2026-05-14 20:49:37.760319+00,tamara.souza@discente.univasf.edu.br
+647,manha_1,Verdão Juazeiro,Bloco de Salas de Aula CCA,5,2026-05-14 21:05:31.863727+00,moise.p@discente.univasf.edu.br
+648,manha_2,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,2,2026-05-14 21:05:31.863727+00,moise.p@discente.univasf.edu.br
+649,tarde_1,Bloco de Salas de Aula CCA,Rua do Paraíso ao lado das Lojas Americanas,4,2026-05-14 21:05:31.863727+00,moise.p@discente.univasf.edu.br
+650,noite_1,UNIVASF Campus CCA,Rua do Paraíso ao lado das Lojas Americanas,5,2026-05-14 21:05:31.863727+00,moise.p@discente.univasf.edu.br
+651,manha_1,Av. da Integração – Petrape,UNIVASF Campus Petrolina,5,2026-05-14 22:59:30.033512+00,nicolly.oliveira@discente.univasf.edu.br
+652,noite_2,Terminal de Juazeiro – Camelódromo 2 de Julho,Estação Velha / Cooperativa Brasil,4,2026-05-15 00:13:48.18393+00,natalia.santos@discente.univasf.edu.br
+653,manha_1,Academia Well,Bloco de Salas de Aula CCA,5,2026-05-15 01:08:31.604953+00,helena.vasconcelos@discente.univasf.edu.br
+654,noite_1,UNIVASF Campus CCA,Igreja Filadélfia,5,2026-05-15 01:08:31.604953+00,helena.vasconcelos@discente.univasf.edu.br
+655,manha_1,Supermercado Regente,UNIVASF Campus Juazeiro,5,2026-05-15 01:14:39.783525+00,gabrielreis@discente.univasf.edu.br
+656,tarde_1,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,5,2026-05-15 01:14:39.783525+00,gabrielreis@discente.univasf.edu.br
+657,manha_1,Distribuidora de Bebidas Revalle,UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-15 01:32:02.342429+00,estefany.nogueira@discente.univasf.edu.br
+658,noite_1,UNIVASF Campus CCA,Costrutéo (ponto de ônibus),5,2026-05-15 01:32:02.342429+00,estefany.nogueira@discente.univasf.edu.br
+659,tarde_2,Bloco de Salas de Aula CCA,Feira da COHAB Massangano,5,2026-05-15 01:32:02.342429+00,estefany.nogueira@discente.univasf.edu.br
+660,manha_2,Feira da COHAB Massangano,Bloco de Salas de Aula CCA,5,2026-05-15 01:32:02.342429+00,estefany.nogueira@discente.univasf.edu.br
+661,noite_1,UNIVASF Campus Petrolina,Estação Velha / Cooperativa Brasil,3,2026-05-15 11:49:34.670488+00,deborah.nascimento@discente.univasf.edu.br
+662,manha_1,Academia Well,Bloco de Salas de Aula CCA,5,2026-05-15 12:00:06.91369+00,maria.pereira@discente.univasf.edu.br
+663,noite_1,UNIVASF Campus CCA,Igreja Filadélfia,5,2026-05-15 12:00:06.91369+00,maria.pereira@discente.univasf.edu.br
+664,manha_1,Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,3,2026-05-15 13:23:57.230228+00,beatriz.argollo@discente.univasf.edu.br
+665,manha_1,Clínica Popular Av. São Francisco (Areia Branca),Bloco de Salas de Aula CCA,5,2026-05-15 13:44:24.888587+00,mariana.almeidasilva@discente.univasf.edu.br
+666,manha_2,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,2,2026-05-15 13:44:24.888587+00,mariana.almeidasilva@discente.univasf.edu.br
+667,tarde_2,Bloco de Salas de Aula CCA,Academia I9 – Av. 7 de Setembro,3,2026-05-15 13:44:24.888587+00,mariana.almeidasilva@discente.univasf.edu.br
+668,noite_1,Bloco de Salas de Aula CCA,DETRAN – Av. Monsenhor (via principal),5,2026-05-15 13:44:24.888587+00,mariana.almeidasilva@discente.univasf.edu.br
+669,manha_1,UNIVASF Campus Petrolina,UNIVASF Campus Juazeiro,3,2026-05-16 04:26:10.65753+00,douglas.asouza@discente.univasf.edu.br
+670,tarde_1,UNIVASF Campus Juazeiro,GBarbosa Av. Monsenhor Ângelo Sampaio,3,2026-05-16 04:26:10.65753+00,douglas.asouza@discente.univasf.edu.br
+671,noite_1,UNIVASF Campus Juazeiro,GBarbosa Av. Monsenhor Ângelo Sampaio,2,2026-05-16 04:26:10.65753+00,douglas.asouza@discente.univasf.edu.br
+672,noite_2,UNIVASF Campus Juazeiro,Sementeira,3,2026-05-16 14:19:07.561354+00,marianicolly.paixao@discente.univasf.edu.br
+673,manha_1,Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,5,2026-05-17 17:18:07.23454+00,fernanda.gondim@discente.univasf.edu.br
+674,noite_1,UNIVASF Campus CCA,Ministério Público Federal,5,2026-05-17 17:18:07.23454+00,fernanda.gondim@discente.univasf.edu.br
+675,manha_1,Terminal de Juazeiro – Camelódromo 2 de Julho,Bloco de Salas de Aula CCA,3,2026-05-17 17:18:33.543756+00,dayara.miranda@discente.univasf.edu.br
+676,noite_1,Bloco de Salas de Aula CCA,Terminal de Juazeiro – Camelódromo 2 de Julho,5,2026-05-17 17:18:33.543756+00,dayara.miranda@discente.univasf.edu.br
+677,manha_1,Clínica Popular Av. São Francisco (Areia Branca),UNIVASF Campus Ciências Agrárias – Bloco Antigo,5,2026-05-17 19:16:45.728191+00,suenya.ianny@discente.univasf.edu.br
+678,noite_1,UNIVASF Campus CCA,Academia I9,5,2026-05-17 19:16:45.728191+00,suenya.ianny@discente.univasf.edu.br
+679,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Bloco de Salas de Aula CCA,5,2026-05-18 11:04:43.930571+00,fatima.joselita@discente.univasf.edu.br
+680,manha_1,Posto Raul Lins / Bairro Castelo Branco,Bloco de Salas de Aula CCA,5,2026-05-18 11:29:04.724301+00,isla.vitoria@discente.univasf.edu.br
+681,tarde_1,Bloco de Salas de Aula CCA,Posto Raul Lins / Bairro Castelo Branco,5,2026-05-18 11:29:04.724301+00,isla.vitoria@discente.univasf.edu.br
+682,noite_1,Bloco de Salas de Aula CCA,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-18 11:29:04.724301+00,isla.vitoria@discente.univasf.edu.br
+683,noite_2,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,3,2026-05-18 20:11:15.889338+00,douglas.peixoto@discente.univasf.edu.br
+684,manha_1,Posto Raul Lins / Bairro Castelo Branco,Posto Raul Lins / Bairro Castelo Branco,5,2026-05-19 23:37:07.015755+00,emily.rlsantos@discente.univasf.edu.br
+685,tarde_1,Bloco de Salas de Aula CCA,Posto Raul Lins / Bairro Castelo Branco,5,2026-05-19 23:37:07.015755+00,emily.rlsantos@discente.univasf.edu.br
+686,noite_1,UNIVASF Campus CCA,Posto Raul Lins – Entrada Castelo Branco,5,2026-05-19 23:37:07.015755+00,emily.rlsantos@discente.univasf.edu.br
+687,noite_2,UNIVASF Campus Juazeiro,Verdão Juazeiro,3,2026-05-20 01:44:43.176353+00,jane.silva@discente.univasf.edu.br
+688,noite_2,Rodoviária de Petrolina,Sementeira,1,2026-05-20 12:07:00.623164+00,gabriel.jsilva@discente.univasf.edu.br
+689,manha_1,Izabela Construções (Cosme Damião / sentido CCA),Bloco de Salas de Aula CCA,5,2026-05-22 00:22:18.823894+00,lucivania.amorim@discente.univasf.edu.br
+690,manha_1,GBarbosa Av. Monsenhor Ângelo Sampaio,Bloco de Salas de Aula CCA,4,2026-05-22 00:27:34.620002+00,carla.csilva@discente.univasf.edu.br
+691,manha_1,Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda,Bloco de Salas de Aula CCA,5,2026-05-22 09:49:08.544007+00,heloisa.boliveira@discente.univasf.edu.br
+692,tarde_1,Bloco de Salas de Aula CCA,Av. Transnordestina – Posto Pedra Linda,5,2026-05-22 09:49:08.544007+00,heloisa.boliveira@discente.univasf.edu.br
+693,noite_1,Bloco de Salas de Aula CCA,Av. Transnordestina – Posto Pedra Linda,5,2026-05-22 09:49:08.544007+00,heloisa.boliveira@discente.univasf.edu.br
+694,noite_1,UNIVASF Campus Juazeiro,UNIVASF Campus Petrolina,5,2026-05-22 14:01:54.700528+00,rita.cpo@discente.univasf.edu.br
+695,manha_1,Av. da Integração – Petrape,Av. da Integração – Petrape,5,2026-05-26 10:24:40.611751+00,anjos.samoreira@discente.univasf.edu.br
+696,tarde_1,Bloco de Salas de Aula CCA,Petrape – Av. da Integração,5,2026-05-26 10:24:40.611751+00,anjos.samoreira@discente.univasf.edu.br
+697,noite_1,Bloco de Salas de Aula CCA,Petrape,5,2026-05-26 10:24:40.611751+00,anjos.samoreira@discente.univasf.edu.br
+698,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-27 02:30:58.907828+00,Bruna.alves@discente.univasf.edu.br
+699,manha_1,Distribuidora de Bebidas Revalle,Bloco de Salas de Aula CCA,5,2026-05-27 02:32:48.163259+00,Bruna.alves@discente.univasf.edu.br
+700,noite_1,Bloco de Salas de Aula CCA,Igreja Filadélfia,5,2026-05-27 02:32:48.163259+00,Bruna.alves@discente.univasf.edu.br
+701,manha_1,Av. da Integração – Secretaria de Obras,Hospital Veterinário CCA,5,2026-05-27 18:17:51.308256+00,marcos.ferreira@discente.univasf.edu.br
+702,noite_1,Hospital Veterinário,Parque Mundo da Lua,5,2026-05-27 18:17:51.308256+00,marcos.ferreira@discente.univasf.edu.br
+703,tarde_2,Hospital Veterinário,Sementeira – Av. da Integração,5,2026-05-27 18:17:51.308256+00,marcos.ferreira@discente.univasf.edu.br
