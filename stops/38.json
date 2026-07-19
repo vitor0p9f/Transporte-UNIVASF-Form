@@ -1,0 +1,277 @@
+{
+    "label": "38",
+    "boardings": [5, 0, 0, 0, 0, 0],
+    "alightings": [0, 0, 1, 0, 0, 0],
+    "edges": [
+        {
+            "destination": "18",
+            "distance": 3.5,
+            "estimated_travel_time": 8,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "6",
+            "distance": 5.7,
+            "estimated_travel_time": 14,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "7",
+            "distance": 10.8,
+            "estimated_travel_time": 18,
+            "demand": [4, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "8",
+            "distance": 9.3,
+            "estimated_travel_time": 16,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "9",
+            "distance": 6.1,
+            "estimated_travel_time": 14,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "12",
+            "distance": 9,
+            "estimated_travel_time": 16,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "16",
+            "distance": 6.7,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "17",
+            "distance": 8.5,
+            "estimated_travel_time": 20,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "19",
+            "distance": 5.2,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "20",
+            "distance": 4.7,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "25",
+            "distance": 6.4,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "5",
+            "distance": 5.3,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "26",
+            "distance": 4.8,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "29",
+            "distance": 3.5,
+            "estimated_travel_time": 8,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "31",
+            "distance": 3.8,
+            "estimated_travel_time": 9,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "34",
+            "distance": 9.1,
+            "estimated_travel_time": 20,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "40",
+            "distance": 2.2,
+            "estimated_travel_time": 4,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "37",
+            "distance": 3.9,
+            "estimated_travel_time": 10,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "45",
+            "distance": 4.7,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "43",
+            "distance": 10.4,
+            "estimated_travel_time": 18,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "46",
+            "distance": 9.4,
+            "estimated_travel_time": 20,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "30",
+            "distance": 3.3,
+            "estimated_travel_time": 8,
+            "demand": [1, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "11",
+            "distance": 4.6,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "27",
+            "distance": 3.9,
+            "estimated_travel_time": 7,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "24",
+            "distance": 3.5,
+            "estimated_travel_time": 8,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "2",
+            "distance": 3.7,
+            "estimated_travel_time": 8,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "36",
+            "distance": 1.5,
+            "estimated_travel_time": 3,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "14",
+            "distance": 7,
+            "estimated_travel_time": 16,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "13",
+            "distance": 0.55,
+            "estimated_travel_time": 2,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "44",
+            "distance": 6.6,
+            "estimated_travel_time": 16,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "10",
+            "distance": 4,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "1",
+            "distance": 3,
+            "estimated_travel_time": 7,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "3",
+            "distance": 2.6,
+            "estimated_travel_time": 5,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "4",
+            "distance": 9.6,
+            "estimated_travel_time": 16,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "15",
+            "distance": 5,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "21",
+            "distance": 7.7,
+            "estimated_travel_time": 18,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "22",
+            "distance": 5.4,
+            "estimated_travel_time": 14,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "23",
+            "distance": 6.7,
+            "estimated_travel_time": 16,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "28",
+            "distance": 3.2,
+            "estimated_travel_time": 7,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "32",
+            "distance": 6.1,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "33",
+            "distance": 5.1,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "35",
+            "distance": 3,
+            "estimated_travel_time": 7,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "41",
+            "distance": 6,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "42",
+            "distance": 3.1,
+            "estimated_travel_time": 8,
+            "demand": [0, 0, 0, 0, 0, 0]
+        },
+        {
+            "destination": "39",
+            "distance": 6.1,
+            "estimated_travel_time": 12,
+            "demand": [0, 0, 0, 0, 0, 0]
+        }
+    ]
+}
