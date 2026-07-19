@@ -67,11 +67,18 @@ A construção de cada rota ocorre de forma sequencial na função `construir_ro
 
 1. **Seleção de Candidatos a Embarque:**
    - O algoritmo filtra todos os pontos de embarque cujos passageiros caibam nas vagas restantes atuais do ônibus (capacidade - lotação atual após desembarques naquela parada).
-2. **Cálculo de Score com Poupança (Savings):**
+2. **Cálculo de Score com Poupança (Savings) e Restrições (Fitness):**
    - Para cada ponto de embarque candidato $j$, calcula-se o ganho espacial clássico de Clarke-Wright usando um coeficiente regulador $\lambda$ (lambda):
      $$\text{Savings} = d(\text{depósito}, j) - \lambda \times d(\text{nó\_atual}, j)$$
-   - O score final do candidato é a diferença entre a poupança espacial e o impacto no custo multi-objetivo simulado:
+   - O score final do candidato é a diferença entre a poupança espacial e o custo multi-objetivo simulado:
      $$\text{Score} = \text{Savings} - \text{Fitness}_{\text{simulado}}$$
+   
+   > [!NOTE]
+   > **Divisão de Papéis (Savings vs. Fitness):**
+   > * **Savings (`savings_val`):** Diz respeito exclusivamente à parte espacial e geométrica. Ele calcula a atratividade geográfica de visitar a parada $j$ em seguida, com base no depósito e na distância de transição direta ($d(\text{nó\_atual}, j)$) ponderada pelo $\lambda$.
+   > * **Fitness (`avaliar_fitness_rota`):** É onde entram todas as outras restrições e objetivos operacionais (limite estrito de tempo de 90 min, capacidade máxima do ônibus, lotação ideal/confortável, custo de combustível real e heterogeneidade de destinos).
+   > * **Unificação:** Ao maximizar o `Score = Savings - Fitness`, o algoritmo pondera o benefício espacial contra as penalidades operacionais.
+   
    - O candidato com melhor score é selecionado, adicionado à rota, e seus passageiros são embarcados.
 3. **Fase de Desembarque Guloso (Nearest Neighbor):**
    - Se nenhum novo ponto de embarque couber ou for viável (devido ao tempo ou limite de vagas), e ainda houver passageiros a bordo, o ônibus viaja para a parada de desembarque pendente mais próxima no espaço para descarregar passageiros e liberar espaço.
