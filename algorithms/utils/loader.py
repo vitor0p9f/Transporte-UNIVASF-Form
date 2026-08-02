@@ -13,6 +13,8 @@ import pandas as pd
 from pathlib import Path
 from collections import defaultdict
 
+from utils.vrp_adapter import canonical   # normaliza aliases → nome canônico
+
 # Caminho padrão do CSV exportado do Supabase
 DATA_DIR = Path(__file__).parent.parent / "data"
 DEFAULT_CSV = DATA_DIR / "viagens.csv"
@@ -75,8 +77,8 @@ def construir_demanda(df: pd.DataFrame) -> dict:
 
     for _, row in df.iterrows():
         turno     = row["turno"]
-        embarque  = str(row["embarque"]).strip()
-        desemb    = str(row["desembarque"]).strip()
+        embarque  = canonical(str(row["embarque"]).strip())
+        desemb    = canonical(str(row["desembarque"]).strip())
         lotacao   = int(row["lotacao"])
 
         demand[turno][embarque]["boarding"]  += 1

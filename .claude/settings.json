@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -X utf8 teste.py --turno manha_1 --sem-two-phase --sem-postimprove)",
+      "Bash(python -X utf8 teste.py --turno noite_1 --sem-two-phase --sem-postimprove)",
+      "Bash(git ls-tree *)",
+      "Bash(python3 -)",
+      "Bash(python convert_vrp_stops.py --dry-run)",
+      "Bash(python convert_vrp_stops.py)",
+      "Bash(python rodar_todos.py)"
+    ]
+  }
+}

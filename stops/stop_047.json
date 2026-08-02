@@ -6,20 +6,20 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Abaré",
-      "distance": 3.594,
-      "estimated_travel_time": 7.7
+      "distance": 3.3,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Academia I9",
-      "distance": 3.652,
-      "estimated_travel_time": 7.8
+      "distance": 3.6,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Academia I9 – Av. 7 de Setembro",
-      "distance": 4.646,
-      "estimated_travel_time": 10.0
+      "distance": 3.6,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -30,14 +30,14 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
-      "distance": 5.248,
-      "estimated_travel_time": 11.2
+      "distance": 0.65,
+      "estimated_travel_time": 2.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Av. 7 de Setembro – Aldiegas",
-      "distance": 4.395,
-      "estimated_travel_time": 9.4
+      "distance": 5.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -54,32 +54,32 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Av. Transnordestina – Nutiva Agro",
-      "distance": 6.754,
-      "estimated_travel_time": 14.5
+      "distance": 8.6,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Av. Transnordestina – Posto Pedra Linda",
-      "distance": 7.471,
+      "distance": 6.8,
       "estimated_travel_time": 16.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
-      "distance": 8.342,
-      "estimated_travel_time": 17.9
+      "distance": 6.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Av. da Integração – Mundo da Lua",
-      "distance": 4.416,
-      "estimated_travel_time": 9.5
+      "distance": 2.2,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Av. da Integração – Petrape",
-      "distance": 9.305,
-      "estimated_travel_time": 19.9
+      "distance": 4.3,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -90,92 +90,92 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Av. da Integração – Sementeira",
-      "distance": 6.637,
-      "estimated_travel_time": 14.2
+      "distance": 3.2,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "BR 407 – Isaías Automóveis / Posto Delta",
-      "distance": 8.049,
-      "estimated_travel_time": 17.2
+      "distance": 3.0,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "BR 407 – Izabela Construções",
-      "distance": 7.019,
-      "estimated_travel_time": 15.0
+      "distance": 8.6,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Bloco Antigo CCA",
-      "distance": 12.274,
-      "estimated_travel_time": 26.3
+      "distance": 13.2,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Bloco de Salas de Aula CCA",
-      "distance": 14.91,
-      "estimated_travel_time": 31.9
+      "distance": 14.4,
+      "estimated_travel_time": 28.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Canteiro de Obras",
-      "distance": 4.515,
-      "estimated_travel_time": 9.7
+      "distance": 3.1,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Canteiro de Obras Av. 7 de Setembro",
-      "distance": 2.191,
-      "estimated_travel_time": 4.7
+      "distance": 3.1,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Canteiro de Obras – Av. 7 de Setembro",
-      "distance": 4.416,
-      "estimated_travel_time": 9.5
+      "distance": 3.1,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Canteiro de Obras – Juazeiro",
-      "distance": 3.99,
-      "estimated_travel_time": 8.6
+      "distance": 3.1,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
-      "distance": 1.548,
-      "estimated_travel_time": 3.3
+      "distance": 1.9,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Costrutéo (ponto de ônibus)",
-      "distance": 0.954,
-      "estimated_travel_time": 2.0
+      "distance": 8.5,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "DETRAN – Av. Monsenhor (via principal)",
-      "distance": 4.272,
-      "estimated_travel_time": 9.2
+      "distance": 2.8,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Distribuidora de Bebidas Revalle",
-      "distance": 1.27,
-      "estimated_travel_time": 2.7
+      "distance": 6.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Estação Velha / Cooperativa Brasil",
-      "distance": 5.141,
-      "estimated_travel_time": 11.0
+      "distance": 6.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Estação Velha Juazeiro",
-      "distance": 2.804,
-      "estimated_travel_time": 6.0
+      "distance": 6.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -186,8 +186,8 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Estrada da Banana – Condomínio Mais Viver",
-      "distance": 7.073,
-      "estimated_travel_time": 15.2
+      "distance": 6.1,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -198,8 +198,8 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Estrada da Banana – Restaurante Dona Branca",
-      "distance": 5.284,
-      "estimated_travel_time": 11.3
+      "distance": 5.6,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -210,8 +210,8 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Feira da COHAB Massangano",
-      "distance": 7.276,
-      "estimated_travel_time": 15.6
+      "distance": 5.9,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -222,104 +222,104 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
-      "distance": 3.376,
-      "estimated_travel_time": 7.2
+      "distance": 1.5,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "GBarbosa Juazeiro",
-      "distance": 3.365,
-      "estimated_travel_time": 7.2
+      "distance": 3.9,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
-      "distance": 5.197,
-      "estimated_travel_time": 11.1
+      "distance": 5.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "GBarbosa Petrolina",
-      "distance": 2.635,
-      "estimated_travel_time": 5.6
+      "distance": 1.5,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
-      "distance": 4.816,
-      "estimated_travel_time": 10.3
+      "distance": 1.5,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Hospital Veterinário",
-      "distance": 11.882,
-      "estimated_travel_time": 25.5
+      "distance": 12.8,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Hospital Veterinário CCA",
-      "distance": 13.182,
-      "estimated_travel_time": 28.2
+      "distance": 12.8,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Igreja Filadélfia",
-      "distance": 4.722,
-      "estimated_travel_time": 10.1
+      "distance": 8.2,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
-      "distance": 10.632,
-      "estimated_travel_time": 22.8
+      "distance": 8.6,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Mecânica Ouro Diesel",
-      "distance": 1.703,
-      "estimated_travel_time": 3.6
+      "distance": 5.2,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
-      "distance": 4.566,
-      "estimated_travel_time": 9.8
+      "distance": 5.2,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Parque Mundo da Lua",
-      "distance": 2.325,
-      "estimated_travel_time": 5.0
+      "distance": 2.2,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Petrape",
-      "distance": 7.279,
-      "estimated_travel_time": 15.6
+      "distance": 4.3,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Petrape – Av. da Integração",
-      "distance": 7.652,
-      "estimated_travel_time": 16.4
+      "distance": 4.3,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Plante Bem",
-      "distance": 6.86,
-      "estimated_travel_time": 14.7
+      "distance": 4.0,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Ponto Aldiegas",
-      "distance": 4.397,
-      "estimated_travel_time": 9.4
+      "distance": 5.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
-      "distance": 8.428,
-      "estimated_travel_time": 18.1
+      "distance": 5.2,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -330,38 +330,38 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Ponto BR 428 – Posto Carranca",
-      "distance": 8.546,
-      "estimated_travel_time": 18.3
+      "distance": 5.7,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
-      "distance": 3.108,
-      "estimated_travel_time": 6.7
+      "distance": 4.5,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Ponto em frente à Abaré",
-      "distance": 1.338,
-      "estimated_travel_time": 2.9
+      "distance": 3.3,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Posto ALE",
-      "distance": 4.635,
-      "estimated_travel_time": 9.9
+      "distance": 7.1,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Posto Raul Lins / Bairro Castelo Branco",
-      "distance": 2.1,
-      "estimated_travel_time": 4.5
+      "distance": 7.4,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Posto Raul Lins – Entrada Castelo Branco",
-      "distance": 4.227,
-      "estimated_travel_time": 9.1
+      "distance": 7.4,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Ministério Público Federal",
@@ -372,25 +372,25 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Posto de Gasolina Big Brother",
-      "distance": 3.944,
-      "estimated_travel_time": 8.5
+      "distance": 2.9,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Residência Estudantil CCA",
-      "distance": 11.193,
-      "estimated_travel_time": 24.0
+      "distance": 13.5,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Rodoviária de Petrolina",
-      "distance": 3.291,
-      "estimated_travel_time": 7.1
+      "distance": 3.3,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Rua do Paraíso ao lado das Lojas Americanas",
-      "distance": 4.689,
+      "distance": 3.7,
       "estimated_travel_time": 10.0
     },
     {
@@ -408,63 +408,62 @@
     {
       "origin": "Ministério Público Federal",
       "destination": "Sementeira",
-      "distance": 3.346,
-      "estimated_travel_time": 7.2
+      "distance": 3.2,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Sementeira – Av. da Integração",
-      "distance": 7.817,
-      "estimated_travel_time": 16.8
+      "distance": 3.2,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Supermercado Regente",
-      "distance": 5.027,
-      "estimated_travel_time": 10.8
+      "distance": 1.6,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
-      "distance": 3.997,
-      "estimated_travel_time": 8.6
+      "distance": 4.4,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "UNIVASF Campus CCA",
-      "distance": 11.343,
-      "estimated_travel_time": 24.3
+      "distance": 14.3,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "UNIVASF Campus CCA – Bloco Antigo",
-      "distance": 15.588,
-      "estimated_travel_time": 33.4
+      "distance": 13.2,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
-      "distance": 13.636,
-      "estimated_travel_time": 29.2
+      "distance": 13.2,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "UNIVASF Campus Juazeiro",
-      "distance": 3.41,
-      "estimated_travel_time": 7.3
+      "distance": 5.0,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "UNIVASF Campus Petrolina",
-      "distance": 0.689,
-      "estimated_travel_time": 1.5
+      "distance": 1.5,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Ministério Público Federal",
       "destination": "Verdão Juazeiro",
-      "distance": 6.736,
-      "estimated_travel_time": 14.4
+      "distance": 7.7,
+      "estimated_travel_time": 20.0
     }
-  ],
-  "_sintetico": true
+  ]
 }

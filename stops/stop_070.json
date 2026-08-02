@@ -6,20 +6,20 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Abaré",
-      "distance": 1.958,
-      "estimated_travel_time": 4.2
+      "distance": 3.4,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Academia I9",
-      "distance": 1.764,
-      "estimated_travel_time": 3.8
+      "distance": 3.3,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Academia I9 – Av. 7 de Setembro",
-      "distance": 1.724,
-      "estimated_travel_time": 3.7
+      "distance": 3.3,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Supermercado Regente",
@@ -30,14 +30,14 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
-      "distance": 6.718,
-      "estimated_travel_time": 14.4
+      "distance": 1.9,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Av. 7 de Setembro – Aldiegas",
-      "distance": 2.75,
-      "estimated_travel_time": 5.9
+      "distance": 3.8,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Supermercado Regente",
@@ -54,32 +54,32 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Av. Transnordestina – Nutiva Agro",
-      "distance": 3.726,
-      "estimated_travel_time": 8.0
+      "distance": 7.2,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Av. Transnordestina – Posto Pedra Linda",
-      "distance": 2.463,
-      "estimated_travel_time": 5.3
+      "distance": 5.5,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
-      "distance": 3.395,
-      "estimated_travel_time": 7.3
+      "distance": 5.5,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Av. da Integração – Mundo da Lua",
-      "distance": 7.154,
-      "estimated_travel_time": 15.3
+      "distance": 2.1,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Av. da Integração – Petrape",
-      "distance": 5.196,
-      "estimated_travel_time": 11.1
+      "distance": 2.8,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Supermercado Regente",
@@ -90,92 +90,92 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Av. da Integração – Sementeira",
-      "distance": 1.754,
-      "estimated_travel_time": 3.8
+      "distance": 2.0,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "BR 407 – Isaías Automóveis / Posto Delta",
-      "distance": 3.059,
-      "estimated_travel_time": 6.6
+      "distance": 1.6,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "BR 407 – Izabela Construções",
-      "distance": 2.636,
-      "estimated_travel_time": 5.6
+      "distance": 7.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Bloco Antigo CCA",
-      "distance": 8.166,
-      "estimated_travel_time": 17.5
+      "distance": 11.7,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Bloco de Salas de Aula CCA",
-      "distance": 10.393,
-      "estimated_travel_time": 22.3
+      "distance": 13.0,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Canteiro de Obras",
-      "distance": 3.259,
-      "estimated_travel_time": 7.0
-    },
-    {
-      "origin": "Supermercado Regente",
-      "destination": "Canteiro de Obras Av. 7 de Setembro",
-      "distance": 3.492,
-      "estimated_travel_time": 7.5
-    },
-    {
-      "origin": "Supermercado Regente",
-      "destination": "Canteiro de Obras – Av. 7 de Setembro",
-      "distance": 2.889,
-      "estimated_travel_time": 6.2
-    },
-    {
-      "origin": "Supermercado Regente",
-      "destination": "Canteiro de Obras – Juazeiro",
-      "distance": 8.314,
-      "estimated_travel_time": 17.8
-    },
-    {
-      "origin": "Supermercado Regente",
-      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
-      "distance": 4.22,
+      "distance": 3.6,
       "estimated_travel_time": 9.0
     },
     {
       "origin": "Supermercado Regente",
+      "destination": "Canteiro de Obras Av. 7 de Setembro",
+      "distance": 3.6,
+      "estimated_travel_time": 9.0
+    },
+    {
+      "origin": "Supermercado Regente",
+      "destination": "Canteiro de Obras – Av. 7 de Setembro",
+      "distance": 3.6,
+      "estimated_travel_time": 9.0
+    },
+    {
+      "origin": "Supermercado Regente",
+      "destination": "Canteiro de Obras – Juazeiro",
+      "distance": 3.6,
+      "estimated_travel_time": 9.0
+    },
+    {
+      "origin": "Supermercado Regente",
+      "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
+      "distance": 2.4,
+      "estimated_travel_time": 6.0
+    },
+    {
+      "origin": "Supermercado Regente",
       "destination": "Costrutéo (ponto de ônibus)",
-      "distance": 4.579,
-      "estimated_travel_time": 9.8
+      "distance": 6.7,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "DETRAN – Av. Monsenhor (via principal)",
-      "distance": 2.631,
-      "estimated_travel_time": 5.6
+      "distance": 3.4,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Distribuidora de Bebidas Revalle",
-      "distance": 5.164,
-      "estimated_travel_time": 11.1
+      "distance": 5.4,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Estação Velha / Cooperativa Brasil",
-      "distance": 9.403,
-      "estimated_travel_time": 20.1
+      "distance": 5.4,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Estação Velha Juazeiro",
-      "distance": 7.293,
-      "estimated_travel_time": 15.6
+      "distance": 5.4,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
@@ -186,8 +186,8 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Estrada da Banana – Condomínio Mais Viver",
-      "distance": 4.586,
-      "estimated_travel_time": 9.8
+      "distance": 4.4,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Supermercado Regente",
@@ -198,8 +198,8 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Estrada da Banana – Restaurante Dona Branca",
-      "distance": 3.672,
-      "estimated_travel_time": 7.9
+      "distance": 3.9,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Supermercado Regente",
@@ -210,8 +210,8 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Feira da COHAB Massangano",
-      "distance": 2.254,
-      "estimated_travel_time": 4.8
+      "distance": 4.5,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Supermercado Regente",
@@ -222,110 +222,110 @@
     {
       "origin": "Supermercado Regente",
       "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
-      "distance": 6.389,
-      "estimated_travel_time": 13.7
+      "distance": 2.2,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "GBarbosa Juazeiro",
-      "distance": 6.052,
-      "estimated_travel_time": 13.0
+      "distance": 2.5,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
-      "distance": 9.142,
-      "estimated_travel_time": 19.6
+      "distance": 4.5,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "GBarbosa Petrolina",
-      "distance": 3.556,
-      "estimated_travel_time": 7.6
+      "distance": 2.2,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
-      "distance": 7.75,
-      "estimated_travel_time": 16.6
+      "distance": 2.2,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Hospital Veterinário",
-      "distance": 8.556,
-      "estimated_travel_time": 18.3
+      "distance": 11.4,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Hospital Veterinário CCA",
-      "distance": 9.586,
-      "estimated_travel_time": 20.5
+      "distance": 11.4,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Igreja Filadélfia",
-      "distance": 1.412,
-      "estimated_travel_time": 3.0
+      "distance": 6.7,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
-      "distance": 6.119,
-      "estimated_travel_time": 13.1
+      "distance": 7.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Mecânica Ouro Diesel",
-      "distance": 3.89,
-      "estimated_travel_time": 8.3
+      "distance": 3.7,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
-      "distance": 5.476,
-      "estimated_travel_time": 11.7
+      "distance": 3.7,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Ministério Público Federal",
-      "distance": 5.027,
-      "estimated_travel_time": 10.8
+      "distance": 1.8,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Parque Mundo da Lua",
-      "distance": 2.722,
-      "estimated_travel_time": 5.8
+      "distance": 2.1,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Petrape",
-      "distance": 4.845,
-      "estimated_travel_time": 10.4
+      "distance": 2.8,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Petrape – Av. da Integração",
-      "distance": 4.235,
-      "estimated_travel_time": 9.1
+      "distance": 2.8,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Plante Bem",
-      "distance": 2.139,
-      "estimated_travel_time": 4.6
+      "distance": 2.6,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Ponto Aldiegas",
-      "distance": 5.09,
-      "estimated_travel_time": 10.9
+      "distance": 3.8,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
-      "distance": 3.498,
-      "estimated_travel_time": 7.5
+      "distance": 5.9,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
@@ -336,38 +336,38 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Ponto BR 428 – Posto Carranca",
-      "distance": 4.722,
-      "estimated_travel_time": 10.1
+      "distance": 6.4,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
-      "distance": 2.491,
-      "estimated_travel_time": 5.3
+      "distance": 5.2,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Ponto em frente à Abaré",
-      "distance": 3.689,
-      "estimated_travel_time": 7.9
+      "distance": 3.4,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Posto ALE",
-      "distance": 2.976,
-      "estimated_travel_time": 6.4
+      "distance": 5.4,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Posto Raul Lins / Bairro Castelo Branco",
-      "distance": 3.654,
-      "estimated_travel_time": 7.8
+      "distance": 6.0,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Posto Raul Lins – Entrada Castelo Branco",
-      "distance": 3.847,
-      "estimated_travel_time": 8.2
+      "distance": 6.0,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Supermercado Regente",
@@ -378,26 +378,26 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Posto de Gasolina Big Brother",
-      "distance": 4.596,
-      "estimated_travel_time": 9.8
+      "distance": 3.6,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Residência Estudantil CCA",
-      "distance": 6.872,
-      "estimated_travel_time": 14.7
+      "distance": 12.1,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Rodoviária de Petrolina",
-      "distance": 5.522,
-      "estimated_travel_time": 11.8
+      "distance": 1.9,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Rua do Paraíso ao lado das Lojas Americanas",
-      "distance": 1.718,
-      "estimated_travel_time": 3.7
+      "distance": 2.2,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Supermercado Regente",
@@ -414,57 +414,56 @@
     {
       "origin": "Supermercado Regente",
       "destination": "Sementeira",
-      "distance": 1.701,
-      "estimated_travel_time": 3.6
+      "distance": 2.0,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Sementeira – Av. da Integração",
-      "distance": 3.838,
-      "estimated_travel_time": 8.2
+      "distance": 2.0,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
-      "distance": 6.59,
-      "estimated_travel_time": 14.1
+      "distance": 3.0,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "UNIVASF Campus CCA",
-      "distance": 7.94,
-      "estimated_travel_time": 17.0
+      "distance": 12.9,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "UNIVASF Campus CCA – Bloco Antigo",
-      "distance": 11.704,
-      "estimated_travel_time": 25.1
+      "distance": 11.7,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
-      "distance": 10.084,
-      "estimated_travel_time": 21.6
+      "distance": 11.7,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "UNIVASF Campus Juazeiro",
-      "distance": 8.301,
-      "estimated_travel_time": 17.8
+      "distance": 3.6,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "UNIVASF Campus Petrolina",
-      "distance": 4.399,
-      "estimated_travel_time": 9.4
+      "distance": 1.6,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Supermercado Regente",
       "destination": "Verdão Juazeiro",
-      "distance": 10.824,
-      "estimated_travel_time": 23.2
+      "distance": 6.3,
+      "estimated_travel_time": 14.0
     }
-  ],
-  "_sintetico": true
+  ]
 }

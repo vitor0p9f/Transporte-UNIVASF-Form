@@ -6,20 +6,20 @@
     {
       "origin": "Petrape",
       "destination": "Abaré",
-      "distance": 4.232,
-      "estimated_travel_time": 9.1
+      "distance": 2.6,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Petrape",
       "destination": "Academia I9",
-      "distance": 6.072,
-      "estimated_travel_time": 13.0
+      "distance": 3.2,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Petrape",
       "destination": "Academia I9 – Av. 7 de Setembro",
-      "distance": 6.51,
-      "estimated_travel_time": 13.9
+      "distance": 3.2,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Petrape",
@@ -30,14 +30,14 @@
     {
       "origin": "Petrape",
       "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
-      "distance": 11.06,
-      "estimated_travel_time": 23.7
+      "distance": 4.6,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
       "destination": "Av. 7 de Setembro – Aldiegas",
-      "distance": 7.439,
-      "estimated_travel_time": 15.9
+      "distance": 1.2,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Petrape",
@@ -54,26 +54,26 @@
     {
       "origin": "Petrape",
       "destination": "Av. Transnordestina – Nutiva Agro",
-      "distance": 1.177,
-      "estimated_travel_time": 2.5
+      "distance": 4.2,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Petrape",
       "destination": "Av. Transnordestina – Posto Pedra Linda",
-      "distance": 4.889,
-      "estimated_travel_time": 10.5
+      "distance": 4.7,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
       "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
-      "distance": 4.813,
-      "estimated_travel_time": 10.3
+      "distance": 4.7,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
       "destination": "Av. da Integração – Mundo da Lua",
-      "distance": 11.028,
-      "estimated_travel_time": 23.6
+      "distance": 2.4,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Petrape",
@@ -90,92 +90,92 @@
     {
       "origin": "Petrape",
       "destination": "Av. da Integração – Sementeira",
-      "distance": 4.187,
-      "estimated_travel_time": 9.0
+      "distance": 1.1,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Petrape",
       "destination": "BR 407 – Isaías Automóveis / Posto Delta",
-      "distance": 4.954,
-      "estimated_travel_time": 10.6
+      "distance": 1.3,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Petrape",
       "destination": "BR 407 – Izabela Construções",
-      "distance": 3.084,
-      "estimated_travel_time": 6.6
+      "distance": 5.6,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
       "destination": "Bloco Antigo CCA",
-      "distance": 5.488,
-      "estimated_travel_time": 11.8
+      "distance": 10.2,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Petrape",
       "destination": "Bloco de Salas de Aula CCA",
-      "distance": 8.456,
-      "estimated_travel_time": 18.1
+      "distance": 11.4,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Petrape",
       "destination": "Canteiro de Obras",
-      "distance": 7.944,
-      "estimated_travel_time": 17.0
+      "distance": 4.0,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "Canteiro de Obras Av. 7 de Setembro",
-      "distance": 7.125,
-      "estimated_travel_time": 15.3
+      "distance": 4.0,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "Canteiro de Obras – Av. 7 de Setembro",
-      "distance": 7.575,
-      "estimated_travel_time": 16.2
+      "distance": 4.0,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "Canteiro de Obras – Juazeiro",
-      "distance": 11.262,
-      "estimated_travel_time": 24.1
+      "distance": 4.0,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
-      "distance": 5.756,
-      "estimated_travel_time": 12.3
+      "distance": 3.4,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "Costrutéo (ponto de ônibus)",
-      "distance": 6.365,
-      "estimated_travel_time": 13.6
+      "distance": 5.2,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
       "destination": "DETRAN – Av. Monsenhor (via principal)",
-      "distance": 7.291,
-      "estimated_travel_time": 15.6
+      "distance": 4.4,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
       "destination": "Distribuidora de Bebidas Revalle",
-      "distance": 8.162,
-      "estimated_travel_time": 17.5
+      "distance": 4.1,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Petrape",
       "destination": "Estação Velha / Cooperativa Brasil",
-      "distance": 12.415,
-      "estimated_travel_time": 26.6
+      "distance": 6.9,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Petrape",
       "destination": "Estação Velha Juazeiro",
-      "distance": 10.08,
-      "estimated_travel_time": 21.6
+      "distance": 6.9,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Petrape",
@@ -186,8 +186,8 @@
     {
       "origin": "Petrape",
       "destination": "Estrada da Banana – Condomínio Mais Viver",
-      "distance": 0.261,
-      "estimated_travel_time": 0.6
+      "distance": 3.7,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
@@ -198,8 +198,8 @@
     {
       "origin": "Petrape",
       "destination": "Estrada da Banana – Restaurante Dona Branca",
-      "distance": 1.995,
-      "estimated_travel_time": 4.3
+      "distance": 3.2,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Petrape",
@@ -210,8 +210,8 @@
     {
       "origin": "Petrape",
       "destination": "Feira da COHAB Massangano",
-      "distance": 4.991,
-      "estimated_travel_time": 10.7
+      "distance": 3.3,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Petrape",
@@ -222,80 +222,80 @@
     {
       "origin": "Petrape",
       "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
-      "distance": 10.061,
-      "estimated_travel_time": 21.6
+      "distance": 3.6,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Petrape",
       "destination": "GBarbosa Juazeiro",
-      "distance": 9.84,
-      "estimated_travel_time": 21.1
+      "distance": 3.9,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
-      "distance": 12.413,
-      "estimated_travel_time": 26.6
+      "distance": 6.2,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Petrape",
       "destination": "GBarbosa Petrolina",
-      "distance": 7.475,
-      "estimated_travel_time": 16.0
+      "distance": 3.6,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Petrape",
       "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
-      "distance": 11.571,
-      "estimated_travel_time": 24.8
+      "distance": 3.6,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Petrape",
       "destination": "Hospital Veterinário",
-      "distance": 4.626,
-      "estimated_travel_time": 9.9
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Petrape",
       "destination": "Hospital Veterinário CCA",
-      "distance": 5.977,
-      "estimated_travel_time": 12.8
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Petrape",
       "destination": "Igreja Filadélfia",
-      "distance": 6.217,
-      "estimated_travel_time": 13.3
+      "distance": 5.2,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
-      "distance": 4.769,
-      "estimated_travel_time": 10.2
+      "distance": 5.6,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
       "destination": "Mecânica Ouro Diesel",
-      "distance": 7.239,
-      "estimated_travel_time": 15.5
+      "distance": 1.2,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Petrape",
       "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
-      "distance": 9.881,
-      "estimated_travel_time": 21.2
+      "distance": 1.2,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Petrape",
       "destination": "Ministério Público Federal",
-      "distance": 7.279,
-      "estimated_travel_time": 15.6
+      "distance": 3.7,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Petrape",
       "destination": "Parque Mundo da Lua",
-      "distance": 5.566,
-      "estimated_travel_time": 11.9
+      "distance": 2.4,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Petrape",
@@ -306,20 +306,20 @@
     {
       "origin": "Petrape",
       "destination": "Plante Bem",
-      "distance": 3.771,
-      "estimated_travel_time": 8.1
+      "distance": 1.3,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Petrape",
       "destination": "Ponto Aldiegas",
-      "distance": 9.514,
-      "estimated_travel_time": 20.4
+      "distance": 1.2,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Petrape",
       "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
-      "distance": 4.764,
-      "estimated_travel_time": 10.2
+      "distance": 6.2,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
@@ -330,37 +330,37 @@
     {
       "origin": "Petrape",
       "destination": "Ponto BR 428 – Posto Carranca",
-      "distance": 2.274,
-      "estimated_travel_time": 4.9
+      "distance": 5.5,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Petrape",
       "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
-      "distance": 4.438,
-      "estimated_travel_time": 9.5
+      "distance": 5.6,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Petrape",
       "destination": "Ponto em frente à Abaré",
-      "distance": 6.327,
-      "estimated_travel_time": 13.6
+      "distance": 2.6,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Petrape",
       "destination": "Posto ALE",
-      "distance": 7.709,
-      "estimated_travel_time": 16.5
+      "distance": 4.2,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "Posto Raul Lins / Bairro Castelo Branco",
-      "distance": 7.249,
-      "estimated_travel_time": 15.5
+      "distance": 7.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Petrape",
       "destination": "Posto Raul Lins – Entrada Castelo Branco",
-      "distance": 8.4,
+      "distance": 7.9,
       "estimated_travel_time": 18.0
     },
     {
@@ -372,26 +372,26 @@
     {
       "origin": "Petrape",
       "destination": "Posto de Gasolina Big Brother",
-      "distance": 8.957,
-      "estimated_travel_time": 19.2
+      "distance": 4.9,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Petrape",
       "destination": "Residência Estudantil CCA",
-      "distance": 4.845,
-      "estimated_travel_time": 10.4
+      "distance": 10.5,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Petrape",
       "destination": "Rodoviária de Petrolina",
-      "distance": 9.436,
-      "estimated_travel_time": 20.2
+      "distance": 1.2,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Petrape",
       "destination": "Rua do Paraíso ao lado das Lojas Americanas",
-      "distance": 6.514,
-      "estimated_travel_time": 14.0
+      "distance": 3.7,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Petrape",
@@ -408,63 +408,62 @@
     {
       "origin": "Petrape",
       "destination": "Sementeira",
-      "distance": 5.464,
-      "estimated_travel_time": 11.7
+      "distance": 1.1,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Petrape",
       "destination": "Sementeira – Av. da Integração",
-      "distance": 2.327,
-      "estimated_travel_time": 5.0
+      "distance": 1.1,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Petrape",
       "destination": "Supermercado Regente",
-      "distance": 4.845,
-      "estimated_travel_time": 10.4
+      "distance": 2.8,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Petrape",
       "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
-      "distance": 10.482,
-      "estimated_travel_time": 22.5
+      "distance": 4.4,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Petrape",
       "destination": "UNIVASF Campus CCA",
-      "distance": 4.123,
-      "estimated_travel_time": 8.8
+      "distance": 11.3,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Petrape",
       "destination": "UNIVASF Campus CCA – Bloco Antigo",
-      "distance": 8.455,
-      "estimated_travel_time": 18.1
+      "distance": 10.2,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Petrape",
       "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
-      "distance": 6.407,
-      "estimated_travel_time": 13.7
+      "distance": 10.2,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Petrape",
       "destination": "UNIVASF Campus Juazeiro",
-      "distance": 10.54,
-      "estimated_travel_time": 22.6
+      "distance": 5.0,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Petrape",
       "destination": "UNIVASF Campus Petrolina",
-      "distance": 6.631,
-      "estimated_travel_time": 14.2
+      "distance": 3.6,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Petrape",
       "destination": "Verdão Juazeiro",
-      "distance": 14.001,
-      "estimated_travel_time": 30.0
+      "distance": 8.2,
+      "estimated_travel_time": 18.0
     }
-  ],
-  "_sintetico": true
+  ]
 }

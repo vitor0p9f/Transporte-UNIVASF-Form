@@ -272,3 +272,37 @@ INSERT INTO public.paradas (turno_id, nome, ordem) VALUES
 (6, 'Ministério Público', 43),
 (6, 'Pousada Paraíso', 44),
 (6, 'Entrada da COHAB 06 (Tapera)', 45);
+
+-- ===================================================
+-- PARADAS FALTANTES — comparado ao itinerário 2026.1
+-- ===================================================
+
+-- Turno 1 (Manhã 1): retorno do Ônibus C via Av. 7 de Setembro
+INSERT INTO public.paradas (turno_id, nome, ordem) VALUES
+(1, 'Mecânica Ouro Diesel – Av. 7 de Setembro', 40),
+(1, 'Delegacia de Polícia Civil – Ouro Preto (Av. 7 de Setembro)', 41),
+(1, 'Academia I9 – Av. 7 de Setembro', 42),
+(1, 'Ministério Público Federal', 43);
+
+-- Turno 3 (Tarde 1): Ônibus F 12:10 via Av. 7 de Setembro (Petrolina)
+INSERT INTO public.paradas (turno_id, nome, ordem) VALUES
+(3, 'Canteiro de Obras – Av. 7 de Setembro', 42),
+(3, 'Posto São Francisco – Av. 7 de Setembro', 43);
+
+-- Turno 4 (Tarde 2): retorno Ônibus D 15:10 + Ônibus A 15:10
+INSERT INTO public.paradas (turno_id, nome, ordem) VALUES
+(4, 'Mecânica Ouro Diesel – Av. 7 de Setembro', 19),
+(4, 'Delegacia de Polícia Civil – Ouro Preto', 20),
+(4, 'Academia I9 – Av. 7 de Setembro', 21),
+(4, 'Ministério Público Federal', 22),
+(4, 'BR 407 – Isaías Automóveis / Honorato Viana', 23);
+
+-- Turno 5 (Noite 1): Ônibus C 17:30, E 18:10, F 18:10
+INSERT INTO public.paradas (turno_id, nome, ordem) VALUES
+(5, 'Estrada da Banana – Primeira Rotatória', 41),
+(5, 'Caixa d''Água da COMPESA', 42),
+(5, 'Abaré', 43);
+
+-- Turno 6 (Noite 2): Ônibus H 22:10
+INSERT INTO public.paradas (turno_id, nome, ordem) VALUES
+(6, 'GBarbosa Juazeiro', 46);

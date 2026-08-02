@@ -6,20 +6,20 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Abaré",
-      "distance": 10.04,
-      "estimated_travel_time": 21.5
+      "distance": 8.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Academia I9",
-      "distance": 9.068,
-      "estimated_travel_time": 19.4
+      "distance": 9.9,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Academia I9 – Av. 7 de Setembro",
-      "distance": 9.58,
-      "estimated_travel_time": 20.5
+      "distance": 9.9,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -30,14 +30,14 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
-      "distance": 5.4,
-      "estimated_travel_time": 11.6
+      "distance": 7.0,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Av. 7 de Setembro – Aldiegas",
-      "distance": 8.676,
-      "estimated_travel_time": 18.6
+      "distance": 8.5,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -54,32 +54,32 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Av. Transnordestina – Nutiva Agro",
-      "distance": 13.393,
-      "estimated_travel_time": 28.7
+      "distance": 12.6,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Av. Transnordestina – Posto Pedra Linda",
-      "distance": 13.187,
-      "estimated_travel_time": 28.3
+      "distance": 11.0,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
-      "distance": 14.173,
-      "estimated_travel_time": 30.4
+      "distance": 11.0,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Av. da Integração – Mundo da Lua",
-      "distance": 4.024,
-      "estimated_travel_time": 8.6
+      "distance": 8.7,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Av. da Integração – Petrape",
-      "distance": 15.761,
-      "estimated_travel_time": 33.8
+      "distance": 7.6,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -90,92 +90,92 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Av. da Integração – Sementeira",
-      "distance": 12.578,
-      "estimated_travel_time": 27.0
+      "distance": 7.1,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "BR 407 – Isaías Automóveis / Posto Delta",
-      "distance": 13.794,
-      "estimated_travel_time": 29.6
+      "distance": 6.9,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "BR 407 – Izabela Construções",
-      "distance": 13.289,
-      "estimated_travel_time": 28.5
+      "distance": 11.9,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Bloco Antigo CCA",
-      "distance": 18.774,
-      "estimated_travel_time": 40.2
+      "distance": 16.5,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Bloco de Salas de Aula CCA",
-      "distance": 21.2,
-      "estimated_travel_time": 45.4
+      "distance": 17.8,
+      "estimated_travel_time": 35.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Canteiro de Obras",
-      "distance": 8.361,
-      "estimated_travel_time": 17.9
+      "distance": 10.3,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Canteiro de Obras Av. 7 de Setembro",
-      "distance": 7.355,
-      "estimated_travel_time": 15.8
+      "distance": 10.3,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Canteiro de Obras – Av. 7 de Setembro",
-      "distance": 8.584,
-      "estimated_travel_time": 18.4
+      "distance": 10.3,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Canteiro de Obras – Juazeiro",
-      "distance": 2.746,
-      "estimated_travel_time": 5.9
+      "distance": 10.3,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
-      "distance": 8.281,
-      "estimated_travel_time": 17.7
+      "distance": 8.2,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Costrutéo (ponto de ônibus)",
-      "distance": 7.676,
-      "estimated_travel_time": 16.4
+      "distance": 11.0,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "DETRAN – Av. Monsenhor (via principal)",
-      "distance": 8.684,
-      "estimated_travel_time": 18.6
+      "distance": 9.4,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Distribuidora de Bebidas Revalle",
-      "distance": 5.895,
-      "estimated_travel_time": 12.6
+      "distance": 10.5,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Estação Velha / Cooperativa Brasil",
-      "distance": 1.606,
-      "estimated_travel_time": 3.4
+      "distance": 1.7,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Estação Velha Juazeiro",
-      "distance": 3.934,
-      "estimated_travel_time": 8.4
+      "distance": 1.7,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -186,8 +186,8 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Estrada da Banana – Condomínio Mais Viver",
-      "distance": 13.788,
-      "estimated_travel_time": 29.5
+      "distance": 10.0,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -198,8 +198,8 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Estrada da Banana – Restaurante Dona Branca",
-      "distance": 12.009,
-      "estimated_travel_time": 25.7
+      "distance": 9.5,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -210,8 +210,8 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Feira da COHAB Massangano",
-      "distance": 12.938,
-      "estimated_travel_time": 27.7
+      "distance": 9.7,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -222,110 +222,110 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
-      "distance": 4.489,
-      "estimated_travel_time": 9.6
+      "distance": 7.8,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "GBarbosa Juazeiro",
-      "distance": 4.87,
-      "estimated_travel_time": 10.4
+      "distance": 4.4,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
-      "distance": 1.683,
-      "estimated_travel_time": 3.6
+      "distance": 2.9,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "GBarbosa Petrolina",
-      "distance": 7.276,
-      "estimated_travel_time": 15.6
+      "distance": 7.8,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
-      "distance": 3.48,
-      "estimated_travel_time": 7.5
+      "distance": 7.8,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Hospital Veterinário",
-      "distance": 18.576,
-      "estimated_travel_time": 39.8
-    },
-    {
-      "origin": "Verdão Juazeiro",
-      "destination": "Hospital Veterinário CCA",
-      "distance": 19.842,
-      "estimated_travel_time": 42.5
-    },
-    {
-      "origin": "Verdão Juazeiro",
-      "destination": "Igreja Filadélfia",
-      "distance": 9.832,
-      "estimated_travel_time": 21.1
-    },
-    {
-      "origin": "Verdão Juazeiro",
-      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
-      "distance": 16.903,
-      "estimated_travel_time": 36.2
-    },
-    {
-      "origin": "Verdão Juazeiro",
-      "destination": "Mecânica Ouro Diesel",
-      "distance": 7.033,
-      "estimated_travel_time": 15.1
-    },
-    {
-      "origin": "Verdão Juazeiro",
-      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
-      "distance": 6.262,
-      "estimated_travel_time": 13.4
-    },
-    {
-      "origin": "Verdão Juazeiro",
-      "destination": "Ministério Público Federal",
-      "distance": 6.736,
-      "estimated_travel_time": 14.4
-    },
-    {
-      "origin": "Verdão Juazeiro",
-      "destination": "Parque Mundo da Lua",
-      "distance": 8.627,
-      "estimated_travel_time": 18.5
-    },
-    {
-      "origin": "Verdão Juazeiro",
-      "destination": "Petrape",
-      "distance": 14.001,
+      "distance": 16.2,
       "estimated_travel_time": 30.0
     },
     {
       "origin": "Verdão Juazeiro",
+      "destination": "Hospital Veterinário CCA",
+      "distance": 16.2,
+      "estimated_travel_time": 30.0
+    },
+    {
+      "origin": "Verdão Juazeiro",
+      "destination": "Igreja Filadélfia",
+      "distance": 12.4,
+      "estimated_travel_time": 26.0
+    },
+    {
+      "origin": "Verdão Juazeiro",
+      "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
+      "distance": 11.9,
+      "estimated_travel_time": 24.0
+    },
+    {
+      "origin": "Verdão Juazeiro",
+      "destination": "Mecânica Ouro Diesel",
+      "distance": 8.5,
+      "estimated_travel_time": 18.0
+    },
+    {
+      "origin": "Verdão Juazeiro",
+      "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
+      "distance": 8.5,
+      "estimated_travel_time": 18.0
+    },
+    {
+      "origin": "Verdão Juazeiro",
+      "destination": "Ministério Público Federal",
+      "distance": 7.7,
+      "estimated_travel_time": 20.0
+    },
+    {
+      "origin": "Verdão Juazeiro",
+      "destination": "Parque Mundo da Lua",
+      "distance": 8.7,
+      "estimated_travel_time": 18.0
+    },
+    {
+      "origin": "Verdão Juazeiro",
+      "destination": "Petrape",
+      "distance": 7.6,
+      "estimated_travel_time": 16.0
+    },
+    {
+      "origin": "Verdão Juazeiro",
       "destination": "Petrape – Av. da Integração",
-      "distance": 14.256,
-      "estimated_travel_time": 30.5
+      "distance": 7.6,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Plante Bem",
-      "distance": 12.937,
-      "estimated_travel_time": 27.7
+      "distance": 7.7,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Ponto Aldiegas",
-      "distance": 6.55,
-      "estimated_travel_time": 14.0
+      "distance": 8.5,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
-      "distance": 14.288,
-      "estimated_travel_time": 30.6
+      "distance": 11.5,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -336,38 +336,38 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Ponto BR 428 – Posto Carranca",
-      "distance": 15.079,
-      "estimated_travel_time": 32.3
+      "distance": 12.0,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
-      "distance": 9.667,
-      "estimated_travel_time": 20.7
+      "distance": 10.9,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Ponto em frente à Abaré",
-      "distance": 7.727,
-      "estimated_travel_time": 16.6
+      "distance": 8.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Posto ALE",
-      "distance": 8.68,
-      "estimated_travel_time": 18.6
+      "distance": 11.1,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Posto Raul Lins / Bairro Castelo Branco",
-      "distance": 7.196,
-      "estimated_travel_time": 15.4
+      "distance": 0.55,
+      "estimated_travel_time": 2.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Posto Raul Lins – Entrada Castelo Branco",
-      "distance": 7.648,
-      "estimated_travel_time": 16.4
+      "distance": 0.55,
+      "estimated_travel_time": 2.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -378,26 +378,26 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Posto de Gasolina Big Brother",
-      "distance": 6.75,
-      "estimated_travel_time": 14.5
+      "distance": 9.8,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Residência Estudantil CCA",
-      "distance": 17.583,
-      "estimated_travel_time": 37.7
+      "distance": 16.9,
+      "estimated_travel_time": 35.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Rodoviária de Petrolina",
-      "distance": 5.442,
-      "estimated_travel_time": 11.7
+      "distance": 6.6,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Rua do Paraíso ao lado das Lojas Americanas",
-      "distance": 9.615,
-      "estimated_travel_time": 20.6
+      "distance": 4.2,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Verdão Juazeiro",
@@ -414,57 +414,56 @@
     {
       "origin": "Verdão Juazeiro",
       "destination": "Sementeira",
-      "distance": 9.24,
-      "estimated_travel_time": 19.8
+      "distance": 7.1,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Sementeira – Av. da Integração",
-      "distance": 14.279,
-      "estimated_travel_time": 30.6
+      "distance": 7.1,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Supermercado Regente",
-      "distance": 10.824,
-      "estimated_travel_time": 23.2
+      "distance": 6.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
-      "distance": 4.502,
-      "estimated_travel_time": 9.6
+      "distance": 3.8,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "UNIVASF Campus CCA",
-      "distance": 18.021,
-      "estimated_travel_time": 38.6
+      "distance": 22.3,
+      "estimated_travel_time": 45.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "UNIVASF Campus CCA – Bloco Antigo",
-      "distance": 22.193,
-      "estimated_travel_time": 47.6
+      "distance": 16.5,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
-      "distance": 20.308,
-      "estimated_travel_time": 43.5
+      "distance": 16.5,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "UNIVASF Campus Juazeiro",
-      "distance": 3.947,
-      "estimated_travel_time": 8.5
+      "distance": 4.5,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Verdão Juazeiro",
       "destination": "UNIVASF Campus Petrolina",
-      "distance": 7.37,
-      "estimated_travel_time": 15.8
+      "distance": 7.4,
+      "estimated_travel_time": 18.0
     }
-  ],
-  "_sintetico": true
+  ]
 }

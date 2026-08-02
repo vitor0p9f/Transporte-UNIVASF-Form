@@ -28,9 +28,40 @@ from utils.distance_matrix import (
 
 TURNOS = ["manha_1", "manha_2", "tarde_1", "tarde_2", "noite_1", "noite_2"]
 
+# Campis reconhecidos como possíveis depósitos (em ordem de prioridade).
+# O algoritmo escolhe o primeiro campus presente na demanda do turno.
+# Para noite_1/noite_2 o campus de maior embarque é detectado automaticamente.
+_CAMPI = [
+    "UNIVASF Campus CCA",
+    "UNIVASF Campus Juazeiro",
+    "UNIVASF Campus Petrolina",
+    "Bloco de Salas de Aula CCA",
+    "UNIVASF Campus CCA – Bloco Antigo",
+    "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
+]
+
 
 def escolher_deposito(demanda_turno: dict) -> str:
-    """Parada de maior movimento (embarques + desembarques) = depósito/hub."""
+    """
+    Escolhe o depósito (ponto de partida da frota) para o turno:
+      1. Se há um campus com boarding >> alighting (sentido "volta"),
+         ele é o depósito — ônibus partem dali carregados.
+      2. Caso contrário, retorna o primeiro campus da lista _CAMPI
+         presente na demanda (turno de "ida": ônibus partem vazios).
+      3. Fallback: parada de maior movimento.
+    """
+    # Detecta campus com boarding dominante (caso noite/volta)
+    for campus in _CAMPI:
+        info = demanda_turno.get(campus, {})
+        if info.get("boarding", 0) > info.get("alighting", 0) * 2:
+            return campus
+
+    # Turno de "ida": usa o campus presente na demanda (ponto de partida vazio)
+    for campus in _CAMPI:
+        if campus in demanda_turno:
+            return campus
+
+    # Fallback genérico
     return max(demanda_turno.items(),
                key=lambda kv: kv[1]["boarding"] + kv[1]["alighting"])[0]
 

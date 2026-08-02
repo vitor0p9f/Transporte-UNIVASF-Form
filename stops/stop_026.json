@@ -6,20 +6,20 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Abaré",
-      "distance": 4.148,
-      "estimated_travel_time": 8.9
+      "distance": 7.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Academia I9",
-      "distance": 3.525,
-      "estimated_travel_time": 7.6
+      "distance": 6.8,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Academia I9 – Av. 7 de Setembro",
-      "distance": 4.355,
-      "estimated_travel_time": 9.3
+      "distance": 6.8,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -30,14 +30,14 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
-      "distance": 3.992,
-      "estimated_travel_time": 8.6
+      "distance": 8.5,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Av. 7 de Setembro – Aldiegas",
-      "distance": 3.83,
-      "estimated_travel_time": 8.2
+      "distance": 4.4,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -54,32 +54,32 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Av. Transnordestina – Nutiva Agro",
-      "distance": 7.503,
-      "estimated_travel_time": 16.1
+      "distance": 6.0,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Av. Transnordestina – Posto Pedra Linda",
-      "distance": 7.619,
-      "estimated_travel_time": 16.3
+      "distance": 7.4,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
-      "distance": 8.557,
-      "estimated_travel_time": 18.3
+      "distance": 7.4,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Av. da Integração – Mundo da Lua",
-      "distance": 3.169,
-      "estimated_travel_time": 6.8
+      "distance": 7.0,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Av. da Integração – Petrape",
-      "distance": 9.888,
-      "estimated_travel_time": 21.2
+      "distance": 5.1,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -90,86 +90,86 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Av. da Integração – Sementeira",
-      "distance": 6.885,
-      "estimated_travel_time": 14.8
+      "distance": 5.6,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "BR 407 – Isaías Automóveis / Posto Delta",
-      "distance": 8.22,
-      "estimated_travel_time": 17.6
+      "distance": 6.4,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "BR 407 – Izabela Construções",
-      "distance": 7.464,
-      "estimated_travel_time": 16.0
+      "distance": 5.3,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Bloco Antigo CCA",
-      "distance": 12.895,
-      "estimated_travel_time": 27.6
+      "distance": 9.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Bloco de Salas de Aula CCA",
-      "distance": 15.4,
-      "estimated_travel_time": 33.0
+      "distance": 11.1,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Canteiro de Obras",
-      "distance": 3.815,
-      "estimated_travel_time": 8.2
+      "distance": 7.6,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Canteiro de Obras Av. 7 de Setembro",
-      "distance": 1.756,
-      "estimated_travel_time": 3.8
+      "distance": 7.6,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Canteiro de Obras – Av. 7 de Setembro",
-      "distance": 3.814,
-      "estimated_travel_time": 8.2
+      "distance": 7.6,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Canteiro de Obras – Juazeiro",
-      "distance": 3.222,
-      "estimated_travel_time": 6.9
+      "distance": 7.6,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
-      "distance": 2.648,
-      "estimated_travel_time": 5.7
+      "distance": 8.8,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Costrutéo (ponto de ônibus)",
-      "distance": 2.13,
-      "estimated_travel_time": 4.6
+      "distance": 1.3,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "DETRAN – Av. Monsenhor (via principal)",
-      "distance": 3.745,
-      "estimated_travel_time": 8.0
+      "distance": 8.2,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Estação Velha / Cooperativa Brasil",
-      "distance": 4.36,
-      "estimated_travel_time": 9.3
+      "distance": 11.5,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Estação Velha Juazeiro",
-      "distance": 2.135,
-      "estimated_travel_time": 4.6
+      "distance": 11.5,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -180,8 +180,8 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Estrada da Banana – Condomínio Mais Viver",
-      "distance": 7.939,
-      "estimated_travel_time": 17.0
+      "distance": 8.0,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -192,8 +192,8 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Estrada da Banana – Restaurante Dona Branca",
-      "distance": 6.187,
-      "estimated_travel_time": 13.3
+      "distance": 7.7,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -204,8 +204,8 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Feira da COHAB Massangano",
-      "distance": 7.396,
-      "estimated_travel_time": 15.8
+      "distance": 2.5,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -216,110 +216,110 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
-      "distance": 2.126,
-      "estimated_travel_time": 4.6
+      "distance": 8.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "GBarbosa Juazeiro",
-      "distance": 2.095,
-      "estimated_travel_time": 4.5
+      "distance": 8.2,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
-      "distance": 4.265,
-      "estimated_travel_time": 9.1
+      "distance": 10.8,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "GBarbosa Petrolina",
-      "distance": 1.99,
-      "estimated_travel_time": 4.3
+      "distance": 8.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
-      "distance": 3.603,
-      "estimated_travel_time": 7.7
+      "distance": 8.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Hospital Veterinário",
-      "distance": 12.698,
-      "estimated_travel_time": 27.2
+      "distance": 9.6,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Hospital Veterinário CCA",
-      "distance": 13.951,
-      "estimated_travel_time": 29.9
+      "distance": 9.6,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Igreja Filadélfia",
-      "distance": 4.512,
-      "estimated_travel_time": 9.7
+      "distance": 1.2,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
-      "distance": 11.098,
-      "estimated_travel_time": 23.8
+      "distance": 5.3,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Mecânica Ouro Diesel",
-      "distance": 1.286,
-      "estimated_travel_time": 2.8
+      "distance": 3.8,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
-      "distance": 3.396,
-      "estimated_travel_time": 7.3
+      "distance": 3.8,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Ministério Público Federal",
-      "distance": 1.27,
-      "estimated_travel_time": 2.7
+      "distance": 8.9,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Parque Mundo da Lua",
-      "distance": 2.738,
-      "estimated_travel_time": 5.9
+      "distance": 7.0,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Petrape",
-      "distance": 8.162,
-      "estimated_travel_time": 17.5
+      "distance": 5.1,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Petrape – Av. da Integração",
-      "distance": 8.361,
-      "estimated_travel_time": 17.9
+      "distance": 5.1,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Plante Bem",
-      "distance": 7.186,
-      "estimated_travel_time": 15.4
+      "distance": 5.1,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Ponto Aldiegas",
-      "distance": 3.278,
-      "estimated_travel_time": 7.0
+      "distance": 4.4,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
-      "distance": 8.658,
-      "estimated_travel_time": 18.6
+      "distance": 9.8,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -330,38 +330,38 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Ponto BR 428 – Posto Carranca",
-      "distance": 9.189,
-      "estimated_travel_time": 19.7
+      "distance": 10.3,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
-      "distance": 3.776,
-      "estimated_travel_time": 8.1
+      "distance": 9.1,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Ponto em frente à Abaré",
-      "distance": 1.841,
-      "estimated_travel_time": 3.9
+      "distance": 7.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Posto ALE",
-      "distance": 4.01,
-      "estimated_travel_time": 8.6
+      "distance": 1.3,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Posto Raul Lins / Bairro Castelo Branco",
-      "distance": 1.603,
-      "estimated_travel_time": 3.4
+      "distance": 12.5,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Posto Raul Lins – Entrada Castelo Branco",
-      "distance": 3.371,
-      "estimated_travel_time": 7.2
+      "distance": 12.5,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -372,26 +372,26 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Posto de Gasolina Big Brother",
-      "distance": 2.897,
-      "estimated_travel_time": 6.2
+      "distance": 8.4,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Residência Estudantil CCA",
-      "distance": 11.735,
-      "estimated_travel_time": 25.1
+      "distance": 10.2,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Rodoviária de Petrolina",
-      "distance": 2.045,
-      "estimated_travel_time": 4.4
+      "distance": 6.0,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Rua do Paraíso ao lado das Lojas Americanas",
-      "distance": 4.398,
-      "estimated_travel_time": 9.4
+      "distance": 8.0,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
@@ -408,63 +408,62 @@
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Sementeira",
-      "distance": 3.481,
-      "estimated_travel_time": 7.5
+      "distance": 5.6,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Sementeira – Av. da Integração",
-      "distance": 8.401,
-      "estimated_travel_time": 18.0
+      "distance": 5.6,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Supermercado Regente",
-      "distance": 5.164,
-      "estimated_travel_time": 11.1
+      "distance": 7.6,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
-      "distance": 2.732,
-      "estimated_travel_time": 5.9
+      "distance": 8.1,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "UNIVASF Campus CCA",
-      "distance": 12.136,
-      "estimated_travel_time": 26.0
+      "distance": 11.0,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "UNIVASF Campus CCA – Bloco Antigo",
-      "distance": 16.299,
-      "estimated_travel_time": 34.9
+      "distance": 9.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
-      "distance": 14.419,
-      "estimated_travel_time": 30.9
+      "distance": 9.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "UNIVASF Campus Juazeiro",
-      "distance": 3.206,
-      "estimated_travel_time": 6.9
+      "distance": 9.3,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "UNIVASF Campus Petrolina",
-      "distance": 1.653,
-      "estimated_travel_time": 3.5
+      "distance": 8.9,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Distribuidora de Bebidas Revalle",
       "destination": "Verdão Juazeiro",
-      "distance": 5.895,
-      "estimated_travel_time": 12.6
+      "distance": 12.4,
+      "estimated_travel_time": 26.0
     }
-  ],
-  "_sintetico": true
+  ]
 }

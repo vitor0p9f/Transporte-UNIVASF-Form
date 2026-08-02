@@ -6,20 +6,20 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Abaré",
-      "distance": 4.306,
-      "estimated_travel_time": 9.2
+      "distance": 8.6,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Academia I9",
-      "distance": 2.327,
-      "estimated_travel_time": 5.0
+      "distance": 9.0,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Academia I9 – Av. 7 de Setembro",
-      "distance": 2.195,
-      "estimated_travel_time": 4.7
+      "distance": 9.0,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -30,14 +30,14 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
-      "distance": 2.897,
-      "estimated_travel_time": 6.2
+      "distance": 6.7,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Av. 7 de Setembro – Aldiegas",
-      "distance": 1.144,
-      "estimated_travel_time": 2.5
+      "distance": 8.3,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -54,32 +54,32 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Av. Transnordestina – Nutiva Agro",
-      "distance": 7.393,
-      "estimated_travel_time": 15.8
+      "distance": 12.4,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Av. Transnordestina – Posto Pedra Linda",
-      "distance": 5.828,
-      "estimated_travel_time": 12.5
+      "distance": 13.1,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
-      "distance": 6.831,
-      "estimated_travel_time": 14.6
+      "distance": 13.1,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Av. da Integração – Mundo da Lua",
-      "distance": 3.666,
-      "estimated_travel_time": 7.9
+      "distance": 8.5,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Av. da Integração – Petrape",
-      "distance": 9.031,
-      "estimated_travel_time": 19.4
+      "distance": 7.3,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -90,92 +90,92 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Av. da Integração – Sementeira",
-      "distance": 5.459,
-      "estimated_travel_time": 11.7
+      "distance": 7.1,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "BR 407 – Isaías Automóveis / Posto Delta",
-      "distance": 6.416,
-      "estimated_travel_time": 13.7
+      "distance": 6.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "BR 407 – Izabela Construções",
-      "distance": 6.477,
-      "estimated_travel_time": 13.9
+      "distance": 11.7,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Bloco Antigo CCA",
-      "distance": 11.968,
-      "estimated_travel_time": 25.6
-    },
-    {
-      "origin": "Posto Raul Lins – Entrada Castelo Branco",
-      "destination": "Bloco de Salas de Aula CCA",
-      "distance": 14.008,
+      "distance": 16.3,
       "estimated_travel_time": 30.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
+      "destination": "Bloco de Salas de Aula CCA",
+      "distance": 17.5,
+      "estimated_travel_time": 35.0
+    },
+    {
+      "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Canteiro de Obras",
-      "distance": 0.722,
-      "estimated_travel_time": 1.5
+      "distance": 10.1,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Canteiro de Obras Av. 7 de Setembro",
-      "distance": 2.141,
-      "estimated_travel_time": 4.6
+      "distance": 10.1,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Canteiro de Obras – Av. 7 de Setembro",
-      "distance": 1.019,
-      "estimated_travel_time": 2.2
+      "distance": 10.1,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Canteiro de Obras – Juazeiro",
-      "distance": 5.605,
-      "estimated_travel_time": 12.0
+      "distance": 10.1,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
-      "distance": 4.722,
-      "estimated_travel_time": 10.1
+      "distance": 7.9,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Costrutéo (ponto de ônibus)",
-      "distance": 4.573,
-      "estimated_travel_time": 9.8
+      "distance": 10.9,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "DETRAN – Av. Monsenhor (via principal)",
-      "distance": 1.229,
-      "estimated_travel_time": 2.6
+      "distance": 8.9,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Distribuidora de Bebidas Revalle",
-      "distance": 3.371,
-      "estimated_travel_time": 7.2
+      "distance": 10.3,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Estação Velha / Cooperativa Brasil",
-      "distance": 6.487,
-      "estimated_travel_time": 13.9
+      "distance": 1.4,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Estação Velha Juazeiro",
-      "distance": 4.957,
-      "estimated_travel_time": 10.6
+      "distance": 1.4,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -186,8 +186,8 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Estrada da Banana – Condomínio Mais Viver",
-      "distance": 8.141,
-      "estimated_travel_time": 17.4
+      "distance": 9.7,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -198,8 +198,8 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Estrada da Banana – Restaurante Dona Branca",
-      "distance": 6.756,
-      "estimated_travel_time": 14.5
+      "distance": 9.2,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -210,8 +210,8 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Feira da COHAB Massangano",
-      "distance": 5.563,
-      "estimated_travel_time": 11.9
+      "distance": 9.4,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -222,110 +222,110 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
-      "distance": 3.238,
-      "estimated_travel_time": 6.9
+      "distance": 7.6,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "GBarbosa Juazeiro",
-      "distance": 2.831,
-      "estimated_travel_time": 6.1
+      "distance": 4.2,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
-      "distance": 6.017,
-      "estimated_travel_time": 12.9
+      "distance": 2.7,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "GBarbosa Petrolina",
-      "distance": 1.628,
-      "estimated_travel_time": 3.5
+      "distance": 7.6,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
-      "distance": 4.256,
-      "estimated_travel_time": 9.1
+      "distance": 7.6,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Hospital Veterinário",
-      "distance": 12.392,
-      "estimated_travel_time": 26.6
+      "distance": 15.9,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Hospital Veterinário CCA",
-      "distance": 13.433,
-      "estimated_travel_time": 28.8
+      "distance": 15.9,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Igreja Filadélfia",
-      "distance": 2.506,
-      "estimated_travel_time": 5.4
+      "distance": 12.3,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
-      "distance": 9.824,
-      "estimated_travel_time": 21.1
+      "distance": 11.7,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Mecânica Ouro Diesel",
-      "distance": 2.551,
-      "estimated_travel_time": 5.5
+      "distance": 8.3,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
-      "distance": 1.655,
-      "estimated_travel_time": 3.5
+      "distance": 8.3,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Ministério Público Federal",
-      "distance": 4.227,
-      "estimated_travel_time": 9.1
+      "distance": 7.4,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Parque Mundo da Lua",
-      "distance": 3.415,
-      "estimated_travel_time": 7.3
+      "distance": 8.5,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Petrape",
-      "distance": 8.4,
+      "distance": 7.3,
       "estimated_travel_time": 18.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Petrape – Av. da Integração",
-      "distance": 8.023,
-      "estimated_travel_time": 17.2
+      "distance": 7.3,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Plante Bem",
-      "distance": 5.918,
-      "estimated_travel_time": 12.7
+      "distance": 7.5,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Ponto Aldiegas",
-      "distance": 1.271,
-      "estimated_travel_time": 2.7
+      "distance": 8.3,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
-      "distance": 6.959,
-      "estimated_travel_time": 14.9
+      "distance": 11.3,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -336,26 +336,26 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Ponto BR 428 – Posto Carranca",
-      "distance": 8.566,
-      "estimated_travel_time": 18.4
+      "distance": 11.8,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
-      "distance": 4.374,
-      "estimated_travel_time": 9.4
+      "distance": 10.6,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Ponto em frente à Abaré",
-      "distance": 3.497,
-      "estimated_travel_time": 7.5
+      "distance": 8.6,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Posto ALE",
-      "distance": 1.053,
-      "estimated_travel_time": 2.3
+      "distance": 11.0,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -372,26 +372,26 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Posto de Gasolina Big Brother",
-      "distance": 0.901,
-      "estimated_travel_time": 1.9
+      "distance": 8.9,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Residência Estudantil CCA",
-      "distance": 10.637,
-      "estimated_travel_time": 22.8
+      "distance": 16.6,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Rodoviária de Petrolina",
-      "distance": 2.263,
-      "estimated_travel_time": 4.8
+      "distance": 6.4,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Rua do Paraíso ao lado das Lojas Americanas",
-      "distance": 2.217,
-      "estimated_travel_time": 4.8
+      "distance": 3.9,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -408,26 +408,26 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Sementeira",
-      "distance": 2.982,
-      "estimated_travel_time": 6.4
+      "distance": 7.1,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Sementeira – Av. da Integração",
-      "distance": 7.684,
-      "estimated_travel_time": 16.5
+      "distance": 7.1,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Supermercado Regente",
-      "distance": 3.847,
-      "estimated_travel_time": 8.2
+      "distance": 5.9,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
-      "distance": 3.15,
-      "estimated_travel_time": 6.8
+      "distance": 3.6,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
@@ -438,33 +438,32 @@
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "UNIVASF Campus CCA – Bloco Antigo",
-      "distance": 15.521,
-      "estimated_travel_time": 33.3
+      "distance": 16.3,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
-      "distance": 13.93,
-      "estimated_travel_time": 29.9
+      "distance": 16.3,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "UNIVASF Campus Juazeiro",
-      "distance": 6.306,
-      "estimated_travel_time": 13.5
+      "distance": 4.2,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "UNIVASF Campus Petrolina",
-      "distance": 4.053,
-      "estimated_travel_time": 8.7
+      "distance": 7.2,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Posto Raul Lins – Entrada Castelo Branco",
       "destination": "Verdão Juazeiro",
-      "distance": 7.648,
-      "estimated_travel_time": 16.4
+      "distance": 0.55,
+      "estimated_travel_time": 2.0
     }
-  ],
-  "_sintetico": true
+  ]
 }

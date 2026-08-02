@@ -6,20 +6,20 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Abaré",
-      "distance": 10.302,
-      "estimated_travel_time": 22.1
+      "distance": 11.9,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Academia I9",
-      "distance": 11.734,
-      "estimated_travel_time": 25.1
+      "distance": 12.2,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Academia I9 – Av. 7 de Setembro",
-      "distance": 11.77,
-      "estimated_travel_time": 25.2
+      "distance": 12.2,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -30,14 +30,14 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
-      "distance": 16.792,
-      "estimated_travel_time": 36.0
+      "distance": 13.2,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Av. 7 de Setembro – Aldiegas",
-      "distance": 12.821,
-      "estimated_travel_time": 27.5
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -54,32 +54,32 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Av. Transnordestina – Nutiva Agro",
-      "distance": 6.916,
-      "estimated_travel_time": 14.8
+      "distance": 8.3,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Av. Transnordestina – Posto Pedra Linda",
-      "distance": 8.548,
-      "estimated_travel_time": 18.3
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
-      "distance": 7.712,
-      "estimated_travel_time": 16.5
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Av. da Integração – Mundo da Lua",
-      "distance": 17.059,
-      "estimated_travel_time": 36.6
+      "distance": 12.3,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Av. da Integração – Petrape",
-      "distance": 4.936,
-      "estimated_travel_time": 10.6
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -90,20 +90,20 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Av. da Integração – Sementeira",
-      "distance": 8.564,
-      "estimated_travel_time": 18.4
+      "distance": 10.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "BR 407 – Isaías Automóveis / Posto Delta",
-      "distance": 8.127,
-      "estimated_travel_time": 17.4
+      "distance": 10.4,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "BR 407 – Izabela Construções",
-      "distance": 7.459,
-      "estimated_travel_time": 16.0
+      "distance": 5.0,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -114,68 +114,68 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Bloco de Salas de Aula CCA",
-      "distance": 4.065,
-      "estimated_travel_time": 8.7
+      "distance": 2.2,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Canteiro de Obras",
-      "distance": 13.322,
-      "estimated_travel_time": 28.5
+      "distance": 13.0,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Canteiro de Obras Av. 7 de Setembro",
-      "distance": 13.153,
-      "estimated_travel_time": 28.2
+      "distance": 13.0,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Canteiro de Obras – Av. 7 de Setembro",
-      "distance": 12.958,
-      "estimated_travel_time": 27.8
+      "distance": 13.0,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Canteiro de Obras – Juazeiro",
-      "distance": 17.589,
-      "estimated_travel_time": 37.7
+      "distance": 13.0,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
-      "distance": 12.138,
-      "estimated_travel_time": 26.0
+      "distance": 13.4,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Costrutéo (ponto de ônibus)",
-      "distance": 12.745,
-      "estimated_travel_time": 27.3
+      "distance": 8.5,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "DETRAN – Av. Monsenhor (via principal)",
-      "distance": 12.71,
-      "estimated_travel_time": 27.2
+      "distance": 13.7,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Distribuidora de Bebidas Revalle",
-      "distance": 14.419,
-      "estimated_travel_time": 30.9
+      "distance": 9.1,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Estação Velha / Cooperativa Brasil",
-      "distance": 18.743,
-      "estimated_travel_time": 40.2
+      "distance": 15.9,
+      "estimated_travel_time": 28.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Estação Velha Juazeiro",
-      "distance": 16.419,
-      "estimated_travel_time": 35.2
+      "distance": 15.9,
+      "estimated_travel_time": 28.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -186,8 +186,8 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Estrada da Banana – Condomínio Mais Viver",
-      "distance": 6.587,
-      "estimated_travel_time": 14.1
+      "distance": 10.6,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -198,7 +198,7 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Estrada da Banana – Restaurante Dona Branca",
-      "distance": 8.38,
+      "distance": 11.1,
       "estimated_travel_time": 18.0
     },
     {
@@ -210,8 +210,8 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Feira da COHAB Massangano",
-      "distance": 8.799,
-      "estimated_travel_time": 18.9
+      "distance": 8.2,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -222,110 +222,110 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
-      "distance": 16.164,
-      "estimated_travel_time": 34.6
+      "distance": 13.5,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "GBarbosa Juazeiro",
-      "distance": 15.891,
-      "estimated_travel_time": 34.1
+      "distance": 12.9,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
-      "distance": 18.682,
-      "estimated_travel_time": 40.0
+      "distance": 15.3,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "GBarbosa Petrolina",
-      "distance": 13.402,
-      "estimated_travel_time": 28.7
+      "distance": 13.5,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
-      "distance": 17.634,
-      "estimated_travel_time": 37.8
+      "distance": 13.5,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Hospital Veterinário",
-      "distance": 1.796,
-      "estimated_travel_time": 3.8
+      "distance": 1.0,
+      "estimated_travel_time": 2.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Hospital Veterinário CCA",
-      "distance": 0.502,
-      "estimated_travel_time": 1.1
+      "distance": 1.0,
+      "estimated_travel_time": 2.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Igreja Filadélfia",
-      "distance": 11.452,
-      "estimated_travel_time": 24.5
+      "distance": 7.8,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
-      "distance": 4.762,
-      "estimated_travel_time": 10.2
+      "distance": 5.0,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Mecânica Ouro Diesel",
-      "distance": 13.367,
-      "estimated_travel_time": 28.6
+      "distance": 9.2,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
-      "distance": 15.555,
-      "estimated_travel_time": 33.3
+      "distance": 9.2,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Ministério Público Federal",
-      "distance": 13.636,
-      "estimated_travel_time": 29.2
+      "distance": 13.9,
+      "estimated_travel_time": 28.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Parque Mundo da Lua",
-      "distance": 11.713,
-      "estimated_travel_time": 25.1
+      "distance": 12.3,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Petrape",
-      "distance": 6.407,
-      "estimated_travel_time": 13.7
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Petrape – Av. da Integração",
-      "distance": 6.076,
-      "estimated_travel_time": 13.0
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Plante Bem",
-      "distance": 8.07,
-      "estimated_travel_time": 17.3
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Ponto Aldiegas",
-      "distance": 15.169,
-      "estimated_travel_time": 32.5
+      "distance": 9.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
-      "distance": 7.579,
-      "estimated_travel_time": 16.2
+      "distance": 15.2,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -336,38 +336,38 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Ponto BR 428 – Posto Carranca",
-      "distance": 5.375,
-      "estimated_travel_time": 11.5
+      "distance": 14.8,
+      "estimated_travel_time": 26.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
-      "distance": 10.643,
-      "estimated_travel_time": 22.8
+      "distance": 14.5,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Ponto em frente à Abaré",
-      "distance": 12.582,
-      "estimated_travel_time": 27.0
+      "distance": 11.9,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Posto ALE",
-      "distance": 13.02,
-      "estimated_travel_time": 27.9
+      "distance": 8.9,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Posto Raul Lins / Bairro Castelo Branco",
-      "distance": 13.297,
-      "estimated_travel_time": 28.5
+      "distance": 16.5,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Posto Raul Lins – Entrada Castelo Branco",
-      "distance": 13.93,
-      "estimated_travel_time": 29.9
+      "distance": 16.5,
+      "estimated_travel_time": 30.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -378,26 +378,26 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Posto de Gasolina Big Brother",
-      "distance": 14.66,
-      "estimated_travel_time": 31.4
+      "distance": 13.8,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Residência Estudantil CCA",
-      "distance": 3.817,
-      "estimated_travel_time": 8.2
+      "distance": 0.45,
+      "estimated_travel_time": 2.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Rodoviária de Petrolina",
-      "distance": 15.421,
-      "estimated_travel_time": 33.0
+      "distance": 11.4,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Rua do Paraíso ao lado das Lojas Americanas",
-      "distance": 11.756,
-      "estimated_travel_time": 25.2
+      "distance": 12.7,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -414,32 +414,32 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Sementeira",
-      "distance": 11.309,
-      "estimated_travel_time": 24.2
+      "distance": 10.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Sementeira – Av. da Integração",
-      "distance": 6.251,
-      "estimated_travel_time": 13.4
+      "distance": 10.9,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Supermercado Regente",
-      "distance": 10.084,
-      "estimated_travel_time": 21.6
+      "distance": 12.3,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
-      "distance": 16.496,
-      "estimated_travel_time": 35.3
+      "distance": 13.5,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "UNIVASF Campus CCA",
-      "distance": 2.294,
-      "estimated_travel_time": 4.9
+      "distance": 2.0,
+      "estimated_travel_time": 5.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
@@ -450,21 +450,20 @@
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "UNIVASF Campus Juazeiro",
-      "distance": 16.941,
-      "estimated_travel_time": 36.3
+      "distance": 13.9,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "UNIVASF Campus Petrolina",
-      "distance": 12.97,
-      "estimated_travel_time": 27.8
+      "distance": 13.5,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
       "destination": "Verdão Juazeiro",
-      "distance": 20.308,
-      "estimated_travel_time": 43.5
+      "distance": 16.8,
+      "estimated_travel_time": 30.0
     }
-  ],
-  "_sintetico": true
+  ]
 }

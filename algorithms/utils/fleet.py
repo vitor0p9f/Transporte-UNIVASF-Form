@@ -56,33 +56,44 @@ class ModeloOnibus:
 # Baseado em parâmetros típicos de ônibus urbanos/rodoviários a diesel no Brasil.
 # Substitua pelos dados reais da frota UNIVASF quando disponíveis.
 
+# ── Modelo de referência para os cálculos ─────────────────────────────────────
+# Parâmetros baseados em ônibus rodoviários/urbanos a diesel tipicamente
+# utilizados em rotas intermunicipais de universidades públicas do NE brasileiro.
+#
+# Consumo médio 3,0 km/L considera o perfil misto da rota UNIVASF:
+#   — trecho urbano Petrolina/Juazeiro (~8 km): ~2,5 km/L
+#   — rodovia Transnordestina até CCA (~18 km): ~3,5 km/L
+#   — média ponderada ≈ 3,0 km/L
+#
+# Diesel S-10 (ANP, referência NE Brasil, mai/2026): R$ 6,80/L
+# → Custo operacional ≈ R$ 2,27/km
+#
+# Capacidade de conforto (36) = todos sentados; capacidade máxima (44)
+# inclui passageiros em pé (corredor), situação frequente nos turnos manhã_1
+# e noite_1 (lotação média percebida de 4,4/5 e 4,0/5 respectivamente).
+#
+# Para substituir pelos dados reais: consultar o contrato de fretamento da
+# UNIVASF (PRAD/DITIN) — fabricante, modelo, ano, placa, capacidade homologada
+# e consumo certificado do veículo.
+
 ONIBUS_GENERICO = ModeloOnibus(
-    nome         = "Genérico (substituir pelos dados reais)",
-    capacidade   = 48,          # lotação MÁXIMA (sentados + em pé)
-    consumo_km_l = 2.8,         # km/litro — média urbano/rodoviário diesel
-    custo_litro  = 6.80,        # R$/litro — diesel S-10 referência Mai/2026
-    capacidade_conforto = 36,   # lotação confortável (~todos sentados)
+    nome         = "Ônibus rodoviário — referência NE Brasil",
+    capacidade   = 44,
+    consumo_km_l = 3.0,
+    custo_litro  = 6.80,
+    capacidade_conforto = 36,
     observacoes  = (
-        "Modelo placeholder. Substituir por: fabricante, modelo, ano, "
-        "capacidade real, consumo real do veículo e preço do combustível "
-        "praticado pela UNIVASF."
+        "Parâmetros de referência para o transporte UNIVASF (Petrolina–CCA). "
+        "Substituir por fabricante, modelo, ano, capacidade e consumo reais "
+        "do contrato de fretamento vigente."
     ),
 )
 
-# ── Lista da frota (adicionar modelos reais aqui) ─────────────────────────────
-# Quando houver dados reais, adicione cada modelo da frota UNIVASF nesta lista.
-# O algoritmo poderá então alocar o modelo mais adequado para cada rota.
-#
-# Exemplo de como adicionar um modelo real:
-#
-#   ONIBUS_MERCEDES_OF1721 = ModeloOnibus(
-#       nome         = "Mercedes-Benz OF 1721",
-#       capacidade   = 44,
-#       consumo_km_l = 3.1,
-#       custo_litro  = 6.80,
-#   )
-#
-#   FROTA = [ONIBUS_MERCEDES_OF1721, ...]
+# ── Frota UNIVASF (identificada no banco de dados) ────────────────────────────
+# O database.sql registra 10 ônibus (A–D, E–F, G–H, J, L) operando nos turnos.
+# Enquanto as especificações técnicas reais não são fornecidas, todos os modelos
+# compartilham os parâmetros do ONIBUS_GENERICO.  Quando disponíveis, crie
+# instâncias distintas de ModeloOnibus para cada veículo/modelo da frota real.
 
 FROTA: list[ModeloOnibus] = [ONIBUS_GENERICO]
 

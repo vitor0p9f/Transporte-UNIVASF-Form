@@ -6,14 +6,14 @@
     {
       "origin": "Abaré",
       "destination": "Academia I9",
-      "distance": 2.052,
-      "estimated_travel_time": 4.4
+      "distance": 0.65,
+      "estimated_travel_time": 1.0
     },
     {
       "origin": "Abaré",
       "destination": "Academia I9 – Av. 7 de Setembro",
-      "distance": 2.868,
-      "estimated_travel_time": 6.1
+      "distance": 0.65,
+      "estimated_travel_time": 1.0
     },
     {
       "origin": "Abaré",
@@ -24,14 +24,14 @@
     {
       "origin": "Abaré",
       "destination": "Antigo Bar da Tripa – Av. Monsenhor Ângelo Sampaio",
-      "distance": 6.841,
-      "estimated_travel_time": 14.7
+      "distance": 3.6,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Abaré",
       "destination": "Av. 7 de Setembro – Aldiegas",
-      "distance": 3.523,
-      "estimated_travel_time": 7.5
+      "distance": 3.9,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Abaré",
@@ -48,32 +48,32 @@
     {
       "origin": "Abaré",
       "destination": "Av. Transnordestina – Nutiva Agro",
-      "distance": 3.407,
-      "estimated_travel_time": 7.3
+      "distance": 7.9,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Abaré",
       "destination": "Av. Transnordestina – Posto Pedra Linda",
-      "distance": 4.113,
-      "estimated_travel_time": 8.8
+      "distance": 5.6,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Abaré",
       "destination": "Av. Transnordestina – Posto de Combustível / Bairro Pedra Linda",
-      "distance": 4.875,
-      "estimated_travel_time": 10.4
+      "distance": 5.6,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Abaré",
       "destination": "Av. da Integração – Mundo da Lua",
-      "distance": 6.82,
-      "estimated_travel_time": 14.6
+      "distance": 1.5,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
       "destination": "Av. da Integração – Petrape",
-      "distance": 5.753,
-      "estimated_travel_time": 12.3
+      "distance": 3.0,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Abaré",
@@ -84,92 +84,92 @@
     {
       "origin": "Abaré",
       "destination": "Av. da Integração – Sementeira",
-      "distance": 3.188,
-      "estimated_travel_time": 6.8
+      "distance": 1.9,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
       "destination": "BR 407 – Isaías Automóveis / Posto Delta",
-      "distance": 4.639,
-      "estimated_travel_time": 9.9
+      "distance": 3.3,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Abaré",
       "destination": "BR 407 – Izabela Construções",
-      "distance": 3.427,
-      "estimated_travel_time": 7.3
+      "distance": 7.9,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Abaré",
       "destination": "Bloco Antigo CCA",
-      "distance": 8.752,
-      "estimated_travel_time": 18.8
+      "distance": 12.5,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Abaré",
       "destination": "Bloco de Salas de Aula CCA",
-      "distance": 11.325,
-      "estimated_travel_time": 24.3
+      "distance": 13.8,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Abaré",
       "destination": "Canteiro de Obras",
-      "distance": 3.986,
-      "estimated_travel_time": 8.5
+      "distance": 1.5,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Abaré",
       "destination": "Canteiro de Obras Av. 7 de Setembro",
-      "distance": 2.901,
-      "estimated_travel_time": 6.2
+      "distance": 1.5,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Abaré",
       "destination": "Canteiro de Obras – Av. 7 de Setembro",
-      "distance": 3.645,
-      "estimated_travel_time": 7.8
+      "distance": 1.5,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Abaré",
       "destination": "Canteiro de Obras – Juazeiro",
-      "distance": 7.362,
-      "estimated_travel_time": 15.8
+      "distance": 1.5,
+      "estimated_travel_time": 3.0
     },
     {
       "origin": "Abaré",
       "destination": "Clínica Popular Av. São Francisco (Areia Branca)",
-      "distance": 2.438,
-      "estimated_travel_time": 5.2
+      "distance": 2.1,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
       "destination": "Costrutéo (ponto de ônibus)",
-      "distance": 2.915,
-      "estimated_travel_time": 6.2
+      "distance": 7.9,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Abaré",
       "destination": "DETRAN – Av. Monsenhor (via principal)",
-      "distance": 3.358,
-      "estimated_travel_time": 7.2
+      "distance": 1.9,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
       "destination": "Distribuidora de Bebidas Revalle",
-      "distance": 4.148,
-      "estimated_travel_time": 8.9
+      "distance": 6.6,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Abaré",
       "destination": "Estação Velha / Cooperativa Brasil",
-      "distance": 8.506,
-      "estimated_travel_time": 18.2
+      "distance": 8.4,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Abaré",
       "destination": "Estação Velha Juazeiro",
-      "distance": 6.229,
-      "estimated_travel_time": 13.3
+      "distance": 8.4,
+      "estimated_travel_time": 18.0
     },
     {
       "origin": "Abaré",
@@ -180,8 +180,8 @@
     {
       "origin": "Abaré",
       "destination": "Estrada da Banana – Condomínio Mais Viver",
-      "distance": 3.984,
-      "estimated_travel_time": 8.5
+      "distance": 4.6,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Abaré",
@@ -192,8 +192,8 @@
     {
       "origin": "Abaré",
       "destination": "Estrada da Banana – Restaurante Dona Branca",
-      "distance": 2.455,
-      "estimated_travel_time": 5.3
+      "distance": 4.1,
+      "estimated_travel_time": 9.0
     },
     {
       "origin": "Abaré",
@@ -204,8 +204,8 @@
     {
       "origin": "Abaré",
       "destination": "Feira da COHAB Massangano",
-      "distance": 3.968,
-      "estimated_travel_time": 8.5
+      "distance": 5.7,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Abaré",
@@ -216,110 +216,110 @@
     {
       "origin": "Abaré",
       "destination": "GBarbosa Av. Monsenhor Ângelo Sampaio",
-      "distance": 5.882,
-      "estimated_travel_time": 12.6
+      "distance": 2.7,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Abaré",
       "destination": "GBarbosa Juazeiro",
-      "distance": 5.636,
-      "estimated_travel_time": 12.1
+      "distance": 5.4,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Abaré",
       "destination": "GBarbosa Juazeiro – Av. Adolfo Viana",
-      "distance": 8.394,
+      "distance": 8.1,
       "estimated_travel_time": 18.0
     },
     {
       "origin": "Abaré",
       "destination": "GBarbosa Petrolina",
-      "distance": 3.243,
-      "estimated_travel_time": 6.9
+      "distance": 2.7,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Abaré",
       "destination": "GBarbosa Petrolina – Av. Monsenhor Ângelo Sampaio",
-      "distance": 7.376,
-      "estimated_travel_time": 15.8
+      "distance": 2.7,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Abaré",
       "destination": "Hospital Veterinário",
-      "distance": 8.612,
-      "estimated_travel_time": 18.5
+      "distance": 12.2,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Abaré",
       "destination": "Hospital Veterinário CCA",
-      "distance": 9.827,
-      "estimated_travel_time": 21.1
+      "distance": 12.2,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Abaré",
       "destination": "Igreja Filadélfia",
-      "distance": 2.68,
-      "estimated_travel_time": 5.7
+      "distance": 7.8,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Abaré",
       "destination": "Izabela Construções (Cosme Damião / sentido CCA)",
-      "distance": 7.04,
-      "estimated_travel_time": 15.1
+      "distance": 7.9,
+      "estimated_travel_time": 16.0
     },
     {
       "origin": "Abaré",
       "destination": "Mecânica Ouro Diesel",
-      "distance": 3.068,
-      "estimated_travel_time": 6.6
+      "distance": 3.6,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Abaré",
       "destination": "Mecânica Ouro Diesel – Av. 7 de Setembro",
-      "distance": 5.686,
-      "estimated_travel_time": 12.2
+      "distance": 3.6,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Abaré",
       "destination": "Ministério Público Federal",
-      "distance": 3.594,
-      "estimated_travel_time": 7.7
+      "distance": 3.5,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Abaré",
       "destination": "Parque Mundo da Lua",
-      "distance": 1.415,
-      "estimated_travel_time": 3.0
+      "distance": 1.5,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
       "destination": "Petrape",
-      "distance": 4.232,
-      "estimated_travel_time": 9.1
+      "distance": 3.0,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Abaré",
       "destination": "Petrape – Av. da Integração",
-      "distance": 4.229,
-      "estimated_travel_time": 9.1
+      "distance": 3.0,
+      "estimated_travel_time": 7.0
     },
     {
       "origin": "Abaré",
       "destination": "Plante Bem",
-      "distance": 3.327,
-      "estimated_travel_time": 7.1
+      "distance": 3.5,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Abaré",
       "destination": "Ponto Aldiegas",
-      "distance": 5.331,
-      "estimated_travel_time": 11.4
+      "distance": 3.9,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Abaré",
       "destination": "Ponto BR 428 – DR Distribuidora (Vila Marcela)",
-      "distance": 4.945,
-      "estimated_travel_time": 10.6
+      "distance": 3.7,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Abaré",
@@ -330,14 +330,14 @@
     {
       "origin": "Abaré",
       "destination": "Ponto BR 428 – Posto Carranca",
-      "distance": 5.041,
-      "estimated_travel_time": 10.8
+      "distance": 3.0,
+      "estimated_travel_time": 8.0
     },
     {
       "origin": "Abaré",
       "destination": "Ponto BR 428 – Sucatão Moraes (Loteamento Recife)",
-      "distance": 0.57,
-      "estimated_travel_time": 1.2
+      "distance": 3.0,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
@@ -348,20 +348,20 @@
     {
       "origin": "Abaré",
       "destination": "Posto ALE",
-      "distance": 3.828,
-      "estimated_travel_time": 8.2
+      "distance": 6.6,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Abaré",
       "destination": "Posto Raul Lins / Bairro Castelo Branco",
-      "distance": 3.032,
-      "estimated_travel_time": 6.5
+      "distance": 9.0,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Abaré",
       "destination": "Posto Raul Lins – Entrada Castelo Branco",
-      "distance": 4.306,
-      "estimated_travel_time": 9.2
+      "distance": 9.0,
+      "estimated_travel_time": 20.0
     },
     {
       "origin": "Abaré",
@@ -372,26 +372,26 @@
     {
       "origin": "Abaré",
       "destination": "Posto de Gasolina Big Brother",
-      "distance": 4.765,
-      "estimated_travel_time": 10.2
+      "distance": 2.1,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
       "destination": "Residência Estudantil CCA",
-      "distance": 7.622,
-      "estimated_travel_time": 16.3
+      "distance": 12.9,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Abaré",
       "destination": "Rodoviária de Petrolina",
-      "distance": 5.211,
-      "estimated_travel_time": 11.2
+      "distance": 2.8,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Abaré",
       "destination": "Rua do Paraíso ao lado das Lojas Americanas",
-      "distance": 2.892,
-      "estimated_travel_time": 6.2
+      "distance": 5.2,
+      "estimated_travel_time": 10.0
     },
     {
       "origin": "Abaré",
@@ -408,63 +408,62 @@
     {
       "origin": "Abaré",
       "destination": "Sementeira",
-      "distance": 1.33,
-      "estimated_travel_time": 2.9
+      "distance": 1.9,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
       "destination": "Sementeira – Av. da Integração",
-      "distance": 4.262,
-      "estimated_travel_time": 9.1
+      "distance": 1.9,
+      "estimated_travel_time": 4.0
     },
     {
       "origin": "Abaré",
       "destination": "Supermercado Regente",
-      "distance": 1.958,
-      "estimated_travel_time": 4.2
+      "distance": 3.0,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Abaré",
       "destination": "Terminal de Juazeiro – Camelódromo 2 de Julho",
-      "distance": 6.267,
-      "estimated_travel_time": 13.4
+      "distance": 6.0,
+      "estimated_travel_time": 12.0
     },
     {
       "origin": "Abaré",
       "destination": "UNIVASF Campus CCA",
-      "distance": 8.033,
-      "estimated_travel_time": 17.2
+      "distance": 13.6,
+      "estimated_travel_time": 24.0
     },
     {
       "origin": "Abaré",
       "destination": "UNIVASF Campus CCA – Bloco Antigo",
-      "distance": 12.154,
-      "estimated_travel_time": 26.0
+      "distance": 12.5,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Abaré",
       "destination": "UNIVASF Campus Ciências Agrárias – Bloco Antigo",
-      "distance": 10.302,
-      "estimated_travel_time": 22.1
+      "distance": 12.5,
+      "estimated_travel_time": 22.0
     },
     {
       "origin": "Abaré",
       "destination": "UNIVASF Campus Juazeiro",
-      "distance": 7.001,
-      "estimated_travel_time": 15.0
+      "distance": 6.5,
+      "estimated_travel_time": 14.0
     },
     {
       "origin": "Abaré",
       "destination": "UNIVASF Campus Petrolina",
-      "distance": 2.907,
-      "estimated_travel_time": 6.2
+      "distance": 2.7,
+      "estimated_travel_time": 6.0
     },
     {
       "origin": "Abaré",
       "destination": "Verdão Juazeiro",
-      "distance": 10.04,
-      "estimated_travel_time": 21.5
+      "distance": 9.2,
+      "estimated_travel_time": 20.0
     }
-  ],
-  "_sintetico": true
+  ]
 }
