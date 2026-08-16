@@ -1,0 +1,49 @@
+turno,criterio,deposito,braco,cobertura,custo_brl,veiculos
+manha_1,Fixado no código (\texttt{DEPOT\_IDS}),9,cw1,89.8989898989899,404.12,4
+manha_1,Fixado no código (\texttt{DEPOT\_IDS}),9,multi,89.8989898989899,491.06,5
+manha_1,Parada de maior movimento,7,cw1,100.0,620.02,5
+manha_1,Parada de maior movimento,7,multi,100.0,852.57,8
+manha_1,Campus Petrolina,45,cw1,96.46464646464646,463.26,5
+manha_1,Campus Petrolina,45,multi,96.46464646464646,581.9,6
+manha_1,Campus Juazeiro,44,cw1,96.96969696969697,453.54,5
+manha_1,Campus Juazeiro,44,multi,96.96969696969697,671.27,7
+manha_2,Fixado no código (\texttt{DEPOT\_IDS}),9,cw1,70.27027027027027,118.08,1
+manha_2,Fixado no código (\texttt{DEPOT\_IDS}),9,multi,70.27027027027027,198.22,2
+manha_2,Parada de maior movimento,7,cw1,100.0,119.54,1
+manha_2,Parada de maior movimento,7,multi,100.0,209.64,2
+manha_2,Campus Petrolina,45,cw1,83.78378378378379,124.15,1
+manha_2,Campus Petrolina,45,multi,83.78378378378379,199.43,2
+manha_2,Campus Juazeiro,44,cw1,89.1891891891892,114.68,1
+manha_2,Campus Juazeiro,44,multi,89.1891891891892,141.63,2
+tarde_1,Fixado no código (\texttt{DEPOT\_IDS}),9,cw1,92.3076923076923,344.35,2
+tarde_1,Fixado no código (\texttt{DEPOT\_IDS}),9,multi,48.35164835164835,411.41,4
+tarde_1,Parada de maior movimento,7,cw1,56.043956043956044,295.13,2
+tarde_1,Parada de maior movimento,7,multi,56.043956043956044,441.08,4
+tarde_1,Campus Petrolina,45,cw1,91.20879120879121,321.72,2
+tarde_1,Campus Petrolina,45,multi,47.252747252747255,311.15,3
+tarde_1,Campus Juazeiro,44,cw1,81.31868131868131,320.5,2
+tarde_1,Campus Juazeiro,44,multi,37.362637362637365,375.04,4
+tarde_2,Fixado no código (\texttt{DEPOT\_IDS}),9,cw1,91.66666666666667,152.56,1
+tarde_2,Fixado no código (\texttt{DEPOT\_IDS}),9,multi,91.66666666666667,300.91,3
+tarde_2,Parada de maior movimento,44,cw1,72.91666666666667,144.06,1
+tarde_2,Parada de maior movimento,44,multi,72.91666666666667,291.43,3
+tarde_2,Campus Petrolina,45,cw1,83.33333333333333,152.56,1
+tarde_2,Campus Petrolina,45,multi,83.33333333333333,290.51,3
+tarde_2,Campus Juazeiro,44,cw1,72.91666666666667,144.06,1
+tarde_2,Campus Juazeiro,44,multi,72.91666666666667,291.43,3
+noite_1,Fixado no código (\texttt{DEPOT\_IDS}),37,cw1,98.73417721518987,520.33,3
+noite_1,Fixado no código (\texttt{DEPOT\_IDS}),37,multi,30.379746835443036,267.15,3
+noite_1,Parada de maior movimento,7,cw1,59.49367088607595,361.18,3
+noite_1,Parada de maior movimento,7,multi,31.645569620253166,301.63,3
+noite_1,Campus Petrolina,45,cw1,90.50632911392405,507.95,3
+noite_1,Campus Petrolina,45,multi,22.151898734177216,270.18,3
+noite_1,Campus Juazeiro,44,cw1,93.0379746835443,515.72,3
+noite_1,Campus Juazeiro,44,multi,24.68354430379747,268.12,3
+noite_2,Fixado no código (\texttt{DEPOT\_IDS}),9,cw1,96.72131147540983,187.85,2
+noite_2,Fixado no código (\texttt{DEPOT\_IDS}),9,multi,62.295081967213115,145.95,2
+noite_2,Parada de maior movimento,44,cw1,45.90163934426229,123.49,1
+noite_2,Parada de maior movimento,44,multi,11.475409836065573,86.46,1
+noite_2,Campus Petrolina,45,cw1,65.57377049180327,134.79,1
+noite_2,Campus Petrolina,45,multi,65.57377049180327,187.49,2
+noite_2,Campus Juazeiro,44,cw1,45.90163934426229,123.49,1
+noite_2,Campus Juazeiro,44,multi,11.475409836065573,86.46,1
