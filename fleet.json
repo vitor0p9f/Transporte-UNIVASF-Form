@@ -1,0 +1,40 @@
+{
+  "buses": [
+    {
+      "id": 1,
+      "passenger_capacity": 45,
+      "fuel_capacity": 300,
+      "km_autonomy_per_liter": 2.5
+    },
+    {
+      "id": 2,
+      "passenger_capacity": 45,
+      "fuel_capacity": 300,
+      "km_autonomy_per_liter": 2.5
+    },
+    {
+      "id": 3,
+      "passenger_capacity": 45,
+      "fuel_capacity": 300,
+      "km_autonomy_per_liter": 2.5
+    },
+    {
+      "id": 4,
+      "passenger_capacity": 45,
+      "fuel_capacity": 300,
+      "km_autonomy_per_liter": 2.5
+    },
+    {
+      "id": 5,
+      "passenger_capacity": 45,
+      "fuel_capacity": 300,
+      "km_autonomy_per_liter": 2.5
+    },
+    {
+      "id": 6,
+      "passenger_capacity": 45,
+      "fuel_capacity": 300,
+      "km_autonomy_per_liter": 2.5
+    }
+  ]
+}
