@@ -1,4 +1,7 @@
 .ai-jail
 .serena/
 
-**/__pycache__/**
+**/__pycache__/
+
+# Legacy algorithms folder
+algorithms/
