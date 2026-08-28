@@ -6,6 +6,7 @@ from application.orienteering.commit import commit_served_demand
 from application.orienteering.judge import judge_competing_candidates
 from application.orienteering.models import CandidateEvaluation, DemandState, GreedyTopResult, GreedyTopStep
 from application.orienteering.planner import rank_candidates
+from application.orienteering.prize import DENSITY
 from domain.entities.bus import Bus
 from domain.entities.graph import Graph
 
@@ -32,15 +33,20 @@ def run_greedy_top(
     demand_state: DemandState,
     bus: Bus,
     origin_label: str,
-    destination_label: str,
+    destination_label: str | None,
     time_limit_minutes: int,
     *,
     alpha: float = 1.0,
+    score_metric: str = DENSITY,
     candidate_labels: Sequence[str] | None = None,
     bus_index: int = 0,
     max_iterations: int | None = None,
 ) -> GreedyTopResult:
-    route_stops = build_initial_route(origin_label, destination_label)
+    allow_terminal_position = destination_label is None
+    if destination_label is None:
+        route_stops = (origin_label,)
+    else:
+        route_stops = build_initial_route(origin_label, destination_label)
     current_state = demand_state
     steps: list[GreedyTopStep] = []
     last_simulation = None
@@ -59,8 +65,10 @@ def run_greedy_top(
                 time_limit_minutes,
                 candidate_labels=candidate_labels,
                 alpha=alpha,
+                score_metric=score_metric,
                 bus_index=bus_index,
                 full_demand_state=demand_state,
+                allow_terminal_position=allow_terminal_position,
             )
         )
         chosen = judge_competing_candidates(ranking, require_feasible=True)

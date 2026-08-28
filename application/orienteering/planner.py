@@ -5,7 +5,8 @@ from collections.abc import Sequence
 from application.orienteering.commit import commit_served_demand
 from application.orienteering.judge import judge_competing_candidates, judge_route
 from application.orienteering.models import CandidateEvaluation, DemandState
-from application.orienteering.prize import calculate_node_prize
+from application.orienteering.prize import DENSITY, prize_for
+from application.orienteering.ranking import evaluation_sort_key
 from application.orienteering.simulation import simulate_route
 from application.orienteering.state import candidate_labels_for_demand
 from domain.entities.bus import Bus
@@ -22,28 +23,20 @@ def candidate_labels_for_route(
 def _insertion_routes(
     route_stops: Sequence[str],
     candidate_label: str,
+    *,
+    allow_terminal_position: bool = False,
 ) -> tuple[tuple[str, ...], ...]:
-    if len(route_stops) < 2:
-        raise ValueError("route_stops must contain at least an origin and a destination")
+    if len(route_stops) < 1:
+        raise ValueError("route_stops must contain at least an origin")
 
     if candidate_label in route_stops:
         raise ValueError("candidate_label cannot already be part of route_stops")
 
     base = tuple(route_stops)
+    end = len(base) + 1 if allow_terminal_position else len(base)
     return tuple(
         (*base[:index], candidate_label, *base[index:])
-        for index in range(1, len(base))
-    )
-
-
-def _evaluation_key(evaluation: CandidateEvaluation) -> tuple:
-    return (
-        int(evaluation.feasible),
-        evaluation.prize,
-        evaluation.simulation.served_passengers,
-        -evaluation.simulation.travel_time_minutes,
-        -evaluation.bus_index,
-        evaluation.candidate_label,
+        for index in range(1, end)
     )
 
 
@@ -55,13 +48,19 @@ def evaluate_candidate(
     candidate_label: str,
     time_limit_minutes: int,
     *,
+    score_metric: str = DENSITY,
     alpha: float = 1.0,
     bus_index: int = 0,
     full_demand_state: DemandState | None = None,
+    allow_terminal_position: bool = False,
 ) -> CandidateEvaluation:
     evaluations: list[CandidateEvaluation] = []
 
-    for inserted_route in _insertion_routes(route_stops, candidate_label):
+    for inserted_route in _insertion_routes(
+        route_stops,
+        candidate_label,
+        allow_terminal_position=allow_terminal_position,
+    ):
         simulation = simulate_route(
             graph,
             demand_state,
@@ -74,7 +73,7 @@ def evaluate_candidate(
                 bus_index=bus_index,
                 candidate_label=candidate_label,
                 route_stops=inserted_route,
-                prize=calculate_node_prize(simulation, alpha),
+                prize=prize_for(simulation, score_metric, alpha),
                 feasible=feasible,
                 simulation=simulation,
             )
@@ -83,7 +82,7 @@ def evaluate_candidate(
     if not evaluations:
         raise ValueError("No insertion positions available for the candidate")
 
-    return max(evaluations, key=_evaluation_key)
+    return max(evaluations, key=evaluation_sort_key)
 
 
 def rank_candidates(
@@ -94,9 +93,11 @@ def rank_candidates(
     time_limit_minutes: int,
     *,
     candidate_labels: Sequence[str] | None = None,
+    score_metric: str = DENSITY,
     alpha: float = 1.0,
     bus_index: int = 0,
     full_demand_state: DemandState | None = None,
+    allow_terminal_position: bool = False,
 ) -> list[CandidateEvaluation]:
     labels = (
         tuple(candidate_labels)
@@ -112,14 +113,16 @@ def rank_candidates(
             route_stops,
             candidate_label,
             time_limit_minutes,
+            score_metric=score_metric,
             alpha=alpha,
             bus_index=bus_index,
             full_demand_state=full_demand_state,
+            allow_terminal_position=allow_terminal_position,
         )
         for candidate_label in labels
     ]
 
-    return sorted(ranked, key=_evaluation_key, reverse=True)
+    return sorted(ranked, key=evaluation_sort_key, reverse=True)
 
 
 def calculate_candidate_prizes(
@@ -130,6 +133,7 @@ def calculate_candidate_prizes(
     time_limit_minutes: int,
     *,
     candidate_labels: Sequence[str] | None = None,
+    score_metric: str = DENSITY,
     alpha: float = 1.0,
     bus_index: int = 0,
     full_demand_state: DemandState | None = None,
@@ -141,6 +145,7 @@ def calculate_candidate_prizes(
         route_stops,
         time_limit_minutes,
         candidate_labels=candidate_labels,
+        score_metric=score_metric,
         alpha=alpha,
         bus_index=bus_index,
         full_demand_state=full_demand_state,
