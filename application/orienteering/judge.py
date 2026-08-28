@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 
 from application.orienteering.models import CandidateEvaluation, RouteSimulation
+from application.orienteering.ranking import evaluation_sort_key
 from domain.entities.bus import Bus
 
 
@@ -18,17 +19,6 @@ def judge_route(
     )
 
 
-def _evaluation_key(evaluation: CandidateEvaluation) -> tuple:
-    return (
-        int(evaluation.feasible),
-        evaluation.prize,
-        evaluation.simulation.served_passengers,
-        -evaluation.simulation.travel_time_minutes,
-        -evaluation.bus_index,
-        evaluation.candidate_label,
-    )
-
-
 def judge_competing_candidates(
     evaluations: Sequence[CandidateEvaluation],
     *,
@@ -41,4 +31,4 @@ def judge_competing_candidates(
     if not pool:
         return None
 
-    return max(pool, key=_evaluation_key)
+    return max(pool, key=evaluation_sort_key)
