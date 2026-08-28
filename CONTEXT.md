@@ -24,10 +24,11 @@
 - **Purpose**: Single metric for routing optimization and economic analysis.
 
 ### Prize (`prize`)
-- **Unit**: heuristic score
-- **Description**: Route-contextual score used to rank candidate nodes in the greedy TOP heuristic.
-- **Formula**: `prize = passengers_served - time_minutes` when `alpha = 1`
-- **Purpose**: Compare candidate insertions before committing demand to the working graph copy.
+- **Unit**: passengers per minute (pax/min)
+- **Description**: Route-contextual score used to rank candidate nodes in the greedy TOP heuristic; a single rate with no scale knob.
+- **Formula**: `prize = passengers_served / travel_time_minutes` (metric `density`, the default); alternative `pax_minus_time`: `prize = passengers_served - alpha * travel_time_minutes`.
+- **Guards**: `density` returns `0.0` when no passengers are served or travel time is `<= 0`.
+- **Purpose**: Compare candidate insertions (and destination/terminal routes) before committing demand to the working graph copy.
 
 ### Rate Configuration
 - `rate_km`: Cost per kilometer (R$/km)
@@ -48,10 +49,15 @@
 - **Purpose**: Tracks what is still pending independently from the physical graph.
 
 ### Fleet Coordination (`fleet_coordination`)
-- **Description**: Pure assignment layer that distributes buses across allowed destination labels.
-- **Properties**: balanced selection by least-used destination, deterministic tie-breaking via RNG seed
-- **Purpose**: Avoid concentrating the fleet on a single end point when multiple final destinations are valid.
-- **Route lock**: Once a bus selects its final destination, subsequent greedy expansions stay within that destination only.
+- **Description**: Round-based assignment layer where all buses compete for the same residual demand; the highest-prize bus executes exactly one move (destination lock or single-stop insertion) per round.
+- **Properties**: `run_parallel_fleet_top` (used by CLI); legacy `run_balanced_fleet_top` moved to `fleet_legacy.py`, deprecated
+- **Round mechanics**: every bus scores against identical `DemandState`; winner = `max(move_sort_key)` → `(prize, served_passengers, -travel_time_minutes, -bus_index, destination_label)`.
+- **Destination lock**: a destination-less bus is scored by a full greedy route per allowed destination; on winning it locks destination and commits the full greedy route it scored, so the residual demand drops accordingly and later destinations re-score on the true remaining pool. **Free mode** (no `destination_labels`): the bus scores a single full greedy route from the origin and the heuristic's last stop becomes the terminal.
+- **2-opt at commit**: the winning lock route is reordered (`improve_route_with_two_opt`) before commit — 2-opt segment swaps with endpoints fixed, accepted when `(served_passengers, -travel_time_minutes)` improves lexicographically (time may grow to serve more); the demand deducted is re-simulated from the optimized route.
+- **Locked phase**: a bus with a locked destination proposes its best single insertion via `rank_candidates` (residual demand for served passengers, full demand for peak).
+- **Honest accounting**: the final report re-simulates each bus only over the demand it actually committed (`served_per_bus`), so totals never double-count passengers across buses.
+- **Termination**: stops when residual `edge_demand` empties; buses that never lock a destination, or whose locked route serves zero passengers, are excluded from the result.
+- **Legacy (balanced)**: `run_balanced_fleet_top` (em `fleet_legacy.py`, deprecado) seleciona por destino menos usado com RNG-seeded tie-breaking; também omite do resultado ônibus cujo plano não atende nenhum passageiro.
 - **Origin as destination**: The origin label may also be included in the allowed destination set.
 
 ### Graph (`graph`)

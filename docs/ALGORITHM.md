@@ -9,10 +9,10 @@ O sistema implementa uma heurística **Greedy Team Orienteering Problem (TOP)** 
 │                        FLUXO PRINCIPAL                          │
 ├─────────────────────────────────────────────────────────────────┤
 │  1. Carregar grafo e demanda por turno                          │
-│  2. Para cada ônibus (sequencialmente):                         │
-│     a. Avaliar todos os destinos possíveis                      │
-│     b. Construir rota gulosa para o melhor destino              │
-│     c. Commitar demanda servida                                 │
+│  2. Para cada rodada (frota paralela):                          │
+│     a. Avaliar todos os ônibus na mesma demanda residual        │
+│     b. Maior prize vence a rodada (um movimento)                │
+│     c. Commitar demanda servida pelo vencedor                   │
 │  3. Gerar relatório de resultados                               │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -21,12 +21,14 @@ O sistema implementa uma heurística **Greedy Team Orienteering Problem (TOP)** 
 
 ### Grafo (Graph)
 ```
-Grafo = {Nodes, Edges}
+Grafo = {Nodes, Edges, edges_by_label}
 
 Node = {label: str}                          // Ex: "1", "10", "44"
 Edge = {source: Node, destination: Node,
         distance_km: float, 
         travel_time_minutes: int}            // Direcional
+
+edges_by_label = {(origem, destino): edge}   // Índice pré-computado O(1)
 ```
 
 ### Estado de Demanda (DemandState)
@@ -55,25 +57,35 @@ RouteSimulation = {
 
 ## 2. Heurística Gulosa (Greedy TOP)
 
-### 2.1 Construção Sequencial
+### 2.1 Construção em Paralelo (Interleaved)
+
+O entry point da CLI é **`run_parallel_fleet_top`**: todos os ônibus competem a cada rodada pela **mesma demanda residual**, e apenas o ônibus com maior prize executa um único movimento.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                  COORDENAÇÃO DA FROTA                           │
+│                 COORDENAÇÃO PARALELA DA FROTA                    │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  Ônibus 1 ──────► Constrói rota completa ──────► Commita demanda│
-│                                                                 │
-│  Ônibus 2 ──────► Constrói rota completa ──────► Commita demanda│
-│  (com demanda residual)                                         │
-│                                                                 │
-│  Ônibus 3 ──────► Constrói rota completa ──────► Commita demanda│
-│  (com demanda residual)                                         │
+│  Rodada N:                                                      │
+│  ┌────────────┐ ┌────────────┐ ┌────────────┐                   │
+│  │ Ônibus 1   │ │ Ônibus 2   │ │ Ônibus 3   │                   │
+│  │  → candidatos│  → candidatos│  → candidatos│                  │
+│  └─────┬──────┘ └─────┬──────┘ └─────┬──────┘                   │
+│        └──────────────┼──────────────┘                          │
+│                       ▼                                         │
+│             maior prize vence a rodada                          │
+│             └─► 1 único movimento (lock ou inserção)            │
+│                 └─► commita demanda daquele movimento            │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**IMPORTANTE:** Cada ônibus constrói sua rota **completamente** antes do próximo. Não há iteração interleaved.
+**Regras:**
+- **Sem destino ainda (lock)**: o ônibus é avaliado por uma **rota gulosa completa** (`run_greedy_top`). No modo com destino (lista `--destinations` informada), roda **uma rota por destino permitido**; no **modo livre** (sem destinos), roda uma única rota a partir da origem e o **terminal é a última parada** que a heurística escolheu. A rodada é vencida pelo melhor prize; ao vencer, o ônibus **trava** o destino (ou terminal) e **commita a rota gulosa completa avaliada** — toda a demanda que ela serve sai do pool, mantendo o residual coerente com o score.
+- **Com destino travado (inserção)**: o ônibus propõe a melhor inserção de uma única parada via `rank_candidates`, usando a demanda residual para passageiros servidos e a demanda cheia para pico.
+- **Desempate**: prize, depois passageiros servidos, depois menor tempo, depois índice do ônibus, depois rótulo do destino (tudo determinístico, sem RNG).
+- **Parada global**: quando a demanda residual fica vazia (`edge_demand` vazio), o loop termina.
+- Ônibus que nunca travam destino **ou cuja rota não atende ninguém** (zero passageiros) são omitidos do resultado final (aplicado também no mode `sequential`).
 
 ### 2.2 Algoritmo `run_greedy_top`
 
@@ -137,8 +149,8 @@ def evaluate_candidate(graph, demand_state, bus, route_stops, candidate, time_li
         # Verificar factibilidade
         feasible = judge_route(simulation, bus, time_limit)
         
-        # Calcular prize
-        prize = calculate_node_prize(simulation, alpha=1.0)
+        # Calcular prize (métrica controlada por --score)
+        prize = prize_for(simulation, score_metric, alpha=1.0)
         
         evaluations.append({
             'route': inserted_route,
@@ -152,26 +164,26 @@ def evaluate_candidate(graph, demand_state, bus, route_stops, candidate, time_li
 
 ### 2.4 Cálculo do Prize
 
-O prize é a métrica de qualidade de uma inserção:
+O prize é a métrica de qualidade de uma inserção, controlada por `--score`:
 
 ```
-prize = served_passengers - α × travel_time_minutes
+density (padrão):   prize = served_passengers / travel_time_minutes   (pax por minuto)
+pax_minus_time:     prize = served_passengers - α × travel_time_minutes
 
 Onde:
   - served_passengers: passageiros atendidos pela rota simulada
   - travel_time_minutes: tempo total da rota simulada
-  - alpha: peso do tempo (padrão: 1.0)
+  - α: peso do tempo (padrão: 1.0; só usado em pax_minus_time)
+
+Guardas do density: retorna 0.0 quando não há passageiros atendidos ou tempo <= 0.
 ```
 
-**Exemplo:**
+**Exemplo (`density`):**
 ```
-Inserção A: 10 passageiros, 60 minutos
-  prize = 10 - 1.0 × 60 = -50
+Inserção A: 10 passageiros, 60 minutos → 10/60 = 0.17 pax/min
+Inserção B: 15 passageiros, 45 minutos → 15/45 = 0.33 pax/min
 
-Inserção B: 15 passageiros, 45 minutos  
-  prize = 15 - 1.0 × 45 = -30
-
-Melhor: Inserção B (-30 > -50)
+Melhor: Inserção B (0.33 > 0.17)
 ```
 
 ## 3. Simulação de Rota
@@ -263,7 +275,59 @@ total_cost = R$ 159.50
 
 ## 4. Coordenação da Frota
 
-### 4.1 Seleção Balanceada de Destinos
+### 4.1 Coordenação Paralela (novo, usado pela CLI)
+
+```python
+def run_parallel_fleet_top(graph, demand_state, buses, origin, destinations, time_limit):
+    current_state = demand_state
+    served_per_bus = [{} for _ in buses]
+
+    while True:
+        round_options = []
+
+        for state in states:                       # todos os ônibus na MESMA demanda
+            if state.destination is None:
+                moves = _destination_lock_moves(...)   # 1 rota gulosa por destino
+            else:
+                moves = _locked_destination_moves(...) # 1 melhor inserção
+            if moves:
+                round_options.append(max(moves, key=move_sort_key))
+
+        if not round_options:
+            break
+
+        chosen = max(round_options, key=move_sort_key)   # maior prize global
+        state.atualizado; se lock: destino travado
+        served = _served_pairs_map(chosen.simulation)
+        served_per_bus[chosen.bus] += served        # contabiliza só o que o ônibus
+        current_state = commit_served_demand(current_state, served)
+        if not current_state.edge_demand:
+            break
+
+    # Relatório final usa APENAS a demanda realmente commitada por ônibus,
+    # evitando contagem dupla entre ônibus.
+```
+
+- **Contagem honesta**: o relatório final refaz `simulate_route` com um `DemandState` contendo **somente** os pares que aquele ônibus commitou (`_demand_state_from_pairs`), não a demanda original — senão passageiros seriam contados múltiplas vezes.
+- Bus 1→ destino 20, bus 2 → destino 30, etc. dependem dos prizes das rotas gulosas completas.
+
+### 4.1.1 Otimização 2-opt antes do commit do destino
+
+Quando uma trava de destino vence, a rota gulosa completa é **reordenada via 2-opt** (`improve_route_with_two_opt`) **antes** de ser commitada:
+
+1. Para cada par de pontos de corte `(i, j)` (origem e destino fixos), gera o reverso do segmento `route[i:j]`.
+2. Aceita o candidato se: `route_valid`, `tempo ≤ time_limit`, `pico ≤ capacidade` (reusa `judge_route`).
+3. Critério de aceite lexicográfico `(served_passengers, -travel_time_minutes)` — **aceita crescer o tempo se atender mais passageiros**; com atendidos iguais, prefere tempo menor.
+4. Repete até nenhuma troca melhorar.
+
+Após a reordenação, `simulate_route` é refeita sobre a rota otimizada e **a demanda dessa simulação é a que será deduzida** (`commit_served_demand`) — ou seja, a dedução reflete o que a rota otimizada de fato atendeu, não a rota avaliada originalmente.
+
+- Efeito medido (MORNING_1): `tl=120` atendeu 196/198 → **198/198** (recuperou pares bloqueados por ordem), ônibus 6 → 5, custo R$ 1191 → R$ 922.
+- O 2-opt age **só sobre a rota vencedora**, na fase de commit; a competição (`move_sort_key`) continua pontuando as rotas gulosas originais.
+
+### 4.2 Seleção Balanceada de Destinos (legado: `run_balanced_fleet_top`, movido para `fleet_legacy.py`)
+
+> ⚠️ **Legado/deprecado**: substituído por `run_parallel_fleet_top`. Mantido em `application/orienteering/fleet_legacy.py` apenas para comparação. O CLI não o utiliza.
 
 ```python
 def select_balanced_bus_plan(plans, destination_usage, rng):
@@ -284,7 +348,7 @@ def select_balanced_bus_plan(plans, destination_usage, rng):
     return rng.choice(sorted(best_pool, key=lambda p: p.destination_label))
 ```
 
-### 4.2 Exemplo de Balanceamento
+### 4.3 Exemplo de Balanceamento (legado)
 
 ```
 Destinos disponíveis: [10, 20, 30]
@@ -304,7 +368,7 @@ Uso atual: {10: 0, 20: 0, 30: 0}
   → Uso final: {10: 1, 20: 1, 30: 1}
 ```
 
-### 4.3 Validação de Capacidade
+### 4.4 Validação de Capacidade
 
 ```python
 def select_balanced_bus_plan(plans, ...):
@@ -395,17 +459,15 @@ def judge_route(simulation, bus, time_limit):
 │  1. main_orienteering.py                                        │
 │     ├── Ler graph.json, fleet.json                              │
 │     ├── Criar Graph, Buses, DemandState                         │
-│     └── Chamar run_balanced_fleet_top()                         │
+│     └── Chamar run_parallel_fleet_top()                         │
 │                                                                 │
-│  2. fleet.py: run_balanced_fleet_top()                          │
-│     ├── Para cada ônibus:                                       │
-│     │   ├── evaluate_destination_options()                      │
-│     │   │   └── evaluate_bus_plan() × N destinos                │
-│     │   │       ├── run_greedy_top() → construção gulosa        │
-│     │   │       └── simulate_route() → cálculo final            │
-│     │   ├── select_balanced_bus_plan()                          │
-│     │   └── commit_served_demand()                              │
-│     └── Retornar FleetResult                                    │
+│  2. fleet.py: run_parallel_fleet_top()                          │
+│     ├── Rodadas: todos os ônibus na mesma demanda residual      │
+│     │   ├── sem destino: rota gulosa completa p/ cada destino   │
+│     │   ├── com destino: melhor inserção única (rank_candidates)│
+│     │   ├── vencedor: max(move_sort_key) — 1 único movimento   │
+│     │   └── commit daquele movimento; para se demanda vazia     │
+│     └── Relatório com demanda commitada por ônibus (sem dupla)  │
 │                                                                 │
 │  3. report.py                                                   │
 │     ├── fleet_result_rows() → tabela markdown                   │
@@ -420,15 +482,18 @@ def judge_route(simulation, bus, time_limit):
 ```markdown
 | id do ônibus | destino | pasageiros atendidos | pico | custo (R$) | tempo | distancia | viável |
 |--------------|---------|---------------------|------|------------|-------|-----------|--------|
-| 1            | 20      | 51                  | 30   | 158.90     | 85    | 44.77     | True   |
-| 2            | 30      | 9                   | 9    | 136.64     | 84    | 36.40     | True   |
-| 3            | 10      | 6                   | 6    | 159.98     | 87    | 44.80     | True   |
-| Σ            |         | 66                  | 30   | 455.52     | 256   | 125.97    |        |
+| 1            | 20      | 50                  | 30   | 158.90     | 85    | 44.77     | True   |
+| 2            | 30      | 10                  | 9    | 145.66     | 88    | 39.10     | True   |
+| 3            | 20      | 4                   | 4    | 152.82     | 81    | 43.20     | True   |
+| Σ            |         | 64                  | 30   | 457.38     | 254   | 127.07    |        |
 
 **Ônibus 1 (20):** 1 → 2 → 10 → 3 → 43 → 7 → 25 → 19 → ... → 20
 **Ônibus 2 (30):** 1 → 41 → 16 → 10 → 3 → 13 → ... → 30
-**Ônibus 3 (10):** 1 → 3 → 19 → 7 → 25 → 36 → ... → 10
+**Ônibus 3 (20):** 1 → 41 → 16 → 10 → 3 → 19 → 7 → ... → 20
 ```
+
+A soma dos passageiros nunca excede a demanda total do turno: cada ônibus
+reporta apenas o que de fato commitou à demanda residual.
 
 ## 9. Complexidade Computacional
 
@@ -452,9 +517,32 @@ def judge_route(simulation, bus, time_limit):
 
 | Parâmetro | Descrição | Padrão |
 |-----------|-----------|--------|
-| `alpha` | Peso do tempo no prize | 1.0 |
+| `alpha` | Peso do tempo no prize (só `score=pax_minus_time`) | 1.0 |
 | `time_limit_minutes` | Limite de tempo por ônibus | 90 |
-| `seed` | Semente RNG para desempate | 0 |
-| `max_iterations` | Limite de iterações por ônibus | None |
-| `diesel_price_per_liter` | Preço do diesel (R$/L) | 0.0 |
-| `driver_hourly_rate` | Custo do motorista (R$/h) | 0.0 |
+| `destination_labels` | Destinos finais permitidos (`--destinations`); vazio = modo livre (terminal = última parada da heurística) | — |
+| `--score` | `density` (pax/min) ou `pax_minus_time` (served − α·time) | `density` |
+| `--mode` | `parallel` (competição por rodada) ou `sequential` (balanceada legada) | `parallel` |
+| `--two-opt` / `--no-two-opt` | Liga/desliga o 2-opt no commit da rota (qualquer modo) | `on` |
+| `--seed` | Semente RNG (só `--mode sequential`) | 0 |
+| `diesel_price_per_liter` | Preço do diesel (R$/L) — só custo | 0.0 |
+| `driver_hourly_rate` | Custo do motorista (R$/h) — só custo | 0.0 |
+
+Exemplo não-interativo de comparação:
+
+```bash
+# Com destino (constrendo terminais aos nós 10/20/30)
+python3 main_orienteering.py --origin 1 --destinations "10 20 30" --shift MORNING_1 \
+  --time-limit 120 --diesel-price 6.5 --driver-rate 30 --mode parallel --two-opt
+
+# Modo livre (a heurística decide o terminal)
+python3 main_orienteering.py --origin 1 --destinations "" --shift MORNING_1 \
+  --time-limit 120 --diesel-price 6.5 --driver-rate 30 --mode parallel --two-opt
+
+# Métrica de prize alternativa
+python3 main_orienteering.py --origin 1 --destinations "10 20 30" --shift MORNING_1 \
+  --time-limit 120 --diesel-price 6.5 --driver-rate 30 --mode parallel --two-opt --score pax_minus_time
+```
+
+Resultados de referência (MORNING_1, tl=120): parallel `density` 2-opt **198** (R$ 829) · parallel `density` livre 2-opt **198** (R$ 753) · parallel `pax_minus_time` 2-opt 198 (R$ 922) · parallel sem 2-opt (pax_minus_time) 196 (R$ 1 191).
+
+> A CLI oferece um **menu seletivo interativo** no terminal para ativar/desativar as opções (origem, destinos [livre/constrangido], turno, limites, modo, 2-opt, score); rodar sem flags abre esse menu. As flags permanecem como atalho não-interativo para scripts.
