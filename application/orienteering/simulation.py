@@ -12,11 +12,7 @@ def _edge_by_labels(
     source_label: str,
     destination_label: str,
 ) -> Edge | None:
-    for edge in graph.edges:
-        if edge.source.label == source_label and edge.destination.label == destination_label:
-            return edge
-
-    return None
+    return graph.edges_by_label.get((source_label, destination_label))
 
 
 def _demand_by_origin(demand_state: DemandState) -> dict[str, dict[str, int]]:
