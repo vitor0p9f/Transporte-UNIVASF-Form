@@ -1,6 +1,12 @@
 from __future__ import annotations
 
-from application.orienteering.models import FleetResult
+from application.orienteering.models import FleetResult, RouteSimulation
+
+
+def _density(simulation: RouteSimulation) -> object:
+    if simulation.travel_time_minutes <= 0:
+        return ""
+    return round(simulation.served_passengers / simulation.travel_time_minutes, 2)
 
 
 def fleet_result_rows(result: FleetResult) -> list[dict[str, object]]:
@@ -10,7 +16,7 @@ def fleet_result_rows(result: FleetResult) -> list[dict[str, object]]:
         rows.append(
             {
                 "id do ônibus": plan.bus.id,
-                "destino": plan.destination_label,
+                "destino": plan.destination_label or "",
                 "pasageiros atendidos": plan.simulation.served_passengers,
                 "passageiros sem desembarque": plan.simulation.leftover_onboard_passengers,
                 "pico de passageiros": plan.simulation.peak_load,
@@ -18,6 +24,7 @@ def fleet_result_rows(result: FleetResult) -> list[dict[str, object]]:
                 "tempo_min": plan.simulation.travel_time_minutes,
                 "distancia_km": round(plan.simulation.total_distance_km, 2),
                 "paradas": visited_stops,
+                "pax/min": _density(plan.simulation),
                 "capacidade": plan.bus.passenger_capacity,
                 "viável": plan.simulation.route_valid,
             }
@@ -45,6 +52,7 @@ def fleet_summary_row(result: FleetResult) -> dict[str, object]:
         "tempo_min": total_time,
         "distancia_km": round(total_distance, 2),
         "paradas": total_stops,
+        "pax/min": round(total_passengers / total_time, 2) if total_time else "",
         "capacidade": "",
         "viável": "",
     }
@@ -74,5 +82,5 @@ def render_routes_section(result: FleetResult) -> str:
     lines: list[str] = []
     for plan in result.plans:
         route_str = " → ".join(plan.route_stops)
-        lines.append(f"**Ônibus {plan.bus.id} ({plan.destination_label}):** {route_str}")
+        lines.append(f"**Ônibus {plan.bus.id} ({plan.destination_label or 'livre'}):** {route_str}")
     return "\n".join(lines)
