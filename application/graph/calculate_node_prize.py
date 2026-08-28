@@ -1,11 +1,7 @@
 from application.orienteering.commit import commit_served_demand, prune_satisfied_nodes
 from application.orienteering.heuristic import build_initial_route, run_greedy_top
-from application.orienteering.fleet import (
-    evaluate_bus_plan,
-    evaluate_destination_options,
-    run_balanced_fleet_top,
-    select_balanced_bus_plan,
-)
+from application.orienteering.fleet import evaluate_bus_plan, evaluate_destination_options
+from application.orienteering.fleet_legacy import run_balanced_fleet_top, select_balanced_bus_plan
 from application.orienteering.judge import judge_competing_candidates, judge_route
 from application.orienteering.models import (
     CandidateEvaluation,
