@@ -51,7 +51,7 @@ class CandidateEvaluation:
 class BusPlan:
     bus_index: int
     bus: Bus
-    destination_label: str
+    destination_label: str | None
     route_stops: tuple[str, ...]
     prize: float
     simulation: RouteSimulation
@@ -75,13 +75,23 @@ class GreedyTopResult:
 
 
 @dataclass(frozen=True)
+class FleetMove:
+    bus_index: int
+    destination_label: str | None
+    route_stops: tuple[str, ...]
+    prize: float
+    simulation: RouteSimulation
+    locks_destination: bool
+
+
+@dataclass(frozen=True)
 class FleetStep:
     iteration: int
     bus_index: int
     route_stops_before: tuple[str, ...]
     route_stops_after: tuple[str, ...]
-    options: tuple[BusPlan, ...]
-    chosen: BusPlan
+    options: tuple[FleetMove, ...]
+    chosen: FleetMove
 
 
 @dataclass(frozen=True)
