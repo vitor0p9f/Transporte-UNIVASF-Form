@@ -1,0 +1,7 @@
+instance_id,path,seed,kind,num_nodes,num_od_pairs,total_demand
+base,instances/base,,base,46,166,593
+i001,instances/i001,478163327,perturbed,46,166,599
+i002,instances/i002,107420369,perturbed,46,166,593
+i003,instances/i003,1181241943,perturbed,46,166,590
+i004,instances/i004,1051802512,perturbed,46,166,599
+i005,instances/i005,958682846,perturbed,46,166,597
