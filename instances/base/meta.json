@@ -4,6 +4,6 @@
   "seed": null,
   "source": "root CSVs (snapshot)",
   "num_nodes": 46,
-  "num_od_pairs": 166,
+  "num_od_pairs": 2070,
   "total_demand": 593
 }
