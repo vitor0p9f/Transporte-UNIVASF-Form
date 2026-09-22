@@ -1,10 +1,14 @@
 """Random scenarios generator.
 
 Generates scenarios.csv with columns:
-  scenario_id,instance_id,fleet_bus_ids,max_time_limit,diesel_price_per_liter,driver_hourly_rate
+  scenario_id,instance_id,fleet_bus_ids,period,max_time_limit,diesel_price_per_liter,driver_hourly_rate
 
 fleet_bus_ids is a ";"-separated subset of the ids in fleet.csv.
 instance_id references instances/index.csv.
+period is one of the demand sub-periods
+(morning_1, morning_2, afternoon_1, afternoon_2, night_1, night_2),
+matching the columns of the instance demand.csv files and the
+`period` argument of utils.demand.load_demand_matrix.
 
 Usage:
   python generate_scenarios.py --num-scenarios 10 --seed 42
@@ -13,6 +17,15 @@ import argparse
 import csv
 import random
 from pathlib import Path
+
+DEMAND_PERIODS = [
+    "morning_1",
+    "morning_2",
+    "afternoon_1",
+    "afternoon_2",
+    "night_1",
+    "night_2",
+]
 
 
 def read_fleet_ids(fleet_path: Path) -> list[int]:
@@ -44,6 +57,7 @@ def generate_scenarios(
             "scenario_id": scenario_id,
             "instance_id": rng.choice(instance_ids),
             "fleet_bus_ids": ";".join(str(i) for i in subset),
+            "period": rng.choice(DEMAND_PERIODS),
             "max_time_limit": rng.randint(60, 120),
             "diesel_price_per_liter": round(rng.uniform(5.0, 7.0), 2),
             "driver_hourly_rate": round(rng.uniform(20.0, 35.0), 2),
@@ -60,6 +74,7 @@ def write_scenarios(scenarios: list[dict], output: Path) -> None:
                 "scenario_id",
                 "instance_id",
                 "fleet_bus_ids",
+                "period",
                 "max_time_limit",
                 "diesel_price_per_liter",
                 "driver_hourly_rate",
