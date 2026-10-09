@@ -53,3 +53,4 @@ scenario_id,instance_id,fleet_bus_ids,period,max_time_limit,diesel_price_per_lit
 62,p1_4_p,1;3;4;11,morning_1,1128,5.16,23.39
 63,p1_4_q,1;2;3;5,night_1,1200,5.41,32.06
 64,p1_4_r,1;2;6;12,afternoon_2,1272,5.37,34.63
+65,base,8;9,morning_1,300,6.00,25.00
