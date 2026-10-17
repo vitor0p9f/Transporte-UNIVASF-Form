@@ -3,13 +3,21 @@
 Generates fleet.csv with columns:
   id,passenger_capacity,fuel_capacity,km_autonomy_per_liter
 
+A seed padrão é `utils.seed.DEFAULT_SEED`, a mesma dos demais geradores.
+
 Usage:
-  python generate_fleet.py --num-buses 12 --seed 42
+  python scripts/generate_fleet.py --num-buses 12 --seed 42
 """
 import argparse
 import csv
 import random
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from utils.seed import DEFAULT_SEED
 
 
 DEFAULT_CAPACITIES = [24, 32, 40, 45, 50]
@@ -36,7 +44,7 @@ def sample_autonomy(passenger_capacity: int, rng: random.Random) -> float:
     return round(rng.uniform(2.0, 3.0), 2)
 
 
-def generate_fleet(num_buses: int, capacities: list[int], seed: int | None) -> list[dict]:
+def generate_fleet(num_buses: int, capacities: list[int], seed: int) -> list[dict]:
     rng = random.Random(seed)
     fleet = []
     for bus_id in range(1, num_buses + 1):
@@ -64,7 +72,9 @@ def write_fleet(fleet: list[dict], output: Path) -> None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate a random bus fleet.")
     parser.add_argument("--num-buses", type=int, default=12, help="Number of buses to generate.")
-    parser.add_argument("--seed", type=int, default=None, help="Random seed for reproducibility.")
+    parser.add_argument(
+        "--seed", type=int, default=DEFAULT_SEED, help="Seed raiz (utils/seed.py)."
+    )
     return parser.parse_args()
 
 
@@ -73,9 +83,9 @@ def main() -> None:
     if args.num_buses <= 0:
         raise ValueError("--num-buses must be > 0")
     fleet = generate_fleet(args.num_buses, DEFAULT_CAPACITIES, args.seed)
-    output = Path(__file__).resolve().parent.parent / "fleet.csv"
+    output = ROOT / "fleet.csv"
     write_fleet(fleet, output)
-    print(f"Wrote {len(fleet)} buses to {output}")
+    print(f"Wrote {len(fleet)} buses to {output} (seed {args.seed})")
 
 
 if __name__ == "__main__":
