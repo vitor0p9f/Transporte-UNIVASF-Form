@@ -1,0 +1,175 @@
+HEURISTICA GREEDY OD COM TRAVA DE PAR (TOP UNIVASF)
+==================================================
+
+Espelha algorithms/top_UNIVASF.py (funcao run_fleet).
+Visao em diagrama: heuristica.md.
+
+OBJETIVO
+--------
+Atender o maximo de passageiros com a frota, respeitando
+capacidade e limite de tempo por onibus.
+
+ENTRADAS
+--------
+- Matrizes: tempo[o,d], demanda[o,d], nos
+  (distance.csv e carregada mas nao e usada pela heuristica)
+- Frota: lista de onibus (id, capacidade)
+- Origem do cenario e limite de tempo
+- Destinos permitidos (None = livre)
+- Origens permitidas p/ draft (None = livre)
+- max_rounds (None = sem teto); max_workers e ignorado (sequencial)
+
+SCORES
+------
+score_par (draft) = embarques do trecho / tempo do trecho
+  trecho = [o, d] (direto) ou [o, P, d] (com um ponto de demanda P)
+  embarques = trava de capacidade na ordem dos trechos
+              (quem desce em P libera assento)
+  se embarques <= 0 ou tempo do trecho <= 0: score = 0
+
+score_marginal (expansao) = ganho de pax / tempo extra
+  ganho = pax_depois - pax_antes
+  se ganho <= 0: score = 0
+  se tempo extra <= 0: score = infinito
+
+score do plano final = pax total / tempo total (pax/min)
+
+INICIALIZACAO
+-------------
+restante[o,d] = demanda original
+estado[bus] = vazio (onibus ainda sem par travado)
+vitorias[bus] = 0
+
+LOOP PRINCIPAL
+--------------
+ENQUANTO soma(restante) > 0:
+  propostas = []
+
+  PARA cada onibus:
+    SE onibus ainda sem estado:
+      // 1) PROPOE RASCUNHO (DRAFT) DO PAR OD
+      melhor = nenhum
+      PARA cada o em nos (filtrado por origens permitidas):
+        out(o) = {p: restante[o,p] > 0}
+        PARA cada d em nos (filtrado por destinos permitidos):
+          in(d) = {p: restante[p,d] > 0}
+          pula se o == d e restante[o,d] > 0  // self-loop nunca embarca
+          pula se tempo[o,d] < 0
+          P = (out(o) + in(d)) - {o, d}
+          // nota: com o == d e sem demanda direta, [o, P, o] ainda vale
+          opcoes = [(direto, [o, d], tempo[o,d])]
+            + [(p, [o, p, d], tempo[o,p] + tempo[p,d]) para cada p em P]
+          PARA cada (p, trecho, tempo_trecho) em opcoes:
+            pula se tempo_trecho < 0 ou tempo_trecho > limite
+            servidos = embarques do trecho com trava de capacidade
+            pula se tempo_trecho == 0 e servidos > 0
+            score = score_par(servidos, tempo_trecho)
+            pula se score < 0          // nota: score 0 PASSA
+            desempate (guarda o maior):
+              (score, servidos, -tempo_trecho, -o, -d, -p)
+              // direto entra como p = -1 (perde para qualquer P)
+      SE achou:
+        base = trecho do melhor        // a rota ja NASCE aqui
+        chaves = pontos da base
+               + todos os subpares OD da base (i < j)
+        propostas.adiciona(DRAFT)
+
+    SENAO:
+      // 2) PROPOE EXPANSAO GUIADA PELA DEMANDA
+      pula se estado.tempo >= limite
+      (cur_pax, cur_tempo, _, cur_pares) =
+        simula(estado.rota, capacidade, restante, estado.held)
+      melhor = nenhum
+      PARA cada candidato cand com demanda restante fora da rota:
+        REGRA A (chega A->cand, A na rota):
+          SE A e o destino final: teste = rota + [cand, d]
+          SENAO: teste = rota com cand logo depois de A
+        REGRA B (sai cand->Y, Y na rota):
+          SE Y e a partida (posicao 0):
+            pula se rota[0] == rota[-1]  // o == d: o fim ja e a partida
+            teste = [o, cand, o, ... resto da rota]   // DOBRADINHA
+          SENAO: teste = rota com cand logo antes de Y
+        PARA cada teste:
+          (pax, tempo, pico, pares) =
+            simula(teste, capacidade, restante, estado.held)
+          pula se tempo > limite ou pico > capacidade
+          score = score_marginal(pax - cur_pax, tempo - cur_tempo)
+          pula se score <= 0
+          claim = pares que ganharam pax (novo - antes)
+          pula se claim vazio
+          desempate (guarda o maior):
+            (score, pax, -tempo, -cand, rota_teste)
+      SE achou:
+        chaves = nos que a insercao ACRESCENTA
+                 (na rota_teste e fora da rota atual; na dobradinha
+                  o `o` repetido nao conta)
+               + pares OD do claim
+        propostas.adiciona(EXPAND)
+      SENAO:
+        onibus nao propoe nada (ganho zero)
+
+  SE propostas vazia: PARA
+
+  // 3) RESOLUCAO DE CONFLITO
+  Agrupa propostas que compartilham qualquer chave
+  (uniao por transitividade):
+    grupo de 1 = sem conflito, commita sozinha
+    grupo com > 1 = em conflito, so 1 commita
+  vencedores = maior score de cada grupo
+    desempate: maior (score,
+                       pax   (DRAFT: servidos; EXPAND: soma do claim),
+                       -tempo (DRAFT: tempo do trecho; EXPAND: total),
+                       -bus.id)
+    // vale tambem com score 0 (draft): 1 vence por grupo,
+    // os demais esperam a proxima rodada
+
+  // 4) COMMIT (abate da demanda global)
+  PARA cada vencedor (em ordem de indice):
+    SE DRAFT:
+      re-simula a rota base sobre `restante`  // caronas no caminho contam
+      para cada par embarcado (fo, fd, q):
+        estado.held += q;  restante[fo, fd] -= q
+      cria estado[bus] = (par travado o,d; rota base; held;
+                          tempo do trecho; pico)
+    SE EXPAND:
+      estado.rota = rota_teste; estado.tempo = tempo; estado.pico = pico
+      para cada (o, d, q) do claim:
+        estado.held += q;  restante[o, d] -= q
+    rodadas += 1;  vitorias[bus] += 1
+
+  SE ninguem commitou: PARA
+
+FIM DO LOOP QUANDO
+------------------
+- restante zerou, ou
+- estourou max_rounds, ou
+- nenhum onibus propos nada, ou
+- ninguem commitou.
+
+SAIDA
+-----
+- Um plano por onibus com soma(held) > 0:
+  (bus, rota, pax, tempo, pico, pax/min, pares, par travado o/d)
+- Estados com pax 0 sao descartados
+  (draft de score 0 que nunca pegou carona).
+- Resumo: rodadas (= commits), vitorias por bus,
+  pares e pax nao atendidos.
+
+OBSERVACOES IMPORTANTES
+-----------------------
+1. Draft aceita score 0; a expansao exige score > 0.
+2. Com score 0 para todo par viavel, todos propoem o mesmo
+   par mais proximo e so o menor bus.id commita por rodada,
+   sem abater demanda.
+3. Draft e expand concorrem na mesma rodada pelo mesmo
+   criterio de max score no grupo de conflito; a rodada
+   inteira planeja sobre a MESMA foto de `restante`.
+4. Nao existe deadhead: a rota nasce na origem do par travado
+   ([o, d] ou [o, P, d]); a origem do cenario apenas filtra as
+   origens permitidas do draft.
+5. DOBRADINHA (posicao nova da expansao): sobra demanda cand->o
+   (sair para a partida) -> o candidato entra como [o, cand, o, ...]
+   e a rota revisita a partida. Nao se aplica quando o == d.
+6. A chave de conflito do EXPAND declara o(s) no(s) realmente
+   inserido(s) + os pares do claim (antes era o penultimo no da
+   rota, o que gerava conflito espurio).
