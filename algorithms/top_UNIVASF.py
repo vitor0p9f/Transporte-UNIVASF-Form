@@ -30,8 +30,8 @@ from pathlib import Path
 import numpy as np
 
 from entities.bus import Bus
-from utils.demand import load_demand_matrix
-from utils.matrices import load_square_matrix
+from utils.instances import InstanceData, load_instance_data
+from utils.scenarios import parse_node_labels
 
 
 def pax_per_min(served_passengers: int, travel_time_minutes: int) -> float:
@@ -62,31 +62,6 @@ def marginal_pax_per_min(delta_passengers: int, delta_time_minutes: int) -> floa
     return delta_passengers / delta_time_minutes
 
 
-@dataclass
-class InstanceData:
-    """Matrices of one instance, indexed directly by node id."""
-
-    nodes: list[int]
-    distance: np.ndarray
-    time: np.ndarray
-    demand: np.ndarray
-
-
-def load_instance_data(instance_dir: str | Path, period: str) -> InstanceData:
-    """Load distance, time and demand matrices for one instance/period."""
-    instance_dir = Path(instance_dir)
-    nodes, distance = load_square_matrix(instance_dir / "distance.csv")
-    _, time = load_square_matrix(instance_dir / "time.csv", dtype=int)
-    _, demand = load_demand_matrix(instance_dir / "demand.csv", period=period)
-    return InstanceData(nodes=nodes, distance=distance, time=time, demand=demand)
-
-
-def run(scenario: dict, buses: list[Bus], root: str | Path) -> InstanceData:
-    """Load everything the greedy heuristics need for one scenario."""
-    instance_dir = Path(root) / "instances" / scenario["instance_id"]
-    return load_instance_data(instance_dir, period=scenario["period"])
-
-
 @dataclass(frozen=True)
 class BusPlan:
     """Resultado de um ônibus: rota final + o que ela atendeu."""
@@ -100,22 +75,6 @@ class BusPlan:
     served_pairs: tuple[tuple[int, int, int], ...] = ()
     origin: int | None = None  # par travado: esta origem (None = livre)
     destination: int | None = None  # par travado: este destino (None = livre)
-
-
-def parse_destination_labels(value: object) -> tuple[int, ...] | None:
-    """Parse '44;45;43' em tupla de destinos. Vazio/None → None (terminal livre)."""
-    if value is None:
-        return None
-    ids = [v.strip() for v in str(value).split(";") if v.strip()]
-    return tuple(int(v) for v in ids) or None
-
-
-def parse_origin_labels(value: object) -> tuple[int, ...] | None:
-    """Parse '43;44;45' em tupla de origens. Vazio/None → None (origem livre)."""
-    if value is None:
-        return None
-    ids = [v.strip() for v in str(value).split(";") if v.strip()]
-    return tuple(int(v) for v in ids) or None
 
 
 @dataclass(frozen=True)
@@ -170,8 +129,8 @@ def simulate_stops(
     n_legs = max(0, len(stops) - 1)
     leg_loads = [0] * n_legs
 
-    first_index: dict[str | int, int] = {}
-    last_index: dict[str | int, int] = {}
+    first_index: dict[int, int] = {}
+    last_index: dict[int, int] = {}
     for idx, node in enumerate(stops):
         first_index.setdefault(node, idx)
         last_index[node] = idx
@@ -468,10 +427,8 @@ def _best_demand_driven_insertion(
 def run_fleet(
     data: InstanceData,
     buses: list[Bus],
-    origin: int,
     time_limit_minutes: int,
     *,
-    max_workers: int | None = None,
     max_rounds: int | None = None,
     destinations: tuple[int, ...] | None = None,
     draft_origins: tuple[int, ...] | None = None,
@@ -484,11 +441,9 @@ def run_fleet(
     origens informadas (`draft_origins`, None = livre) e destinos informados
     (`destinations`, None = livre); com par propõe o passo guiado pela
     demanda (`_best_demand_driven_insertion`).
-    Tudo abate da demanda global. `max_workers` é ignorado e `origin` fica
-    sem uso: a rota nasce na origem do par (sem deslocamento vazio).
+    Tudo abate da demanda global. A rota nasce na origem do par: não há
+    deslocamento vazio e a origem do cenário não é usada como posição fixa.
     """
-    _ = max_workers  # sequencial por definição: sem threads
-    _ = origin  # sem deadhead: o ônibus nasce na origem do par travado
     if not buses:
         return [], _fleet_summary(data.demand.copy(), {}, 0)
     ids = [bus.id for bus in buses]
@@ -623,23 +578,23 @@ def solve_scenario(
     *,
     origin: int | None = None,
 ) -> tuple[InstanceData, list[BusPlan], FleetSummary]:
-    """Pipeline completo: carrega instância e resolve a frota."""
-    data = run(scenario, buses, root)
-    raw_origin = scenario.get("origin") if isinstance(scenario, dict) else None
-    origins = parse_origin_labels(raw_origin)
-    if origin is None and origins:
-        origin = origins[0]
-    start = origin if origin is not None else min(data.nodes)
-    if origins:
-        draft_origins = origins
-    elif origin is not None:
+    """Pipeline completo: carrega instância e resolve a frota.
+
+    As origens permitidas do draft vêm da coluna ``origin`` do cenário
+    (vazio = livre); o parâmetro `origin` sobrescreve o cenário e força uma
+    única origem permitida, para experimentos.
+    """
+    data = load_instance_data(
+        Path(root) / "instances" / scenario["instance_id"], period=scenario["period"]
+    )
+    draft_origins = parse_node_labels(scenario.get("origin"))
+    if origin is not None:
         draft_origins = (origin,)
-    else:
-        draft_origins = None
-    raw_dest = scenario.get("destination_labels") if isinstance(scenario, dict) else None
     plans, summary = run_fleet(
-        data, buses, start, int(scenario["max_time_limit"]),
-        destinations=parse_destination_labels(raw_dest),
+        data,
+        buses,
+        int(scenario["max_time_limit"]),
+        destinations=parse_node_labels(scenario.get("destination_labels")),
         draft_origins=draft_origins,
     )
     return data, plans, summary

@@ -20,6 +20,19 @@ from pathlib import Path
 SCENARIO_FILES = ("scenarios.csv", "scenarios_base.csv")
 
 
+def parse_node_labels(value: object) -> tuple[int, ...] | None:
+    """Lê um campo de nós separados por ponto e vírgula, ex.: ``"43;44;45"``.
+
+    Usado pelas colunas ``origin`` (origens permitidas do draft) e
+    ``destination_labels`` (destinos permitidos do par). Campo vazio ou
+    ausente significa "livre" (None), não "nenhum nó".
+    """
+    if value is None:
+        return None
+    ids = [item.strip() for item in str(value).split(";") if item.strip()]
+    return tuple(int(item) for item in ids) or None
+
+
 def load_scenarios(
     root: str | Path,
     files: tuple[str, ...] = SCENARIO_FILES,

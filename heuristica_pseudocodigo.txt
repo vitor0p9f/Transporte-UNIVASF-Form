@@ -14,10 +14,10 @@ ENTRADAS
 - Matrizes: tempo[o,d], demanda[o,d], nos
   (distance.csv e carregada mas nao e usada pela heuristica)
 - Frota: lista de onibus (id, capacidade)
-- Origem do cenario e limite de tempo
+- Limite de tempo por onibus
 - Destinos permitidos (None = livre)
 - Origens permitidas p/ draft (None = livre)
-- max_rounds (None = sem teto); max_workers e ignorado (sequencial)
+- max_rounds (None = sem teto)
 
 SCORES
 ------
