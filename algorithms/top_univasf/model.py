@@ -16,17 +16,21 @@ ConflictKey = tuple[str, int] | tuple[str, int, int]
 
 @dataclass(frozen=True)
 class BusPlan:
-    """Resultado de um ônibus: rota final + o que ela atendeu."""
+    """Resultado de um ônibus: rota final + o que ela atendeu.
+
+    `origin`/`destination` são o par OD travado do ônibus: a rota nasce na
+    origem do par, então os dois estão sempre definidos.
+    """
 
     bus_id: int
+    origin: int
+    destination: int
     stops: StopSequence
     served_passengers: int
     travel_time_minutes: int
     peak_load: int
     score: float
     served_pairs: tuple[ServedPair, ...] = ()
-    origin: int | None = None  # par travado: esta origem (None = livre)
-    destination: int | None = None  # par travado: este destino (None = livre)
 
 
 @dataclass(frozen=True)

@@ -1,117 +1,170 @@
-"""Roda todos os cenários e grava os resultados num .md."""
+"""Roda todos os cenários e grava os resultados num .md.
+
+Cada cenário roda uma única vez: o resultado alimenta tanto a tabela-resumo
+quanto o detalhe (rotas, pares atendidos, ônibus ociosos). A renderização em
+si vem de `reporting`, o mesmo módulo usado pelo `main.py`.
+"""
 
 import sys
 import time
-from collections import Counter
-from datetime import datetime, timezone
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-OUT = ROOT / "results.md"
 
-from algorithms.top_univasf import solve_scenario
+import reporting
+from algorithms.top_univasf import (
+    BusPlan,
+    FleetSummary,
+    InstanceData,
+    solve_scenario,
+)
+from entities.bus import Bus
 from utils.fleet import load_fleet, parse_fleet_ids
 from utils.scenarios import load_scenarios
 from utils.seed import DEFAULT_SEED
 
+OUT = ROOT / "results.md"
+#: Cenários que usam a instância `base` são fixos, não sorteados.
+FIXED_INSTANCE = "base"
+
+
+@dataclass
+class ScenarioRun:
+    """Tudo o que um cenário produziu, inclusive quando ele falhou."""
+
+    scenario: dict
+    buses: list[Bus]
+    elapsed: float
+    data: InstanceData | None = None
+    plans: list[BusPlan] = field(default_factory=list)
+    summary: FleetSummary | None = None
+    error: str = ""
+
+    @property
+    def scenario_id(self) -> str:
+        return self.scenario["scenario_id"]
+
+
+def run_scenario(scenario: dict) -> ScenarioRun:
+    """Roda um cenário e registra tempo, planos e resumo (ou o erro)."""
+    buses = load_fleet(ROOT / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"]))
+    start = time.monotonic()
+    try:
+        data, plans, summary = solve_scenario(scenario, buses, ROOT)
+        error = ""
+    except Exception as exc:  # noqa: BLE001 — registra e segue para o próximo
+        data, plans, summary, error = None, [], None, f"{type(exc).__name__}: {exc}"
+    elapsed = time.monotonic() - start
+    return ScenarioRun(
+        scenario=scenario,
+        buses=buses,
+        elapsed=elapsed,
+        data=data,
+        plans=plans,
+        summary=summary,
+        error=error,
+    )
+
+
+def _scenario_heading(run: ScenarioRun) -> str:
+    scenario = run.scenario
+    origin = f" | origem {scenario['origin']}" if scenario.get("origin") else ""
+    destinations = (
+        f" -> [{scenario['destination_labels']}]"
+        if scenario.get("destination_labels")
+        else ""
+    )
+    return (
+        f"## Cenário {scenario['scenario_id']} — {scenario['instance_id']} / "
+        f"{scenario['period']} (frota [{scenario['fleet_bus_ids']}], "
+        f"limite {scenario['max_time_limit']} min{origin}{destinations})"
+    )
+
+
+def _summary_row(run: ScenarioRun) -> str:
+    scenario = run.scenario
+    prefix = (
+        f"| {scenario['scenario_id']} | {scenario['instance_id']} | {scenario['period']} | "
+        f"[{scenario['fleet_bus_ids']}] | {scenario['max_time_limit']} | "
+    )
+    if run.error:
+        return prefix + f"ERRO | — | — | — | {run.elapsed:.1f} |"
+    served, total, percentage = reporting.served_ratio(run.data, run.plans)
+    return (
+        prefix
+        + f"{len(run.plans)}/{len(run.buses)} | {served}/{total} | {percentage:.0f}% | "
+        + f"{run.summary.rounds} | {run.elapsed:.1f} |"
+    )
+
+
+def _detail_lines(run: ScenarioRun) -> list[str]:
+    """Detalhe de um cenário: cabeçalho, tabela de ônibus e rotas."""
+    lines = [_scenario_heading(run), ""]
+    if run.error:
+        return lines + [f"ERRO após {run.elapsed:.1f}s: `{run.error}`", ""]
+
+    scenario = run.scenario
+    capacity = {bus.id: bus.passenger_capacity for bus in run.buses}
+    lines.append(
+        f"{reporting.fleet_totals_line(run.plans, run.buses, run.data)} · "
+        f"{run.summary.rounds} rodadas · {run.elapsed:.1f}s"
+    )
+    lines.append("")
+    lines.append("| " + " | ".join(reporting.PLAN_HEADERS) + " |")
+    lines.append("|" + "---|" * len(reporting.PLAN_HEADERS))
+    for plan in run.plans:
+        cells = reporting.plan_cells(
+            plan, scenario["max_time_limit"], capacity.get(plan.bus_id)
+        )
+        lines.append("| " + " | ".join(cells) + " |")
+    lines.append("")
+
+    for line in (
+        reporting.served_pairs_line(run.plans),
+        _idle_line(run),
+        reporting.unserved_line(run.summary),
+    ):
+        if line:
+            lines += [line, ""]
+
+    lines += ["Rotas:", "", "```"]
+    lines += [reporting.route_line(plan) for plan in run.plans]
+    lines += ["```", ""]
+    return lines
+
+
+def _idle_line(run: ScenarioRun) -> str:
+    idle = reporting.idle_bus_ids(run.buses, run.plans)
+    return f"Ociosos ({len(idle)}): {idle}" if idle else ""
+
+
+def render(runs: list[ScenarioRun], generated_at: str) -> list[str]:
+    """Relatório completo: cabeçalho, tabela-resumo e detalhe por cenário."""
+    fixed = sum(1 for run in runs if run.scenario["instance_id"] == FIXED_INSTANCE)
+    lines = [
+        "# Resultados — todos os cenários (TOP UNIVASF)",
+        "",
+        f"Gerado em {generated_at} · {len(runs)} cenários ({fixed} fixos de base) · "
+        + f"seed de geração {DEFAULT_SEED} (utils/seed.py).",
+        "",
+        "| cenário | instância | período | frota | limite | usados | pax | % | rounds | exec (s) |",
+        "|---|---|---|---|---|---|---|---|---|---|",
+    ]
+    lines += [_summary_row(run) for run in runs]
+    lines.append("")
+    for run in runs:
+        lines += _detail_lines(run)
+    return lines
+
 
 def main() -> None:
     scenarios = load_scenarios(ROOT)
-    lines: list[str] = []
-    now = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M %Z")
-    lines.append("# Resultados — todos os cenários (TOP UNIVASF)")
-    lines.append("")
-    fixed = sum(1 for s in scenarios if s["instance_id"] == "base")
-    lines.append(
-        f"Gerado em {now} · {len(scenarios)} cenários ({fixed} fixos de base) · "
-        f"seed de geração {DEFAULT_SEED} (utils/seed.py)."
-    )
-    lines.append("")
-    lines.append("| cenário | instância | período | frota | limite | usados | pax | % | rounds | exec (s) |")
-    lines.append("|---|---|---|---|---|---|---|---|---|---|")
-
-    for s in scenarios:
-        buses = load_fleet(ROOT / "fleet.csv", parse_fleet_ids(s["fleet_bus_ids"]))
-        start = time.monotonic()
-        try:
-            data, plans, summary = solve_scenario(s, buses, ROOT)
-            error = ""
-        except Exception as exc:  # noqa: BLE001 — registra e segue
-            data, plans, summary, error = None, [], None, f"{type(exc).__name__}: {exc}"
-        elapsed = time.monotonic() - start
-        if error:
-            lines.append(f"| {s['scenario_id']} | {s['instance_id']} | {s['period']} | "
-                         f"[{s['fleet_bus_ids']}] | {s['max_time_limit']} | ERRO | — | — | — | {elapsed:.1f} |")
-        else:
-            total = int(data.demand.sum())
-            served = sum(p.served_passengers for p in plans)
-            pct = 100.0 * served / total if total else 0.0
-            lines.append(f"| {s['scenario_id']} | {s['instance_id']} | {s['period']} | "
-                         f"[{s['fleet_bus_ids']}] | {s['max_time_limit']} | {len(plans)}/{len(buses)} | "
-                         f"{served}/{total} | {pct:.0f}% | {summary.rounds} | {elapsed:.1f} |")
-
-    lines.append("")
-    for s in scenarios:
-        buses = load_fleet(ROOT / "fleet.csv", parse_fleet_ids(s["fleet_bus_ids"]))
-        cap = {b.id: b.passenger_capacity for b in buses}
-        start = time.monotonic()
-        try:
-            data, plans, summary = solve_scenario(s, buses, ROOT)
-            error = ""
-        except Exception as exc:  # noqa: BLE001
-            data, plans, summary, error = None, [], None, f"{type(exc).__name__}: {exc}"
-        elapsed = time.monotonic() - start
-        origin_txt = f" | origem {s['origin']}" if s.get("origin") else ""
-        dest_txt = f" -> [{s['destination_labels']}]" if s.get("destination_labels") else ""
-        lines.append(f"## Cenário {s['scenario_id']} — {s['instance_id']} / {s['period']} "
-                     f"(frota [{s['fleet_bus_ids']}], limite {s['max_time_limit']} min{origin_txt}{dest_txt})")
-        lines.append("")
-        if error:
-            lines.append(f"ERRO após {elapsed:.1f}s: `{error}`")
-            lines.append("")
-            continue
-        total = int(data.demand.sum())
-        served = sum(p.served_passengers for p in plans)
-        pct = 100.0 * served / total if total else 0.0
-        lines.append(f"{len(plans)} de {len(buses)} ônibus · {served}/{total} pax ({pct:.0f}%) · "
-                     f"{summary.rounds} rodadas · {elapsed:.1f}s")
-        lines.append("")
-        lines.append("| bus | paradas | pax | tempo | pico | pax/min | origem | destino |")
-        lines.append("|---|---|---|---|---|---|---|---|")
-        for p in plans:
-            org = str(p.stops[0])
-            dst = str(p.destination) if p.destination is not None else "livre"
-            lines.append(f"| {p.bus_id} | {len(p.stops)} | {p.served_passengers} | "
-                         f"{p.travel_time_minutes}/{s['max_time_limit']} | {p.peak_load}/{cap.get(p.bus_id, '?')} | "
-                         f"{p.score:.2f} | {org} | {dst} |")
-        lines.append("")
-        agg: Counter = Counter()
-        for p in plans:
-            for o, d, q in p.served_pairs:
-                agg[(o, d)] += q
-        if agg:
-            lines.append("Pares mais atendidos: " + ", ".join(
-                f"{o}→{d}={q}" for (o, d), q in agg.most_common(5)))
-            lines.append("")
-        idle = [b.id for b in buses if b.id not in {p.bus_id for p in plans}]
-        if idle:
-            lines.append(f"Ociosos ({len(idle)}): {idle}")
-            lines.append("")
-        if summary.unserved_pairs:
-            lines.append(f"Não atendidos ({summary.unserved_passengers} pax): " + ", ".join(
-                f"{o}→{d}={q}" for o, d, q in summary.unserved_pairs[:8]))
-            lines.append("")
-        lines.append("Rotas:")
-        lines.append("")
-        lines.append("```")
-        for p in plans:
-            lines.append(f"bus {p.bus_id} ({p.stops[0]} → {p.destination}): "
-                         + " -> ".join(map(str, p.stops)))
-        lines.append("```")
-        lines.append("")
-
-    OUT.write_text("\n".join(lines), encoding="utf-8")
+    runs = [run_scenario(scenario) for scenario in scenarios]
+    generated_at = datetime.now(UTC).astimezone().strftime("%Y-%m-%d %H:%M %Z")
+    OUT.write_text("\n".join(render(runs, generated_at)), encoding="utf-8")
     print(f"OK: {OUT} ({len(scenarios)} cenários)")
 
 
