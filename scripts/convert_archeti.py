@@ -68,6 +68,10 @@ SCENARIO_FIELDS = [
     "max_time_limit",
     "diesel_price_per_liter",
     "driver_hourly_rate",
+    # Mantidas (vazias) para não desalinhar as linhas de scenarios.csv, que
+    # passou a ter origem/destino possíveis gerados por generate_scenarios.py.
+    "origin",
+    "destination_labels",
 ]
 
 
