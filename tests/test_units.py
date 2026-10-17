@@ -15,7 +15,11 @@ from algorithms.top_univasf.scoring import (
     od_pair_score,
     pax_per_min,
 )
-from algorithms.top_univasf.simulation import simulate_stops, stretch_passengers
+from algorithms.top_univasf.simulation import (
+    board_greedily,
+    simulate_stops,
+    stretch_passengers,
+)
 from entities.bus import Bus
 
 
@@ -127,14 +131,30 @@ class TestSimulateStops:
         ).passengers
 
     def test_draft_fast_path_diverges_only_on_disjoint_repeats(self):
-        """Documented divergence: `stretch_passengers` skips the local demand
-        copy, so a pair reachable twice with disjoint leg ranges (1->2 at
+        """Documented divergence: `stretch_passengers` skips the demand copy,
+        so a pair reachable twice with disjoint leg ranges (1->2 at
         positions 0->1 and 2->3) boards once per occurrence instead of once
         in total. No draft shape can produce that, and the fast path is never
         called on expansion routes.
         """
         data = make_data(demand={(1, 2): 5}, time={(1, 2): 5})
         stops = (1, 2, 1, 2)
+        assert stretch_passengers(stops, 5, data.demand) == 10
+        assert simulate_stops(data, stops, 5, data.demand).passengers == 5
+
+    def test_shared_core_flag_is_the_only_difference(self):
+        """Both entry points call board_greedily; only deduplicate_pairs differs."""
+        data = make_data(demand={(1, 2): 5}, time={(1, 2): 5})
+        stops = (1, 2, 1, 2)
+
+        with_duplicates, _ = board_greedily(
+            stops, 5, data.demand, [0] * (len(stops) - 1), deduplicate_pairs=False
+        )
+        without_duplicates, served = board_greedily(
+            stops, 5, data.demand, [0] * (len(stops) - 1), deduplicate_pairs=True
+        )
+        assert with_duplicates == [(1, 2, 5), (1, 2, 5)]
+        assert (without_duplicates, served) == ([(1, 2, 5)], 5)
         assert stretch_passengers(stops, 5, data.demand) == 10
         assert simulate_stops(data, stops, 5, data.demand).passengers == 5
 

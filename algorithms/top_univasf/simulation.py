@@ -12,6 +12,57 @@ from algorithms.top_univasf.model import (
 from utils.instances import InstanceData
 
 
+def board_greedily(
+    stops: StopSequence,
+    capacity: int,
+    remaining: np.ndarray,
+    leg_loads: list[int],
+    *,
+    deduplicate_pairs: bool,
+) -> tuple[list[ServedPair], int]:
+    """Embarque guloso com trava de capacidade, na ordem da rota.
+
+    Ordem de avaliação: origem crescente, depois destino. Para cada par
+    (o, d) embarca `min(demanda, assentos livres no trecho mais cheio entre
+    o e d)` e ocupa os trechos percorridos. `leg_loads` é o estado de
+    ocupação por trecho e já pode vir preenchido com assentos que o ônibus
+    ocupa por demanda já reivindicada; é atualizado no lugar.
+
+    `deduplicate_pairs` abate do par o que já subiu nesta mesma chamada —
+    uma rota com nó repetido nunca embarca um par duas vezes além do que
+    existe. Desligar é a versão rápida do draft (ver `stretch_passengers`).
+
+    Returns:
+        (pairs, passengers), com os pares embarcados agora, em ordem de
+        embarque.
+    """
+    boarded: dict[tuple[int, int], int] = {}
+    pairs: list[ServedPair] = []
+    served = 0
+    for origin_index, origin in enumerate(stops):
+        for destination_index in range(origin_index + 1, len(stops)):
+            destination = stops[destination_index]
+            quantity = int(remaining[origin, destination])
+            if deduplicate_pairs:
+                quantity -= boarded.get((origin, destination), 0)
+            if quantity <= 0:
+                continue
+            peak_in_range = max(leg_loads[origin_index:destination_index], default=0)
+            room = capacity - peak_in_range
+            if room <= 0:
+                continue
+            taken = min(quantity, room)
+            for leg in range(origin_index, destination_index):
+                leg_loads[leg] += taken
+            if deduplicate_pairs:
+                boarded[(origin, destination)] = taken + boarded.get(
+                    (origin, destination), 0
+                )
+            pairs.append((origin, destination, taken))
+            served += taken
+    return pairs, served
+
+
 def simulate_stops(
     data: InstanceData,
     stops: StopSequence,
@@ -29,51 +80,27 @@ def simulate_stops(
     """
     stops = tuple(stops)
     travel = sum(int(data.time[a, b]) for a, b in itertools.pairwise(stops))
-    position = {node: i for i, node in enumerate(stops)}
-    n_legs = max(0, len(stops) - 1)
-    leg_loads = [0] * n_legs
-
-    first_index: dict[int, int] = {}
-    last_index: dict[int, int] = {}
-    for idx, node in enumerate(stops):
-        first_index.setdefault(node, idx)
-        last_index[node] = idx
+    leg_loads = [0] * max(0, len(stops) - 1)
 
     if claimed:
-        for (origin, destination), qty in sorted(claimed.items()):
-            if qty <= 0 or origin == destination:
+        first_index: dict[int, int] = {}
+        last_index: dict[int, int] = {}
+        for index, node in enumerate(stops):
+            first_index.setdefault(node, index)
+            last_index[node] = index
+        for (origin, destination), quantity in sorted(claimed.items()):
+            if quantity <= 0 or origin == destination:
                 continue
-            i = first_index.get(origin, -1)
-            j = last_index.get(destination, -1)
-            if i < 0 or j < 0 or i >= j:
+            start = first_index.get(origin, -1)
+            end = last_index.get(destination, -1)
+            if start < 0 or end < 0 or start >= end:
                 continue
-            for leg in range(i, j):
-                leg_loads[leg] += qty
+            for leg in range(start, end):
+                leg_loads[leg] += quantity
 
-    boardable: list[tuple[int, int, int, int]] = []
-    for i, origin in enumerate(stops):
-        for destination in stops[i + 1:]:
-            if int(remaining[origin, destination]) > 0:
-                boardable.append((i, position[destination], origin, destination))
-    boardable.sort(key=lambda item: (item[0], item[1]))
-
-    left = remaining.copy()  # abate local: 2ª passagem não reembarca o mesmo par
-    pairs: list[ServedPair] = []
-    served = 0
-    for origin_idx, dest_idx, origin, destination in boardable:
-        qty = int(left[origin, destination])
-        if qty <= 0:
-            continue
-        peak_in_range = max(leg_loads[origin_idx:dest_idx], default=0)
-        boarded = min(qty, max(0, capacity - peak_in_range))
-        if boarded <= 0:
-            continue
-        for leg in range(origin_idx, dest_idx):
-            leg_loads[leg] += boarded
-        left[origin, destination] -= boarded
-        pairs.append((origin, destination, boarded))
-        served += boarded
-
+    pairs, served = board_greedily(
+        stops, capacity, remaining, leg_loads, deduplicate_pairs=True
+    )
     return BoardingOutcome(
         passengers=served,
         travel_minutes=travel,
@@ -99,28 +126,17 @@ def stretch_passengers(
 ) -> int:
     """Embarques de um trecho curto do draft, com trava de capacidade.
 
-    Mesma conta gulosa de `simulate_stops` (origem crescente, depois
-    destino), mas sem copiar a matriz de demanda: o draft avalia milhares
-    de trechos minúsculos por rodada.
+    Mesmo `board_greedily` de `simulate_stops`, sem deduplicar pares e sem
+    copiar a matriz de demanda: o draft avalia milhares de trechos
+    minúsculos por rodada.
 
     As formas que o draft avalia ([o, d], [o, P, d] e [o, P, o]) nunca
-    repetem um par OD, então esta versão rápida e `simulate_stops` dão o
+    repetem um par OD, então aqui a versão rápida e `simulate_stops` dão o
     mesmo embarque (ver tests/test_units.py). Rota com nó repetido em
     posições disjuntas só existe na expansão, que usa `simulate_stops`.
     """
-    n = len(stops)
-    leg_loads = [0] * (n - 1)
-    served = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            qty = int(remaining[stops[i], stops[j]])
-            if qty <= 0:
-                continue
-            room = capacity - max(leg_loads[i:j], default=0)
-            if room <= 0:
-                continue
-            boarded = min(qty, room)
-            for leg in range(i, j):
-                leg_loads[leg] += boarded
-            served += boarded
+    leg_loads = [0] * max(0, len(stops) - 1)
+    _, served = board_greedily(
+        stops, capacity, remaining, leg_loads, deduplicate_pairs=False
+    )
     return served
