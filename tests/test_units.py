@@ -3,18 +3,19 @@
 import numpy as np
 import pytest
 
-from algorithms.top_UNIVASF import (
+from algorithms.top_univasf import (
     DraftProposal,
     ExpansionProposal,
     InstanceData,
     WorkState,
-    _conflict_groups,
-    _stretch_passengers,
+)
+from algorithms.top_univasf.conflict import conflict_groups
+from algorithms.top_univasf.scoring import (
     marginal_pax_per_min,
     od_pair_score,
     pax_per_min,
-    simulate_stops,
 )
+from algorithms.top_univasf.simulation import simulate_stops, stretch_passengers
 from entities.bus import Bus
 
 
@@ -121,12 +122,12 @@ class TestSimulateStops:
             },
         )
         remaining = data.demand.copy()
-        assert _stretch_passengers(stops, 5, remaining) == simulate_stops(
+        assert stretch_passengers(stops, 5, remaining) == simulate_stops(
             data, stops, 5, remaining
         ).passengers
 
     def test_draft_fast_path_diverges_only_on_disjoint_repeats(self):
-        """Documented divergence: `_stretch_passengers` skips the local demand
+        """Documented divergence: `stretch_passengers` skips the local demand
         copy, so a pair reachable twice with disjoint leg ranges (1->2 at
         positions 0->1 and 2->3) boards once per occurrence instead of once
         in total. No draft shape can produce that, and the fast path is never
@@ -134,7 +135,7 @@ class TestSimulateStops:
         """
         data = make_data(demand={(1, 2): 5}, time={(1, 2): 5})
         stops = (1, 2, 1, 2)
-        assert _stretch_passengers(stops, 5, data.demand) == 10
+        assert stretch_passengers(stops, 5, data.demand) == 10
         assert simulate_stops(data, stops, 5, data.demand).passengers == 5
 
 
@@ -209,11 +210,11 @@ class TestProposals:
 
 class TestConflictGroups:
     def test_disjoint_keys_stay_separate(self):
-        groups = _conflict_groups([[("point", 1)], [("point", 2)]])
+        groups = conflict_groups([[("point", 1)], [("point", 2)]])
         assert sorted(sorted(group) for group in groups) == [[0], [1]]
 
     def test_shared_key_merges_transitively(self):
-        groups = _conflict_groups(
+        groups = conflict_groups(
             [
                 [("point", 1)],
                 [("point", 1), ("point", 2)],
@@ -224,4 +225,4 @@ class TestConflictGroups:
         assert sorted(sorted(group) for group in groups) == [[0, 1, 2], [3]]
 
     def test_no_keys_means_no_group(self):
-        assert _conflict_groups([]) == []
+        assert conflict_groups([]) == []

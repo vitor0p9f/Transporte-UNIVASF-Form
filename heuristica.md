@@ -1,6 +1,6 @@
 # Heurística TOP UNIVASF — visão geral
 
-O código é a fonte da verdade (`algorithms/top_UNIVASF.py`); o passo a passo
+O código é a fonte da verdade (`algorithms/top_univasf/`); o passo a passo
 completo, em pseudocódigo, está em `heuristica_pseudocodigo.txt`.
 
 ## 1. Fluxo principal (a rodada)

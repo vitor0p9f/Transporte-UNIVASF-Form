@@ -3,7 +3,7 @@
 import time
 from pathlib import Path
 
-from algorithms.top_UNIVASF import solve_scenario
+from algorithms.top_univasf import solve_scenario
 from utils.fleet import load_fleet, parse_fleet_ids
 from utils.scenarios import load_scenarios
 

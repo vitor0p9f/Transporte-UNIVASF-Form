@@ -1,7 +1,7 @@
 HEURISTICA GREEDY OD COM TRAVA DE PAR (TOP UNIVASF)
 ==================================================
 
-Espelha algorithms/top_UNIVASF.py (funcao run_fleet).
+Espelha algorithms/top_univasf/ (rodada em fleet.py: run_fleet).
 Visao em diagrama: heuristica.md.
 
 OBJETIVO

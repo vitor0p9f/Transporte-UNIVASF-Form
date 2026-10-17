@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 OUT = ROOT / "results.md"
 
-from algorithms.top_UNIVASF import solve_scenario
+from algorithms.top_univasf import solve_scenario
 from utils.fleet import load_fleet, parse_fleet_ids
 from utils.scenarios import load_scenarios
 from utils.seed import DEFAULT_SEED
