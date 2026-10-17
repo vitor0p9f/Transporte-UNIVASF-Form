@@ -7,7 +7,7 @@ from algorithms.top_univasf.model import (
     StopSequence,
 )
 from algorithms.top_univasf.scoring import od_pair_score
-from algorithms.top_univasf.simulation import stretch_passengers
+from algorithms.top_univasf.simulation import segment_passengers
 from entities.bus import Bus
 from utils.instances import InstanceData
 
@@ -21,17 +21,16 @@ def best_pair_for_bus(
     draft_origins: tuple[int, ...] | None = None,
     cache: dict[tuple, int] | None = None,
 ) -> DraftProposal | None:
-    """Melhor par OD de um ônibus, já como proposta de rota base.
+    """Best OD pair for one bus, already as a base-route proposal.
 
-    Para cada par candidato (o, d) — `draft_origins`/`destinations` filtram
-    as seleções possíveis — busca no grafo de demanda os pontos P com
-    demanda `o→P` ou `P→d` e avalia o trecho `[o, P, d]`, além da opção
-    direta `[o, d]`. Os embarques respeitam a capacidade na ordem dos
-    trechos (quem desce em P libera assento) e o score é
-    `servidos / (tempo[o, P] + tempo[P, d])`; vale o P de maior score. O par
-    NÃO precisa ter demanda direta `o→d`. A proposta já traz a rota
-    pontuada: o ônibus nasce na origem do par (sem deslocamento vazio).
-    None se nada viável.
+    For every candidate pair (o, d) -- `draft_origins`/`destinations` filter the
+    selections available -- it looks in the demand graph for the points P with
+    demand `o->P` or `P->d` and scores the route [o, P, d] plus the direct
+    option [o, d]. Boarding respects capacity in route order (whoever alights at
+    P frees a seat) and the score is `servable / (time[o, P] + time[P, d])`; the
+    P with the highest score wins. The pair does NOT need direct demand `o->d`.
+    The proposal already carries the scored route: the bus is born at the pair
+    origin, so there is no deadhead. None when nothing is viable.
     """
     capacity = bus.passenger_capacity
     time = data.time
@@ -59,7 +58,7 @@ def best_pair_for_bus(
             if dest_set is not None and d not in dest_set:
                 continue
             if o == d and int(remaining[o, d]) > 0:
-                continue  # self-loop nunca embarca
+                continue  # a self-loop never boards
             direct_time = int(time[o, d])
             if direct_time < 0:
                 continue
@@ -67,8 +66,8 @@ def best_pair_for_bus(
             points.update(in_demand[d])
             points.discard(o)
             points.discard(d)
-            # Candidate stretches: the direct pair first (margin -1), then
-            # every demand point P, in node order.
+            # Candidate routes: the direct pair first (margin -1), then every
+            # demand point P, in node order.
             options: list[tuple[int, StopSequence, int]] = [(-1, (o, d), direct_time)]
             for p in sorted(points):
                 first_leg, second_leg = int(time[o, p]), int(time[p, d])
@@ -81,15 +80,15 @@ def best_pair_for_bus(
                 key_cache = (capacity, stops)
                 served = cache.get(key_cache)
                 if served is None:
-                    served = stretch_passengers(stops, capacity, remaining)
+                    served = segment_passengers(stops, capacity, remaining)
                     cache[key_cache] = served
                 if pair_time == 0 and served > 0:
-                    continue  # sem tempo p/ servir
+                    continue  # no time to serve it
                 score = od_pair_score(served, pair_time)
                 if score < 0:
                     continue
-                # Empate de score: mais pax, trecho mais curto, menor (o, d)
-                # e, por fim, o P avaliado primeiro (o direto perde).
+                # Score tie: more passengers, shorter route, lower (o, d) and,
+                # last, the P evaluated first (the direct option loses).
                 key = (score, served, -pair_time, -o, -d, -margin)
                 if best_key is None or key > best_key:
                     best_key = key

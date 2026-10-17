@@ -15,7 +15,7 @@ from algorithms.top_univasf.model import (
     WorkState,
     fleet_summary,
 )
-from algorithms.top_univasf.scoring import pax_per_min
+from algorithms.top_univasf.scoring import passengers_per_minute
 from algorithms.top_univasf.simulation import simulate_stops
 from entities.bus import Bus
 from utils.instances import InstanceData
@@ -30,16 +30,17 @@ def run_fleet(
     destinations: tuple[int, ...] | None = None,
     draft_origins: tuple[int, ...] | None = None,
 ) -> tuple[list[BusPlan], FleetSummary]:
-    """Loop único: todo ônibus propõe o melhor passo; sem conflito comitam
-    juntos, em conflito só o maior score age.
+    """Single loop: every bus proposes its best step; without a conflict they
+    commit together, in a conflict only the highest score acts.
 
-    Sem par travado propõe a rota base do par (score = embarques do trecho
-    `[o, P, d]` / tempo do trecho — ver `best_pair_for_bus`), só entre
-    origens informadas (`draft_origins`, None = livre) e destinos informados
-    (`destinations`, None = livre); com par propõe o passo guiado pela
-    demanda (`best_demand_driven_insertion`).
-    Tudo abate da demanda global. A rota nasce na origem do par: não há
-    deslocamento vazio e a origem do cenário não é usada como posição fixa.
+    A bus without a locked pair proposes the pair's base route (score =
+    boardings of the route [o, P, d] / route time -- see `best_pair_for_bus`),
+    restricted to the informed origins (`draft_origins`, None = free) and
+    destinations (`destinations`, None = free); with a locked pair it proposes
+    the demand-driven step (`best_demand_driven_insertion`).
+    Everything is charged against the global demand. The route is born at the
+    pair origin: there is no deadhead, and the scenario origin is not used as a
+    fixed position.
     """
     if not buses:
         return [], fleet_summary(data.demand.copy(), {}, 0)
@@ -91,10 +92,10 @@ def collect_proposals(
     destinations: tuple[int, ...] | None = None,
     draft_origins: tuple[int, ...] | None = None,
 ) -> list[Proposal]:
-    """Todo ônibus propõe um passo sobre a MESMA foto de `remaining`.
+    """Every bus proposes one step over the SAME snapshot of `remaining`.
 
-    Ônibus sem par travado propõe a rota base do par; com par travado,
-    propõe a inserção guiada pela demanda. Ninguém abate demanda aqui.
+    A bus without a locked pair proposes the pair's base route; with a locked
+    pair it proposes the demand-driven insertion. Nobody charges demand here.
     """
     proposals: list[Proposal] = []
     draft_cache: dict[tuple, int] = {}
@@ -122,10 +123,10 @@ def collect_proposals(
 
 
 def resolve_conflicts(proposals: list[Proposal]) -> list[int]:
-    """Índices que comitam nesta rodada, em ordem crescente.
+    """Indices that commit this round, in increasing order.
 
-    Propostas que compartilham ponto ou par OD caem no mesmo grupo (direto
-    ou por transitividade) e só a de maior score age.
+    Proposals sharing a point or an OD pair fall into the same group (directly
+    or by transitivity) and only the highest score acts.
     """
     return sorted(
         max(group, key=lambda index: proposals[index].tie_break_key())
@@ -138,7 +139,7 @@ def _claim_demand(
     claimed: dict[tuple[int, int], int],
     pairs: tuple[ServedPair, ...],
 ) -> None:
-    """Abate da demanda global o que foi embarcado e acumula no estado."""
+    """Charge the global demand for what was boarded and accumulate it."""
     for origin, destination, quantity in pairs:
         claimed[(origin, destination)] = claimed.get((origin, destination), 0) + quantity
         remaining[origin, destination] = max(
@@ -153,11 +154,11 @@ def commit_draft(
     state_by_id: dict[int, WorkState],
     wins: dict[int, int],
 ) -> None:
-    """Trava o par do ônibus e cria o estado com a rota base.
+    """Lock the bus's pair and create its state with the base route.
 
-    A rota base já é [o, P, d]: re-simula sobre a demanda atual para abater
-    exatamente o que ela embarca com trava de capacidade (caronas
-    incluídas).
+    The base route already is [o, P, d]: re-simulating it over the current
+    demand charges exactly what it boards under the capacity lock (hitchhikers
+    included).
     """
     outcome = simulate_stops(
         data, proposal.stops, proposal.bus.passenger_capacity, remaining
@@ -181,7 +182,7 @@ def commit_expansion(
     remaining: np.ndarray,
     wins: dict[int, int],
 ) -> None:
-    """Aceita a inserção no estado do ônibus e abate o que ela pegou."""
+    """Accept the insertion into the bus state and charge what it picked up."""
     state = proposal.state
     state.stops = list(proposal.stops)
     state.travel_time_minutes = proposal.travel_time_minutes
@@ -191,26 +192,28 @@ def commit_expansion(
 
 
 def build_plans(buses: list[Bus], state_by_id: dict[int, WorkState]) -> list[BusPlan]:
-    """Um plano por ônibus que atendeu alguém, em ordem de id.
+    """One plan per bus that served somebody, ordered by bus id.
 
-    O draft de score 0 que nunca pegou carona vira estado com pax 0 e é
-    descartado: plano é o que de fato atendeu passageiro.
+    A zero-score draft that never picked up a hitchhiker becomes a state with 0
+    passengers and is dropped: a plan is what actually served a passenger.
     """
     plans = [
         BusPlan(
             bus_id=state.bus.id,
+            origin=state.origin,
+            destination=state.destination,
             stops=tuple(state.stops),
             served_passengers=state.served_passengers,
             travel_time_minutes=state.travel_time_minutes,
             peak_load=state.peak_load,
-            score=pax_per_min(state.served_passengers, state.travel_time_minutes),
+            score=passengers_per_minute(
+                state.served_passengers, state.travel_time_minutes
+            ),
             served_pairs=tuple(
                 (origin, destination, quantity)
                 for (origin, destination), quantity in sorted(state.claimed.items())
                 if quantity > 0
             ),
-            destination=state.destination,
-            origin=state.origin,
         )
         for state in (state_by_id[bus.id] for bus in buses if bus.id in state_by_id)
         if state.served_passengers > 0

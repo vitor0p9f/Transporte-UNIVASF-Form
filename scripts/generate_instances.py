@@ -1,24 +1,24 @@
-"""Gerador de instâncias sintéticas (distância, tempo e demanda).
+"""Synthetic instance generator (distance, time and demand).
 
-Duas formas, ambas reprodutíveis pela seed raiz (``utils/seed.py``):
+Two modes, both reproducible from the root seed (``utils/seed.py``):
 
-    synth (padrão)
-        Gera do zero, com valores aleatórios: n nós sorteados num box de
-        ~13 km, distância euclidiana, tempo = distância * ~2.2 min/km com
-        ruído U(0.9, 1.1) e demanda = ~0.2865 * n*(n-1) viagens espalhadas
-        em (origem, destino != origem, sub-período).
+    synth (default)
+        Builds from scratch with random values: n nodes sampled in a ~13 km
+        box, Euclidean distance, time = distance * ~2.2 min/km with U(0.9, 1.1)
+        noise and demand = ~0.2865 * n*(n-1) trips spread over
+        (origin, destination != origin, sub-period).
     perturb
-        Perturba ``instances/base``: distância/tempo * U(0.9, 1.1) e
-        demanda * U(0.8, 1.2).
+        Perturbs ``instances/base``: distance/time * U(0.9, 1.1) and
+        demand * U(0.8, 1.2).
 
-Grava ``instances/i001..i00N`` (reescrevendo os que já existirem, então rodar
-de novo com a mesma seed é idempotente) e atualiza as linhas correspondentes
-em ``instances/index.csv``. Instâncias ``i00N+k`` de execuções anteriores não
-são removidas — só as N primeiras são reescritas.
+Writes ``instances/i001..i00N`` (rewriting whatever already exists, so running
+it again with the same seed is idempotent) and updates the matching rows in
+``instances/index.csv``. Instances ``i00N+k`` from earlier runs are not removed
+-- only the first N are rewritten.
 
-Obs.: o experimento atual usa apenas as instâncias ``base`` + arqueti
-(``p1_*``); rodar este gerador cria instâncias sintéticas à parte, que
-passam a ser sorteadas por ``generate_scenarios.py``.
+Note: the current experiment uses only the ``base`` + arqueti instances
+(``p1_*``); running this generator creates separate synthetic instances, which
+``generate_scenarios.py`` then starts sampling.
 
 Usage:
   python scripts/generate_instances.py --num-instances 5 --seed 42
@@ -63,7 +63,7 @@ INDEX_FIELDS = [
 
 
 def read_base(base: Path):
-    """Lê o triplo do base uma única vez (usado no modo perturb)."""
+    """Read the base triple once (used by the perturb mode)."""
     nodes: list[int] | None = None
     values = {}
     for name in ("distance.csv", "time.csv"):
@@ -79,7 +79,7 @@ def read_base(base: Path):
 
 
 def perturb_values(values, rng: random.Random, low: float, high: float, fmt):
-    """Perturba uma matriz (diagonal e zeros preservados)."""
+    """Perturb a matrix (diagonal and zeros preserved)."""
     out = []
     for i, row in enumerate(values):
         out_row = []
@@ -93,7 +93,7 @@ def perturb_values(values, rng: random.Random, low: float, high: float, fmt):
 
 
 def perturb_demand(rows, rng: random.Random):
-    """Perturba as contagens de demanda (zeros continuam zero)."""
+    """Perturb the demand counts (zeros stay zero)."""
     out = []
     for row in rows:
         new_row = dict(row)
@@ -102,18 +102,18 @@ def perturb_demand(rows, rng: random.Random):
             if value == 0:
                 new_row[period] = 0
             else:
-                new_row[period] = max(0, int(round(value * rng.uniform(0.8, 1.2))))
+                new_row[period] = max(0, round(value * rng.uniform(0.8, 1.2)))
         out.append(new_row)
     return out
 
 
 def instance_ids(num_instances: int) -> list[str]:
-    """Ids determinísticos i001..i00N (reexecutar com a mesma seed reescreve)."""
+    """Deterministic ids i001..i00N (re-running with the same seed rewrites)."""
     return [f"i{k:03d}" for k in range(1, num_instances + 1)]
 
 
 def update_index(index_path: Path, new_rows: list[dict]) -> None:
-    """Substitui (ou acrescenta) linhas por instance_id, preservando a ordem."""
+    """Replace (or append) rows by instance_id, preserving the existing order."""
     rows = []
     if index_path.exists():
         with index_path.open(newline="", encoding="utf-8") as f:
@@ -132,38 +132,38 @@ def update_index(index_path: Path, new_rows: list[dict]) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Gera instâncias sintéticas.")
+    parser = argparse.ArgumentParser(description="Generate synthetic instances.")
     parser.add_argument(
-        "--num-instances", type=int, default=5, help="Número de instâncias a gerar."
+        "--num-instances", type=int, default=5, help="Number of instances to generate."
     )
     parser.add_argument(
-        "--seed", type=int, default=DEFAULT_SEED, help="Seed raiz (utils/seed.py)."
+        "--seed", type=int, default=DEFAULT_SEED, help="Root seed (utils/seed.py)."
     )
     parser.add_argument(
         "--mode",
         choices=("synth", "perturb"),
         default="synth",
-        help="synth: gera do zero; perturb: perturba instances/base (padrão: synth).",
+        help="synth: build from scratch; perturb: perturb instances/base (default: synth).",
     )
-    parser.add_argument("--num-nodes", type=int, default=46, help="Nós por instância (synth).")
-    parser.add_argument("--span-km", type=float, default=DEFAULT_SPAN_KM, help="Lado do box em km.")
+    parser.add_argument("--num-nodes", type=int, default=46, help="Nodes per instance (synth).")
+    parser.add_argument("--span-km", type=float, default=DEFAULT_SPAN_KM, help="Box side in km.")
     parser.add_argument(
         "--min-per-unit",
         type=float,
         default=DEFAULT_MIN_PER_UNIT,
-        help="Minutos por km no tempo de viagem.",
+        help="Minutes per km in the travel time.",
     )
     parser.add_argument(
         "--demand-ratio",
         type=float,
         default=DEFAULT_DEMAND_RATIO,
-        help="Viagens por par de nós no total dos 6 sub-períodos.",
+        help="Trips per node pair over all 6 sub-periods.",
     )
     parser.add_argument(
         "--pair-ratio",
         type=float,
         default=DEFAULT_PAIR_RATIO,
-        help="Fração dos pares OD que concentram a demanda (base: 11%%).",
+        help="Fraction of the OD pairs that concentrate the demand (base: 11%%).",
     )
     return parser.parse_args()
 
@@ -203,7 +203,7 @@ def main() -> None:
                 "instance_id": instance_id,
                 "kind": "synthetic",
                 "seed": seed,
-                "source": "utils.synth (pontos, distância, tempo, demanda)",
+                "source": "utils.synth (points, distance, time, demand)",
                 "generator": {
                     "num_nodes": len(nodes),
                     "span_km": args.span_km,
@@ -217,7 +217,7 @@ def main() -> None:
             base_nodes, base_distance, base_time, base_demand = base
             nodes = base_nodes
             distance = perturb_values(base_distance, irng, 0.9, 1.1, lambda v: round(v, 2))
-            time = perturb_values(base_time, irng, 0.9, 1.1, lambda v: max(1, int(round(v))))
+            time = perturb_values(base_time, irng, 0.9, 1.1, lambda v: max(1, round(v)))
             demand_rows = perturb_demand(base_demand, irng)
             write_square(out_dir / "distance.csv", nodes, distance)
             write_square(out_dir / "time.csv", nodes, time, integer_cell)

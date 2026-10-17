@@ -6,7 +6,7 @@ from algorithms.top_univasf.model import (
     ExpansionProposal,
     WorkState,
 )
-from algorithms.top_univasf.scoring import marginal_pax_per_min
+from algorithms.top_univasf.scoring import marginal_passengers_per_minute
 from algorithms.top_univasf.simulation import candidate_nodes, simulate_stops
 from utils.instances import InstanceData
 
@@ -17,23 +17,25 @@ def best_demand_driven_insertion(
     remaining: np.ndarray,
     time_limit_minutes: int,
 ) -> ExpansionProposal | None:
-    """Passo guiado pela demanda: a posição do ponto novo vem do par.
+    """Demand-driven step: the new point's position comes from the pair.
 
-    Para cada ponto fora da rota: se chega demanda `A→B` com `A` na rota,
-    testa `B` logo depois de `A` (se `A` é o destino final, faz a cruzada
-    [..., d, B, d]); se sai demanda `B→Y` com `Y` na rota, testa `B` logo
-    antes de `Y` — e, quando `Y` é a partida `o` (posição fixa), testa a
-    dobradinha `[o, B, o, ...]`, exceto se `o == d` (aí o fim da rota já é
-    o próprio `o` e o caso do destino final cobre). Cada trial é simulada
-    inteira (capacidade por trecho, quem desce libera assento) e vale o
-    score marginal (ganho de pax / minutos extras). Devolve a melhor
-    proposta de expansão, ou None.
+    For every point off the route: if demand `A->B` arrives with `A` on the
+    route, it tries `B` right after `A` (if `A` is the final destination it
+    makes the crossing [..., d, B, d]); if demand `B->Y` leaves with `Y` on the
+    route, it tries `B` right before `Y` -- and, when `Y` is the start `o` (a
+    fixed position), it tries the dobradinha `[o, B, o, ...]`, unless `o == d`
+    (then the route already ends at `o`, and the final-destination case covers
+    it). Every trial is simulated in full (capacity per leg, whoever alights
+    frees a seat) and the marginal score (passengers gained / extra minutes)
+    decides. Returns the best expansion proposal, or None.
     """
     capacity = state.bus.passenger_capacity
     stops = state.stops
     last = len(stops) - 1
     current = simulate_stops(data, stops, capacity, remaining, state.claimed)
-    current_qty = {(origin, destination): qty for origin, destination, qty in current.pairs}
+    current_qty = {
+        (origin, destination): qty for origin, destination, qty in current.pairs
+    }
     best: ExpansionProposal | None = None
     best_key: tuple | None = None
 
@@ -42,7 +44,7 @@ def best_demand_driven_insertion(
         outcome = simulate_stops(data, trial, capacity, remaining, state.claimed)
         if outcome.travel_minutes > time_limit_minutes or outcome.peak_load > capacity:
             return
-        score = marginal_pax_per_min(
+        score = marginal_passengers_per_minute(
             outcome.passengers - current.passengers,
             outcome.travel_minutes - current.travel_minutes,
         )
@@ -57,7 +59,13 @@ def best_demand_driven_insertion(
         )
         if not claim:
             return
-        key = (score, outcome.passengers, -outcome.travel_minutes, -candidate, tuple(trial))
+        key = (
+            score,
+            outcome.passengers,
+            -outcome.travel_minutes,
+            -candidate,
+            tuple(trial),
+        )
         if best_key is None or key > best_key:
             known = set(stops)
             best_key = key
@@ -72,18 +80,20 @@ def best_demand_driven_insertion(
             )
 
     for candidate in candidate_nodes(remaining, stops):
-        for index, stop in enumerate(stops):  # chega A→cand: cand logo depois de A
+        # A->candidate arrives: place candidate right after A.
+        for index, stop in enumerate(stops):
             if int(remaining[stop, candidate]) <= 0:
                 continue
-            if index == last:  # A é o destino final: cruzada [..., d, cand, d]
+            if index == last:  # A is the final destination: [..., d, B, d]
                 consider(candidate, stops + [candidate, stops[-1]])
             else:
                 consider(candidate, stops[:index + 1] + [candidate] + stops[index + 1:])
-        for index, stop in enumerate(stops):  # sai cand→Y: cand logo antes de Y
+        # candidate->Y leaves: place candidate right before Y.
+        for index, stop in enumerate(stops):
             if int(remaining[candidate, stop]) <= 0:
                 continue
-            if index == 0:  # Y é a partida: dobradinha [o, cand, o, ...]
-                if stops[0] == stops[-1]:  # o == d: o fim já é o o
+            if index == 0:  # Y is the start: dobradinha [o, B, o, ...]
+                if stops[0] == stops[-1]:  # o == d: the route already ends at o
                     continue
                 consider(candidate, stops[:1] + [candidate] + stops[:1] + stops[1:])
             else:

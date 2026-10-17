@@ -1,8 +1,8 @@
-"""Roda todos os cenários e grava os resultados num .md.
+"""Run every scenario and write the results to a .md report.
 
-Cada cenário roda uma única vez: o resultado alimenta tanto a tabela-resumo
-quanto o detalhe (rotas, pares atendidos, ônibus ociosos). A renderização em
-si vem de `reporting`, o mesmo módulo usado pelo `main.py`.
+Each scenario runs exactly once: the outcome feeds both the summary table and
+the per-scenario detail (routes, served pairs, idle buses). The rendering
+itself comes from `reporting`, the same module `main.py` uses.
 """
 
 import sys
@@ -27,13 +27,13 @@ from utils.scenarios import load_scenarios
 from utils.seed import DEFAULT_SEED
 
 OUT = ROOT / "results.md"
-#: Cenários que usam a instância `base` são fixos, não sorteados.
+#: Scenarios using the `base` instance are fixed, not sampled.
 FIXED_INSTANCE = "base"
 
 
 @dataclass
 class ScenarioRun:
-    """Tudo o que um cenário produziu, inclusive quando ele falhou."""
+    """Everything one scenario produced, including when it failed."""
 
     scenario: dict
     buses: list[Bus]
@@ -49,13 +49,13 @@ class ScenarioRun:
 
 
 def run_scenario(scenario: dict) -> ScenarioRun:
-    """Roda um cenário e registra tempo, planos e resumo (ou o erro)."""
+    """Run one scenario and record its time, plans and summary (or the error)."""
     buses = load_fleet(ROOT / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"]))
     start = time.monotonic()
     try:
         data, plans, summary = solve_scenario(scenario, buses, ROOT)
         error = ""
-    except Exception as exc:  # noqa: BLE001 — registra e segue para o próximo
+    except Exception as exc:  # noqa: BLE001 -- record it and move on
         data, plans, summary, error = None, [], None, f"{type(exc).__name__}: {exc}"
     elapsed = time.monotonic() - start
     return ScenarioRun(
@@ -71,16 +71,16 @@ def run_scenario(scenario: dict) -> ScenarioRun:
 
 def _scenario_heading(run: ScenarioRun) -> str:
     scenario = run.scenario
-    origin = f" | origem {scenario['origin']}" if scenario.get("origin") else ""
+    origin = f" | origin {scenario['origin']}" if scenario.get("origin") else ""
     destinations = (
         f" -> [{scenario['destination_labels']}]"
         if scenario.get("destination_labels")
         else ""
     )
     return (
-        f"## Cenário {scenario['scenario_id']} — {scenario['instance_id']} / "
-        f"{scenario['period']} (frota [{scenario['fleet_bus_ids']}], "
-        f"limite {scenario['max_time_limit']} min{origin}{destinations})"
+        f"## Scenario {scenario['scenario_id']} — {scenario['instance_id']} / "
+        f"{scenario['period']} (fleet [{scenario['fleet_bus_ids']}], "
+        f"limit {scenario['max_time_limit']} min{origin}{destinations})"
     )
 
 
@@ -91,7 +91,7 @@ def _summary_row(run: ScenarioRun) -> str:
         f"[{scenario['fleet_bus_ids']}] | {scenario['max_time_limit']} | "
     )
     if run.error:
-        return prefix + f"ERRO | — | — | — | {run.elapsed:.1f} |"
+        return prefix + f"ERROR | — | — | — | {run.elapsed:.1f} |"
     served, total, percentage = reporting.served_ratio(run.data, run.plans)
     return (
         prefix
@@ -101,16 +101,16 @@ def _summary_row(run: ScenarioRun) -> str:
 
 
 def _detail_lines(run: ScenarioRun) -> list[str]:
-    """Detalhe de um cenário: cabeçalho, tabela de ônibus e rotas."""
+    """One scenario's detail: heading, bus table and routes."""
     lines = [_scenario_heading(run), ""]
     if run.error:
-        return lines + [f"ERRO após {run.elapsed:.1f}s: `{run.error}`", ""]
+        return lines + [f"ERROR after {run.elapsed:.1f}s: `{run.error}`", ""]
 
     scenario = run.scenario
     capacity = {bus.id: bus.passenger_capacity for bus in run.buses}
     lines.append(
         f"{reporting.fleet_totals_line(run.plans, run.buses, run.data)} · "
-        f"{run.summary.rounds} rodadas · {run.elapsed:.1f}s"
+        f"{run.summary.rounds} rounds · {run.elapsed:.1f}s"
     )
     lines.append("")
     lines.append("| " + " | ".join(reporting.PLAN_HEADERS) + " |")
@@ -130,7 +130,7 @@ def _detail_lines(run: ScenarioRun) -> list[str]:
         if line:
             lines += [line, ""]
 
-    lines += ["Rotas:", "", "```"]
+    lines += ["Routes:", "", "```"]
     lines += [reporting.route_line(plan) for plan in run.plans]
     lines += ["```", ""]
     return lines
@@ -138,19 +138,19 @@ def _detail_lines(run: ScenarioRun) -> list[str]:
 
 def _idle_line(run: ScenarioRun) -> str:
     idle = reporting.idle_bus_ids(run.buses, run.plans)
-    return f"Ociosos ({len(idle)}): {idle}" if idle else ""
+    return f"Idle ({len(idle)}): {idle}" if idle else ""
 
 
 def render(runs: list[ScenarioRun], generated_at: str) -> list[str]:
-    """Relatório completo: cabeçalho, tabela-resumo e detalhe por cenário."""
+    """Full report: header, summary table and one detail block per scenario."""
     fixed = sum(1 for run in runs if run.scenario["instance_id"] == FIXED_INSTANCE)
     lines = [
-        "# Resultados — todos os cenários (TOP UNIVASF)",
+        "# Results — all scenarios (TOP UNIVASF)",
         "",
-        f"Gerado em {generated_at} · {len(runs)} cenários ({fixed} fixos de base) · "
-        + f"seed de geração {DEFAULT_SEED} (utils/seed.py).",
+        f"Generated on {generated_at} · {len(runs)} scenarios "
+        + f"({fixed} fixed base) · generation seed {DEFAULT_SEED} (utils/seed.py).",
         "",
-        "| cenário | instância | período | frota | limite | usados | pax | % | rounds | exec (s) |",
+        "| scenario | instance | period | fleet | limit | used | pax | % | rounds | exec (s) |",
         "|---|---|---|---|---|---|---|---|---|---|",
     ]
     lines += [_summary_row(run) for run in runs]
@@ -165,7 +165,7 @@ def main() -> None:
     runs = [run_scenario(scenario) for scenario in scenarios]
     generated_at = datetime.now(UTC).astimezone().strftime("%Y-%m-%d %H:%M %Z")
     OUT.write_text("\n".join(render(runs, generated_at)), encoding="utf-8")
-    print(f"OK: {OUT} ({len(scenarios)} cenários)")
+    print(f"OK: {OUT} ({len(scenarios)} scenarios)")
 
 
 if __name__ == "__main__":

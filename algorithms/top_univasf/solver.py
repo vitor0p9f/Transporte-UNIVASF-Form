@@ -16,11 +16,11 @@ def solve_scenario(
     *,
     origin: int | None = None,
 ) -> tuple[InstanceData, list[BusPlan], FleetSummary]:
-    """Pipeline completo: carrega instância e resolve a frota.
+    """Full pipeline: load the instance and solve its fleet.
 
-    As origens permitidas do draft vêm da coluna ``origin`` do cenário
-    (vazio = livre); o parâmetro `origin` sobrescreve o cenário e força uma
-    única origem permitida, para experimentos.
+    The origins the draft may use come from the scenario's ``origin`` column
+    (empty = free); the `origin` parameter overrides the scenario and forces a
+    single allowed origin, for experiments.
     """
     data = load_instance_data(
         Path(root) / "instances" / scenario["instance_id"], period=scenario["period"]

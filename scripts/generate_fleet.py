@@ -3,7 +3,8 @@
 Generates fleet.csv with columns:
   id,passenger_capacity,fuel_capacity,km_autonomy_per_liter
 
-A seed padrão é `utils.seed.DEFAULT_SEED`, a mesma dos demais geradores.
+The default seed is `utils.seed.DEFAULT_SEED`, the same one the other
+generators use.
 
 Usage:
   python scripts/generate_fleet.py --num-buses 12 --seed 42
@@ -18,7 +19,6 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from utils.seed import DEFAULT_SEED
-
 
 DEFAULT_CAPACITIES = [24, 32, 40, 45, 50]
 
@@ -73,7 +73,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate a random bus fleet.")
     parser.add_argument("--num-buses", type=int, default=12, help="Number of buses to generate.")
     parser.add_argument(
-        "--seed", type=int, default=DEFAULT_SEED, help="Seed raiz (utils/seed.py)."
+        "--seed", type=int, default=DEFAULT_SEED, help="Root seed (utils/seed.py)."
     )
     return parser.parse_args()
 

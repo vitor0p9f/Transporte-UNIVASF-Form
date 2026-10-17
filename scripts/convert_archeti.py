@@ -68,8 +68,9 @@ SCENARIO_FIELDS = [
     "max_time_limit",
     "diesel_price_per_liter",
     "driver_hourly_rate",
-    # Mantidas (vazias) para não desalinhar as linhas de scenarios.csv, que
-    # passou a ter origem/destino possíveis gerados por generate_scenarios.py.
+    # Kept (empty) so rows of scenarios.csv do not drift out of alignment: that
+    # file now also carries the possible origins/destinations sampled by
+    # generate_scenarios.py.
     "origin",
     "destination_labels",
 ]
@@ -122,7 +123,7 @@ def build_time(dist, rng: random.Random, min_per_unit: float) -> list[list[int]]
         for j in range(n):
             if i == j:
                 continue
-            mat[i][j] = max(1, int(round(dist[i][j] * min_per_unit * rng.uniform(0.9, 1.1))))
+            mat[i][j] = max(1, round(dist[i][j] * min_per_unit * rng.uniform(0.9, 1.1)))
     return mat
 
 
@@ -285,7 +286,7 @@ def convert_one(
         "instance_id": instance_id,
         "fleet_bus_ids": ";".join(str(i) for i in buses),
         "period": args.period or frng.choice(DEMAND_PERIODS),
-        "max_time_limit": int(round(tmax * args.tmax_to_minutes)),
+        "max_time_limit": round(tmax * args.tmax_to_minutes),
         "diesel_price_per_liter": round(frng.uniform(5.0, 7.0), 2),
         "driver_hourly_rate": round(frng.uniform(20.0, 35.0), 2),
     }

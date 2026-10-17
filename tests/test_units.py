@@ -11,14 +11,14 @@ from algorithms.top_univasf import (
 )
 from algorithms.top_univasf.conflict import conflict_groups
 from algorithms.top_univasf.scoring import (
-    marginal_pax_per_min,
+    marginal_passengers_per_minute,
     od_pair_score,
-    pax_per_min,
+    passengers_per_minute,
 )
 from algorithms.top_univasf.simulation import (
     board_greedily,
+    segment_passengers,
     simulate_stops,
-    stretch_passengers,
 )
 from entities.bus import Bus
 
@@ -40,24 +40,24 @@ def make_data(demand: dict, time: dict | None = None, size: int = 4) -> Instance
 
 
 class TestScoring:
-    def test_pax_per_min_zero_inputs(self):
-        assert pax_per_min(0, 10) == 0.0
-        assert pax_per_min(10, 0) == 0.0
-        assert pax_per_min(-1, 10) == 0.0
+    def test_passengers_per_minute_zero_inputs(self):
+        assert passengers_per_minute(0, 10) == 0.0
+        assert passengers_per_minute(10, 0) == 0.0
+        assert passengers_per_minute(-1, 10) == 0.0
 
-    def test_pax_per_min_ratio(self):
-        assert pax_per_min(10, 2) == 5.0
+    def test_passengers_per_minute_ratio(self):
+        assert passengers_per_minute(10, 2) == 5.0
 
     def test_od_pair_score(self):
         assert od_pair_score(0, 10) == 0.0
         assert od_pair_score(9, 3) == 3.0
 
-    def test_marginal_pax_per_min(self):
-        assert marginal_pax_per_min(0, 5) == 0.0
-        assert marginal_pax_per_min(4, 2) == 2.0
+    def test_marginal_score_ratio(self):
+        assert marginal_passengers_per_minute(0, 5) == 0.0
+        assert marginal_passengers_per_minute(4, 2) == 2.0
 
     def test_marginal_score_is_infinite_without_extra_time(self):
-        assert marginal_pax_per_min(3, 0) == float("inf")
+        assert marginal_passengers_per_minute(3, 0) == float("inf")
 
 
 class TestSimulateStops:
@@ -126,12 +126,12 @@ class TestSimulateStops:
             },
         )
         remaining = data.demand.copy()
-        assert stretch_passengers(stops, 5, remaining) == simulate_stops(
+        assert segment_passengers(stops, 5, remaining) == simulate_stops(
             data, stops, 5, remaining
         ).passengers
 
     def test_draft_fast_path_diverges_only_on_disjoint_repeats(self):
-        """Documented divergence: `stretch_passengers` skips the demand copy,
+        """Documented divergence: `segment_passengers` skips the demand copy,
         so a pair reachable twice with disjoint leg ranges (1->2 at
         positions 0->1 and 2->3) boards once per occurrence instead of once
         in total. No draft shape can produce that, and the fast path is never
@@ -139,7 +139,7 @@ class TestSimulateStops:
         """
         data = make_data(demand={(1, 2): 5}, time={(1, 2): 5})
         stops = (1, 2, 1, 2)
-        assert stretch_passengers(stops, 5, data.demand) == 10
+        assert segment_passengers(stops, 5, data.demand) == 10
         assert simulate_stops(data, stops, 5, data.demand).passengers == 5
 
     def test_shared_core_flag_is_the_only_difference(self):
@@ -155,7 +155,7 @@ class TestSimulateStops:
         )
         assert with_duplicates == [(1, 2, 5), (1, 2, 5)]
         assert (without_duplicates, served) == ([(1, 2, 5)], 5)
-        assert stretch_passengers(stops, 5, data.demand) == 10
+        assert segment_passengers(stops, 5, data.demand) == 10
         assert simulate_stops(data, stops, 5, data.demand).passengers == 5
 
 

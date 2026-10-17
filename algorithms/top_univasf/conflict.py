@@ -4,10 +4,10 @@ from algorithms.top_univasf.model import ConflictKey
 
 
 def conflict_groups(key_lists: list[list[ConflictKey]]) -> list[list[int]]:
-    """Agrupa índices que compartilham alguma chave (união por transitividade).
+    """Group indices that share any key (union by transitivity).
 
-    Propostas sem chave em comum comitam juntas na mesma rodada; de cada
-    grupo em conflito, só a de maior score age.
+    Proposals with no key in common commit together in the same round; from
+    each conflicting group, only the highest score acts.
     """
     parent = list(range(len(key_lists)))
 

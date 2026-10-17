@@ -10,7 +10,10 @@ from utils.scenarios import load_scenarios
 
 ROOT = Path(__file__).resolve().parent
 
-HEURISTICS = ["Greedy OD (trava par OD; sem conflito comitta junto, senão maior score)"]
+HEURISTICS = [
+    "Greedy OD (locked OD pair; conflict-free steps commit together, "
+    + "otherwise only the highest score acts)"
+]
 
 
 def pick(menu, label):
@@ -24,8 +27,8 @@ def pick(menu, label):
 
 
 def print_results_table(scenario: dict, data, plans: list, summary, buses: list, elapsed: float) -> None:
-    print(f"\n=== Results ({elapsed:.1f}s, {summary.rounds} rodadas) ===")
-    print("pax = atendidos · tempo = usado/limite (min) · pico = lotação máx · pax/min = eficiência")
+    print(f"\n=== Results ({elapsed:.1f}s, {summary.rounds} rounds) ===")
+    print("pax = served · time = used/limit (min) · peak = highest load · pax/min = efficiency")
 
     header = reporting.PLAN_HEADERS
     rows = [
@@ -48,7 +51,7 @@ def print_results_table(scenario: dict, data, plans: list, summary, buses: list,
         print(served_pairs)
     idle = reporting.idle_bus_ids(buses, plans)
     if idle:
-        print(f"Ociosos ({len(idle)}): {idle} — sem commit em nenhuma rodada")
+        print(f"Idle ({len(idle)}): {idle} — no commit in any round")
     unserved = reporting.unserved_line(summary)
     if unserved:
         print(unserved)
@@ -57,7 +60,7 @@ def print_results_table(scenario: dict, data, plans: list, summary, buses: list,
     for plan in plans:
         print(f"  {reporting.route_line(plan)}")
     if not plans:
-        print("  (nenhum ônibus formou rota viável)")
+        print("  (no bus formed a feasible route)")
 
 
 def main() -> None:

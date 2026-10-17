@@ -1,8 +1,8 @@
-# Resultados — todos os cenários (TOP UNIVASF)
+# Results — all scenarios (TOP UNIVASF)
 
-Gerado em 2026-10-17 18:55 -03 · 66 cenários (6 fixos de base) · seed de geração 42 (utils/seed.py).
+Generated on 2026-10-17 19:05 -03 · 66 scenarios (6 fixed base) · generation seed 42 (utils/seed.py).
 
-| cenário | instância | período | frota | limite | usados | pax | % | rounds | exec (s) |
+| scenario | instance | period | fleet | limit | used | pax | % | rounds | exec (s) |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | p1_4_e | morning_2 | [1;4;5;10] | 56 | 4/4 | 9/38 | 24% | 9 | 0.0 |
 | 2 | p1_2_f | night_2 | [1;4;6;9;10;12] | 169 | 6/6 | 44/45 | 98% | 37 | 0.0 |
@@ -71,22 +71,22 @@ Gerado em 2026-10-17 18:55 -03 · 66 cenários (6 fixos de base) · seed de gera
 | 69 | base | night_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | 8/12 | 158/158 | 100% | 53 | 0.1 |
 | 70 | base | night_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | 5/12 | 60/61 | 98% | 30 | 0.1 |
 
-## Cenário 1 — p1_4_e / morning_2 (frota [1;4;5;10], limite 56 min | origem 28 -> [2])
+## Scenario 1 — p1_4_e / morning_2 (fleet [1;4;5;10], limit 56 min | origin 28 -> [2])
 
-4 de 4 ônibus · 9/38 pax (24%) · 9 rodadas · 0.0s
+4 of 4 buses · 9/38 pax (24%) · 9 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 7 | 6 | 55/56 | 3/24 | 0.11 | 28 | 2 |
 | 4 | 3 | 1 | 56/56 | 1/50 | 0.02 | 28 | 2 |
 | 5 | 4 | 1 | 30/56 | 1/24 | 0.03 | 28 | 2 |
 | 10 | 4 | 1 | 49/56 | 1/24 | 0.02 | 28 | 2 |
 
-Pares mais atendidos: 12→2=1, 18→19=1, 18→28=1, 19→22=1, 22→2=1
+Most served pairs: 12→2=1, 18→19=1, 18→28=1, 19→22=1, 22→2=1
 
-Não atendidos (29 pax): 5→31=2, 2→14=1, 2→31=1, 4→12=1, 5→20=1, 5→26=1, 6→29=1, 7→14=1 (+20 pares)
+Unserved (29 pax): 5→31=2, 2→14=1, 2→31=1, 4→12=1, 5→20=1, 5→26=1, 6→29=1, 7→14=1 (+20 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (28 → 2): 28 -> 18 -> 28 -> 19 -> 22 -> 12 -> 2
@@ -95,11 +95,11 @@ bus 5 (28 → 2): 28 -> 1 -> 28 -> 2
 bus 10 (28 → 2): 28 -> 2 -> 12 -> 2
 ```
 
-## Cenário 2 — p1_2_f / night_2 (frota [1;4;6;9;10;12], limite 169 min | origem 1;11 -> [18;22;28])
+## Scenario 2 — p1_2_f / night_2 (fleet [1;4;6;9;10;12], limit 169 min | origin 1;11 -> [18;22;28])
 
-6 de 6 ônibus · 44/45 pax (98%) · 37 rodadas · 0.0s
+6 of 6 buses · 44/45 pax (98%) · 37 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 11 | 8 | 152/169 | 4/24 | 0.05 | 11 | 22 |
 | 4 | 9 | 12 | 135/169 | 7/50 | 0.09 | 1 | 22 |
@@ -108,11 +108,11 @@ bus 10 (28 → 2): 28 -> 2 -> 12 -> 2
 | 10 | 8 | 6 | 102/169 | 5/24 | 0.06 | 11 | 18 |
 | 12 | 6 | 4 | 71/169 | 4/32 | 0.06 | 11 | 28 |
 
-Pares mais atendidos: 5→2=1, 5→31=1, 6→12=1, 6→24=1, 11→12=1
+Most served pairs: 5→2=1, 5→31=1, 6→12=1, 6→24=1, 11→12=1
 
-Não atendidos (1 pax): 31→12=1
+Unserved (1 pax): 31→12=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (11 → 22): 11 -> 6 -> 24 -> 12 -> 22 -> 26 -> 19 -> 5 -> 2 -> 31 -> 22
@@ -123,11 +123,11 @@ bus 10 (11 → 18): 11 -> 20 -> 7 -> 8 -> 10 -> 16 -> 15 -> 18
 bus 12 (11 → 28): 11 -> 24 -> 23 -> 8 -> 2 -> 28
 ```
 
-## Cenário 3 — p1_2_j / afternoon_1 (frota [2;3;6;7;10;11], limite 97 min | origem 6;8;25 -> [13;19;24])
+## Scenario 3 — p1_2_j / afternoon_1 (fleet [2;3;6;7;10;11], limit 97 min | origin 6;8;25 -> [13;19;24])
 
-6 de 6 ônibus · 39/52 pax (75%) · 34 rodadas · 0.0s
+6 of 6 buses · 39/52 pax (75%) · 34 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 10 | 9 | 79/97 | 3/32 | 0.11 | 8 | 13 |
 | 3 | 10 | 8 | 95/97 | 6/24 | 0.08 | 6 | 13 |
@@ -136,11 +136,11 @@ bus 12 (11 → 28): 11 -> 24 -> 23 -> 8 -> 2 -> 28
 | 10 | 5 | 3 | 60/97 | 1/24 | 0.05 | 8 | 13 |
 | 11 | 8 | 5 | 78/97 | 4/45 | 0.06 | 6 | 13 |
 
-Pares mais atendidos: 31→11=2, 11→29=2, 25→29=2, 8→2=1, 10→13=1
+Most served pairs: 31→11=2, 11→29=2, 25→29=2, 8→2=1, 10→13=1
 
-Não atendidos (13 pax): 5→11=1, 5→15=1, 7→25=1, 9→16=1, 10→14=1, 15→10=1, 15→25=1, 21→14=1 (+5 pares)
+Unserved (13 pax): 5→11=1, 5→15=1, 7→25=1, 9→16=1, 10→14=1, 15→10=1, 15→25=1, 21→14=1 (+5 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (8 → 13): 8 -> 12 -> 27 -> 26 -> 31 -> 11 -> 9 -> 2 -> 10 -> 13
@@ -151,22 +151,22 @@ bus 10 (8 → 13): 8 -> 4 -> 20 -> 9 -> 13
 bus 11 (6 → 13): 6 -> 13 -> 3 -> 12 -> 32 -> 31 -> 27 -> 13
 ```
 
-## Cenário 4 — p1_4_j / morning_1 (frota [1;4;5;11], limite 89 min | origem 11;24 -> [14;23])
+## Scenario 4 — p1_4_j / morning_1 (fleet [1;4;5;11], limit 89 min | origin 11;24 -> [14;23])
 
-4 de 4 ônibus · 27/46 pax (59%) · 24 rodadas · 0.0s
+4 of 4 buses · 27/46 pax (59%) · 24 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 9 | 7 | 89/89 | 3/24 | 0.08 | 11 | 23 |
 | 4 | 9 | 8 | 89/89 | 5/50 | 0.09 | 24 | 23 |
 | 5 | 7 | 5 | 65/89 | 4/24 | 0.08 | 11 | 23 |
 | 11 | 8 | 7 | 86/89 | 5/45 | 0.08 | 11 | 14 |
 
-Pares mais atendidos: 2→22=2, 21→11=2, 10→13=1, 10→21=1, 11→21=1
+Most served pairs: 2→22=2, 21→11=2, 10→13=1, 10→21=1, 11→21=1
 
-Não atendidos (19 pax): 1→4=1, 3→11=1, 4→18=1, 4→30=1, 5→11=1, 9→28=1, 12→17=1, 14→11=1 (+11 pares)
+Unserved (19 pax): 1→4=1, 3→11=1, 4→18=1, 4→30=1, 5→11=1, 9→28=1, 12→17=1, 14→11=1 (+11 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (11 → 23): 11 -> 10 -> 13 -> 22 -> 24 -> 30 -> 19 -> 21 -> 23
@@ -175,11 +175,11 @@ bus 5 (11 → 23): 11 -> 21 -> 11 -> 31 -> 25 -> 26 -> 23
 bus 11 (11 → 14): 11 -> 24 -> 25 -> 8 -> 9 -> 5 -> 15 -> 14
 ```
 
-## Cenário 5 — p1_4_g / afternoon_2 (frota [2;3;4;8;10;11;12], limite 99 min | origem 4;15;21 -> [3])
+## Scenario 5 — p1_4_g / afternoon_2 (fleet [2;3;4;8;10;11;12], limit 99 min | origin 4;15;21 -> [3])
 
-6 de 7 ônibus · 29/52 pax (56%) · 29 rodadas · 0.0s
+6 of 7 buses · 29/52 pax (56%) · 29 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 9 | 8 | 96/99 | 5/32 | 0.08 | 21 | 3 |
 | 3 | 8 | 6 | 77/99 | 2/24 | 0.08 | 21 | 3 |
@@ -188,13 +188,13 @@ bus 11 (11 → 14): 11 -> 24 -> 25 -> 8 -> 9 -> 5 -> 15 -> 14
 | 10 | 4 | 1 | 49/99 | 1/24 | 0.02 | 4 | 3 |
 | 11 | 5 | 2 | 93/99 | 2/45 | 0.02 | 4 | 3 |
 
-Pares mais atendidos: 32→3=2, 6→17=2, 3→11=1, 7→11=1, 15→17=1
+Most served pairs: 32→3=2, 6→17=2, 3→11=1, 7→11=1, 15→17=1
 
-Ociosos (1): [12]
+Idle (1): [12]
 
-Não atendidos (23 pax): 10→17=2, 23→17=2, 1→9=1, 1→23=1, 2→15=1, 2→26=1, 5→30=1, 8→29=1 (+13 pares)
+Unserved (23 pax): 10→17=2, 23→17=2, 1→9=1, 1→23=1, 2→15=1, 2→26=1, 5→30=1, 8→29=1 (+13 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (21 → 3): 21 -> 32 -> 15 -> 17 -> 18 -> 7 -> 3 -> 11 -> 3
@@ -205,11 +205,11 @@ bus 10 (4 → 3): 4 -> 3 -> 14 -> 3
 bus 11 (4 → 3): 4 -> 31 -> 16 -> 4 -> 3
 ```
 
-## Cenário 6 — p1_4_p / afternoon_2 (frota [2;4;5;6;7;8;9;10], limite 147 min | origem 17;26;28 -> [9;15])
+## Scenario 6 — p1_4_p / afternoon_2 (fleet [2;4;5;6;7;8;9;10], limit 147 min | origin 17;26;28 -> [9;15])
 
-6 de 8 ônibus · 37/44 pax (84%) · 41 rodadas · 0.0s
+6 of 8 buses · 37/44 pax (84%) · 41 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 10 | 8 | 136/147 | 6/32 | 0.06 | 28 | 15 |
 | 4 | 11 | 10 | 145/147 | 6/50 | 0.07 | 26 | 9 |
@@ -218,13 +218,13 @@ bus 11 (4 → 3): 4 -> 31 -> 16 -> 4 -> 3
 | 7 | 9 | 6 | 131/147 | 3/50 | 0.05 | 17 | 15 |
 | 8 | 9 | 6 | 146/147 | 3/50 | 0.04 | 17 | 15 |
 
-Pares mais atendidos: 6→22=1, 14→16=1, 15→13=1, 16→18=1, 16→22=1
+Most served pairs: 6→22=1, 14→16=1, 15→13=1, 16→18=1, 16→22=1
 
-Ociosos (2): [9, 10]
+Idle (2): [9, 10]
 
-Não atendidos (7 pax): 4→8=1, 4→11=1, 4→25=1, 8→19=1, 16→25=1, 18→26=1, 29→5=1
+Unserved (7 pax): 4→8=1, 4→11=1, 4→25=1, 8→19=1, 16→25=1, 18→26=1, 29→5=1
 
-Rotas:
+Routes:
 
 ```
 bus 2 (28 → 15): 28 -> 15 -> 14 -> 16 -> 6 -> 22 -> 27 -> 18 -> 13 -> 15
@@ -235,24 +235,24 @@ bus 7 (17 → 15): 17 -> 20 -> 22 -> 30 -> 25 -> 23 -> 14 -> 17 -> 15
 bus 8 (17 → 15): 17 -> 15 -> 32 -> 24 -> 27 -> 30 -> 16 -> 4 -> 15
 ```
 
-## Cenário 7 — p1_3_o / afternoon_2 (frota [1;2;3;4;6;7;9;10;11;12], limite 149 min | origem 8 -> [8;18;22])
+## Scenario 7 — p1_3_o / afternoon_2 (fleet [1;2;3;4;6;7;9;10;11;12], limit 149 min | origin 8 -> [8;18;22])
 
-4 de 10 ônibus · 37/45 pax (82%) · 38 rodadas · 0.0s
+4 of 10 buses · 37/45 pax (82%) · 38 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 10 | 9 | 94/149 | 6/24 | 0.10 | 8 | 22 |
 | 2 | 10 | 10 | 140/149 | 5/32 | 0.07 | 8 | 22 |
 | 3 | 12 | 11 | 143/149 | 4/24 | 0.08 | 8 | 8 |
 | 4 | 10 | 7 | 146/149 | 7/50 | 0.05 | 8 | 18 |
 
-Pares mais atendidos: 30→29=2, 2→5=1, 4→11=1, 6→11=1, 7→10=1
+Most served pairs: 30→29=2, 2→5=1, 4→11=1, 6→11=1, 7→10=1
 
-Ociosos (6): [6, 7, 9, 10, 11, 12]
+Idle (6): [6, 7, 9, 10, 11, 12]
 
-Não atendidos (8 pax): 3→26=1, 9→30=1, 14→21=1, 16→30=1, 16→31=1, 19→9=1, 21→13=1, 21→14=1
+Unserved (8 pax): 3→26=1, 9→30=1, 14→21=1, 16→30=1, 16→31=1, 19→9=1, 21→13=1, 21→14=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (8 → 22): 8 -> 7 -> 6 -> 32 -> 2 -> 5 -> 4 -> 11 -> 10 -> 22
@@ -261,33 +261,33 @@ bus 3 (8 → 8): 8 -> 6 -> 17 -> 28 -> 26 -> 12 -> 31 -> 27 -> 1 -> 23 -> 7 -> 8
 bus 4 (8 → 18): 8 -> 23 -> 18 -> 27 -> 20 -> 31 -> 16 -> 5 -> 15 -> 18
 ```
 
-## Cenário 8 — p1_3_a / morning_2 (frota [1;2;3;5;8;9;10;11;12], limite 125 min | origem 1;21;32 -> [8])
+## Scenario 8 — p1_3_a / morning_2 (fleet [1;2;3;5;8;9;10;11;12], limit 125 min | origin 1;21;32 -> [8])
 
-2 de 9 ônibus · 11/43 pax (26%) · 16 rodadas · 0.0s
+2 of 9 buses · 11/43 pax (26%) · 16 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 10 | 10 | 122/125 | 4/24 | 0.08 | 21 | 8 |
 | 2 | 3 | 1 | 22/125 | 1/32 | 0.05 | 1 | 8 |
 
-Pares mais atendidos: 21→30=2, 4→18=1, 4→26=1, 4→31=1, 9→13=1
+Most served pairs: 21→30=2, 4→18=1, 4→26=1, 4→31=1, 9→13=1
 
-Ociosos (7): [3, 5, 8, 9, 10, 11, 12]
+Idle (7): [3, 5, 8, 9, 10, 11, 12]
 
-Não atendidos (32 pax): 3→10=1, 3→25=1, 3→26=1, 3→27=1, 4→17=1, 5→22=1, 6→25=1, 7→14=1 (+24 pares)
+Unserved (32 pax): 3→10=1, 3→25=1, 3→26=1, 3→27=1, 4→17=1, 5→22=1, 6→25=1, 7→14=1 (+24 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (21 → 8): 21 -> 9 -> 13 -> 30 -> 4 -> 18 -> 19 -> 26 -> 31 -> 8
 bus 2 (1 → 8): 1 -> 20 -> 8
 ```
 
-## Cenário 9 — p1_3_f / morning_1 (frota [1;2;4;6;9;10;12], limite 166 min | origem 11;17 -> [13;14;28])
+## Scenario 9 — p1_3_f / morning_1 (fleet [1;2;4;6;9;10;12], limit 166 min | origin 11;17 -> [13;14;28])
 
-5 de 7 ônibus · 50/51 pax (98%) · 47 rodadas · 0.0s
+5 of 7 buses · 50/51 pax (98%) · 47 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 12 | 152/166 | 7/24 | 0.08 | 11 | 28 |
 | 2 | 14 | 13 | 158/166 | 7/32 | 0.08 | 17 | 13 |
@@ -295,13 +295,13 @@ bus 2 (1 → 8): 1 -> 20 -> 8
 | 6 | 12 | 11 | 158/166 | 7/32 | 0.07 | 17 | 13 |
 | 9 | 8 | 5 | 143/166 | 4/50 | 0.03 | 17 | 28 |
 
-Pares mais atendidos: 5→15=2, 2→4=1, 2→7=1, 2→10=1, 2→17=1
+Most served pairs: 5→15=2, 2→4=1, 2→7=1, 2→10=1, 2→17=1
 
-Ociosos (2): [10, 12]
+Idle (2): [10, 12]
 
-Não atendidos (1 pax): 14→11=1
+Unserved (1 pax): 14→11=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (11 → 28): 11 -> 13 -> 31 -> 2 -> 10 -> 4 -> 8 -> 3 -> 7 -> 28 -> 17 -> 28
@@ -311,23 +311,23 @@ bus 6 (17 → 13): 17 -> 32 -> 9 -> 5 -> 15 -> 2 -> 18 -> 12 -> 23 -> 25 -> 21 -
 bus 9 (17 → 28): 17 -> 9 -> 26 -> 4 -> 29 -> 6 -> 17 -> 28
 ```
 
-## Cenário 10 — p1_4_j / morning_2 (frota [1;2;6;7;8;9;11], limite 46 min | origem 15 -> [5])
+## Scenario 10 — p1_4_j / morning_2 (fleet [1;2;6;7;8;9;11], limit 46 min | origin 15 -> [5])
 
-3 de 7 ônibus · 7/46 pax (15%) · 10 rodadas · 0.0s
+3 of 7 buses · 7/46 pax (15%) · 10 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 4 | 4 | 44/46 | 3/24 | 0.09 | 15 | 5 |
 | 2 | 4 | 2 | 46/46 | 2/32 | 0.04 | 15 | 5 |
 | 6 | 4 | 1 | 37/46 | 1/32 | 0.03 | 15 | 5 |
 
-Pares mais atendidos: 8→5=2, 15→5=1, 15→18=1, 15→19=1, 15→20=1
+Most served pairs: 8→5=2, 15→5=1, 15→18=1, 15→19=1, 15→20=1
 
-Ociosos (4): [7, 8, 9, 11]
+Idle (4): [7, 8, 9, 11]
 
-Não atendidos (39 pax): 13→25=2, 31→2=2, 2→8=1, 2→14=1, 3→25=1, 4→11=1, 5→15=1, 6→22=1 (+29 pares)
+Unserved (39 pax): 13→25=2, 31→2=2, 2→8=1, 2→14=1, 3→25=1, 4→11=1, 5→15=1, 6→22=1 (+29 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (15 → 5): 15 -> 18 -> 8 -> 5
@@ -335,21 +335,21 @@ bus 2 (15 → 5): 15 -> 20 -> 19 -> 5
 bus 6 (15 → 5): 15 -> 18 -> 15 -> 5
 ```
 
-## Cenário 11 — p1_4_j / afternoon_1 (frota [1;2;4], limite 48 min | origem 9;14 -> [16;27;31])
+## Scenario 11 — p1_4_j / afternoon_1 (fleet [1;2;4], limit 48 min | origin 9;14 -> [16;27;31])
 
-3 de 3 ônibus · 8/45 pax (18%) · 7 rodadas · 0.0s
+3 of 3 buses · 8/45 pax (18%) · 7 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 5 | 4 | 47/48 | 2/24 | 0.09 | 9 | 27 |
 | 2 | 5 | 3 | 48/48 | 2/32 | 0.06 | 14 | 16 |
 | 4 | 3 | 1 | 35/48 | 1/50 | 0.03 | 9 | 16 |
 
-Pares mais atendidos: 1→27=1, 9→29=1, 28→27=1, 29→28=1, 5→15=1
+Most served pairs: 1→27=1, 9→29=1, 28→27=1, 29→28=1, 5→15=1
 
-Não atendidos (37 pax): 2→23=1, 3→7=1, 4→6=1, 5→9=1, 5→12=1, 5→28=1, 6→12=1, 6→23=1 (+29 pares)
+Unserved (37 pax): 2→23=1, 3→7=1, 4→6=1, 5→9=1, 5→12=1, 5→28=1, 6→12=1, 6→23=1 (+29 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (9 → 27): 9 -> 1 -> 29 -> 28 -> 27
@@ -357,22 +357,22 @@ bus 2 (14 → 16): 14 -> 5 -> 17 -> 15 -> 16
 bus 4 (9 → 16): 9 -> 6 -> 16
 ```
 
-## Cenário 12 — p1_2_m / afternoon_2 (frota [2;6;7;11], limite 135 min | origem 4;7;26 -> [7;16;22])
+## Scenario 12 — p1_2_m / afternoon_2 (fleet [2;6;7;11], limit 135 min | origin 4;7;26 -> [7;16;22])
 
-4 de 4 ônibus · 32/43 pax (74%) · 27 rodadas · 0.0s
+4 of 4 buses · 32/43 pax (74%) · 27 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 12 | 13 | 127/135 | 6/32 | 0.10 | 7 | 7 |
 | 6 | 9 | 6 | 115/135 | 3/32 | 0.05 | 26 | 22 |
 | 7 | 9 | 8 | 123/135 | 4/50 | 0.07 | 4 | 16 |
 | 11 | 8 | 5 | 114/135 | 3/45 | 0.04 | 26 | 7 |
 
-Pares mais atendidos: 20→25=2, 2→12=1, 7→3=1, 7→12=1, 10→8=1
+Most served pairs: 20→25=2, 2→12=1, 7→3=1, 7→12=1, 10→8=1
 
-Não atendidos (11 pax): 2→29=1, 14→29=1, 15→25=1, 16→11=1, 16→31=1, 17→6=1, 23→11=1, 25→6=1 (+3 pares)
+Unserved (11 pax): 2→29=1, 14→29=1, 15→25=1, 16→11=1, 16→31=1, 17→6=1, 23→11=1, 25→6=1 (+3 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (7 → 7): 7 -> 11 -> 10 -> 8 -> 2 -> 12 -> 24 -> 20 -> 25 -> 19 -> 3 -> 7
@@ -381,11 +381,11 @@ bus 7 (4 → 16): 4 -> 20 -> 30 -> 15 -> 14 -> 4 -> 13 -> 17 -> 16
 bus 11 (26 → 7): 26 -> 1 -> 10 -> 6 -> 24 -> 26 -> 28 -> 7
 ```
 
-## Cenário 13 — p1_2_m / afternoon_2 (frota [3;7;8;9;10;11], limite 93 min | origem 1;4;7 -> [16])
+## Scenario 13 — p1_2_m / afternoon_2 (fleet [3;7;8;9;10;11], limit 93 min | origin 1;4;7 -> [16])
 
-6 de 6 ônibus · 26/43 pax (60%) · 25 rodadas · 0.0s
+6 of 6 buses · 26/43 pax (60%) · 25 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 3 | 7 | 5 | 72/93 | 3/24 | 0.07 | 4 | 16 |
 | 7 | 7 | 5 | 88/93 | 3/50 | 0.06 | 7 | 16 |
@@ -394,11 +394,11 @@ bus 11 (26 → 7): 26 -> 1 -> 10 -> 6 -> 24 -> 26 -> 28 -> 7
 | 10 | 6 | 3 | 81/93 | 3/24 | 0.04 | 4 | 16 |
 | 11 | 4 | 1 | 85/93 | 1/45 | 0.01 | 4 | 16 |
 
-Pares mais atendidos: 20→25=2, 4→17=1, 13→16=1, 13→17=1, 14→4=1
+Most served pairs: 20→25=2, 4→17=1, 13→16=1, 13→17=1, 14→4=1
 
-Não atendidos (17 pax): 2→29=1, 6→24=1, 6→26=1, 12→24=1, 12→25=1, 13→30=1, 14→29=1, 15→25=1 (+9 pares)
+Unserved (17 pax): 2→29=1, 6→24=1, 6→26=1, 12→24=1, 12→25=1, 13→30=1, 14→29=1, 15→25=1 (+9 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 3 (4 → 16): 4 -> 15 -> 14 -> 4 -> 13 -> 17 -> 16
@@ -409,11 +409,11 @@ bus 10 (4 → 16): 4 -> 20 -> 26 -> 21 -> 4 -> 16
 bus 11 (4 → 16): 4 -> 16 -> 31 -> 16
 ```
 
-## Cenário 14 — p1_2_k / afternoon_1 (frota [1;2;4;6;7;8;10;11;12], limite 146 min | origem 10;13;32 -> [4;14])
+## Scenario 14 — p1_2_k / afternoon_1 (fleet [1;2;4;6;7;8;10;11;12], limit 146 min | origin 10;13;32 -> [4;14])
 
-9 de 9 ônibus · 52/52 pax (100%) · 52 rodadas · 0.0s
+9 of 9 buses · 52/52 pax (100%) · 52 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 10 | 136/146 | 4/24 | 0.07 | 32 | 4 |
 | 2 | 11 | 10 | 124/146 | 4/32 | 0.08 | 32 | 4 |
@@ -425,9 +425,9 @@ bus 11 (4 → 16): 4 -> 16 -> 31 -> 16
 | 11 | 5 | 2 | 81/146 | 2/45 | 0.02 | 13 | 4 |
 | 12 | 6 | 3 | 140/146 | 3/32 | 0.02 | 13 | 4 |
 
-Pares mais atendidos: 7→11=1, 9→18=1, 9→21=1, 11→21=1, 18→12=1
+Most served pairs: 7→11=1, 9→18=1, 9→21=1, 11→21=1, 18→12=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (32 → 4): 32 -> 20 -> 26 -> 27 -> 9 -> 18 -> 12 -> 7 -> 11 -> 21 -> 13 -> 4
@@ -441,44 +441,44 @@ bus 11 (13 → 4): 13 -> 4 -> 2 -> 26 -> 4
 bus 12 (13 → 4): 13 -> 4 -> 8 -> 14 -> 25 -> 4
 ```
 
-## Cenário 15 — p1_4_b / morning_2 (frota [1;2;3;4;5;6;7;8;9;10;12], limite 47 min | origem 26 -> [16])
+## Scenario 15 — p1_4_b / morning_2 (fleet [1;2;3;4;5;6;7;8;9;10;12], limit 47 min | origin 26 -> [16])
 
-1 de 11 ônibus · 3/48 pax (6%) · 12 rodadas · 0.0s
+1 of 11 buses · 3/48 pax (6%) · 12 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 4 | 3 | 42/47 | 3/24 | 0.07 | 26 | 16 |
 
-Pares mais atendidos: 27→26=3
+Most served pairs: 27→26=3
 
-Ociosos (10): [2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+Idle (10): [2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
 
-Não atendidos (45 pax): 22→13=2, 1→17=1, 2→25=1, 4→2=1, 4→8=1, 4→11=1, 4→24=1, 5→15=1 (+36 pares)
+Unserved (45 pax): 22→13=2, 1→17=1, 2→25=1, 4→2=1, 4→8=1, 4→11=1, 4→24=1, 5→15=1 (+36 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (26 → 16): 26 -> 27 -> 26 -> 16
 ```
 
-## Cenário 16 — p1_4_b / night_2 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 106 min | origem 1 -> [5;7])
+## Scenario 16 — p1_4_b / night_2 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 106 min | origin 1 -> [5;7])
 
-4 de 12 ônibus · 37/59 pax (63%) · 39 rodadas · 0.0s
+4 of 12 buses · 37/59 pax (63%) · 39 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 8 | 9 | 98/106 | 8/24 | 0.09 | 1 | 7 |
 | 2 | 10 | 9 | 94/106 | 6/32 | 0.10 | 1 | 5 |
 | 3 | 11 | 10 | 104/106 | 3/24 | 0.10 | 1 | 5 |
 | 4 | 9 | 9 | 102/106 | 6/50 | 0.09 | 1 | 7 |
 
-Pares mais atendidos: 29→31=2, 30→27=2, 1→7=1, 1→14=1, 4→15=1
+Most served pairs: 29→31=2, 30→27=2, 1→7=1, 1→14=1, 4→15=1
 
-Ociosos (8): [5, 6, 7, 8, 9, 10, 11, 12]
+Idle (8): [5, 6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (22 pax): 2→22=1, 4→22=1, 5→10=1, 8→15=1, 13→24=1, 14→24=1, 16→31=1, 17→2=1 (+14 pares)
+Unserved (22 pax): 2→22=1, 4→22=1, 5→10=1, 8→15=1, 13→24=1, 14→24=1, 16→31=1, 17→2=1 (+14 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (1 → 7): 1 -> 16 -> 13 -> 6 -> 4 -> 15 -> 14 -> 7
@@ -487,23 +487,23 @@ bus 3 (1 → 5): 1 -> 18 -> 29 -> 31 -> 21 -> 19 -> 26 -> 9 -> 10 -> 3 -> 5
 bus 4 (1 → 7): 1 -> 7 -> 12 -> 30 -> 27 -> 25 -> 26 -> 19 -> 7
 ```
 
-## Cenário 17 — p1_3_q / afternoon_1 (frota [2;3;5;6;8;9], limite 102 min | origem 1;7;20 -> [17])
+## Scenario 17 — p1_3_q / afternoon_1 (fleet [2;3;5;6;8;9], limit 102 min | origin 1;7;20 -> [17])
 
-3 de 6 ônibus · 15/48 pax (31%) · 19 rodadas · 0.0s
+3 of 6 buses · 15/48 pax (31%) · 19 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 7 | 5 | 95/102 | 3/32 | 0.05 | 7 | 17 |
 | 3 | 8 | 5 | 100/102 | 4/24 | 0.05 | 1 | 17 |
 | 5 | 7 | 5 | 94/102 | 4/24 | 0.05 | 1 | 17 |
 
-Pares mais atendidos: 3→22=1, 7→3=1, 18→22=1, 22→11=1, 29→22=1
+Most served pairs: 3→22=1, 7→3=1, 18→22=1, 22→11=1, 29→22=1
 
-Ociosos (3): [6, 8, 9]
+Idle (3): [6, 8, 9]
 
-Não atendidos (33 pax): 21→27=2, 2→5=1, 4→5=1, 5→24=1, 5→29=1, 6→12=1, 6→28=1, 9→4=1 (+24 pares)
+Unserved (33 pax): 21→27=2, 2→5=1, 4→5=1, 5→24=1, 5→29=1, 6→12=1, 6→28=1, 9→4=1 (+24 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (7 → 17): 7 -> 3 -> 18 -> 29 -> 22 -> 11 -> 17
@@ -511,22 +511,22 @@ bus 3 (1 → 17): 1 -> 17 -> 19 -> 9 -> 21 -> 13 -> 10 -> 17
 bus 5 (1 → 17): 1 -> 17 -> 15 -> 28 -> 25 -> 26 -> 17
 ```
 
-## Cenário 18 — p1_2_h / afternoon_1 (frota [3;5;9;12], limite 83 min | origem 4;17;32 -> [28])
+## Scenario 18 — p1_2_h / afternoon_1 (fleet [3;5;9;12], limit 83 min | origin 4;17;32 -> [28])
 
-4 de 4 ônibus · 27/50 pax (54%) · 23 rodadas · 0.0s
+4 of 4 buses · 27/50 pax (54%) · 23 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 3 | 7 | 6 | 59/83 | 5/24 | 0.10 | 32 | 28 |
 | 5 | 10 | 11 | 82/83 | 5/24 | 0.13 | 32 | 28 |
 | 9 | 7 | 5 | 75/83 | 3/50 | 0.07 | 4 | 28 |
 | 12 | 7 | 5 | 75/83 | 2/32 | 0.07 | 32 | 28 |
 
-Pares mais atendidos: 9→28=2, 22→28=2, 1→28=1, 7→18=1, 7→27=1
+Most served pairs: 9→28=2, 22→28=2, 1→28=1, 7→18=1, 7→27=1
 
-Não atendidos (23 pax): 3→19=1, 3→27=1, 6→16=1, 7→12=1, 9→25=1, 9→30=1, 12→14=1, 13→26=1 (+15 pares)
+Unserved (23 pax): 3→19=1, 3→27=1, 6→16=1, 7→12=1, 9→25=1, 9→30=1, 12→14=1, 13→26=1 (+15 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 3 (32 → 28): 32 -> 1 -> 9 -> 7 -> 18 -> 27 -> 28
@@ -535,11 +535,11 @@ bus 9 (4 → 28): 4 -> 13 -> 3 -> 2 -> 5 -> 29 -> 28
 bus 12 (32 → 28): 32 -> 19 -> 24 -> 10 -> 11 -> 21 -> 28
 ```
 
-## Cenário 19 — p1_4_r / afternoon_2 (frota [1;2;3;5;6;10;12], limite 171 min | origem 5 -> [3;10;24])
+## Scenario 19 — p1_4_r / afternoon_2 (fleet [1;2;3;5;6;10;12], limit 171 min | origin 5 -> [3;10;24])
 
-6 de 7 ônibus · 59/66 pax (89%) · 48 rodadas · 0.0s
+6 of 7 buses · 59/66 pax (89%) · 48 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 17 | 25 | 170/171 | 10/24 | 0.15 | 5 | 3 |
 | 2 | 10 | 9 | 144/171 | 6/32 | 0.06 | 5 | 24 |
@@ -548,13 +548,13 @@ bus 12 (32 → 28): 32 -> 19 -> 24 -> 10 -> 11 -> 21 -> 28
 | 6 | 7 | 4 | 85/171 | 3/32 | 0.05 | 5 | 3 |
 | 10 | 9 | 6 | 155/171 | 3/24 | 0.04 | 5 | 3 |
 
-Pares mais atendidos: 10→3=2, 18→5=2, 18→26=2, 3→26=2, 1→25=1
+Most served pairs: 10→3=2, 18→5=2, 18→26=2, 3→26=2, 1→25=1
 
-Ociosos (1): [12]
+Idle (1): [12]
 
-Não atendidos (7 pax): 19→27=2, 11→30=1, 15→9=1, 24→14=1, 25→14=1, 27→14=1
+Unserved (7 pax): 19→27=2, 11→30=1, 15→9=1, 24→14=1, 25→14=1, 27→14=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (5 → 3): 5 -> 18 -> 1 -> 30 -> 25 -> 20 -> 26 -> 12 -> 5 -> 4 -> 2 -> 32 -> 28 -> 21 -> 11 -> 10 -> 3
@@ -565,11 +565,11 @@ bus 6 (5 → 3): 5 -> 28 -> 2 -> 8 -> 21 -> 5 -> 3
 bus 10 (5 → 3): 5 -> 10 -> 4 -> 25 -> 32 -> 15 -> 16 -> 5 -> 3
 ```
 
-## Cenário 20 — p1_4_b / night_2 (frota [1;2;3;5;6;7;8;9;10;11;12], limite 56 min | origem 10;16 -> [12])
+## Scenario 20 — p1_4_b / night_2 (fleet [1;2;3;5;6;7;8;9;10;11;12], limit 56 min | origin 10;16 -> [12])
 
-7 de 11 ônibus · 21/59 pax (36%) · 25 rodadas · 0.0s
+7 of 11 buses · 21/59 pax (36%) · 25 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 6 | 3 | 55/56 | 2/24 | 0.05 | 10 | 12 |
 | 2 | 4 | 2 | 50/56 | 1/32 | 0.04 | 10 | 12 |
@@ -579,13 +579,13 @@ bus 10 (5 → 3): 5 -> 10 -> 4 -> 25 -> 32 -> 15 -> 16 -> 5 -> 3
 | 7 | 7 | 4 | 56/56 | 2/50 | 0.07 | 10 | 12 |
 | 8 | 5 | 2 | 49/56 | 1/50 | 0.04 | 10 | 12 |
 
-Pares mais atendidos: 29→31=2, 9→10=1, 10→3=1, 13→9=1, 13→24=1
+Most served pairs: 29→31=2, 9→10=1, 10→3=1, 13→9=1, 13→24=1
 
-Ociosos (4): [9, 10, 11, 12]
+Idle (4): [9, 10, 11, 12]
 
-Não atendidos (38 pax): 30→27=2, 1→14=1, 2→22=1, 3→4=1, 4→5=1, 4→15=1, 4→19=1, 4→22=1 (+29 pares)
+Unserved (38 pax): 30→27=2, 1→14=1, 2→22=1, 3→4=1, 4→5=1, 4→15=1, 4→19=1, 4→22=1 (+29 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (10 → 12): 10 -> 13 -> 9 -> 10 -> 3 -> 12
@@ -597,21 +597,21 @@ bus 7 (10 → 12): 10 -> 12 -> 27 -> 25 -> 26 -> 19 -> 12
 bus 8 (10 → 12): 10 -> 13 -> 5 -> 10 -> 12
 ```
 
-## Cenário 21 — p1_3_i / night_2 (frota [3;6;7], limite 93 min | origem 25 -> [31])
+## Scenario 21 — p1_3_i / night_2 (fleet [3;6;7], limit 93 min | origin 25 -> [31])
 
-3 de 3 ônibus · 20/48 pax (42%) · 21 rodadas · 0.0s
+3 of 3 buses · 20/48 pax (42%) · 21 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 3 | 11 | 8 | 88/93 | 7/24 | 0.09 | 25 | 31 |
 | 6 | 9 | 8 | 82/93 | 4/32 | 0.10 | 25 | 31 |
 | 7 | 7 | 4 | 90/93 | 3/50 | 0.04 | 25 | 31 |
 
-Pares mais atendidos: 27→21=2, 9→10=1, 11→21=1, 13→10=1, 18→10=1
+Most served pairs: 27→21=2, 9→10=1, 11→21=1, 13→10=1, 18→10=1
 
-Não atendidos (28 pax): 2→30=1, 3→7=1, 3→12=1, 6→27=1, 7→3=1, 8→22=1, 10→4=1, 11→18=1 (+20 pares)
+Unserved (28 pax): 2→30=1, 3→7=1, 3→12=1, 6→27=1, 7→3=1, 8→22=1, 10→4=1, 11→18=1 (+20 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 3 (25 → 31): 25 -> 19 -> 18 -> 13 -> 9 -> 10 -> 11 -> 21 -> 26 -> 25 -> 31
@@ -619,24 +619,24 @@ bus 6 (25 → 31): 25 -> 31 -> 27 -> 21 -> 24 -> 12 -> 11 -> 10 -> 31
 bus 7 (25 → 31): 25 -> 31 -> 32 -> 7 -> 15 -> 21 -> 31
 ```
 
-## Cenário 22 — p1_2_o / night_2 (frota [1;4;5;6;8;9], limite 79 min | origem 18 -> [22;26])
+## Scenario 22 — p1_2_o / night_2 (fleet [1;4;5;6;8;9], limit 79 min | origin 18 -> [22;26])
 
-4 de 6 ônibus · 17/38 pax (45%) · 20 rodadas · 0.0s
+4 of 6 buses · 17/38 pax (45%) · 20 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 7 | 5 | 78/79 | 3/24 | 0.06 | 18 | 26 |
 | 4 | 8 | 6 | 69/79 | 4/50 | 0.09 | 18 | 22 |
 | 5 | 5 | 3 | 70/79 | 3/24 | 0.04 | 18 | 26 |
 | 6 | 6 | 3 | 78/79 | 2/32 | 0.04 | 18 | 26 |
 
-Pares mais atendidos: 7→26=1, 18→29=1, 27→7=1, 27→21=1, 28→26=1
+Most served pairs: 7→26=1, 18→29=1, 27→7=1, 27→21=1, 28→26=1
 
-Ociosos (2): [8, 9]
+Idle (2): [8, 9]
 
-Não atendidos (21 pax): 2→19=1, 4→3=1, 6→27=1, 8→14=1, 10→14=1, 12→17=1, 13→14=1, 15→4=1 (+13 pares)
+Unserved (21 pax): 2→19=1, 4→3=1, 6→27=1, 8→14=1, 10→14=1, 12→17=1, 13→14=1, 15→4=1 (+13 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (18 → 26): 18 -> 29 -> 28 -> 27 -> 21 -> 7 -> 26
@@ -645,22 +645,22 @@ bus 5 (18 → 26): 18 -> 14 -> 19 -> 11 -> 26
 bus 6 (18 → 26): 18 -> 1 -> 23 -> 13 -> 18 -> 26
 ```
 
-## Cenário 23 — p1_2_b / morning_1 (frota [3;5;10;12], limite 57 min | origem 8;28 -> [13;17])
+## Scenario 23 — p1_2_b / morning_1 (fleet [3;5;10;12], limit 57 min | origin 8;28 -> [13;17])
 
-4 de 4 ônibus · 19/49 pax (39%) · 15 rodadas · 0.0s
+4 of 4 buses · 19/49 pax (39%) · 15 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 3 | 7 | 5 | 55/57 | 3/24 | 0.09 | 8 | 13 |
 | 5 | 7 | 6 | 54/57 | 4/24 | 0.11 | 8 | 13 |
 | 10 | 7 | 6 | 47/57 | 3/24 | 0.13 | 28 | 17 |
 | 12 | 4 | 2 | 36/57 | 2/32 | 0.06 | 8 | 13 |
 
-Pares mais atendidos: 26→27=2, 5→13=1, 8→4=1, 9→11=1, 13→9=1
+Most served pairs: 26→27=2, 5→13=1, 8→4=1, 9→11=1, 13→9=1
 
-Não atendidos (30 pax): 5→26=2, 2→15=1, 2→25=1, 2→27=1, 3→25=1, 5→22=1, 6→3=1, 6→18=1 (+21 pares)
+Unserved (30 pax): 5→26=2, 2→15=1, 2→25=1, 2→27=1, 3→25=1, 5→22=1, 6→3=1, 6→18=1 (+21 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 3 (8 → 13): 8 -> 4 -> 5 -> 13 -> 9 -> 11 -> 13
@@ -669,24 +669,24 @@ bus 10 (28 → 17): 28 -> 26 -> 31 -> 27 -> 19 -> 20 -> 17
 bus 12 (8 → 13): 8 -> 12 -> 22 -> 13
 ```
 
-## Cenário 24 — p1_2_c / night_2 (frota [1;3;4;5;6;9;10;11;12], limite 61 min | origem 21;27 -> [9;19])
+## Scenario 24 — p1_2_c / night_2 (fleet [1;3;4;5;6;9;10;11;12], limit 61 min | origin 21;27 -> [9;19])
 
-4 de 9 ônibus · 19/53 pax (36%) · 23 rodadas · 0.0s
+4 of 9 buses · 19/53 pax (36%) · 23 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 10 | 9 | 61/61 | 6/24 | 0.15 | 21 | 19 |
 | 3 | 5 | 3 | 47/61 | 2/24 | 0.06 | 21 | 9 |
 | 4 | 5 | 3 | 59/61 | 2/50 | 0.05 | 21 | 19 |
 | 5 | 6 | 4 | 56/61 | 2/24 | 0.07 | 21 | 19 |
 
-Pares mais atendidos: 19→23=2, 20→22=1, 20→23=1, 21→26=1, 21→27=1
+Most served pairs: 19→23=2, 20→22=1, 20→23=1, 21→26=1, 21→27=1
 
-Ociosos (5): [6, 9, 10, 11, 12]
+Idle (5): [6, 9, 10, 11, 12]
 
-Não atendidos (34 pax): 1→6=2, 10→14=2, 1→4=1, 3→16=1, 4→20=1, 6→4=1, 6→23=1, 6→26=1 (+24 pares)
+Unserved (34 pax): 1→6=2, 10→14=2, 1→4=1, 3→16=1, 4→20=1, 6→4=1, 6→23=1, 6→26=1 (+24 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (21 → 19): 21 -> 20 -> 25 -> 24 -> 23 -> 22 -> 31 -> 26 -> 27 -> 19
@@ -695,23 +695,23 @@ bus 4 (21 → 19): 21 -> 3 -> 8 -> 28 -> 19
 bus 5 (21 → 19): 21 -> 19 -> 23 -> 25 -> 28 -> 19
 ```
 
-## Cenário 25 — p1_2_m / morning_2 (frota [1;3;5;7;8;9;10;11;12], limite 140 min | origem 29;30 -> [14;31])
+## Scenario 25 — p1_2_m / morning_2 (fleet [1;3;5;7;8;9;10;11;12], limit 140 min | origin 29;30 -> [14;31])
 
-3 de 9 ônibus · 21/49 pax (43%) · 25 rodadas · 0.0s
+3 of 9 buses · 21/49 pax (43%) · 25 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 10 | 10 | 140/140 | 4/24 | 0.07 | 29 | 31 |
 | 3 | 11 | 10 | 132/140 | 7/24 | 0.08 | 30 | 14 |
 | 5 | 4 | 1 | 85/140 | 1/24 | 0.01 | 30 | 31 |
 
-Pares mais atendidos: 12→24=2, 1→31=1, 6→14=1, 13→16=1, 13→28=1
+Most served pairs: 12→24=2, 1→31=1, 6→14=1, 13→16=1, 13→28=1
 
-Ociosos (6): [7, 8, 9, 10, 11, 12]
+Idle (6): [7, 8, 9, 10, 11, 12]
 
-Não atendidos (28 pax): 4→25=2, 1→29=1, 3→15=1, 4→22=1, 4→29=1, 5→2=1, 5→22=1, 6→26=1 (+19 pares)
+Unserved (28 pax): 4→25=2, 1→29=1, 3→15=1, 4→22=1, 4→29=1, 5→2=1, 5→22=1, 6→26=1 (+19 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (29 → 31): 29 -> 13 -> 28 -> 6 -> 14 -> 18 -> 32 -> 16 -> 1 -> 31
@@ -719,24 +719,24 @@ bus 3 (30 → 14): 30 -> 12 -> 24 -> 22 -> 23 -> 10 -> 25 -> 26 -> 21 -> 13 -> 1
 bus 5 (30 → 31): 30 -> 14 -> 30 -> 31
 ```
 
-## Cenário 26 — p1_4_o / morning_1 (frota [2;5;6;9;11], limite 90 min | origem 10 -> [3])
+## Scenario 26 — p1_4_o / morning_1 (fleet [2;5;6;9;11], limit 90 min | origin 10 -> [3])
 
-4 de 5 ônibus · 14/45 pax (31%) · 17 rodadas · 0.0s
+4 of 5 buses · 14/45 pax (31%) · 17 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 6 | 4 | 77/90 | 4/32 | 0.05 | 10 | 3 |
 | 5 | 6 | 4 | 79/90 | 3/24 | 0.05 | 10 | 3 |
 | 6 | 6 | 3 | 75/90 | 1/32 | 0.04 | 10 | 3 |
 | 9 | 6 | 3 | 80/90 | 1/50 | 0.04 | 10 | 3 |
 
-Pares mais atendidos: 10→22=1, 21→7=1, 21→9=1, 21→22=1, 16→3=1
+Most served pairs: 10→22=1, 21→7=1, 21→9=1, 21→22=1, 16→3=1
 
-Ociosos (1): [11]
+Idle (1): [11]
 
-Não atendidos (31 pax): 5→25=2, 23→25=2, 1→17=1, 5→24=1, 6→15=1, 6→23=1, 7→31=1, 9→4=1 (+21 pares)
+Unserved (31 pax): 5→25=2, 23→25=2, 1→17=1, 5→24=1, 6→15=1, 6→23=1, 7→31=1, 9→4=1 (+21 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (10 → 3): 10 -> 21 -> 7 -> 9 -> 22 -> 3
@@ -745,33 +745,33 @@ bus 6 (10 → 3): 10 -> 3 -> 28 -> 13 -> 19 -> 3
 bus 9 (10 → 3): 10 -> 3 -> 29 -> 17 -> 15 -> 3
 ```
 
-## Cenário 27 — p1_2_p / morning_2 (frota [2;4;5;6;7;8;9;10;11;12], limite 67 min | origem 28 -> [12])
+## Scenario 27 — p1_2_p / morning_2 (fleet [2;4;5;6;7;8;9;10;11;12], limit 67 min | origin 28 -> [12])
 
-2 de 10 ônibus · 6/50 pax (12%) · 14 rodadas · 0.0s
+2 of 10 buses · 6/50 pax (12%) · 14 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 7 | 4 | 65/67 | 3/32 | 0.06 | 28 | 12 |
 | 4 | 4 | 2 | 65/67 | 2/50 | 0.03 | 28 | 12 |
 
-Pares mais atendidos: 17→18=1, 18→19=1, 18→28=1, 28→10=1, 15→23=1
+Most served pairs: 17→18=1, 18→19=1, 18→28=1, 28→10=1, 15→23=1
 
-Ociosos (8): [5, 6, 7, 8, 9, 10, 11, 12]
+Idle (8): [5, 6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (44 pax): 6→20=2, 1→13=1, 2→11=1, 2→25=1, 4→30=1, 5→22=1, 6→31=1, 7→24=1 (+35 pares)
+Unserved (44 pax): 6→20=2, 1→13=1, 2→11=1, 2→25=1, 4→30=1, 5→22=1, 6→31=1, 7→24=1 (+35 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (28 → 12): 28 -> 17 -> 18 -> 19 -> 28 -> 10 -> 12
 bus 4 (28 → 12): 28 -> 15 -> 23 -> 12
 ```
 
-## Cenário 28 — p1_4_p / night_1 (frota [1;2;3;4;5;6;7;8;9;10;12], limite 144 min | origem 17;29 -> [18])
+## Scenario 28 — p1_4_p / night_1 (fleet [1;2;3;4;5;6;7;8;9;10;12], limit 144 min | origin 17;29 -> [18])
 
-6 de 11 ônibus · 39/46 pax (85%) · 42 rodadas · 0.0s
+6 of 11 buses · 39/46 pax (85%) · 42 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 11 | 10 | 129/144 | 6/24 | 0.08 | 29 | 18 |
 | 2 | 11 | 10 | 120/144 | 6/32 | 0.08 | 29 | 18 |
@@ -780,13 +780,13 @@ bus 4 (28 → 12): 28 -> 15 -> 23 -> 12
 | 5 | 8 | 6 | 98/144 | 3/24 | 0.06 | 17 | 18 |
 | 6 | 4 | 1 | 64/144 | 1/32 | 0.02 | 17 | 18 |
 
-Pares mais atendidos: 29→25=2, 20→31=2, 22→11=2, 11→26=1, 12→6=1
+Most served pairs: 29→25=2, 20→31=2, 22→11=2, 11→26=1, 12→6=1
 
-Ociosos (5): [7, 8, 9, 10, 12]
+Idle (5): [7, 8, 9, 10, 12]
 
-Não atendidos (7 pax): 11→16=1, 14→13=1, 14→24=1, 15→21=1, 20→14=1, 21→5=1, 26→15=1
+Unserved (7 pax): 11→16=1, 14→13=1, 14→24=1, 15→21=1, 20→14=1, 21→5=1, 26→15=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (29 → 18): 29 -> 32 -> 11 -> 24 -> 26 -> 23 -> 21 -> 25 -> 12 -> 6 -> 18
@@ -797,23 +797,23 @@ bus 5 (17 → 18): 17 -> 18 -> 8 -> 2 -> 22 -> 11 -> 3 -> 18
 bus 6 (17 → 18): 17 -> 18 -> 25 -> 18
 ```
 
-## Cenário 29 — p1_4_n / afternoon_1 (frota [1;2;3;4;5;6;8;9;10;11;12], limite 168 min | origem 10;14 -> [27])
+## Scenario 29 — p1_4_n / afternoon_1 (fleet [1;2;3;4;5;6;8;9;10;11;12], limit 168 min | origin 10;14 -> [27])
 
-3 de 11 ônibus · 30/40 pax (75%) · 33 rodadas · 0.0s
+3 of 11 buses · 30/40 pax (75%) · 33 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 12 | 168/168 | 5/24 | 0.07 | 14 | 27 |
 | 2 | 11 | 11 | 155/168 | 5/32 | 0.07 | 10 | 27 |
 | 3 | 10 | 7 | 159/168 | 3/24 | 0.04 | 10 | 27 |
 
-Pares mais atendidos: 7→14=1, 13→15=1, 14→13=1, 14→31=1, 15→17=1
+Most served pairs: 7→14=1, 13→15=1, 14→13=1, 14→31=1, 15→17=1
 
-Ociosos (8): [4, 5, 6, 8, 9, 10, 11, 12]
+Idle (8): [4, 5, 6, 8, 9, 10, 11, 12]
 
-Não atendidos (10 pax): 1→2=1, 2→14=1, 5→17=1, 6→24=1, 11→2=1, 12→3=1, 21→14=1, 23→6=1 (+2 pares)
+Unserved (10 pax): 1→2=1, 2→14=1, 5→17=1, 6→24=1, 11→2=1, 12→3=1, 21→14=1, 23→6=1 (+2 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (14 → 27): 14 -> 32 -> 7 -> 14 -> 13 -> 31 -> 25 -> 26 -> 18 -> 15 -> 17 -> 27
@@ -821,11 +821,11 @@ bus 2 (10 → 27): 10 -> 20 -> 24 -> 19 -> 29 -> 8 -> 26 -> 23 -> 22 -> 25 -> 27
 bus 3 (10 → 27): 10 -> 15 -> 8 -> 16 -> 28 -> 27 -> 21 -> 22 -> 13 -> 27
 ```
 
-## Cenário 30 — p1_3_i / night_1 (frota [1;4;6;7;8;9;10;11], limite 35 min | origem 1;31 -> [20;25])
+## Scenario 30 — p1_3_i / night_1 (fleet [1;4;6;7;8;9;10;11], limit 35 min | origin 1;31 -> [20;25])
 
-6 de 8 ônibus · 11/50 pax (22%) · 14 rodadas · 0.0s
+6 of 8 buses · 11/50 pax (22%) · 14 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 4 | 2 | 24/35 | 2/24 | 0.08 | 31 | 20 |
 | 4 | 4 | 3 | 27/35 | 2/50 | 0.11 | 1 | 20 |
@@ -834,13 +834,13 @@ bus 3 (10 → 27): 10 -> 15 -> 8 -> 16 -> 28 -> 27 -> 21 -> 22 -> 13 -> 27
 | 8 | 4 | 1 | 27/35 | 1/50 | 0.04 | 31 | 20 |
 | 9 | 6 | 3 | 33/35 | 2/50 | 0.09 | 31 | 20 |
 
-Pares mais atendidos: 22→19=1, 31→19=1, 1→12=1, 1→13=1, 13→12=1
+Most served pairs: 22→19=1, 31→19=1, 1→12=1, 1→13=1, 13→12=1
 
-Ociosos (2): [10, 11]
+Idle (2): [10, 11]
 
-Não atendidos (39 pax): 2→16=1, 3→29=1, 4→7=1, 4→11=1, 8→17=1, 8→22=1, 9→7=1, 10→3=1 (+31 pares)
+Unserved (39 pax): 2→16=1, 3→29=1, 4→7=1, 4→11=1, 8→17=1, 8→22=1, 9→7=1, 10→3=1 (+31 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (31 → 20): 31 -> 22 -> 19 -> 20
@@ -851,23 +851,23 @@ bus 8 (31 → 20): 31 -> 20 -> 9 -> 20
 bus 9 (31 → 20): 31 -> 20 -> 12 -> 11 -> 21 -> 20
 ```
 
-## Cenário 31 — p1_4_r / morning_1 (frota [2;3;4;5;8;9;10;11;12], limite 129 min | origem 11;30 -> [2])
+## Scenario 31 — p1_4_r / morning_1 (fleet [2;3;4;5;8;9;10;11;12], limit 129 min | origin 11;30 -> [2])
 
-3 de 9 ônibus · 22/40 pax (55%) · 25 rodadas · 0.0s
+3 of 9 buses · 22/40 pax (55%) · 25 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 11 | 9 | 123/129 | 5/32 | 0.07 | 11 | 2 |
 | 3 | 5 | 4 | 103/129 | 3/24 | 0.04 | 11 | 2 |
 | 4 | 10 | 9 | 120/129 | 3/50 | 0.07 | 30 | 2 |
 
-Pares mais atendidos: 18→7=2, 6→3=1, 9→3=1, 9→11=1, 11→10=1
+Most served pairs: 18→7=2, 6→3=1, 9→3=1, 9→11=1, 11→10=1
 
-Ociosos (6): [5, 8, 9, 10, 11, 12]
+Idle (6): [5, 8, 9, 10, 11, 12]
 
-Não atendidos (18 pax): 3→16=1, 4→14=1, 4→25=1, 5→17=1, 7→29=1, 9→17=1, 9→31=1, 10→25=1 (+10 pares)
+Unserved (18 pax): 3→16=1, 4→14=1, 4→25=1, 5→17=1, 7→29=1, 9→17=1, 9→31=1, 10→25=1 (+10 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (11 → 2): 11 -> 23 -> 19 -> 29 -> 8 -> 9 -> 6 -> 3 -> 11 -> 10 -> 2
@@ -875,11 +875,11 @@ bus 3 (11 → 2): 11 -> 14 -> 12 -> 4 -> 2
 bus 4 (30 → 2): 30 -> 28 -> 16 -> 5 -> 18 -> 7 -> 13 -> 26 -> 21 -> 2
 ```
 
-## Cenário 32 — p1_3_h / morning_2 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 146 min | origem 18;27 -> [6;31])
+## Scenario 32 — p1_3_h / morning_2 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 146 min | origin 18;27 -> [6;31])
 
-6 de 12 ônibus · 44/54 pax (81%) · 46 rodadas · 0.0s
+6 of 12 buses · 44/54 pax (81%) · 46 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 13 | 129/146 | 7/24 | 0.10 | 27 | 31 |
 | 2 | 11 | 10 | 127/146 | 5/32 | 0.08 | 27 | 6 |
@@ -888,13 +888,13 @@ bus 4 (30 → 2): 30 -> 28 -> 16 -> 5 -> 18 -> 7 -> 13 -> 26 -> 21 -> 2
 | 5 | 9 | 6 | 135/146 | 4/24 | 0.04 | 27 | 6 |
 | 6 | 4 | 1 | 44/146 | 1/32 | 0.02 | 27 | 31 |
 
-Pares mais atendidos: 5→26=1, 7→10=1, 7→17=1, 7→23=1, 7→26=1
+Most served pairs: 5→26=1, 7→10=1, 7→17=1, 7→23=1, 7→26=1
 
-Ociosos (6): [7, 8, 9, 10, 11, 12]
+Idle (6): [7, 8, 9, 10, 11, 12]
 
-Não atendidos (10 pax): 3→25=1, 3→26=1, 4→21=1, 6→16=1, 13→16=1, 14→25=1, 23→13=1, 24→14=1 (+2 pares)
+Unserved (10 pax): 3→25=1, 3→26=1, 4→21=1, 6→16=1, 13→16=1, 14→25=1, 23→13=1, 24→14=1 (+2 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (27 → 31): 27 -> 21 -> 8 -> 5 -> 7 -> 10 -> 23 -> 26 -> 31 -> 17 -> 30 -> 31
@@ -905,11 +905,11 @@ bus 5 (27 → 6): 27 -> 28 -> 29 -> 30 -> 15 -> 16 -> 6 -> 21 -> 6
 bus 6 (27 → 31): 27 -> 5 -> 27 -> 31
 ```
 
-## Cenário 33 — p1_2_b / morning_2 (frota [1;2;3;4;5;6;7;8;9;11;12], limite 62 min | origem 30 -> [11;17;24])
+## Scenario 33 — p1_2_b / morning_2 (fleet [1;2;3;4;5;6;7;8;9;11;12], limit 62 min | origin 30 -> [11;17;24])
 
-6 de 11 ônibus · 14/46 pax (30%) · 20 rodadas · 0.0s
+6 of 11 buses · 14/46 pax (30%) · 20 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 7 | 5 | 57/62 | 3/24 | 0.09 | 30 | 24 |
 | 2 | 7 | 4 | 56/62 | 3/32 | 0.07 | 30 | 11 |
@@ -918,13 +918,13 @@ bus 6 (27 → 31): 27 -> 5 -> 27 -> 31
 | 5 | 3 | 1 | 50/62 | 1/24 | 0.02 | 30 | 24 |
 | 6 | 5 | 2 | 62/62 | 1/32 | 0.03 | 30 | 17 |
 
-Pares mais atendidos: 19→12=1, 21→12=1, 25→24=1, 25→31=1, 31→19=1
+Most served pairs: 19→12=1, 21→12=1, 25→24=1, 25→31=1, 31→19=1
 
-Ociosos (5): [7, 8, 9, 11, 12]
+Idle (5): [7, 8, 9, 11, 12]
 
-Não atendidos (32 pax): 1→2=1, 1→7=1, 1→27=1, 1→29=1, 2→14=1, 4→24=1, 5→16=1, 5→31=1 (+24 pares)
+Unserved (32 pax): 1→2=1, 1→7=1, 1→27=1, 1→29=1, 2→14=1, 4→24=1, 5→16=1, 5→31=1 (+24 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (30 → 24): 30 -> 25 -> 31 -> 19 -> 21 -> 12 -> 24
@@ -935,11 +935,11 @@ bus 5 (30 → 24): 30 -> 13 -> 24
 bus 6 (30 → 17): 30 -> 9 -> 19 -> 30 -> 17
 ```
 
-## Cenário 34 — p1_4_c / night_1 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 92 min | origem 3;8;23 -> [5;24;28])
+## Scenario 34 — p1_4_c / night_1 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 92 min | origin 3;8;23 -> [5;24;28])
 
-5 de 12 ônibus · 32/48 pax (67%) · 35 rodadas · 0.0s
+5 of 12 buses · 32/48 pax (67%) · 35 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 9 | 10 | 89/92 | 6/24 | 0.11 | 8 | 5 |
 | 2 | 8 | 6 | 79/92 | 4/32 | 0.08 | 23 | 28 |
@@ -947,13 +947,13 @@ bus 6 (30 → 17): 30 -> 9 -> 19 -> 30 -> 17
 | 4 | 8 | 8 | 85/92 | 6/50 | 0.09 | 23 | 5 |
 | 5 | 6 | 3 | 57/92 | 3/24 | 0.05 | 23 | 24 |
 
-Pares mais atendidos: 6→15=1, 8→5=1, 8→9=1, 8→10=1, 9→5=1
+Most served pairs: 6→15=1, 8→5=1, 8→9=1, 8→10=1, 9→5=1
 
-Ociosos (7): [6, 7, 8, 9, 10, 11, 12]
+Idle (7): [6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (16 pax): 1→3=1, 1→11=1, 1→18=1, 2→16=1, 4→15=1, 5→2=1, 7→2=1, 7→17=1 (+8 pares)
+Unserved (16 pax): 1→3=1, 1→11=1, 1→18=1, 2→16=1, 4→15=1, 5→2=1, 7→2=1, 7→17=1 (+8 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (8 → 5): 8 -> 10 -> 12 -> 20 -> 19 -> 6 -> 15 -> 9 -> 5
@@ -963,11 +963,11 @@ bus 4 (23 → 5): 23 -> 26 -> 30 -> 31 -> 10 -> 21 -> 4 -> 5
 bus 5 (23 → 24): 23 -> 27 -> 28 -> 25 -> 23 -> 24
 ```
 
-## Cenário 35 — p1_3_o / night_2 (frota [1;2;3;4;6;7;8;11], limite 69 min | origem 18;30;31 -> [18;21])
+## Scenario 35 — p1_3_o / night_2 (fleet [1;2;3;4;6;7;8;11], limit 69 min | origin 18;30;31 -> [18;21])
 
-8 de 8 ônibus · 35/66 pax (53%) · 30 rodadas · 0.0s
+8 of 8 buses · 35/66 pax (53%) · 30 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 6 | 4 | 41/69 | 3/24 | 0.10 | 18 | 18 |
 | 2 | 6 | 4 | 50/69 | 2/32 | 0.08 | 31 | 21 |
@@ -978,11 +978,11 @@ bus 5 (23 → 24): 23 -> 27 -> 28 -> 25 -> 23 -> 24
 | 8 | 6 | 5 | 66/69 | 3/50 | 0.08 | 18 | 21 |
 | 11 | 6 | 4 | 57/69 | 3/45 | 0.07 | 18 | 21 |
 
-Pares mais atendidos: 32→25=2, 1→18=1, 1→19=1, 13→5=1, 13→18=1
+Most served pairs: 32→25=2, 1→18=1, 1→19=1, 13→5=1, 13→18=1
 
-Não atendidos (31 pax): 1→24=1, 2→16=1, 2→30=1, 3→24=1, 4→8=1, 4→24=1, 4→25=1, 4→27=1 (+23 pares)
+Unserved (31 pax): 1→24=1, 2→16=1, 2→30=1, 3→24=1, 4→8=1, 4→24=1, 4→25=1, 4→27=1 (+23 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (18 → 18): 18 -> 1 -> 19 -> 13 -> 5 -> 18
@@ -995,22 +995,22 @@ bus 8 (18 → 21): 18 -> 6 -> 3 -> 10 -> 25 -> 21
 bus 11 (18 → 21): 18 -> 2 -> 26 -> 23 -> 22 -> 21
 ```
 
-## Cenário 36 — p1_2_p / night_1 (frota [4;5;8;11], limite 127 min | origem 12;32 -> [23])
+## Scenario 36 — p1_2_p / night_1 (fleet [4;5;8;11], limit 127 min | origin 12;32 -> [23])
 
-4 de 4 ônibus · 32/41 pax (78%) · 31 rodadas · 0.0s
+4 of 4 buses · 32/41 pax (78%) · 31 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 4 | 11 | 10 | 127/127 | 6/50 | 0.08 | 12 | 23 |
 | 5 | 9 | 7 | 118/127 | 4/24 | 0.06 | 32 | 23 |
 | 8 | 10 | 8 | 107/127 | 4/50 | 0.07 | 12 | 23 |
 | 11 | 10 | 7 | 126/127 | 4/45 | 0.06 | 12 | 23 |
 
-Pares mais atendidos: 7→14=1, 7→25=1, 7→28=1, 10→14=1, 10→31=1
+Most served pairs: 7→14=1, 7→25=1, 7→28=1, 10→14=1, 10→31=1
 
-Não atendidos (9 pax): 2→16=1, 10→3=1, 11→17=1, 17→13=1, 17→22=1, 19→8=1, 21→15=1, 22→17=1 (+1 pares)
+Unserved (9 pax): 2→16=1, 10→3=1, 11→17=1, 17→13=1, 17→22=1, 19→8=1, 21→15=1, 22→17=1 (+1 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 4 (12 → 23): 12 -> 11 -> 12 -> 10 -> 31 -> 7 -> 14 -> 28 -> 21 -> 25 -> 23
@@ -1019,11 +1019,11 @@ bus 8 (12 → 23): 12 -> 18 -> 4 -> 15 -> 7 -> 9 -> 20 -> 21 -> 24 -> 23
 bus 11 (12 → 23): 12 -> 23 -> 1 -> 18 -> 14 -> 16 -> 15 -> 2 -> 21 -> 23
 ```
 
-## Cenário 37 — p1_4_p / morning_1 (frota [1;2;5;6;9;10;11], limite 91 min | origem 31 -> [2;29;32])
+## Scenario 37 — p1_4_p / morning_1 (fleet [1;2;5;6;9;10;11], limit 91 min | origin 31 -> [2;29;32])
 
-7 de 7 ônibus · 33/53 pax (62%) · 35 rodadas · 0.0s
+7 of 7 buses · 33/53 pax (62%) · 35 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 9 | 8 | 81/91 | 5/24 | 0.10 | 31 | 29 |
 | 2 | 8 | 6 | 91/91 | 4/32 | 0.07 | 31 | 29 |
@@ -1033,11 +1033,11 @@ bus 11 (12 → 23): 12 -> 23 -> 1 -> 18 -> 14 -> 16 -> 15 -> 2 -> 21 -> 23
 | 10 | 7 | 4 | 80/91 | 3/24 | 0.05 | 31 | 32 |
 | 11 | 6 | 3 | 79/91 | 2/45 | 0.04 | 31 | 32 |
 
-Pares mais atendidos: 9→27=1, 20→22=1, 20→27=1, 22→26=1, 22→30=1
+Most served pairs: 9→27=1, 20→22=1, 20→27=1, 22→26=1, 22→30=1
 
-Não atendidos (20 pax): 1→10=1, 3→15=1, 3→19=1, 3→22=1, 4→24=1, 5→25=1, 10→3=1, 10→25=1 (+12 pares)
+Unserved (20 pax): 1→10=1, 3→15=1, 3→19=1, 3→22=1, 4→24=1, 5→25=1, 10→3=1, 10→25=1 (+12 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (31 → 29): 31 -> 20 -> 9 -> 27 -> 22 -> 30 -> 26 -> 31 -> 29
@@ -1049,11 +1049,11 @@ bus 10 (31 → 32): 31 -> 18 -> 5 -> 15 -> 28 -> 31 -> 32
 bus 11 (31 → 32): 31 -> 20 -> 4 -> 26 -> 31 -> 32
 ```
 
-## Cenário 38 — p1_2_f / night_1 (frota [4;5;6;7;9;10;12], limite 118 min | origem 23;30 -> [17;20])
+## Scenario 38 — p1_2_f / night_1 (fleet [4;5;6;7;9;10;12], limit 118 min | origin 23;30 -> [17;20])
 
-7 de 7 ônibus · 44/51 pax (86%) · 39 rodadas · 0.0s
+7 of 7 buses · 44/51 pax (86%) · 39 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 4 | 11 | 12 | 117/118 | 7/50 | 0.10 | 23 | 17 |
 | 5 | 9 | 8 | 110/118 | 6/24 | 0.07 | 30 | 17 |
@@ -1063,11 +1063,11 @@ bus 11 (31 → 32): 31 -> 20 -> 4 -> 26 -> 31 -> 32
 | 10 | 7 | 6 | 106/118 | 3/24 | 0.06 | 23 | 17 |
 | 12 | 7 | 4 | 114/118 | 2/32 | 0.04 | 23 | 20 |
 
-Pares mais atendidos: 19→13=2, 26→16=2, 25→8=2, 4→21=1, 7→17=1
+Most served pairs: 19→13=2, 26→16=2, 25→8=2, 4→21=1, 7→17=1
 
-Não atendidos (7 pax): 6→24=1, 11→28=1, 16→2=1, 16→19=1, 16→25=1, 17→25=1, 18→2=1
+Unserved (7 pax): 6→24=1, 11→28=1, 16→2=1, 16→19=1, 16→25=1, 17→25=1, 18→2=1
 
-Rotas:
+Routes:
 
 ```
 bus 4 (23 → 17): 23 -> 19 -> 20 -> 13 -> 11 -> 10 -> 7 -> 4 -> 21 -> 18 -> 17
@@ -1079,22 +1079,22 @@ bus 10 (23 → 17): 23 -> 6 -> 15 -> 14 -> 31 -> 26 -> 17
 bus 12 (23 → 20): 23 -> 29 -> 12 -> 3 -> 22 -> 23 -> 20
 ```
 
-## Cenário 39 — p1_2_o / night_2 (frota [2;4;6;12], limite 167 min | origem 14 -> [18;19;31])
+## Scenario 39 — p1_2_o / night_2 (fleet [2;4;6;12], limit 167 min | origin 14 -> [18;19;31])
 
-4 de 4 ônibus · 31/38 pax (82%) · 29 rodadas · 0.0s
+4 of 4 buses · 31/38 pax (82%) · 29 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 10 | 8 | 143/167 | 4/32 | 0.06 | 14 | 31 |
 | 4 | 9 | 7 | 159/167 | 6/50 | 0.04 | 14 | 19 |
 | 6 | 10 | 9 | 163/167 | 6/32 | 0.06 | 14 | 31 |
 | 12 | 10 | 7 | 156/167 | 3/32 | 0.04 | 14 | 18 |
 
-Pares mais atendidos: 6→27=1, 7→26=1, 14→26=1, 21→3=1, 27→7=1
+Most served pairs: 6→27=1, 7→26=1, 14→26=1, 21→3=1, 27→7=1
 
-Não atendidos (7 pax): 9→24=1, 10→25=1, 12→24=1, 13→14=1, 22→30=1, 24→16=1, 24→20=1
+Unserved (7 pax): 9→24=1, 10→25=1, 12→24=1, 13→14=1, 22→30=1, 24→16=1, 24→20=1
 
-Rotas:
+Routes:
 
 ```
 bus 2 (14 → 31): 14 -> 28 -> 16 -> 6 -> 27 -> 21 -> 3 -> 7 -> 26 -> 31
@@ -1103,11 +1103,11 @@ bus 6 (14 → 31): 14 -> 15 -> 16 -> 30 -> 21 -> 25 -> 29 -> 4 -> 3 -> 31
 bus 12 (14 → 18): 14 -> 8 -> 9 -> 10 -> 14 -> 1 -> 23 -> 2 -> 13 -> 18
 ```
 
-## Cenário 40 — p1_2_g / night_2 (frota [1;3;4;5;6;12], limite 166 min | origem 19 -> [7;9;32])
+## Scenario 40 — p1_2_g / night_2 (fleet [1;3;4;5;6;12], limit 166 min | origin 19 -> [7;9;32])
 
-5 de 6 ônibus · 41/48 pax (85%) · 37 rodadas · 0.0s
+5 of 6 buses · 41/48 pax (85%) · 37 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 14 | 130/166 | 6/24 | 0.11 | 19 | 32 |
 | 3 | 10 | 9 | 124/166 | 4/24 | 0.07 | 19 | 7 |
@@ -1115,13 +1115,13 @@ bus 12 (14 → 18): 14 -> 8 -> 9 -> 10 -> 14 -> 1 -> 23 -> 2 -> 13 -> 18
 | 5 | 7 | 4 | 112/166 | 3/24 | 0.04 | 19 | 9 |
 | 6 | 8 | 5 | 150/166 | 3/32 | 0.03 | 19 | 9 |
 
-Pares mais atendidos: 16→4=2, 11→26=1, 17→12=1, 17→25=1, 19→28=1
+Most served pairs: 16→4=2, 11→26=1, 17→12=1, 17→25=1, 19→28=1
 
-Ociosos (1): [12]
+Idle (1): [12]
 
-Não atendidos (7 pax): 2→16=1, 4→23=1, 8→31=1, 10→15=1, 22→5=1, 26→18=1, 26→29=1
+Unserved (7 pax): 2→16=1, 4→23=1, 8→31=1, 10→15=1, 22→5=1, 26→18=1, 26→29=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (19 → 32): 19 -> 28 -> 17 -> 13 -> 32 -> 22 -> 11 -> 27 -> 26 -> 25 -> 12 -> 32
@@ -1131,11 +1131,11 @@ bus 5 (19 → 9): 19 -> 9 -> 28 -> 14 -> 5 -> 30 -> 9
 bus 6 (19 → 9): 19 -> 9 -> 1 -> 24 -> 4 -> 16 -> 2 -> 9
 ```
 
-## Cenário 41 — p1_2_a / afternoon_2 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 48 min | origem 10 -> [6;16;20])
+## Scenario 41 — p1_2_a / afternoon_2 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 48 min | origin 10 -> [6;16;20])
 
-5 de 12 ônibus · 12/41 pax (29%) · 21 rodadas · 0.0s
+5 of 12 buses · 12/41 pax (29%) · 21 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 6 | 4 | 39/48 | 4/24 | 0.10 | 10 | 20 |
 | 2 | 4 | 2 | 40/48 | 2/32 | 0.05 | 10 | 20 |
@@ -1143,13 +1143,13 @@ bus 6 (19 → 9): 19 -> 9 -> 1 -> 24 -> 4 -> 16 -> 2 -> 9
 | 4 | 6 | 3 | 47/48 | 2/50 | 0.06 | 10 | 20 |
 | 5 | 4 | 1 | 42/48 | 1/24 | 0.02 | 10 | 20 |
 
-Pares mais atendidos: 10→26=1, 21→11=1, 21→12=1, 21→26=1, 6→28=1
+Most served pairs: 10→26=1, 21→11=1, 21→12=1, 21→26=1, 6→28=1
 
-Ociosos (7): [6, 7, 8, 9, 10, 11, 12]
+Idle (7): [6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (29 pax): 6→26=2, 1→11=1, 1→29=1, 2→11=1, 5→25=1, 5→26=1, 6→21=1, 7→3=1 (+20 pares)
+Unserved (29 pax): 6→26=2, 1→11=1, 1→29=1, 2→11=1, 5→25=1, 5→26=1, 6→21=1, 7→3=1 (+20 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (10 → 20): 10 -> 21 -> 11 -> 12 -> 26 -> 20
@@ -1159,24 +1159,24 @@ bus 4 (10 → 20): 10 -> 20 -> 26 -> 30 -> 21 -> 20
 bus 5 (10 → 20): 10 -> 20 -> 25 -> 20
 ```
 
-## Cenário 42 — p1_2_h / night_1 (frota [1;2;3;4;6;7;8;9;10;11;12], limite 55 min | origem 17 -> [6;11;16])
+## Scenario 42 — p1_2_h / night_1 (fleet [1;2;3;4;6;7;8;9;10;11;12], limit 55 min | origin 17 -> [6;11;16])
 
-4 de 11 ônibus · 10/46 pax (22%) · 16 rodadas · 0.0s
+4 of 11 buses · 10/46 pax (22%) · 16 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 6 | 5 | 43/55 | 4/24 | 0.12 | 17 | 11 |
 | 2 | 5 | 3 | 46/55 | 1/32 | 0.07 | 17 | 11 |
 | 3 | 3 | 1 | 51/55 | 1/24 | 0.02 | 17 | 11 |
 | 4 | 3 | 1 | 52/55 | 1/50 | 0.02 | 17 | 16 |
 
-Pares mais atendidos: 18→12=2, 1→11=1, 1→12=1, 12→10=1, 19→31=1
+Most served pairs: 18→12=2, 1→11=1, 1→12=1, 12→10=1, 19→31=1
 
-Ociosos (7): [6, 7, 8, 9, 10, 11, 12]
+Idle (7): [6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (36 pax): 14→24=2, 1→22=1, 1→24=1, 2→10=1, 2→16=1, 3→24=1, 3→26=1, 4→22=1 (+27 pares)
+Unserved (36 pax): 14→24=2, 1→22=1, 1→24=1, 2→10=1, 2→16=1, 3→24=1, 3→26=1, 4→22=1 (+27 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (17 → 11): 17 -> 1 -> 18 -> 12 -> 10 -> 11
@@ -1185,24 +1185,24 @@ bus 3 (17 → 11): 17 -> 25 -> 11
 bus 4 (17 → 16): 17 -> 20 -> 16
 ```
 
-## Cenário 43 — p1_2_l / afternoon_1 (frota [1;2;3;4;5;6;7;8;9;10;11], limite 102 min | origem 13;15;17 -> [8;15])
+## Scenario 43 — p1_2_l / afternoon_1 (fleet [1;2;3;4;5;6;7;8;9;10;11], limit 102 min | origin 13;15;17 -> [8;15])
 
-4 de 11 ônibus · 30/54 pax (56%) · 33 rodadas · 0.0s
+4 of 11 buses · 30/54 pax (56%) · 33 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 9 | 8 | 92/102 | 4/24 | 0.09 | 13 | 8 |
 | 2 | 9 | 6 | 96/102 | 2/32 | 0.06 | 13 | 8 |
 | 3 | 9 | 7 | 86/102 | 2/24 | 0.08 | 15 | 15 |
 | 4 | 9 | 9 | 97/102 | 6/50 | 0.09 | 17 | 8 |
 
-Pares mais atendidos: 4→28=2, 8→6=2, 27→21=2, 4→29=1, 13→8=1
+Most served pairs: 4→28=2, 8→6=2, 27→21=2, 4→29=1, 13→8=1
 
-Ociosos (7): [5, 6, 7, 8, 9, 10, 11]
+Idle (7): [5, 6, 7, 8, 9, 10, 11]
 
-Não atendidos (24 pax): 3→30=1, 9→14=1, 10→5=1, 10→29=1, 12→16=1, 14→28=1, 16→3=1, 16→30=1 (+16 pares)
+Unserved (24 pax): 3→30=1, 9→14=1, 10→5=1, 10→29=1, 12→16=1, 14→28=1, 16→3=1, 16→30=1 (+16 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (13 → 8): 13 -> 4 -> 28 -> 29 -> 17 -> 13 -> 8 -> 6 -> 8
@@ -1211,46 +1211,46 @@ bus 3 (15 → 15): 15 -> 16 -> 18 -> 7 -> 5 -> 2 -> 4 -> 14 -> 15
 bus 4 (17 → 8): 17 -> 9 -> 12 -> 20 -> 27 -> 30 -> 21 -> 31 -> 8
 ```
 
-## Cenário 44 — p1_4_f / afternoon_1 (frota [1;2;3;5;11], limite 175 min | origem 20;26 -> [29;32])
+## Scenario 44 — p1_4_f / afternoon_1 (fleet [1;2;3;5;11], limit 175 min | origin 20;26 -> [29;32])
 
-2 de 5 ônibus · 25/38 pax (66%) · 25 rodadas · 0.0s
+2 of 5 buses · 25/38 pax (66%) · 25 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 11 | 158/175 | 7/24 | 0.07 | 26 | 32 |
 | 2 | 14 | 14 | 175/175 | 6/32 | 0.08 | 26 | 32 |
 
-Pares mais atendidos: 23→22=2, 6→13=1, 7→22=1, 7→30=1, 13→21=1
+Most served pairs: 23→22=2, 6→13=1, 7→22=1, 7→30=1, 13→21=1
 
-Ociosos (3): [3, 5, 11]
+Idle (3): [3, 5, 11]
 
-Não atendidos (13 pax): 1→27=1, 2→11=1, 3→12=1, 3→17=1, 5→26=1, 9→12=1, 12→14=1, 14→26=1 (+5 pares)
+Unserved (13 pax): 1→27=1, 2→11=1, 3→12=1, 3→17=1, 5→26=1, 9→12=1, 12→14=1, 14→26=1 (+5 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (26 → 32): 26 -> 18 -> 7 -> 23 -> 22 -> 30 -> 24 -> 6 -> 13 -> 21 -> 20 -> 32
 bus 2 (26 → 32): 26 -> 21 -> 11 -> 10 -> 22 -> 4 -> 2 -> 7 -> 5 -> 8 -> 15 -> 31 -> 28 -> 32
 ```
 
-## Cenário 45 — p1_2_f / morning_2 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 150 min | origem 12;28 -> [6;31;32])
+## Scenario 45 — p1_2_f / morning_2 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 150 min | origin 12;28 -> [6;31;32])
 
-4 de 12 ônibus · 40/49 pax (82%) · 39 rodadas · 0.0s
+4 of 12 buses · 40/49 pax (82%) · 39 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 13 | 16 | 129/150 | 10/24 | 0.12 | 12 | 31 |
 | 2 | 8 | 7 | 103/150 | 5/32 | 0.07 | 28 | 31 |
 | 3 | 12 | 11 | 129/150 | 7/24 | 0.09 | 12 | 31 |
 | 4 | 8 | 6 | 120/150 | 4/50 | 0.05 | 28 | 32 |
 
-Pares mais atendidos: 7→15=2, 28→23=2, 10→11=2, 1→15=1, 6→15=1
+Most served pairs: 7→15=2, 28→23=2, 10→11=2, 1→15=1, 6→15=1
 
-Ociosos (8): [5, 6, 7, 8, 9, 10, 11, 12]
+Idle (8): [5, 6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (9 pax): 24→30=2, 3→16=1, 4→16=1, 4→26=1, 20→21=1, 25→9=1, 31→3=1, 31→14=1
+Unserved (9 pax): 24→30=2, 3→16=1, 4→16=1, 4→26=1, 20→21=1, 25→9=1, 31→3=1, 31→14=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (12 → 31): 12 -> 26 -> 1 -> 7 -> 6 -> 15 -> 14 -> 23 -> 22 -> 12 -> 21 -> 20 -> 31
@@ -1259,33 +1259,33 @@ bus 3 (12 → 31): 12 -> 13 -> 9 -> 10 -> 8 -> 7 -> 3 -> 1 -> 25 -> 27 -> 11 -> 
 bus 4 (28 → 32): 28 -> 16 -> 17 -> 7 -> 29 -> 4 -> 3 -> 32
 ```
 
-## Cenário 46 — p1_3_e / night_2 (frota [2;3;4;6;7;8;9;11;12], limite 132 min | origem 6;21 -> [8;21])
+## Scenario 46 — p1_3_e / night_2 (fleet [2;3;4;6;7;8;9;11;12], limit 132 min | origin 6;21 -> [8;21])
 
-2 de 9 ônibus · 12/30 pax (40%) · 19 rodadas · 0.0s
+2 of 9 buses · 12/30 pax (40%) · 19 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 6 | 4 | 60/132 | 3/32 | 0.07 | 21 | 21 |
 | 3 | 11 | 8 | 127/132 | 5/24 | 0.06 | 6 | 21 |
 
-Pares mais atendidos: 1→6=1, 21→25=1, 26→6=1, 26→21=1, 1→21=1
+Most served pairs: 1→6=1, 21→25=1, 26→6=1, 26→21=1, 1→21=1
 
-Ociosos (7): [4, 6, 7, 8, 9, 11, 12]
+Idle (7): [4, 6, 7, 8, 9, 11, 12]
 
-Não atendidos (18 pax): 19→22=2, 2→10=1, 2→17=1, 2→27=1, 3→16=1, 3→31=1, 7→30=1, 8→16=1 (+9 pares)
+Unserved (18 pax): 19→22=2, 2→10=1, 2→17=1, 2→27=1, 3→16=1, 3→31=1, 7→30=1, 8→16=1 (+9 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (21 → 21): 21 -> 25 -> 26 -> 1 -> 6 -> 21
 bus 3 (6 → 21): 6 -> 5 -> 9 -> 30 -> 24 -> 25 -> 20 -> 6 -> 18 -> 1 -> 21
 ```
 
-## Cenário 47 — p1_4_n / night_1 (frota [1;2;3;5;7;8;9;11;12], limite 157 min | origem 18 -> [9;19;29])
+## Scenario 47 — p1_4_n / night_1 (fleet [1;2;3;5;7;8;9;11;12], limit 157 min | origin 18 -> [9;19;29])
 
-5 de 9 ônibus · 44/49 pax (90%) · 45 rodadas · 0.0s
+5 of 9 buses · 44/49 pax (90%) · 45 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 13 | 136/157 | 5/24 | 0.10 | 18 | 29 |
 | 2 | 11 | 10 | 148/157 | 7/32 | 0.07 | 18 | 19 |
@@ -1293,13 +1293,13 @@ bus 3 (6 → 21): 6 -> 5 -> 9 -> 30 -> 24 -> 25 -> 20 -> 6 -> 18 -> 1 -> 21
 | 5 | 9 | 7 | 127/157 | 5/24 | 0.06 | 18 | 9 |
 | 7 | 11 | 8 | 156/157 | 3/50 | 0.05 | 18 | 19 |
 
-Pares mais atendidos: 26→11=2, 7→12=1, 7→21=1, 7→27=1, 10→12=1
+Most served pairs: 26→11=2, 7→12=1, 7→21=1, 7→27=1, 10→12=1
 
-Ociosos (4): [8, 9, 11, 12]
+Idle (4): [8, 9, 11, 12]
 
-Não atendidos (5 pax): 5→31=1, 12→14=1, 13→16=1, 20→16=1, 24→16=1
+Unserved (5 pax): 5→31=1, 12→14=1, 13→16=1, 20→16=1, 24→16=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (18 → 29): 18 -> 7 -> 27 -> 21 -> 26 -> 23 -> 24 -> 11 -> 2 -> 10 -> 12 -> 29
@@ -1309,11 +1309,11 @@ bus 5 (18 → 9): 18 -> 30 -> 31 -> 6 -> 25 -> 27 -> 28 -> 8 -> 9
 bus 7 (18 → 19): 18 -> 19 -> 12 -> 10 -> 25 -> 26 -> 3 -> 4 -> 24 -> 20 -> 19
 ```
 
-## Cenário 48 — p1_4_i / morning_2 (frota [1;2;3;4;5;6;8;9;10;11], limite 59 min | origem 32 -> [18;19;27])
+## Scenario 48 — p1_4_i / morning_2 (fleet [1;2;3;4;5;6;8;9;10;11], limit 59 min | origin 32 -> [18;19;27])
 
-5 de 10 ônibus · 15/44 pax (34%) · 20 rodadas · 0.0s
+5 of 10 buses · 15/44 pax (34%) · 20 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 7 | 5 | 57/59 | 2/24 | 0.09 | 32 | 27 |
 | 2 | 6 | 4 | 52/59 | 3/32 | 0.08 | 32 | 19 |
@@ -1321,13 +1321,13 @@ bus 7 (18 → 19): 18 -> 19 -> 12 -> 10 -> 25 -> 26 -> 3 -> 4 -> 24 -> 20 -> 19
 | 4 | 5 | 3 | 58/59 | 2/50 | 0.05 | 32 | 27 |
 | 5 | 3 | 1 | 56/59 | 1/24 | 0.02 | 32 | 18 |
 
-Pares mais atendidos: 5→15=1, 15→17=1, 17→28=1, 31→27=1, 32→17=1
+Most served pairs: 5→15=1, 15→17=1, 17→28=1, 31→27=1, 32→17=1
 
-Ociosos (5): [6, 8, 9, 10, 11]
+Idle (5): [6, 8, 9, 10, 11]
 
-Não atendidos (29 pax): 8→15=2, 3→25=1, 3→31=1, 4→24=1, 5→4=1, 5→10=1, 6→13=1, 6→26=1 (+20 pares)
+Unserved (29 pax): 8→15=2, 3→25=1, 3→31=1, 4→24=1, 5→4=1, 5→10=1, 6→13=1, 6→26=1 (+20 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (32 → 27): 32 -> 5 -> 15 -> 17 -> 28 -> 31 -> 27
@@ -1337,24 +1337,24 @@ bus 4 (32 → 27): 32 -> 19 -> 28 -> 11 -> 27
 bus 5 (32 → 18): 32 -> 25 -> 18
 ```
 
-## Cenário 49 — p1_4_r / afternoon_1 (frota [1;2;3;4;5;6;8;9;11;12], limite 136 min | origem 1;19 -> [10;20;32])
+## Scenario 49 — p1_4_r / afternoon_1 (fleet [1;2;3;4;5;6;8;9;11;12], limit 136 min | origin 1;19 -> [10;20;32])
 
-4 de 10 ônibus · 32/45 pax (71%) · 37 rodadas · 0.0s
+4 of 10 buses · 32/45 pax (71%) · 37 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 10 | 116/136 | 5/24 | 0.09 | 19 | 10 |
 | 2 | 12 | 11 | 130/136 | 5/32 | 0.08 | 1 | 10 |
 | 3 | 9 | 6 | 128/136 | 3/24 | 0.05 | 1 | 20 |
 | 4 | 8 | 5 | 106/136 | 2/50 | 0.05 | 1 | 32 |
 
-Pares mais atendidos: 5→11=1, 5→27=1, 6→4=1, 7→4=1, 9→5=1
+Most served pairs: 5→11=1, 5→27=1, 6→4=1, 7→4=1, 9→5=1
 
-Ociosos (6): [5, 6, 8, 9, 11, 12]
+Idle (6): [5, 6, 8, 9, 11, 12]
 
-Não atendidos (13 pax): 2→16=1, 2→24=1, 2→26=1, 4→30=1, 10→5=1, 11→4=1, 13→24=1, 16→23=1 (+5 pares)
+Unserved (13 pax): 2→16=1, 2→24=1, 2→26=1, 4→30=1, 10→5=1, 11→4=1, 13→24=1, 16→23=1 (+5 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (19 → 10): 19 -> 21 -> 9 -> 6 -> 7 -> 4 -> 5 -> 27 -> 11 -> 19 -> 2 -> 10
@@ -1363,11 +1363,11 @@ bus 3 (1 → 20): 1 -> 30 -> 20 -> 2 -> 23 -> 25 -> 13 -> 3 -> 20
 bus 4 (1 → 32): 1 -> 32 -> 22 -> 14 -> 16 -> 17 -> 13 -> 32
 ```
 
-## Cenário 50 — p1_3_k / morning_2 (frota [2;3;4;5;6;7;8;9;10;11;12], limite 135 min | origem 10;25;32 -> [9])
+## Scenario 50 — p1_3_k / morning_2 (fleet [2;3;4;5;6;7;8;9;10;11;12], limit 135 min | origin 10;25;32 -> [9])
 
-5 de 11 ônibus · 29/36 pax (81%) · 36 rodadas · 0.0s
+5 of 11 buses · 29/36 pax (81%) · 36 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 9 | 8 | 114/135 | 5/32 | 0.07 | 32 | 9 |
 | 3 | 8 | 6 | 93/135 | 6/24 | 0.06 | 10 | 9 |
@@ -1375,13 +1375,13 @@ bus 4 (1 → 32): 1 -> 32 -> 22 -> 14 -> 16 -> 17 -> 13 -> 32
 | 5 | 7 | 4 | 102/135 | 2/24 | 0.04 | 10 | 9 |
 | 6 | 8 | 5 | 131/135 | 3/32 | 0.04 | 10 | 9 |
 
-Pares mais atendidos: 4→21=1, 9→21=1, 9→26=1, 14→21=1, 14→26=1
+Most served pairs: 4→21=1, 9→21=1, 9→26=1, 14→21=1, 14→26=1
 
-Ociosos (6): [7, 8, 9, 10, 11, 12]
+Idle (6): [7, 8, 9, 10, 11, 12]
 
-Não atendidos (7 pax): 23→8=2, 17→24=1, 22→17=1, 23→4=1, 29→25=1, 30→21=1
+Unserved (7 pax): 23→8=2, 17→24=1, 22→17=1, 23→4=1, 29→25=1, 30→21=1
 
-Rotas:
+Routes:
 
 ```
 bus 2 (32 → 9): 32 -> 7 -> 9 -> 14 -> 4 -> 21 -> 26 -> 31 -> 9
@@ -1391,24 +1391,24 @@ bus 5 (10 → 9): 10 -> 12 -> 16 -> 5 -> 28 -> 10 -> 9
 bus 6 (10 → 9): 10 -> 9 -> 29 -> 11 -> 3 -> 15 -> 28 -> 9
 ```
 
-## Cenário 51 — p1_3_o / afternoon_2 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 97 min | origem 6;22;25 -> [3;32])
+## Scenario 51 — p1_3_o / afternoon_2 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 97 min | origin 6;22;25 -> [3;32])
 
-4 de 12 ônibus · 18/45 pax (40%) · 24 rodadas · 0.0s
+4 of 12 buses · 18/45 pax (40%) · 24 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 8 | 6 | 84/97 | 3/24 | 0.07 | 6 | 32 |
 | 2 | 6 | 4 | 81/97 | 2/32 | 0.05 | 6 | 32 |
 | 3 | 6 | 6 | 95/97 | 3/24 | 0.06 | 22 | 32 |
 | 4 | 5 | 2 | 62/97 | 1/50 | 0.03 | 6 | 3 |
 
-Pares mais atendidos: 30→29=2, 6→17=1, 17→27=1, 17→28=1, 17→29=1
+Most served pairs: 30→29=2, 6→17=1, 17→27=1, 17→28=1, 17→29=1
 
-Ociosos (8): [5, 6, 7, 8, 9, 10, 11, 12]
+Idle (8): [5, 6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (27 pax): 1→23=1, 2→5=1, 7→22=1, 8→24=1, 9→30=1, 14→21=1, 16→30=1, 16→31=1 (+19 pares)
+Unserved (27 pax): 1→23=1, 2→5=1, 7→22=1, 8→24=1, 9→30=1, 14→21=1, 16→30=1, 16→31=1 (+19 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (6 → 32): 6 -> 17 -> 27 -> 29 -> 28 -> 26 -> 31 -> 32
@@ -1417,22 +1417,22 @@ bus 3 (22 → 32): 22 -> 30 -> 29 -> 32 -> 25 -> 32
 bus 4 (6 → 3): 6 -> 3 -> 26 -> 12 -> 3
 ```
 
-## Cenário 52 — p1_4_d / night_2 (frota [4;5;11;12], limite 53 min | origem 7;11;29 -> [2;3;20])
+## Scenario 52 — p1_4_d / night_2 (fleet [4;5;11;12], limit 53 min | origin 7;11;29 -> [2;3;20])
 
-4 de 4 ônibus · 7/44 pax (16%) · 6 rodadas · 0.0s
+4 of 4 buses · 7/44 pax (16%) · 6 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 4 | 3 | 2 | 44/53 | 1/50 | 0.05 | 29 | 3 |
 | 5 | 4 | 2 | 37/53 | 2/24 | 0.05 | 7 | 20 |
 | 11 | 4 | 2 | 35/53 | 1/45 | 0.06 | 7 | 20 |
 | 12 | 3 | 1 | 32/53 | 1/32 | 0.03 | 29 | 20 |
 
-Pares mais atendidos: 14→3=1, 29→14=1, 18→17=1, 18→20=1, 7→21=1
+Most served pairs: 14→3=1, 29→14=1, 18→17=1, 18→20=1, 7→21=1
 
-Não atendidos (37 pax): 2→12=1, 2→23=1, 3→4=1, 4→29=1, 5→22=1, 6→13=1, 8→26=1, 9→10=1 (+29 pares)
+Unserved (37 pax): 2→12=1, 2→23=1, 3→4=1, 4→29=1, 5→22=1, 6→13=1, 8→26=1, 9→10=1 (+29 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 4 (29 → 3): 29 -> 14 -> 3
@@ -1441,21 +1441,21 @@ bus 11 (7 → 20): 7 -> 21 -> 31 -> 20
 bus 12 (29 → 20): 29 -> 21 -> 20
 ```
 
-## Cenário 53 — p1_3_c / afternoon_2 (frota [5;6;11], limite 67 min | origem 6;11;12 -> [16;25;32])
+## Scenario 53 — p1_3_c / afternoon_2 (fleet [5;6;11], limit 67 min | origin 6;11;12 -> [16;25;32])
 
-3 de 3 ônibus · 10/42 pax (24%) · 8 rodadas · 0.0s
+3 of 3 buses · 10/42 pax (24%) · 8 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 5 | 6 | 6 | 66/67 | 3/24 | 0.09 | 11 | 25 |
 | 6 | 5 | 2 | 59/67 | 1/32 | 0.03 | 6 | 32 |
 | 11 | 5 | 2 | 64/67 | 2/45 | 0.03 | 12 | 32 |
 
-Pares mais atendidos: 11→12=2, 2→12=1, 9→25=1, 9→30=1, 12→25=1
+Most served pairs: 11→12=2, 2→12=1, 9→25=1, 9→30=1, 12→25=1
 
-Não atendidos (32 pax): 2→14=1, 3→2=1, 4→21=1, 5→27=1, 7→17=1, 7→25=1, 10→17=1, 11→31=1 (+24 pares)
+Unserved (32 pax): 2→14=1, 3→2=1, 4→21=1, 5→27=1, 7→17=1, 7→25=1, 10→17=1, 11→31=1 (+24 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 5 (11 → 25): 11 -> 2 -> 12 -> 9 -> 30 -> 25
@@ -1463,44 +1463,44 @@ bus 6 (6 → 32): 6 -> 8 -> 32 -> 15 -> 32
 bus 11 (12 → 32): 12 -> 30 -> 12 -> 6 -> 32
 ```
 
-## Cenário 54 — p1_4_b / night_2 (frota [4;5;8;10;11], limite 32 min | origem 5;11 -> [20;23])
+## Scenario 54 — p1_4_b / night_2 (fleet [4;5;8;10;11], limit 32 min | origin 5;11 -> [20;23])
 
-1 de 5 ônibus · 1/59 pax (2%) · 5 rodadas · 0.0s
+1 of 5 buses · 1/59 pax (2%) · 5 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 4 | 3 | 1 | 25/32 | 1/50 | 0.04 | 11 | 23 |
 
-Pares mais atendidos: 20→23=1
+Most served pairs: 20→23=1
 
-Ociosos (4): [5, 8, 10, 11]
+Idle (4): [5, 8, 10, 11]
 
-Não atendidos (58 pax): 29→31=2, 30→27=2, 1→7=1, 1→14=1, 2→22=1, 3→4=1, 4→5=1, 4→15=1 (+48 pares)
+Unserved (58 pax): 29→31=2, 30→27=2, 1→7=1, 1→14=1, 2→22=1, 3→4=1, 4→5=1, 4→15=1 (+48 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 4 (11 → 23): 11 -> 20 -> 23
 ```
 
-## Cenário 55 — p1_4_e / afternoon_2 (frota [1;2;4;5;7;8;10;11;12], limite 176 min | origem 2;19;26 -> [1;4])
+## Scenario 55 — p1_4_e / afternoon_2 (fleet [1;2;4;5;7;8;10;11;12], limit 176 min | origin 2;19;26 -> [1;4])
 
-4 de 9 ônibus · 42/48 pax (88%) · 42 rodadas · 0.0s
+4 of 9 buses · 42/48 pax (88%) · 42 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 12 | 12 | 150/176 | 8/24 | 0.08 | 2 | 4 |
 | 2 | 14 | 14 | 165/176 | 6/32 | 0.08 | 26 | 1 |
 | 4 | 15 | 15 | 173/176 | 6/50 | 0.09 | 19 | 1 |
 | 5 | 4 | 1 | 43/176 | 1/24 | 0.02 | 19 | 1 |
 
-Pares mais atendidos: 3→21=2, 15→23=2, 16→15=2, 2→4=1, 2→20=1
+Most served pairs: 3→21=2, 15→23=2, 16→15=2, 2→4=1, 2→20=1
 
-Ociosos (5): [7, 8, 10, 11, 12]
+Idle (5): [7, 8, 10, 11, 12]
 
-Não atendidos (6 pax): 9→6=1, 10→16=1, 17→24=1, 24→5=1, 27→14=1, 31→15=1
+Unserved (6 pax): 9→6=1, 10→16=1, 17→24=1, 24→5=1, 27→14=1, 31→15=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (2 → 4): 2 -> 19 -> 30 -> 28 -> 13 -> 25 -> 23 -> 24 -> 22 -> 20 -> 29 -> 4
@@ -1509,24 +1509,24 @@ bus 4 (19 → 1): 19 -> 1 -> 8 -> 7 -> 18 -> 32 -> 17 -> 16 -> 15 -> 29 -> 26 ->
 bus 5 (19 → 1): 19 -> 1 -> 22 -> 1
 ```
 
-## Cenário 56 — p1_4_c / night_2 (frota [2;3;4;5;6;8;9;10;11;12], limite 65 min | origem 3;20;29 -> [24])
+## Scenario 56 — p1_4_c / night_2 (fleet [2;3;4;5;6;8;9;10;11;12], limit 65 min | origin 3;20;29 -> [24])
 
-4 de 10 ônibus · 14/48 pax (29%) · 17 rodadas · 0.0s
+4 of 10 buses · 14/48 pax (29%) · 17 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 6 | 4 | 56/65 | 2/32 | 0.07 | 3 | 24 |
 | 3 | 5 | 4 | 60/65 | 4/24 | 0.07 | 20 | 24 |
 | 4 | 4 | 2 | 60/65 | 1/50 | 0.03 | 29 | 24 |
 | 5 | 5 | 4 | 63/65 | 4/24 | 0.06 | 29 | 24 |
 
-Pares mais atendidos: 19→22=2, 2→3=1, 3→25=1, 7→2=1, 25→24=1
+Most served pairs: 19→22=2, 2→3=1, 3→25=1, 7→2=1, 25→24=1
 
-Ociosos (6): [6, 8, 9, 10, 11, 12]
+Idle (6): [6, 8, 9, 10, 11, 12]
 
-Não atendidos (34 pax): 17→15=2, 1→29=1, 2→29=1, 5→4=1, 5→15=1, 8→3=1, 10→30=1, 12→8=1 (+25 pares)
+Unserved (34 pax): 17→15=2, 1→29=1, 2→29=1, 5→4=1, 5→15=1, 8→3=1, 10→30=1, 12→8=1 (+25 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (3 → 24): 3 -> 7 -> 2 -> 3 -> 25 -> 24
@@ -1535,11 +1535,11 @@ bus 4 (29 → 24): 29 -> 11 -> 9 -> 24
 bus 5 (29 → 24): 29 -> 16 -> 19 -> 22 -> 24
 ```
 
-## Cenário 57 — p1_4_k / morning_2 (frota [2;3;5;6;7], limite 63 min | origem 11;18 -> [19;31])
+## Scenario 57 — p1_4_k / morning_2 (fleet [2;3;5;6;7], limit 63 min | origin 11;18 -> [19;31])
 
-5 de 5 ônibus · 17/43 pax (40%) · 16 rodadas · 0.0s
+5 of 5 buses · 17/43 pax (40%) · 16 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 8 | 5 | 51/63 | 3/32 | 0.10 | 11 | 19 |
 | 3 | 5 | 2 | 43/63 | 1/24 | 0.05 | 11 | 31 |
@@ -1547,11 +1547,11 @@ bus 5 (29 → 24): 29 -> 16 -> 19 -> 22 -> 24
 | 6 | 5 | 3 | 52/63 | 2/32 | 0.06 | 18 | 31 |
 | 7 | 5 | 2 | 54/63 | 2/50 | 0.04 | 11 | 19 |
 
-Pares mais atendidos: 10→9=1, 10→11=1, 10→28=1, 19→28=1, 20→19=1
+Most served pairs: 10→9=1, 10→11=1, 10→28=1, 19→28=1, 20→19=1
 
-Não atendidos (26 pax): 1→22=1, 3→16=1, 4→21=1, 4→22=1, 4→23=1, 6→27=1, 7→25=1, 8→3=1 (+18 pares)
+Unserved (26 pax): 1→22=1, 3→16=1, 4→21=1, 4→22=1, 4→23=1, 6→27=1, 7→25=1, 8→3=1 (+18 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (11 → 19): 11 -> 10 -> 9 -> 11 -> 20 -> 19 -> 28 -> 19
@@ -1561,11 +1561,11 @@ bus 6 (18 → 31): 18 -> 4 -> 5 -> 12 -> 31
 bus 7 (11 → 19): 11 -> 19 -> 27 -> 24 -> 19
 ```
 
-## Cenário 58 — p1_4_l / night_1 (frota [2;3;4;6;7;8;11;12], limite 123 min | origem 8;30 -> [17;25])
+## Scenario 58 — p1_4_l / night_1 (fleet [2;3;4;6;7;8;11;12], limit 123 min | origin 8;30 -> [17;25])
 
-5 de 8 ônibus · 34/45 pax (76%) · 36 rodadas · 0.0s
+5 of 8 buses · 34/45 pax (76%) · 36 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 11 | 11 | 115/123 | 7/32 | 0.10 | 30 | 17 |
 | 3 | 9 | 7 | 90/123 | 7/24 | 0.08 | 8 | 25 |
@@ -1573,13 +1573,13 @@ bus 7 (11 → 19): 11 -> 19 -> 27 -> 24 -> 19
 | 6 | 5 | 2 | 91/123 | 1/32 | 0.02 | 30 | 25 |
 | 7 | 7 | 4 | 111/123 | 2/50 | 0.04 | 30 | 25 |
 
-Pares mais atendidos: 18→26=2, 4→15=1, 13→15=1, 17→12=1, 17→15=1
+Most served pairs: 18→26=2, 4→15=1, 13→15=1, 17→12=1, 17→15=1
 
-Ociosos (3): [8, 11, 12]
+Idle (3): [8, 11, 12]
 
-Não atendidos (11 pax): 22→4=2, 24→15=2, 4→19=1, 5→26=1, 11→15=1, 11→20=1, 20→16=1, 22→16=1 (+1 pares)
+Unserved (11 pax): 22→4=2, 24→15=2, 4→19=1, 5→26=1, 11→15=1, 11→20=1, 20→16=1, 22→16=1 (+1 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (30 → 17): 30 -> 29 -> 28 -> 18 -> 17 -> 19 -> 12 -> 13 -> 4 -> 15 -> 17
@@ -1589,41 +1589,41 @@ bus 6 (30 → 25): 30 -> 3 -> 29 -> 30 -> 25
 bus 7 (30 → 25): 30 -> 25 -> 5 -> 14 -> 16 -> 27 -> 25
 ```
 
-## Cenário 59 — p1_4_q / night_1 (frota [1;2;3;4;5;7;8;11], limite 86 min | origem 20;27 -> [9])
+## Scenario 59 — p1_4_q / night_1 (fleet [1;2;3;4;5;7;8;11], limit 86 min | origin 20;27 -> [9])
 
-1 de 8 ônibus · 4/48 pax (8%) · 11 rodadas · 0.0s
+1 of 8 buses · 4/48 pax (8%) · 11 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 7 | 4 | 53/86 | 2/24 | 0.08 | 27 | 9 |
 
-Pares mais atendidos: 2→7=1, 6→2=1, 9→2=1, 27→21=1
+Most served pairs: 2→7=1, 6→2=1, 9→2=1, 27→21=1
 
-Ociosos (7): [2, 3, 4, 5, 7, 8, 11]
+Idle (7): [2, 3, 4, 5, 7, 8, 11]
 
-Não atendidos (44 pax): 1→14=1, 1→16=1, 3→23=1, 3→24=1, 4→8=1, 4→24=1, 5→15=1, 7→14=1 (+36 pares)
+Unserved (44 pax): 1→14=1, 1→16=1, 3→23=1, 3→24=1, 4→8=1, 4→24=1, 5→15=1, 7→14=1 (+36 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 1 (27 → 9): 27 -> 21 -> 9 -> 6 -> 2 -> 7 -> 9
 ```
 
-## Cenário 60 — p1_2_c / morning_1 (frota [2;5;8], limite 90 min | origem 24;27 -> [7;10;27])
+## Scenario 60 — p1_2_c / morning_1 (fleet [2;5;8], limit 90 min | origin 24;27 -> [7;10;27])
 
-3 de 3 ônibus · 16/41 pax (39%) · 13 rodadas · 0.0s
+3 of 3 buses · 16/41 pax (39%) · 13 rounds · 0.0s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 2 | 7 | 8 | 86/90 | 7/32 | 0.09 | 24 | 10 |
 | 5 | 6 | 4 | 74/90 | 2/24 | 0.05 | 24 | 7 |
 | 8 | 7 | 4 | 90/90 | 2/50 | 0.04 | 27 | 7 |
 
-Pares mais atendidos: 2→27=2, 2→28=1, 19→28=1, 22→10=1, 22→27=1
+Most served pairs: 2→27=2, 2→28=1, 19→28=1, 22→10=1, 22→27=1
 
-Não atendidos (25 pax): 1→22=1, 3→24=1, 4→25=1, 4→29=1, 10→17=1, 10→19=1, 10→25=1, 11→16=1 (+17 pares)
+Unserved (25 pax): 1→22=1, 3→24=1, 4→25=1, 4→29=1, 10→17=1, 10→19=1, 10→25=1, 11→16=1 (+17 pairs)
 
-Rotas:
+Routes:
 
 ```
 bus 2 (24 → 10): 24 -> 22 -> 2 -> 19 -> 28 -> 27 -> 10
@@ -1631,11 +1631,11 @@ bus 5 (24 → 7): 24 -> 3 -> 9 -> 20 -> 13 -> 7
 bus 8 (27 → 7): 27 -> 28 -> 29 -> 8 -> 7 -> 12 -> 7
 ```
 
-## Cenário 65 — base / morning_1 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 120 min | origem 44 -> [44;45;43])
+## Scenario 65 — base / morning_1 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 120 min | origin 44 -> [44;45;43])
 
-7 de 12 ônibus · 195/198 pax (98%) · 57 rodadas · 0.1s
+7 of 12 buses · 195/198 pax (98%) · 57 rounds · 0.1s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 10 | 33 | 109/120 | 24/24 | 0.30 | 44 | 44 |
 | 2 | 10 | 20 | 73/120 | 16/32 | 0.27 | 44 | 44 |
@@ -1645,13 +1645,13 @@ bus 8 (27 → 7): 27 -> 28 -> 29 -> 8 -> 7 -> 12 -> 7
 | 6 | 10 | 29 | 120/120 | 28/32 | 0.24 | 44 | 44 |
 | 7 | 8 | 23 | 111/120 | 23/50 | 0.21 | 44 | 45 |
 
-Pares mais atendidos: 9→7=14, 39→7=10, 20→44=9, 40→7=7, 10→7=7
+Most served pairs: 9→7=14, 39→7=10, 20→44=9, 40→7=7, 10→7=7
 
-Ociosos (5): [8, 9, 10, 11, 12]
+Idle (5): [8, 9, 10, 11, 12]
 
-Não atendidos (3 pax): 17→8=1, 20→12=1, 34→8=1
+Unserved (3 pax): 17→8=1, 20→12=1, 34→8=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (44 → 44): 44 -> 20 -> 45 -> 37 -> 11 -> 7 -> 2 -> 10 -> 16 -> 44
@@ -1663,24 +1663,24 @@ bus 6 (44 → 44): 44 -> 39 -> 36 -> 11 -> 10 -> 20 -> 8 -> 4 -> 7 -> 44
 bus 7 (44 → 45): 44 -> 34 -> 46 -> 38 -> 6 -> 16 -> 7 -> 45
 ```
 
-## Cenário 66 — base / morning_2 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 120 min | origem 44;45;43 -> [43;44;45])
+## Scenario 66 — base / morning_2 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 120 min | origin 44;45;43 -> [43;44;45])
 
-4 de 12 ônibus · 34/37 pax (92%) · 19 rodadas · 0.1s
+4 of 12 buses · 34/37 pax (92%) · 19 rounds · 0.1s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 8 | 25 | 111/120 | 24/24 | 0.23 | 44 | 45 |
 | 2 | 7 | 7 | 66/120 | 6/32 | 0.11 | 45 | 44 |
 | 3 | 3 | 1 | 26/120 | 1/24 | 0.04 | 45 | 45 |
 | 4 | 3 | 1 | 27/120 | 1/50 | 0.04 | 44 | 43 |
 
-Pares mais atendidos: 9→45=6, 45→7=6, 9→7=5, 19→7=4, 40→7=3
+Most served pairs: 9→45=6, 45→7=6, 9→7=5, 19→7=4, 40→7=3
 
-Ociosos (8): [5, 6, 7, 8, 9, 10, 11, 12]
+Idle (8): [5, 6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (3 pax): 20→7=3
+Unserved (3 pax): 20→7=3
 
-Rotas:
+Routes:
 
 ```
 bus 1 (44 → 45): 44 -> 25 -> 44 -> 9 -> 45 -> 19 -> 7 -> 45
@@ -1689,11 +1689,11 @@ bus 3 (45 → 45): 45 -> 19 -> 45
 bus 4 (44 → 43): 44 -> 12 -> 43
 ```
 
-## Cenário 67 — base / afternoon_1 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 120 min | origem 44;45;43 -> [43;44;45])
+## Scenario 67 — base / afternoon_1 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 120 min | origin 44;45;43 -> [43;44;45])
 
-6 de 12 ônibus · 91/91 pax (100%) · 41 rodadas · 0.1s
+6 of 12 buses · 91/91 pax (100%) · 41 rounds · 0.1s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 10 | 33 | 104/120 | 24/24 | 0.32 | 44 | 45 |
 | 2 | 12 | 21 | 119/120 | 15/32 | 0.18 | 43 | 43 |
@@ -1702,11 +1702,11 @@ bus 4 (44 → 43): 44 -> 12 -> 43
 | 5 | 7 | 10 | 92/120 | 8/24 | 0.11 | 45 | 45 |
 | 6 | 3 | 1 | 30/120 | 1/32 | 0.03 | 45 | 44 |
 
-Pares mais atendidos: 9→45=6, 7→19=5, 7→34=5, 44→20=4, 44→45=4
+Most served pairs: 9→45=6, 7→19=5, 7→34=5, 44→20=4, 44→45=4
 
-Ociosos (6): [7, 8, 9, 10, 11, 12]
+Idle (6): [7, 8, 9, 10, 11, 12]
 
-Rotas:
+Routes:
 
 ```
 bus 1 (44 → 45): 44 -> 25 -> 19 -> 7 -> 30 -> 29 -> 40 -> 20 -> 9 -> 45
@@ -1717,11 +1717,11 @@ bus 5 (45 → 45): 45 -> 2 -> 7 -> 34 -> 21 -> 17 -> 45
 bus 6 (45 → 44): 45 -> 13 -> 44
 ```
 
-## Cenário 68 — base / afternoon_2 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 120 min | origem 44;45;43 -> [43;44;45])
+## Scenario 68 — base / afternoon_2 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 120 min | origin 44;45;43 -> [43;44;45])
 
-5 de 12 ônibus · 48/48 pax (100%) · 26 rodadas · 0.1s
+5 of 12 buses · 48/48 pax (100%) · 26 rounds · 0.1s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 11 | 20 | 97/120 | 19/24 | 0.21 | 44 | 45 |
 | 2 | 7 | 8 | 73/120 | 5/32 | 0.11 | 45 | 44 |
@@ -1729,11 +1729,11 @@ bus 6 (45 → 44): 45 -> 13 -> 44
 | 4 | 7 | 11 | 68/120 | 9/50 | 0.16 | 45 | 44 |
 | 5 | 3 | 1 | 28/120 | 1/24 | 0.04 | 43 | 45 |
 
-Pares mais atendidos: 44→20=4, 7→5=4, 7→2=3, 9→45=3, 44→19=2
+Most served pairs: 44→20=4, 7→5=4, 7→2=3, 9→45=3, 44→19=2
 
-Ociosos (7): [6, 7, 8, 9, 10, 11, 12]
+Idle (7): [6, 7, 8, 9, 10, 11, 12]
 
-Rotas:
+Routes:
 
 ```
 bus 1 (44 → 45): 44 -> 9 -> 7 -> 28 -> 2 -> 25 -> 19 -> 30 -> 40 -> 20 -> 45
@@ -1743,11 +1743,11 @@ bus 4 (45 → 44): 45 -> 19 -> 7 -> 37 -> 9 -> 5 -> 44
 bus 5 (43 → 45): 43 -> 40 -> 45
 ```
 
-## Cenário 69 — base / night_1 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 120 min | origem 44;45;43 -> [43;44;45])
+## Scenario 69 — base / night_1 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 120 min | origin 44;45;43 -> [43;44;45])
 
-8 de 12 ônibus · 158/158 pax (100%) · 53 rodadas · 0.1s
+8 of 12 buses · 158/158 pax (100%) · 53 rounds · 0.1s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 9 | 29 | 95/120 | 24/24 | 0.31 | 45 | 44 |
 | 2 | 11 | 36 | 114/120 | 31/32 | 0.32 | 44 | 45 |
@@ -1758,11 +1758,11 @@ bus 5 (43 → 45): 43 -> 40 -> 45
 | 7 | 4 | 3 | 38/120 | 3/50 | 0.08 | 44 | 44 |
 | 8 | 3 | 1 | 20/120 | 1/50 | 0.05 | 44 | 45 |
 
-Pares mais atendidos: 7→5=7, 7→20=6, 43→5=6, 43→34=6, 7→44=5
+Most served pairs: 7→5=7, 7→20=6, 43→5=6, 43→34=6, 7→44=5
 
-Ociosos (4): [9, 10, 11, 12]
+Idle (4): [9, 10, 11, 12]
 
-Rotas:
+Routes:
 
 ```
 bus 1 (45 → 44): 45 -> 21 -> 34 -> 30 -> 25 -> 7 -> 18 -> 5 -> 44
@@ -1775,11 +1775,11 @@ bus 7 (44 → 44): 44 -> 32 -> 19 -> 44
 bus 8 (44 → 45): 44 -> 1 -> 45
 ```
 
-## Cenário 70 — base / night_2 (frota [1;2;3;4;5;6;7;8;9;10;11;12], limite 120 min | origem 44;45;43 -> [44])
+## Scenario 70 — base / night_2 (fleet [1;2;3;4;5;6;7;8;9;10;11;12], limit 120 min | origin 44;45;43 -> [44])
 
-5 de 12 ônibus · 60/61 pax (98%) · 30 rodadas · 0.1s
+5 of 12 buses · 60/61 pax (98%) · 30 rounds · 0.1s
 
-| bus | paradas | pax | tempo | pico | pax/min | origem | destino |
+| bus | stops | pax | time | peak | pax/min | origin | destination |
 |---|---|---|---|---|---|---|---|
 | 1 | 10 | 23 | 68/120 | 18/24 | 0.34 | 44 | 44 |
 | 2 | 9 | 17 | 64/120 | 14/32 | 0.27 | 45 | 44 |
@@ -1787,13 +1787,13 @@ bus 8 (44 → 45): 44 -> 1 -> 45
 | 4 | 5 | 5 | 58/120 | 5/50 | 0.09 | 44 | 44 |
 | 5 | 3 | 1 | 20/120 | 1/24 | 0.05 | 45 | 44 |
 
-Pares mais atendidos: 44→19=6, 44→40=6, 44→33=5, 45→21=4, 44→20=4
+Most served pairs: 44→19=6, 44→40=6, 44→33=5, 45→21=4, 44→20=4
 
-Ociosos (7): [6, 7, 8, 9, 10, 11, 12]
+Idle (7): [6, 7, 8, 9, 10, 11, 12]
 
-Não atendidos (1 pax): 19→25=1
+Unserved (1 pax): 19→25=1
 
-Rotas:
+Routes:
 
 ```
 bus 1 (44 → 44): 44 -> 9 -> 18 -> 45 -> 25 -> 23 -> 19 -> 40 -> 30 -> 44

@@ -1,38 +1,38 @@
-"""UNIVASF TOP heuristic: greedy sequencial com trava no par OD.
+"""UNIVASF TOP heuristic: sequential greedy with a locked OD pair.
 
-Etapa 1 (draft do par): cada ônibus ainda sem par varre as seleções
-possíveis (origem, destino) e, para cada par, busca no grafo de demanda
-os pontos P com demanda vindo de `o` OU indo para `d`, avaliando o
-trecho [o, P, d] (mais a opção direta [o, d]):
-    servível = embarques do trecho com trava de capacidade
-               (o→P desembarca, então embarca P→d, mais o o→d no caminho)
-    score = servível / (tempo[o, P] + tempo[P, d])
-Vale o P de maior score. O par NÃO precisa ter demanda direta `o→d`. O
-maior score global trava a rota base [o, P, d] primeiro (o ônibus nasce
-na origem do par — não há deslocamento vazio) e abate da demanda o que o
-trecho embarcou. Os demais repetem sobre a demanda atualizada.
+Stage 1 (the pair draft): every bus still without a pair scans the possible
+(origin, destination) selections and, for each pair, looks in the demand graph
+for the points P with demand coming from `o` OR going to `d`, scoring the route
+[o, P, d] (plus the direct option [o, d]):
+    servable = boardings along that route under the capacity lock
+               (o->P alights, so P->d boards, plus o->d along the way)
+    score = servable / (time[o, P] + time[P, d])
+The P with the highest score wins. The pair does NOT need direct demand
+`o->d`. The globally best score locks the base route [o, P, d] first (the bus
+is born at the pair origin -- there is no deadhead) and charges the demand for
+whatever that route boarded. The others repeat over the updated demand.
 
-Etapa 2 (rodadas globais): a cada rodada, cada ônibus com par travado
-(o, d) propõe um passo guiado pela demanda — ponto novo entra onde o par
-manda: `A→B` põe `B` depois de `A` (se `A` é o destino final, cruzada
-[..., d, B, d]); `B→Y` põe `B` antes de `Y` (início fixo); em conflito de
-ponto ou par, sempre o maior score marginal committa e assume a demanda;
-os demais replanejam na rodada seguinte, até estourar tempo/capacidade
-ou zerar o score.
+Stage 2 (global rounds): each round, every bus with a locked pair (o, d)
+proposes one demand-driven step -- the new point enters where the pair tells
+it to: `A->B` puts `B` after `A` (if `A` is the final destination, the crossing
+[..., d, B, d]); `B->Y` puts `B` before `Y` (the start is fixed); in a point or
+pair conflict the highest marginal score always commits and claims the demand;
+the others replan in the next round, until time/capacity runs out or the score
+drops to zero.
 
-`destinations`/`draft_origins` (quando dados) filtram as seleções
-possíveis de destino/origem do par.
+`destinations`/`draft_origins` (when given) filter the possible
+destination/origin selections of the pair.
 
-Módulos:
+Modules:
 
-    model       dados (planos, propostas, estado de trabalho)
-    scoring     as três pontuações (par, marginal, plano final)
-    simulation  embarque com trava de capacidade e nós candidatos
-    draft       etapa 1: melhor par OD e sua rota base
-    expansion   etapa 2: inserção de um ponto guiada pela demanda
-    conflict    agrupamento das propostas que disputam ponto ou par
-    fleet       a rodada: propostas, conflito, commit, planos finais
-    solver      solve_scenario: carrega o cenário e chama a frota
+    model       data (plans, proposals, work state)
+    scoring     the three scores (pair, marginal, final plan)
+    simulation  capacity-locked boarding and candidate nodes
+    draft       stage 1: best OD pair and its base route
+    expansion   stage 2: inserting one demand-driven point
+    conflict    grouping the proposals that dispute a point or pair
+    fleet       the round: proposals, conflict, commit, final plans
+    solver      solve_scenario: load the scenario and run the fleet
 """
 
 from algorithms.top_univasf.draft import best_pair_for_bus
@@ -52,14 +52,14 @@ from algorithms.top_univasf.model import (
     fleet_summary,
 )
 from algorithms.top_univasf.scoring import (
-    marginal_pax_per_min,
+    marginal_passengers_per_minute,
     od_pair_score,
-    pax_per_min,
+    passengers_per_minute,
 )
 from algorithms.top_univasf.simulation import (
     candidate_nodes,
+    segment_passengers,
     simulate_stops,
-    stretch_passengers,
 )
 from algorithms.top_univasf.solver import solve_scenario
 from utils.instances import InstanceData
@@ -81,11 +81,11 @@ __all__ = [
     "candidate_nodes",
     "collect_proposals",
     "fleet_summary",
-    "marginal_pax_per_min",
+    "marginal_passengers_per_minute",
     "od_pair_score",
-    "pax_per_min",
+    "passengers_per_minute",
     "run_fleet",
+    "segment_passengers",
     "simulate_stops",
     "solve_scenario",
-    "stretch_passengers",
 ]

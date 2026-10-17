@@ -16,10 +16,10 @@ ConflictKey = tuple[str, int] | tuple[str, int, int]
 
 @dataclass(frozen=True)
 class BusPlan:
-    """Resultado de um ônibus: rota final + o que ela atendeu.
+    """One bus result: the final route plus what it served.
 
-    `origin`/`destination` são o par OD travado do ônibus: a rota nasce na
-    origem do par, então os dois estão sempre definidos.
+    `origin`/`destination` are the bus's locked OD pair: the route is born at
+    the pair origin, so both are always set.
     """
 
     bus_id: int
@@ -35,12 +35,12 @@ class BusPlan:
 
 @dataclass(frozen=True)
 class FleetSummary:
-    """O que aconteceu na frota: rodadas, vitórias por ônibus e sobra."""
+    """What the fleet did: rounds, commits per bus and the demand left over."""
 
     rounds: int
-    wins_per_bus: tuple[tuple[int, int], ...]  # (bus_id, commits)
+    wins_per_bus: tuple[tuple[int, int], ...]  # (bus_id, commits won)
     unserved_passengers: int
-    unserved_pairs: tuple[ServedPair, ...]  # (o, d, q) por qtd desc
+    unserved_pairs: tuple[ServedPair, ...]  # (o, d, q), highest demand first
 
 
 def fleet_summary(
@@ -48,7 +48,7 @@ def fleet_summary(
     wins: dict[int, int],
     rounds: int,
 ) -> FleetSummary:
-    """Resumo final: rodadas, commits por ônibus e o que sobrou de demanda."""
+    """Final summary: rounds, commits per bus and the demand left behind."""
     pairs = sorted(
         (
             (int(origin), int(destination), int(qty))
@@ -69,8 +69,8 @@ def fleet_summary(
 class BoardingOutcome:
     """What a candidate route would actually carry.
 
-    `passengers` counts only the demand boarded now; `claimed` demand the
-    bus already holds occupies seats but is never counted again.
+    `passengers` counts only the demand boarded now; demand the bus already
+    holds (`claimed`) occupies seats but is never counted again.
     """
 
     passengers: int
@@ -81,7 +81,7 @@ class BoardingOutcome:
 
 @dataclass
 class WorkState:
-    """Estado interno: par OD travado + rota em crescimento."""
+    """Internal state: the locked OD pair plus the route as it grows."""
 
     bus: Bus
     origin: int
@@ -100,8 +100,8 @@ class WorkState:
 class DraftProposal:
     """A bus without a locked OD pair proposes the base route of one pair.
 
-    `stops` is already the scored stretch: [o, d] or [o, P, d]. The bus is
-    born at `origin`, so there is no deadhead.
+    `stops` is already the scored route: [o, d] or [o, P, d]. The bus is born
+    at `origin`, so there is no deadhead.
     """
 
     bus: Bus
@@ -151,10 +151,9 @@ class ExpansionProposal:
 
     def conflict_keys(self) -> list[ConflictKey]:
         """The inserted points plus every OD pair the insertion claims."""
-        return (
-            [("point", node) for node in self.new_points]
-            + [("od", origin, destination) for origin, destination, _ in self.claim]
-        )
+        return [("point", node) for node in self.new_points] + [
+            ("od", origin, destination) for origin, destination, _ in self.claim
+        ]
 
     def tie_break_key(self) -> tuple:
         """Highest score wins; then more passengers, less time, lower bus id."""

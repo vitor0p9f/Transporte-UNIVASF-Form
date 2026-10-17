@@ -20,21 +20,21 @@ def board_greedily(
     *,
     deduplicate_pairs: bool,
 ) -> tuple[list[ServedPair], int]:
-    """Embarque guloso com trava de capacidade, na ordem da rota.
+    """Greedy boarding under the capacity lock, in route order.
 
-    Ordem de avaliação: origem crescente, depois destino. Para cada par
-    (o, d) embarca `min(demanda, assentos livres no trecho mais cheio entre
-    o e d)` e ocupa os trechos percorridos. `leg_loads` é o estado de
-    ocupação por trecho e já pode vir preenchido com assentos que o ônibus
-    ocupa por demanda já reivindicada; é atualizado no lugar.
+    Evaluation order: increasing origin, then destination. For each pair
+    (o, d) the bus boards `min(demand, free seats on the busiest leg between o
+    and d)` and fills the legs it drives. `leg_loads` is the per-leg occupancy
+    state and may already carry seats the bus occupies for demand it has
+    claimed; it is updated in place.
 
-    `deduplicate_pairs` abate do par o que já subiu nesta mesma chamada —
-    uma rota com nó repetido nunca embarca um par duas vezes além do que
-    existe. Desligar é a versão rápida do draft (ver `stretch_passengers`).
+    `deduplicate_pairs` subtracts from the pair whatever boarded during this
+    same call -- so a route that visits a node twice never boards a pair twice
+    beyond the demand that exists. Turning it off is the draft's fast path
+    (see `segment_passengers`).
 
     Returns:
-        (pairs, passengers), com os pares embarcados agora, em ordem de
-        embarque.
+        (pairs, passengers) with the pairs boarded now, in boarding order.
     """
     boarded: dict[tuple[int, int], int] = {}
     pairs: list[ServedPair] = []
@@ -70,13 +70,13 @@ def simulate_stops(
     remaining: np.ndarray,
     claimed: dict[tuple[int, int], int] | None = None,
 ) -> BoardingOutcome:
-    """Simula uma sequência de paradas. Retorna (pax, tempo, pico, pares).
+    """Simulate one stop sequence. Returns (passengers, time, peak, pairs).
 
-    Embarque com restrição de capacidade, na ordem da rota. `claimed`
-    (demanda já internalizada pelo ônibus) ocupa assentos mas nunca é
-    recontada nos pares retornados. Cada embarque abate uma cópia local da
-    demanda, então um par nunca embarca duas vezes (rota com nó repetido)
-    além do que existe — `remaining` nunca é alterada.
+    Boarding under the capacity lock, in route order. `claimed` (demand the
+    bus has already internalised) occupies seats but is never counted again in
+    the returned pairs. Each boarding is charged against a local copy of the
+    demand, so a pair never boards twice (route with a repeated node) beyond
+    the demand that exists -- `remaining` is never changed.
     """
     stops = tuple(stops)
     travel = sum(int(data.time[a, b]) for a, b in itertools.pairwise(stops))
@@ -110,7 +110,7 @@ def simulate_stops(
 
 
 def candidate_nodes(demand: np.ndarray, stops: list[int]) -> list[int]:
-    """Nós com demanda (embarque ou desembarque) ainda fora da rota."""
+    """Nodes with demand (pickup or drop-off) that are still off the route."""
     blocked = set(stops)
     candidates: set[int] = set()
     for origin, destination in zip(*np.nonzero(demand)):
@@ -121,19 +121,20 @@ def candidate_nodes(demand: np.ndarray, stops: list[int]) -> list[int]:
     return sorted(candidates)
 
 
-def stretch_passengers(
+def segment_passengers(
     stops: StopSequence, capacity: int, remaining: np.ndarray
 ) -> int:
-    """Embarques de um trecho curto do draft, com trava de capacidade.
+    """Boardings along a short route segment (the draft's fast path).
 
-    Mesmo `board_greedily` de `simulate_stops`, sem deduplicar pares e sem
-    copiar a matriz de demanda: o draft avalia milhares de trechos
-    minúsculos por rodada.
+    Same `board_greedily` as `simulate_stops`, without deduplicating pairs and
+    without copying the demand matrix: the draft evaluates thousands of tiny
+    routes per round.
 
-    As formas que o draft avalia ([o, d], [o, P, d] e [o, P, o]) nunca
-    repetem um par OD, então aqui a versão rápida e `simulate_stops` dão o
-    mesmo embarque (ver tests/test_units.py). Rota com nó repetido em
-    posições disjuntas só existe na expansão, que usa `simulate_stops`.
+    Every shape the draft evaluates ([o, d], [o, P, d] and [o, P, o]) never
+    repeats an OD pair, so this fast path and `simulate_stops` board exactly
+    the same passengers (see tests/test_units.py). A route repeating nodes in
+    disjoint positions only happens during expansion, which uses
+    `simulate_stops`.
     """
     leg_loads = [0] * max(0, len(stops) - 1)
     _, served = board_greedily(

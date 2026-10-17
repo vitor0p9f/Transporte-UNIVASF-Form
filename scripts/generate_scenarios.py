@@ -4,25 +4,25 @@ Generates scenarios.csv with columns:
   scenario_id,instance_id,fleet_bus_ids,period,max_time_limit,diesel_price_per_liter,driver_hourly_rate,origin,destination_labels
 
 fleet_bus_ids is a ";"-separated subset of the ids in fleet.csv.
-instance_id references instances/index.csv — por padrão apenas as instâncias
-de kind ``archeti`` (`--instance-kind` muda isso; a ``base`` é configuração
-fixa de referência e não é sorteada).
+instance_id references instances/index.csv -- by default only instances of
+kind ``archeti`` (`--instance-kind` changes that; ``base`` is a fixed reference
+setup and is not sampled).
 period is one of the demand sub-periods
 (morning_1, morning_2, afternoon_1, afternoon_2, night_1, night_2),
 matching the columns of the instance demand.csv files and the
 `period` argument of utils.demand.load_demand_matrix.
 
-`origin` and `destination_labels` recebem 1..`--max-labels` nós sorteados
-(campos "n1;n2;...") — são as origens e os destinos possíveis do cenário.
-Se a instância sorteada não tiver matriz de tempo (ou de distância) no disco,
-ela é gerada na hora com valores aleatórios semeados (utils.synth).
+`origin` and `destination_labels` get 1..`--max-labels` sampled nodes ("n1;n2;..."
+fields) -- they are the scenario's possible origins and destinations.
+If the sampled instance has no time (or distance) matrix on disk, it is
+generated on the spot with seeded random values (utils.synth).
 
-A seed padrão é `utils.seed.DEFAULT_SEED`, a mesma dos demais geradores.
+The default seed is `utils.seed.DEFAULT_SEED`, the same one the other
+generators use.
 
-Este script reescreve apenas `scenarios.csv`; os cenários fixos da instância
-``base`` ficam em `scenarios_base.csv` (escrito à mão) e os executores
-(`main.py`, `scripts/run_all.py`) somam os dois arquivos — ver
-`utils/scenarios.py`.
+This script rewrites only `scenarios.csv`; the fixed scenarios of the ``base``
+instance live in `scenarios_base.csv` (hand-written) and the runners
+(`main.py`, `scripts/run_all.py`) sum both files -- see `utils/scenarios.py`.
 
 Usage:
   python scripts/generate_scenarios.py --num-scenarios 60 --seed 42
@@ -71,20 +71,20 @@ def read_index(index_path: Path) -> list[dict]:
 
 
 def filter_by_kind(instances: list[dict], kinds: set[str] | None) -> list[dict]:
-    """Filtra as instâncias do índice pelos `kind`s pedidos (None = todas)."""
+    """Filter the index instances by the requested `kind`s (None = all)."""
     if kinds is None:
         return instances
     kept = [row for row in instances if row.get("kind") in kinds]
     available = sorted({row.get("kind", "") for row in instances})
     if not kept:
         raise ValueError(
-            f"nenhuma instância com kind em {sorted(kinds)}; o índice tem {available}"
+            f"no instance with kind in {sorted(kinds)}; the index has {available}"
         )
     return kept
 
 
 def instance_nodes(instance_dir: Path, index_row: dict) -> list[int]:
-    """Nós válidos da instância: do demand.csv ou, na falta, de num_nodes."""
+    """Valid nodes of the instance: from demand.csv or, failing that, num_nodes."""
     nodes = load_nodes(instance_dir / "demand.csv")
     if nodes:
         return nodes
@@ -93,7 +93,7 @@ def instance_nodes(instance_dir: Path, index_row: dict) -> list[int]:
 
 
 def node_labels(nodes: list[int], rng: random.Random, max_labels: int) -> str:
-    """Sorteia 1..max_labels nós e devolve como "n1;n2;..."."""
+    """Sample 1..max_labels nodes and return them as "n1;n2;..."."""
     size = rng.randint(1, max(1, min(max_labels, len(nodes))))
     return ";".join(str(node) for node in sorted(rng.sample(nodes, size)))
 
@@ -119,7 +119,7 @@ def generate_scenarios(
         instance_dir = ROOT / "instances" / instance_id
         nodes = instance_nodes(instance_dir, instance)
         if not nodes:
-            raise ValueError(f"instância {instance_id!r} sem nós conhecidos")
+            raise ValueError(f"instance {instance_id!r} has no known nodes")
         fresh = ensure_matrices(
             instance_dir,
             nodes,
@@ -157,7 +157,7 @@ def write_scenarios(scenarios: list[dict], output: Path) -> None:
 
 
 def parse_kinds(value: str) -> set[str] | None:
-    """'all' (ou vazio) = todas as instâncias; senão, lista separada por vírgula."""
+    """'all' (or empty) = every instance; otherwise a comma-separated list."""
     text = value.strip().lower()
     if text in ("", "all", "*"):
         return None
@@ -170,31 +170,31 @@ def parse_args() -> argparse.Namespace:
         "--num-scenarios", type=int, default=10, help="Number of scenarios to generate."
     )
     parser.add_argument(
-        "--seed", type=int, default=DEFAULT_SEED, help="Seed raiz (utils/seed.py)."
+        "--seed", type=int, default=DEFAULT_SEED, help="Root seed (utils/seed.py)."
     )
     parser.add_argument(
         "--instance-kind",
         default="archeti",
-        help="Kinds de instância usados nos cenários (padrão: archeti; "
-        "'all' = todas; aceita lista, ex.: 'archeti,base').",
+        help="Instance kinds used in the scenarios (default: archeti; "
+        "'all' = every kind; a list is accepted, e.g. 'archeti,base').",
     )
     parser.add_argument(
         "--max-labels",
         type=int,
         default=3,
-        help="Máximo de nós sorteados por campo origin/destination_labels.",
+        help="Maximum nodes sampled per origin/destination_labels field.",
     )
     parser.add_argument(
         "--span-km",
         type=float,
         default=DEFAULT_SPAN_KM,
-        help="Lado do box (km) para matrizes ausentes.",
+        help="Box side (km) for missing matrices.",
     )
     parser.add_argument(
         "--min-per-unit",
         type=float,
         default=DEFAULT_MIN_PER_UNIT,
-        help="Minutos por km para matrizes ausentes.",
+        help="Minutes per km for missing matrices.",
     )
     return parser.parse_args()
 
@@ -224,10 +224,10 @@ def main() -> None:
     write_scenarios(scenarios, output)
     print(
         f"Wrote {len(scenarios)} scenarios to {output} "
-        f"(seed {args.seed}; {len(instances)} instâncias kind={args.instance_kind})"
+        f"(seed {args.seed}; {len(instances)} instances kind={args.instance_kind})"
     )
     for instance_id, files in sorted(created.items()):
-        print(f"  matriz(es) gerada(s) para {instance_id}: {', '.join(sorted(set(files)))}")
+        print(f"  matrix(es) generated for {instance_id}: {', '.join(sorted(set(files)))}")
 
 
 if __name__ == "__main__":

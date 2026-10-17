@@ -1,17 +1,18 @@
-"""Seed raiz da geração sintética de dados.
+"""Root seed for the synthetic data generation.
 
-Todo dado sintético do projeto sai da MESMA seed raiz `DEFAULT_SEED`:
+Every synthetic datum in the project comes from the SAME root seed,
+`DEFAULT_SEED`:
 
-    tempos de viagem + demandas  -> scripts/generate_instances.py
-    frota (fleet.csv)            -> scripts/generate_fleet.py
-    cenários (scenarios.csv)     -> scripts/generate_scenarios.py
-    matrizes ausentes            -> utils.synth.ensure_matrices
+    travel times + demand     -> scripts/generate_instances.py
+    fleet (fleet.csv)         -> scripts/generate_fleet.py
+    scenarios (scenarios.csv) -> scripts/generate_scenarios.py
+    missing matrices          -> utils.synth.ensure_matrices
 
-Rodar os três geradores com o mesmo `--seed` reproduz exatamente as mesmas
-instâncias, frota e cenários; para trocar o experimento inteiro, troque só
-`DEFAULT_SEED` aqui (ou passe `--seed` em cada gerador).
+Running the three generators with the same `--seed` reproduces exactly the same
+instances, fleet and scenarios; to swap the whole experiment, change only
+`DEFAULT_SEED` here (or pass `--seed` to each generator).
 
-O `scripts/run_all.py` registra a seed usada no cabeçalho do `results.md`.
+`scripts/run_all.py` records the seed it used in the `results.md` header.
 """
 
 DEFAULT_SEED = 42

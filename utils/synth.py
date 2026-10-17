@@ -1,19 +1,17 @@
-"""Geração sintética reprodutível: pontos, distância, tempo e demanda.
+"""Reproducible synthetic generation: points, distance, time and demand.
 
-Calibrado em ``instances/base`` (46 nós):
+Calibrated on ``instances/base`` (46 nodes):
 
-    - pontos num box de ~13 km -> distância euclidiana (2 casas),
-      média ~6.8 km;
-    - tempo = ``max(1, round(km * 2.2 * U(0.9, 1.1)))`` (~2.2 min/km,
-      média ~14 min);
-    - demanda: ~0.2865 * n*(n-1) viagens (o base tem 593) concentradas em
-      ~11% dos pares OD — o base tem 166 pares com viagem em 266 células
-      (média 3.6 viagens por par), então a demanda é enviesada e cada par
-      é atendido em 1 ou 2 sub-períodos.
+    - points in a ~13 km box -> Euclidean distance (2 decimals), mean ~6.8 km;
+    - time = ``max(1, round(km * 2.2 * U(0.9, 1.1)))`` (~2.2 min/km, mean
+      ~14 min);
+    - demand: ~0.2865 * n*(n-1) trips (base has 593) concentrated on ~11% of
+      the OD pairs -- base has 166 pairs with a trip across 266 cells (mean 3.6
+      trips per pair), so the demand is skewed and each pair is served in 1 or
+      2 sub-periods.
 
-Todas as funções recebem um ``random.Random`` já semeado, então a mesma
-seed reproduz os mesmos arquivos. A seed raiz do projeto fica em
-``utils/seed.py``.
+Every function takes an already seeded ``random.Random``, so the same seed
+reproduces the same files. The project root seed lives in ``utils/seed.py``.
 """
 
 import csv
@@ -23,35 +21,35 @@ from pathlib import Path
 
 from utils.demand import DEMAND_PERIODS
 
-#: Primeira célula das matrizes quadradas (distance.csv / time.csv).
+#: First cell of the square matrices (distance.csv / time.csv).
 CORNER = "origin/destination"
 
-#: Lado do box onde os pontos são sorteados, em km (base: média 6.8 km).
+#: Side of the box the points are sampled in, in km (base: mean 6.8 km).
 DEFAULT_SPAN_KM = 13.0
 
-#: Minutos por km no tempo de viagem (base: ~2.23 min/km).
+#: Minutes per km in the travel time (base: ~2.23 min/km).
 DEFAULT_MIN_PER_UNIT = 2.2
 
-#: Viagens por par de nós no total dos 6 sub-períodos (base: 593/2070).
+#: Trips per node pair over all 6 sub-periods (base: 593/2070).
 DEFAULT_DEMAND_RATIO = 0.2865
 
-#: Fração de pares OD que concentram a demanda (base: 166/2070).
+#: Fraction of OD pairs that concentrate the demand (base: 166/2070).
 DEFAULT_PAIR_RATIO = 0.11
 
-#: Expoente do viés entre pares quentes (base: média 3.6 viagens/par).
+#: Skew exponent between hot pairs (base: mean 3.6 trips per pair).
 DEFAULT_DEMAND_SKEW = 2.5
 
-#: Chance de um par quente ser atendido em 2 sub-períodos (base: 264/166).
+#: Chance a hot pair is served across 2 sub-periods (base: 264/166).
 DEFAULT_PERIOD_SPREAD = 0.8
 
 
 def random_points(num_points: int, rng: random.Random, span: float = DEFAULT_SPAN_KM):
-    """Sorteia `num_points` coordenadas (x, y) num box [0, span] x [0, span]."""
+    """Sample `num_points` (x, y) coordinates in a [0, span] x [0, span] box."""
     return [(rng.uniform(0.0, span), rng.uniform(0.0, span)) for _ in range(num_points)]
 
 
 def build_distance(points) -> list[list[float]]:
-    """Matriz de distância euclidiana (km, 2 casas) entre os pontos."""
+    """Euclidean distance matrix (km, 2 decimals) between the points."""
     n = len(points)
     matrix = [[0.0] * n for _ in range(n)]
     for i in range(n):
@@ -66,19 +64,19 @@ def build_distance(points) -> list[list[float]]:
 def build_time(
     distance, rng: random.Random, min_per_unit: float = DEFAULT_MIN_PER_UNIT
 ) -> list[list[int]]:
-    """Tempo de viagem (min, >= 1) a partir da distância, com ruído U(0.9, 1.1)."""
+    """Travel time (min, >= 1) from the distance, with U(0.9, 1.1) noise."""
     n = len(distance)
     matrix = [[0] * n for _ in range(n)]
     for i in range(n):
         for j in range(n):
             if i != j:
                 factor = min_per_unit * rng.uniform(0.9, 1.1)
-                matrix[i][j] = max(1, int(round(distance[i][j] * factor)))
+                matrix[i][j] = max(1, round(distance[i][j] * factor))
     return matrix
 
 
 def demand_budget(num_nodes: int, ratio: float = DEFAULT_DEMAND_RATIO) -> int:
-    """Orçamento de viagens para `num_nodes` (calibrado: 593 para 46 nós)."""
+    """Trip budget for `num_nodes` (calibrated: 593 for 46 nodes)."""
     return max(num_nodes, round(ratio * num_nodes * (num_nodes - 1)))
 
 
@@ -91,15 +89,15 @@ def build_demand(
     skew: float = DEFAULT_DEMAND_SKEW,
     period_spread: float = DEFAULT_PERIOD_SPREAD,
 ) -> list[dict]:
-    """Espalha `budget` viagens em pares OD "quentes", no perfil do base.
+    """Spread `budget` trips over "hot" OD pairs, following the base profile.
 
-    Calibrado em ``instances/base`` (46 nós): ~11% dos pares concentram a
-    demanda (~166 pares com viagem em 266 células), a distribuição por par
-    é enviesada (``U(0,1) ** 2.5``: poucos pares têm muitas viagens) e cada
-    par é atendido em 1 ou 2 sub-períodos (80% de chance de dois).
+    Calibrated on ``instances/base`` (46 nodes): ~11% of the pairs concentrate
+    the demand (~166 pairs with a trip across 266 cells), the per-pair
+    distribution is skewed (``U(0,1) ** 2.5``: a few pairs hold many trips) and
+    each pair is served in 1 or 2 sub-periods (80% chance of two).
 
-    Devolve uma linha por par OD fora da diagonal, no formato longo de
-    demand.csv (colunas de sub-período zeradas quando não sorteadas).
+    Returns one row per off-diagonal OD pair, in the long demand.csv format
+    (sub-period columns are zero when not sampled).
     """
     nodes = sorted(nodes)
     pairs = [(origin, destination) for origin in nodes for destination in nodes
@@ -139,18 +137,18 @@ def build_demand(
 
 
 def demand_fields() -> list[str]:
-    """Cabeçalho de demand.csv (origin, destination, 6 sub-períodos)."""
+    """Header of demand.csv (origin, destination, 6 sub-periods)."""
     return ["origin", "destination", *DEMAND_PERIODS]
 
 
 def summarize_demand(rows) -> tuple[int, int]:
-    """(pares OD, total de viagens nos 6 sub-períodos) de linhas de demanda."""
+    """(OD pairs, total trips over the 6 sub-periods) of demand rows."""
     total = sum(int(row[period]) for row in rows for period in DEMAND_PERIODS)
     return len(rows), total
 
 
 def write_square(path, nodes: list[int], matrix, fmt=lambda v: v) -> None:
-    """Grava uma matriz quadrada (distance.csv / time.csv) na ordem de `nodes`."""
+    """Write a square matrix (distance.csv / time.csv) in `nodes` order."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
@@ -161,7 +159,7 @@ def write_square(path, nodes: list[int], matrix, fmt=lambda v: v) -> None:
 
 
 def read_square(path) -> tuple[list[int], list[list[float]]]:
-    """Lê uma matriz quadrada como (ids dos nós, matriz alinhada aos ids)."""
+    """Read a square matrix as (node ids, matrix aligned with those ids)."""
     with Path(path).open(newline="", encoding="utf-8") as f:
         reader = csv.reader(f)
         header = next(reader)
@@ -172,7 +170,7 @@ def read_square(path) -> tuple[list[int], list[list[float]]]:
 
 
 def write_demand(path, rows) -> None:
-    """Grava demand.csv no formato longo (um par OD por linha)."""
+    """Write demand.csv in the long format (one OD pair per row)."""
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
@@ -182,7 +180,7 @@ def write_demand(path, rows) -> None:
 
 
 def load_nodes(demand_path) -> list[int]:
-    """Ids de nós que aparecem em demand.csv (vazio se o arquivo não existe)."""
+    """Node ids appearing in demand.csv (empty when the file does not exist)."""
     demand_path = Path(demand_path)
     if not demand_path.exists():
         return []
@@ -195,13 +193,13 @@ def load_nodes(demand_path) -> list[int]:
 
 
 def integer_cell(value) -> int | float:
-    """Formata uma célula de tempo: int quando inteiro, float caso contrário."""
+    """Format a time cell: int when integral, float otherwise."""
     number = float(value)
     return int(number) if number.is_integer() else number
 
 
 def instance_rng(seed: int, instance_id: str) -> random.Random:
-    """RNG determinístico por instância, derivado da seed raiz."""
+    """Deterministic per-instance RNG, derived from the root seed."""
     return random.Random(f"{seed}:{instance_id}")
 
 
@@ -214,11 +212,11 @@ def ensure_matrices(
     min_per_unit: float = DEFAULT_MIN_PER_UNIT,
     force: bool = False,
 ) -> list[str]:
-    """Cria distance.csv/time.csv ausentes com valores aleatórios semeados.
+    """Create missing distance.csv/time.csv with seeded random values.
 
-    Usado quando um cenário aponta para uma instância sem matriz de tempo
-    (ou de distância): em vez de falhar, o dado é gerado na hora a partir
-    dos nós conhecidos. Devolve a lista de arquivos criados.
+    Used when a scenario points at an instance with no time (or distance)
+    matrix: instead of failing, the data is generated on the spot from the
+    known nodes. Returns the list of files created.
     """
     instance_dir = Path(instance_dir)
     nodes = sorted(nodes)
