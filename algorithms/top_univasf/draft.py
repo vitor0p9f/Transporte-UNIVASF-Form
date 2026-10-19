@@ -88,7 +88,7 @@ def best_pair_for_bus(
                 if score < 0:
                     continue
                 # Score tie: more passengers, shorter route, lower (o, d) and,
-                # last, the P evaluated first (the direct option loses).
+                # last, the direct route: its margin -1 beats any P >= 1.
                 key = (score, served, -pair_time, -o, -d, -margin)
                 if best_key is None or key > best_key:
                     best_key = key
