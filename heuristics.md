@@ -1,7 +1,7 @@
 # UNIVASF TOP heuristic — overview
 
 The code is the source of truth (`algorithms/top_univasf/`); the full
-step-by-step pseudocode is in `heuristics_pseudocode.md`.
+step-by-step pseudocode is in `heuristics_pseudocode.md` (in Portuguese).
 
 ## 1. Main flow (the round)
 
