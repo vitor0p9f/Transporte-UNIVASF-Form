@@ -1,181 +1,136 @@
-# UNIVASF TOP heuristic — pseudocode
+# Heurística TOP UNIVASF — pseudocódigo
 
-Greedy OD with a locked pair. Mirrors `algorithms/top_univasf/` (the round is
-`fleet.py: run_fleet`); the diagram overview is in `heuristics.md`.
-Identifiers match the code, so a name here can be searched for directly.
+> Documento em português; o código (identificadores e comentários) está em
+> inglês. O código é a fonte da verdade: `algorithms/top_univasf/` — o laço das
+> rodadas é `fleet.py: run_fleet`. O que estiver em `código` é nome do código, dá
+> para buscar direto. O panorama com diagramas está em `heuristics.md`.
+
+**Entradas:** matrizes de tempo e de demanda (a de distância é carregada mas não
+usada), frota (`id` e lugares), limite de tempo por ônibus, filtros opcionais de
+origem/destino e `max_rounds`.
+
+## Ideia
+
+Servir o máximo de passageiros respeitando lugares e limite de tempo por ônibus.
+Em cada rodada **todo ônibus propõe um passo**; quem não conflita commita junto
+e, num conflito, só o melhor score age. O que commita é descontado da demanda
+global. Quem ainda não tem par travado escolhe a rota (um par OD) e, daí em
+diante, só cresce a rota — um ponto por vez, guiado pela demanda.
+
+## Pontuações
+
+| momento | score |
+|---|---|
+| rota nova (`draft`) | passageiros embarcados ÷ tempo da rota |
+| inserção (`expansão`) | passageiros ganhos ÷ tempo extra |
+| plano final | passageiros ÷ tempo total |
+
+- A rota nova é `[o, d]` ou `[o, P, d]`; o embarque respeita os lugares na ordem
+  da rota (quem desce em `P` libera lugar). Sem passageiro ou sem tempo, score 0.
+- Expansão: ganho ≤ 0 → score 0; com ganho > 0, tempo extra ≤ 0 → score infinito.
+
+## Desempate — a ordem importa
+
+Toda escolha compara uma tupla de campos e fica com a **maior**. Tupla se compara
+da esquerda para a direita, então a primeira posição é o critério de verdade e
+cada posição seguinte só decide empate exato das anteriores. `-campo` quer dizer
+"menor é melhor". Ids de nó e `bus.id` estão ali só para o resultado sair sempre
+igual (determinismo), não para escolher melhor.
+
+| onde | tupla | em palavras |
+|---|---|---|
+| draft, por candidata | `(score, servidos, -tempo_rota, -o, -d, -margin)` | melhor score → mais passageiros → rota mais curta → menor `o` → menor `d` → no empate exato, a **rota direta** (`margin = -1`; uma rota com `P` entra com o id do nó) |
+| expansão, por trial | `(score, passageiros, -tempo, -cand, trial)` | melhor score → mais passageiros → trial mais curto → menor nó inserido → a própria sequência |
+| conflito, por proposta | `DraftProposal (score, servidos, -tempo, -bus.id)`<br>`ExpansionProposal (score, soma do claim, -tempo, -bus.id)` | melhor score → mais passageiros → rota mais curta → menor `bus.id` |
+
+Numa disputa entre draft e expansão os `score` têm unidades diferentes
+(eficiência da rota inteira × eficiência marginal do passo).
+
+## A rodada
 
 ```text
-GREEDY OD HEURISTIC WITH LOCKED PAIR (TOP UNIVASF)
-==================================================
+remaining = demanda original            // vai sendo descontada
+state_by_id[ônibus] = vazio             // ônibus sem par travado
+rounds = 0 ; wins[ônibus] = 0
 
-OBJECTIVE
----------
-Serve as many passengers as possible with the fleet, respecting the
-capacity and the time limit per bus.
+ENQUANTO soma(remaining) > 0:
 
-INPUTS
-------
-- Matrices: time[o,d], demand[o,d], nodes
-  (distance.csv is loaded but not used by the heuristic)
-- Fleet: list of buses (id, capacity)
-- Time limit per bus
-- Allowed destinations (None = free)
-- Allowed origins for the draft (None = free)
-- max_rounds (None = no cap)
-
-SCORES
-------
-od_pair_score (draft) = boardings of the route / route time
-  route = [o, d] (direct) or [o, P, d] (with one demand point P)
-  boardings = capacity lock in route order
-              (whoever alights at P frees a seat)
-  if boardings <= 0 or route time <= 0: score = 0
-
-marginal_passengers_per_minute (expansion) = passengers gained / extra time
-  gain = passengers_after - passengers_before
-  if gain <= 0: score = 0
-  if extra time <= 0: score = infinity
-
-final plan score = passengers_per_minute(total passengers, total time)
-
-INITIALIZATION
---------------
-remaining[o,d] = original demand
-state_by_id[bus] = empty (bus still without a locked pair)
-wins[bus] = 0
-
-MAIN LOOP
----------
-WHILE sum(remaining) > 0:
+  // 1. CADA ÔNIBUS PROPÕE UM PASSO (todos sobre o mesmo `remaining`)
   proposals = []
+  PARA cada ônibus:
+    SE ainda não tem par travado:
+      PARA cada par (o, d) permitido:        // filtros de origem/destino
+        SE o == d e remaining[o,d] > 0: pula   // self-loop não embarca
+        SE tempo[o,d] < 0: pula
+        P = demanda que sai de o + demanda que chega em d, menos {o, d}
+        candidatas = [ [o, d] (direta) ] + [ [o, P, d] para cada P ]
+        PARA cada candidata:
+          SE algum trecho ou a rota tem tempo negativo, ou a rota passa do
+            limite: pula
+          embarcados = embarque na ordem da rota (quem desce libera lugar)
+          SE a rota tem tempo 0 e embarcou alguém: pula
+          score = embarcados / tempo da rota     // 0 passa, negativo não
+          fica com a melhor tupla de desempate
+      SE achou: propõe a rota escolhida      // o par trava aqui; sem deadhead
+    SENÃO:
+      SE a rota já está no limite de tempo: não propõe
+      atual = simula a rota com a demanda já cobrada (`claimed`)
+      PARA cada ponto fora da rota que aparece na demanda:
+        REGRA A — demanda A→ponto, com A na rota:
+          o ponto entra logo depois de A
+          (se A é o destino final: [..., d, ponto, d])
+        REGRA B — demanda ponto→Y, com Y na rota:
+          o ponto entra logo antes de Y
+          (se Y é o início e a rota não termina nele: [o, ponto, o, ...] — a
+          dobradinha)
+        simula o trial inteiro (lugares por perna, tempo e pico), e:
+          SE passa do limite de tempo ou dos lugares: descarta
+          score = passageiros ganhos / tempo extra    // precisa ser > 0
+          claim = pares que ganharam passageiros       // precisa ser não vazio
+          fica com a melhor tupla de desempate
+      SE achou: propõe {pontos realmente inseridos + pares do claim}
 
-  FOR each bus:
-    IF the bus has no state yet:
-      // 1) PROPOSE THE DRAFT OF THE OD PAIR
-      best = none
-      FOR each o in nodes (filtered by the allowed origins):
-        out(o) = {p: remaining[o,p] > 0}
-        FOR each d in nodes (filtered by the allowed destinations):
-          in(d) = {p: remaining[p,d] > 0}
-          skip if o == d and remaining[o,d] > 0  // a self-loop never boards
-          skip if time[o,d] < 0
-          P = (out(o) + in(d)) - {o, d}
-          // note: with o == d and no direct demand, [o, P, o] still counts
-          options = [(direct, [o, d], time[o,d])]
-            + [(p, [o, p, d], time[o,p] + time[p,d]) for each p in P]
-          FOR each (p, stops, route_time) in options:
-            skip if route_time < 0 or route_time > time_limit
-            served = segment_passengers(stops, capacity, remaining)
-            skip if route_time == 0 and served > 0
-            score = od_pair_score(served, route_time)
-            skip if score < 0          // note: score 0 PASSES
-            tie-break (keep the largest):
-              (score, served, -route_time, -o, -d, -p)
-              // direct enters as p = -1 (loses to any P)
-      IF found:
-        base = route of the best        // the route is BORN here
-        keys = points of the base
-             + every OD sub-pair of the base (i < j)
-        proposals.append(DraftProposal)
+  SE ninguém propôs nada: PARA
 
-    ELSE:
-      // 2) PROPOSE THE DEMAND-DRIVEN EXPANSION
-      skip if state.travel_time_minutes >= time_limit
-      (cur_passengers, cur_time, _, cur_pairs) =
-        simulate_stops(state.stops, capacity, remaining, state.claimed)
-      best = none
-      FOR each candidate cand with remaining demand off the route:
-        RULE A (A->cand arrives, A on the route):
-          IF A is the final destination: trial = stops + [cand, d]
-          ELSE: trial = stops with cand right after A
-        RULE B (cand->Y leaves, Y on the route):
-          IF Y is the start (index 0):
-            skip if stops[0] == stops[-1]  // o == d: the route already ends at o
-            trial = [o, cand, o, ... rest of the route]   // DOBRADINHA
-          ELSE: trial = stops with cand right before Y
-        FOR each trial:
-          (passengers, time, peak_load, pairs) =
-            simulate_stops(trial, capacity, remaining, state.claimed)
-          skip if time > time_limit or peak_load > capacity
-          score = marginal(passengers - cur_passengers, time - cur_time)
-          skip if score <= 0
-          claim = pairs that gained passengers (new - before)
-          skip if claim is empty
-          tie-break (keep the largest):
-            (score, passengers, -time, -cand, trial)
-      IF found:
-        keys = nodes the insertion REALLY ADDS
-                 (in trial and off the current route; in the dobradinha
-                  the repeated `o` does not count)
-             + OD pairs of the claim
-        proposals.append(ExpansionProposal)
-      ELSE:
-        the bus proposes nothing (zero gain)
+  // 2. CONFLITO
+  agrupa as propostas que compartilham ponto ou par OD (direto ou por
+  transitividade): grupo de 1 commita sozinho; grupo com mais de 1 deixa agir
+  só o melhor da tupla de desempate
 
-  IF proposals is empty: STOP
+  // 3. COMMIT — cobra a demanda global
+  PARA cada vencedor:
+    SE rota nova: re-simula a rota base, cobra os pares embarcados e cria o
+      estado (par travado, rota, claimed, tempo, pico)
+    SE expansão: adota o trial e cobra os pares do claim
+    rounds += 1 ; wins[ônibus] += 1
+  SE ninguém commitou: PARA
 
-  // 3) CONFLICT RESOLUTION
-  conflict_groups: group proposals that share any key
-  (union by transitivity):
-    group of 1 = no conflict, commits alone
-    group with > 1 = in conflict, only 1 commits
-  winners = highest score of each group
-    tie-break: largest (score,
-                       passengers (DraftProposal: served; ExpansionProposal:
-                                   sum of the claim),
-                       -time (DraftProposal: route time; ExpansionProposal: total),
-                       -bus.id)
-    // holds with score 0 too (draft): 1 wins per group,
-    // the others wait for the next round
+O LAÇO TERMINA QUANDO: `remaining` zerou, ou passou `max_rounds`, ou ninguém
+propôs, ou ninguém commitou.
 
-  // 4) COMMIT (charge the global demand)
-  FOR each winner (in index order):
-    IF DraftProposal:
-      re-simulate the base route over `remaining`  // hitchhikers count
-      for each boarded pair (fo, fd, q):
-        state.claimed += q;  remaining[fo, fd] -= q
-      create state_by_id[bus] = (locked pair o,d; base route; claimed;
-                                 route time; peak_load)
-    IF ExpansionProposal:
-      state.stops = trial; state.time = time; state.peak_load = peak_load
-      for each (o, d, q) of the claim:
-        state.claimed += q;  remaining[o, d] -= q
-    rounds += 1;  wins[bus] += 1
-
-  IF nobody committed: STOP
-
-LOOP ENDS WHEN
---------------
-- remaining reached zero, or
-- max_rounds was exceeded, or
-- no bus proposed anything, or
-- nobody committed.
-
-OUTPUT
-------
-- One plan per bus with sum(claimed) > 0:
-  (bus, stops, passengers, time, peak_load, passengers/min, pairs, locked pair o/d)
-- States with 0 passengers are dropped
-  (a score-0 draft that never picked up a hitchhiker).
-- Summary: rounds (= commits), wins per bus,
-  pairs and passengers not served.
-
-IMPORTANT NOTES
----------------
-1. The draft accepts score 0; the expansion requires score > 0.
-2. With score 0 for every viable pair, all buses propose the same
-   nearest pair and only the lowest bus.id commits per round,
-   charging no demand.
-3. Draft and expansion compete in the same round under the same
-   max-score rule inside the conflict group; the whole round plans
-   over the SAME snapshot of `remaining`.
-4. There is no deadhead: the route is born at the locked pair origin
-   ([o, d] or [o, P, d]); the scenario origin only filters the
-   origins the draft may use.
-5. DOBRADINHA (new expansion position): demand cand->o is left over
-   (leaving for the start) -> the candidate enters as [o, cand, o, ...]
-   and the route revisits the start. It does not apply when o == d.
-6. The conflict key of ExpansionProposal declares the node(s) really
-   inserted + the pairs of the claim (it used to be the route's
-   second-to-last node, which caused spurious conflicts).
+SAÍDA — um plano por ônibus com passageiros > 0:
+  (ônibus, rota, passageiros, tempo, pico, pax/min, pares servidos, par travado)
+  e um resumo: rounds (= commits), vitórias por ônibus, pares e passageiros
+  não servidos.
 ```
+
+## Detalhes que costumam morder
+
+- O draft aceita score 0. Se todos os pares viáveis derem 0, todo ônibus propõe o
+  mesmo par mais próximo e, por rodada, só o menor `bus.id` commita — sem cobrar
+  demanda.
+- Draft e expansão disputam na mesma rodada, sob o mesmo `remaining`: nada é
+  cobrado durante a proposta.
+- Não existe deadhead: a rota nasce na origem do par (`[o,d]` ou `[o,P,d]`); a
+  origem do cenário só filtra as origens que o draft pode usar.
+- **Dobradinha:** quando a demanda é `ponto→o` (indo para o início) e a rota não
+  termina no início, o ponto entra como `[o, ponto, o, ...]` — é o único formato
+  que revisita a origem. Não vale quando `o == d`.
+- A chave de conflito da expansão lista os nós realmente inseridos + os pares do
+  claim (antes era o penúltimo nó da rota, o que gerava conflito à toa).
+- `rounds` conta commits, não voltas do laço: dois commits na mesma volta = 2
+  rounds.
+- Só vira plano o ônibus que serviu alguém (estado com 0 passageiros é
+  descartado).
+- No empate exato do draft fica a rota direta, que também é mais barata de
+  coordenar: entra nas chaves de conflito com menos pontos e menos pares.
