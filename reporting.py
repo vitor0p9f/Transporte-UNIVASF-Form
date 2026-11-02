@@ -36,6 +36,18 @@ PLAN_HEADERS = (
     "destination",
 )
 
+#: Header of the per-scenario summary table, in the same order as `summary_cells`.
+SUMMARY_HEADERS = (
+    "Cenário",
+    "Heurística",
+    "Total de passageiros",
+    "Passageiros atendidos",
+    "Passageiros não atendidos",
+    "Pico de passageiros simultâneos",
+    "Tempo da maior rota",
+    "Ônibus usados",
+)
+
 
 def served_ratio(data: InstanceData, plans: list[BusPlan]) -> tuple[int, int, float]:
     """(passengers served, total demand, percentage) of one scenario."""
@@ -43,6 +55,38 @@ def served_ratio(data: InstanceData, plans: list[BusPlan]) -> tuple[int, int, fl
     served = sum(plan.served_passengers for plan in plans)
     percentage = 100.0 * served / total if total else 0.0
     return served, total, percentage
+
+
+def peak_load(plans: list[BusPlan]) -> int:
+    """Highest simultaneous load among the plans; 0 when no bus formed a route."""
+    return max((plan.peak_load for plan in plans), default=0)
+
+
+def longest_route_minutes(plans: list[BusPlan]) -> int:
+    """Travel time of the longest plan; 0 when no bus formed a route."""
+    return max((plan.travel_time_minutes for plan in plans), default=0)
+
+
+def summary_cells(
+    scenario_id: str,
+    heuristic: str,
+    data: InstanceData,
+    plans: list[BusPlan],
+    summary: FleetSummary,
+    buses: list[Bus],
+) -> tuple[str, ...]:
+    """One scenario's cells, in `SUMMARY_HEADERS` order."""
+    served, total, _ = served_ratio(data, plans)
+    return (
+        str(scenario_id),
+        heuristic,
+        str(total),
+        str(served),
+        str(summary.unserved_passengers),
+        str(peak_load(plans)),
+        str(longest_route_minutes(plans)),
+        f"{len(plans)}/{len(buses)}",
+    )
 
 
 def top_served_pairs(
@@ -66,7 +110,7 @@ def idle_bus_ids(buses: list[Bus], plans: list[BusPlan]) -> list[int]:
 
 
 def pairs_preview(
-    pairs: list[ServedPair], limit: int = PAIR_PREVIEW, overflow_suffix: bool = False
+    pairs: list[ServedPair] | tuple[ServedPair, ...], limit: int = PAIR_PREVIEW, overflow_suffix: bool = False
 ) -> str:
     """Preview "o→d=q, o→d=q" of the first `limit` pairs.
 

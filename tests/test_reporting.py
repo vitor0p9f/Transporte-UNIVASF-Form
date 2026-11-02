@@ -169,6 +169,60 @@ class TestUnservedAndServedLines:
         assert reporting.served_pairs_line([make_plan(served_pairs=())]) == ""
 
 
+class TestSummaryCells:
+    def make_summary(self, unserved=3) -> FleetSummary:
+        return FleetSummary(
+            rounds=3,
+            wins_per_bus=((1, 3),),
+            unserved_passengers=unserved,
+            unserved_pairs=((5, 6, 4),),
+        )
+
+    def test_cells_follow_the_header_order(self):
+        data = make_data({(3, 7): 4, (1, 2): 6})
+        cells = reporting.summary_cells(
+            "1",
+            "Greedy OD",
+            data,
+            [make_plan(served_passengers=4, peak_load=2, travel_time_minutes=20)],
+            self.make_summary(unserved=6),
+            [make_bus(1), make_bus(2)],
+        )
+        assert len(cells) == len(reporting.SUMMARY_HEADERS)
+        assert cells == ("1", "Greedy OD", "10", "4", "6", "2", "20", "1/2")
+
+    def test_served_column_is_what_the_plans_delivered(self):
+        data = make_data({(3, 7): 4, (1, 2): 6})
+        cells = reporting.summary_cells(
+            "1",
+            "Clarke-Wright",
+            data,
+            [make_plan(served_passengers=1), make_plan(bus_id=2, served_passengers=2)],
+            self.make_summary(unserved=7),
+            [make_bus(1), make_bus(2)],
+        )
+        assert cells[2:5] == ("10", "3", "7")
+
+    def test_peak_is_the_highest_load_across_routes(self):
+        plans = [
+            make_plan(peak_load=3),
+            make_plan(bus_id=2, peak_load=9),
+            make_plan(bus_id=3, peak_load=5),
+        ]
+        assert reporting.peak_load(plans) == 9
+
+    def test_longest_route_is_the_max_travel_time(self):
+        plans = [
+            make_plan(travel_time_minutes=20),
+            make_plan(bus_id=2, travel_time_minutes=55),
+        ]
+        assert reporting.longest_route_minutes(plans) == 55
+
+    def test_no_plan_gives_zero_peak_and_zero_time(self):
+        assert reporting.peak_load([]) == 0
+        assert reporting.longest_route_minutes([]) == 0
+
+
 def test_lines_return_empty_strings_instead_of_none():
     """Both front ends test the result for truthiness before printing."""
     summary = FleetSummary(
