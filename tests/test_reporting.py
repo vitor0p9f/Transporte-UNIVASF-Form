@@ -1,5 +1,7 @@
 """Unit tests for the renderer shared by main.py and scripts/run_all.py."""
 
+from types import SimpleNamespace
+
 import numpy as np
 
 import reporting
@@ -223,6 +225,36 @@ class TestSummaryCells:
         assert reporting.longest_route_minutes([]) == 0
 
 
+class TestRotaDeReferencia:
+    """All route-level columns of a report row come from one route."""
+
+    def test_is_the_longest_route_that_served_someone(self):
+        plans = [
+            make_plan(bus_id=1, travel_time_minutes=20),
+            make_plan(
+                bus_id=2, served_passengers=0, travel_time_minutes=50,
+                peak_load=0,
+            ),
+            make_plan(bus_id=3, travel_time_minutes=35, peak_load=5),
+        ]
+        reference = reporting.reference_plan(plans)
+        assert reference is not None
+        assert reference.bus_id == 3
+        assert (reference.travel_time_minutes, reference.peak_load) == (35, 5)
+
+    def test_falls_back_to_the_longest_route_without_passengers(self):
+        plans = [
+            make_plan(bus_id=1, served_passengers=0, travel_time_minutes=10),
+            make_plan(bus_id=2, served_passengers=0, travel_time_minutes=30),
+        ]
+        reference = reporting.reference_plan(plans)
+        assert reference is not None
+        assert reference.bus_id == 2
+
+    def test_empty_fleet_has_no_reference(self):
+        assert reporting.reference_plan([]) is None
+
+
 def test_lines_return_empty_strings_instead_of_none():
     """Both front ends test the result for truthiness before printing."""
     summary = FleetSummary(
@@ -231,3 +263,86 @@ def test_lines_return_empty_strings_instead_of_none():
     assert reporting.unserved_line(summary) == ""
     assert reporting.served_pairs_line([]) == ""
     assert reporting.served_pairs_line([make_plan(served_pairs=())]) == ""
+
+
+class TestCustoOperacional:
+    """Fuel + driver cost under one vehicle model, the same for both methods."""
+
+    def test_distance_sums_consecutive_legs_including_the_depot(self):
+        data = SimpleNamespace(distance=np.zeros((8, 8)))
+        data.distance[1, 3] = 4.0
+        data.distance[3, 7] = 6.0
+        plan = make_plan(stops=(1, 3, 7))
+        assert reporting.plan_distance_km(plan, data) == 10.0
+
+    def test_distance_is_zero_for_a_route_without_a_leg(self):
+        data = SimpleNamespace(distance=np.zeros((8, 8)))
+        assert reporting.plan_distance_km(make_plan(stops=(1,)), data) == 0.0
+
+    def test_cost_formula(self):
+        """10 km / 4 km per liter * R$ 6 + 60 min / 60 * R$ 30 = R$ 45."""
+        data = SimpleNamespace(distance=np.zeros((8, 8)))
+        data.distance[1, 4] = 10.0
+        plan = make_plan(stops=(1, 4), travel_time_minutes=60)
+        cost = reporting.operational_cost(
+            [plan],
+            data,
+            km_per_liter=4.0,
+            diesel_price=6.0,
+            driver_hourly_rate=30.0,
+        )
+        assert cost.distance_km == 10.0
+        assert cost.liters == 2.5
+        assert cost.fuel == 15.0
+        assert cost.driver == 30.0
+        assert cost.total == 45.0
+        assert cost.per_passenger(4) == 11.25
+
+    def test_routes_without_passengers_are_not_charged(self):
+        """The CW can return a route that serves nobody; it is not operated."""
+        data = SimpleNamespace(distance=np.zeros((8, 8)))
+        data.distance[1, 3] = 4.0
+        data.distance[3, 7] = 6.0
+        empty = make_plan(
+            bus_id=2,
+            stops=(1, 3),
+            served_passengers=0,
+            travel_time_minutes=30,
+        )
+        loaded = make_plan(
+            bus_id=1,
+            stops=(1, 3, 7),
+            served_passengers=4,
+            travel_time_minutes=60,
+        )
+        cost = reporting.operational_cost(
+            [empty, loaded],
+            data,
+            km_per_liter=4.0,
+            diesel_price=6.0,
+            driver_hourly_rate=30.0,
+        )
+        assert cost.distance_km == 10.0
+        assert cost.liters == 2.5
+        assert cost.driver == 30.0
+        assert cost.total == 45.0
+
+    def test_cost_per_passenger_is_zero_without_passengers(self):
+        cost = reporting.OperationalCost(
+            distance_km=0.0,
+            liters=0.0,
+            fuel=0.0,
+            driver=0.0,
+            diesel_price=6.0,
+            driver_hourly_rate=30.0,
+        )
+        assert cost.per_passenger(0) == 0.0
+
+    def test_distance_counts_repeated_nodes(self):
+        """A route that revisits the depot (dobradinha) pays the leg again."""
+        data = SimpleNamespace(distance=np.zeros((8, 8)))
+        data.distance[1, 3] = 2.0
+        data.distance[3, 1] = 2.0
+        data.distance[1, 7] = 5.0
+        plan = make_plan(stops=(1, 3, 1, 7))
+        assert reporting.plan_distance_km(plan, data) == 9.0

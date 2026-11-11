@@ -10,6 +10,8 @@ objects, so it is a view of a run, not a reusable utility.
 """
 
 from collections import Counter
+from dataclasses import dataclass
+from itertools import pairwise
 
 from algorithms.top_univasf import (
     BusPlan,
@@ -65,6 +67,135 @@ def peak_load(plans: list[BusPlan]) -> int:
 def longest_route_minutes(plans: list[BusPlan]) -> int:
     """Travel time of the longest plan; 0 when no bus formed a route."""
     return max((plan.travel_time_minutes for plan in plans), default=0)
+
+
+def reference_plan(plans: list[BusPlan]) -> BusPlan | None:
+    """The route every route-level column of a report row is read from.
+
+    It is the longest route that served someone, the same set of routes the
+    reports count as "ônibus usados" and charge in the cost. Empty routes are
+    skipped on purpose: a CW route that boards nobody can still be the longest
+    one driven, and it would otherwise become the reference for the time, the
+    peak and the capacity of a row that does not count it anywhere else. When
+    no route served anyone, falls back to the longest route overall so the
+    time column still reports something; ``None`` only for an empty fleet.
+    """
+    served = [plan for plan in plans if plan.served_passengers > 0]
+    candidates = served or plans
+    return max(candidates, key=lambda plan: plan.travel_time_minutes, default=None)
+
+
+def plan_distance_km(plan: BusPlan, data: InstanceData) -> float:
+    """Distance driven by one plan, in km (open route, no return leg).
+
+    `plan.stops` already starts at the depot, so the first leg is counted;
+    repeated nodes (dobradinha) count every time they are driven.
+    """
+    stops = plan.stops
+    if len(stops) < 2:
+        return 0.0
+    return float(
+        sum(float(data.distance[a, b]) for a, b in pairwise(stops))
+    )
+
+
+@dataclass(frozen=True)
+class OperationalCost:
+    """Fuel + driver cost of one heuristic's routes in one scenario.
+
+    The same vehicle model (km per liter and diesel price) is applied to both
+    heuristics, so the numbers are comparable; the driver rate comes from the
+    scenario. Only routes that carry at least one passenger are charged -- the
+    same set the reports count as "ônibus usados".
+    """
+
+    distance_km: float
+    liters: float
+    fuel: float
+    driver: float
+    diesel_price: float
+    driver_hourly_rate: float
+
+    @property
+    def total(self) -> float:
+        return self.fuel + self.driver
+
+    def per_passenger(self, served: int) -> float:
+        """Cost per passenger carried; the metric that does not reward idling."""
+        return self.total / served if served else 0.0
+
+
+def operational_cost(
+    plans: list[BusPlan],
+    data: InstanceData,
+    *,
+    km_per_liter: float,
+    diesel_price: float,
+    driver_hourly_rate: float,
+) -> OperationalCost:
+    """Fuel + driver cost of a set of plans under one vehicle model.
+
+    Routes that serve nobody are not charged: the Clarke-Wright can return a
+    route whose boarding simulation carries zero passengers, and an operator
+    would not put a bus on the road for it. Charging only the routes that
+    served someone keeps the cost and the "ônibus usados" column talking about
+    the same set of routes.
+    """
+    if km_per_liter <= 0:
+        raise ValueError(f"km_per_liter must be positive, got {km_per_liter}")
+    driven = [plan for plan in plans if plan.served_passengers > 0]
+    distance = sum(plan_distance_km(plan, data) for plan in driven)
+    minutes = sum(plan.travel_time_minutes for plan in driven)
+    liters = distance / km_per_liter
+    return OperationalCost(
+        distance_km=distance,
+        liters=liters,
+        fuel=liters * diesel_price,
+        driver=minutes / 60.0 * driver_hourly_rate,
+        diesel_price=diesel_price,
+        driver_hourly_rate=driver_hourly_rate,
+    )
+
+
+def operational_cost_per_bus(
+    plans: list[BusPlan],
+    data: InstanceData,
+    buses: list[Bus],
+    *,
+    diesel_price: float,
+    driver_hourly_rate: float,
+) -> OperationalCost:
+    """Fuel + driver cost charging each route its own bus's km per liter.
+
+    The heterogeneous-fleet counterpart of `operational_cost`, which applies a
+    single reference model: here every plan burns its own vehicle's fuel. The
+    rest of the convention is the same -- only routes that serve someone are
+    charged.
+    """
+    by_id = {bus.id: bus for bus in buses}
+    distance = liters = fuel = driver = 0.0
+    for plan in plans:
+        if plan.served_passengers <= 0:
+            continue
+        plan_cost = operational_cost(
+            [plan],
+            data,
+            km_per_liter=by_id[plan.bus_id].km_autonomy_per_liter,
+            diesel_price=diesel_price,
+            driver_hourly_rate=driver_hourly_rate,
+        )
+        distance += plan_cost.distance_km
+        liters += plan_cost.liters
+        fuel += plan_cost.fuel
+        driver += plan_cost.driver
+    return OperationalCost(
+        distance_km=distance,
+        liters=liters,
+        fuel=fuel,
+        driver=driver,
+        diesel_price=diesel_price,
+        driver_hourly_rate=driver_hourly_rate,
+    )
 
 
 def summary_cells(
