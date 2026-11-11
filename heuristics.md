@@ -11,8 +11,8 @@ flowchart TD
     B -- "no" --> Z["final plans<br/>(only buses with passengers)"]
     B -- "yes" --> C["ROUND: every bus proposes 1 step"]
     C --> D{"does the bus already have<br/>a locked pair?"}
-    D -- "no" --> E["DRAFT<br/>picks the base route [o, d] or [o, P, d]<br/>score = passengers on the route / route time"]
-    D -- "yes" --> F["EXPANSION<br/>inserts 1 demand-driven point<br/>score = passengers gained / extra time"]
+    D -- "no" --> E["DRAFT<br/>picks the base route [o, d] or [o, P, d]<br/>score = passengers on the route / route time<br/>(or / route cost under the cost objective)"]
+    D -- "yes" --> F["EXPANSION<br/>inserts 1 demand-driven point<br/>score = passengers gained / extra time<br/>(or / extra cost)"]
     E --> G["CONFLICT: group the proposals that<br/>share a point or an origin-destination pair"]
     F --> G
     G --> H{"any group<br/>with more than one?"}
@@ -54,3 +54,13 @@ flowchart TD
 - **scores** — draft: `passengers on the route ÷ route time`; expansion:
   `passengers gained ÷ extra time`. The final plan reports
   `total passengers ÷ total time`.
+
+## 3. Cost objective
+
+The same implementation can score passengers per real (R$) instead of per
+minute: `solve_scenario(..., objective="cost")` (equivalently, pass a
+`CostModel` to `run_fleet`). Each bus still respects its own capacity, and now
+pays fuel with its own km per liter plus the driver, both priced by the
+scenario. Maximising passengers per real is equivalent to minimising the cost
+per passenger; in the expansion stage it minimises the cost per extra
+passenger. The original time objective remains the default.
