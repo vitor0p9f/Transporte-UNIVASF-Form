@@ -1,0 +1,327 @@
+"""Run the TOP heuristic on the real (heterogeneous) fleet.
+
+The controlled reports homogenise the fleet and force every bus to leave from
+the scenario's first origin. This runner does neither: it loads the scenario's
+buses straight from ``fleet.csv`` (each one keeps its own capacity and fuel
+autonomy) and calls the solver with no fixed origin and no depot, so the draft
+chooses the OD pair itself -- always respecting the scenario's ``origin`` and
+``destination_labels`` columns, which are part of the scenario definition.
+
+The operational cost follows the same convention as the other reports (only
+routes that serve someone are charged), but fuel is computed per bus with that
+bus's own km/L, since the fleet is no longer one single vehicle model.
+
+Default scenarios: 65 (``base``) plus 19, 16, 32 and 37, in that order.
+
+Usage:
+  python scripts/run_top_real_fleet.py
+  python scripts/run_top_real_fleet.py --only 65,32
+"""
+
+import argparse
+import sys
+import time
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+# Imports must follow the sys.path setup above (same pattern as the other scripts).
+import reporting
+from algorithms.top_univasf import (
+    BusPlan,
+    FleetSummary,
+    InstanceData,
+    solve_scenario,
+)
+from entities.bus import Bus
+from utils.fleet import load_fleet, parse_fleet_ids
+from utils.scenarios import load_scenarios
+
+#: Scenarios run by default, in output order.
+DEFAULT_SCENARIOS = ("65", "19", "16", "32", "37")
+
+OUT_PATH = ROOT / "resultados_top_frota_real.md"
+
+#: Header of the summary table, in the same order as `summary_cells`.
+SUMMARY_HEADERS = (
+    "Cenário",
+    "Instância",
+    "Período",
+    "Frota",
+    "Limite (min)",
+    "Pax atendidos / Total",
+    "%",
+    "Ônibus usados / Frota",
+    "Maior rota / Limite",
+    "Pico / Capacidade do ônibus",
+    "Custo operacional (R$)",
+    "Custo por passageiro (R$)",
+    "Rodadas",
+    "Exec (s)",
+)
+
+#: Header of the per-bus table, in the same order as `plan_cells`.
+PLAN_HEADERS = (
+    "bus",
+    "lugares",
+    "km/L",
+    "stops",
+    "pax",
+    "time",
+    "peak",
+    "pax/min",
+    "origin",
+    "destination",
+)
+
+
+@dataclass(frozen=True)
+class ScenarioRun:
+    """One scenario solved on its real fleet."""
+
+    scenario: dict
+    buses: list[Bus]
+    data: InstanceData
+    plans: list[BusPlan]
+    summary: FleetSummary
+    elapsed: float
+
+    @property
+    def scenario_id(self) -> str:
+        return str(self.scenario["scenario_id"])
+
+
+def select_scenarios(
+    ids: tuple[str, ...] = DEFAULT_SCENARIOS,
+    root: str | Path = ROOT,
+) -> list[dict]:
+    """The requested scenarios, in the requested order.
+
+    ``load_scenarios`` already sums ``scenarios.csv`` and
+    ``scenarios_base.csv``, so ids such as 65 (the hand-written ``base``
+    instance) are found alongside the generated ones.
+    """
+    by_id = {str(scenario["scenario_id"]): scenario for scenario in load_scenarios(root)}
+    missing = [scenario_id for scenario_id in ids if scenario_id not in by_id]
+    if missing:
+        raise ValueError(f"unknown scenario ids: {', '.join(missing)}")
+    return [by_id[scenario_id] for scenario_id in ids]
+
+
+def run_scenario(
+    scenario: dict, root: str | Path = ROOT
+) -> ScenarioRun:
+    """Solve one scenario on the real fleet, letting TOP pick the OD pair.
+
+    No ``origin=`` and no ``depot=``: the draft scans the origins allowed by
+    the scenario's ``origin`` column and the destinations allowed by
+    ``destination_labels``, and the route is born at the chosen pair origin
+    (no deadhead).
+    """
+    root = Path(root)
+    buses = load_fleet(
+        root / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
+    )
+    start = time.monotonic()
+    data, plans, summary = solve_scenario(scenario, buses, root)
+    return ScenarioRun(
+        scenario=scenario,
+        buses=buses,
+        data=data,
+        plans=plans,
+        summary=summary,
+        elapsed=time.monotonic() - start,
+    )
+
+
+def _bus_by_id(buses: list[Bus]) -> dict[int, Bus]:
+    return {bus.id: bus for bus in buses}
+
+
+def operational_cost(run: ScenarioRun) -> reporting.OperationalCost:
+    """Fuel + driver cost of one run, charging each route its own bus.
+
+    The fleet is heterogeneous, so each plan's fuel is computed with the
+    km/L of the bus that drove it (the other reports use one reference model
+    because they homogenise the fleet). Only routes that serve someone are
+    charged, matching the reports' "ônibus usados" column.
+    """
+    return reporting.operational_cost_per_bus(
+        run.plans,
+        run.data,
+        run.buses,
+        diesel_price=float(run.scenario["diesel_price_per_liter"]),
+        driver_hourly_rate=float(run.scenario["driver_hourly_rate"]),
+    )
+
+
+def _reference_capacity(run: ScenarioRun) -> int:
+    """Capacity of the bus behind the row's reference route."""
+    reference = reporting.reference_plan(run.plans)
+    if reference is None:
+        return 0
+    return _bus_by_id(run.buses)[reference.bus_id].passenger_capacity
+
+
+def summary_cells(run: ScenarioRun, cost: reporting.OperationalCost) -> tuple[str, ...]:
+    """One summary row, in `SUMMARY_HEADERS` order."""
+    scenario = run.scenario
+    served, total, percentage = reporting.served_ratio(run.data, run.plans)
+    used = sum(1 for plan in run.plans if plan.served_passengers > 0)
+    reference = reporting.reference_plan(run.plans)
+    longest = reference.travel_time_minutes if reference else 0
+    peak = reference.peak_load if reference else 0
+    limit = int(scenario["max_time_limit"])
+    return (
+        str(scenario["scenario_id"]),
+        str(scenario["instance_id"]),
+        str(scenario["period"]),
+        f"[{scenario['fleet_bus_ids']}]",
+        str(limit),
+        f"{served}/{total}",
+        f"{percentage:.0f}%",
+        f"{used}/{len(run.buses)}",
+        f"{longest}/{limit}",
+        f"{peak}/{_reference_capacity(run)}",
+        f"{cost.total:.2f}",
+        f"{cost.per_passenger(served):.2f}",
+        str(run.summary.rounds),
+        f"{run.elapsed:.1f}",
+    )
+
+
+def plan_cells(plan: BusPlan, bus: Bus, time_limit_minutes: int) -> tuple[str, ...]:
+    """One plan's cells, in `PLAN_HEADERS` order (capacity and km/L added)."""
+    cells = reporting.plan_cells(plan, time_limit_minutes, bus.passenger_capacity)
+    return (
+        cells[0],
+        str(bus.passenger_capacity),
+        f"{bus.km_autonomy_per_liter:.2f}",
+        *cells[1:],
+    )
+
+
+def _scenario_markdown(run: ScenarioRun) -> list[str]:
+    scenario = run.scenario
+    limit = int(scenario["max_time_limit"])
+    buses = _bus_by_id(run.buses)
+    lines = [
+        (
+            f"## Cenário {scenario['scenario_id']} — "
+            f"{scenario['instance_id']} / {scenario['period']}"
+        ),
+        "",
+        f"Frota [{scenario['fleet_bus_ids']}] · limite {limit} min",
+        "",
+        "| " + " | ".join(PLAN_HEADERS) + " |",
+        "|" + "---|" * len(PLAN_HEADERS),
+    ]
+    for plan in run.plans:
+        lines.append(
+            "| "
+            + " | ".join(plan_cells(plan, buses[plan.bus_id], limit))
+            + " |"
+        )
+    served_pairs = reporting.served_pairs_line(run.plans)
+    if served_pairs:
+        lines += ["", served_pairs]
+    unserved = reporting.unserved_line(run.summary)
+    if unserved:
+        lines += ["", unserved]
+    idle = reporting.idle_bus_ids(run.buses, run.plans)
+    if idle:
+        lines += ["", f"Idle ({len(idle)}): {idle}"]
+    lines += ["", "Routes:", "", "```"]
+    lines += [reporting.route_line(plan) for plan in run.plans]
+    lines += ["", "```", ""]
+    return lines
+
+
+def render_markdown(runs: list[ScenarioRun], generated_at: str) -> str:
+    """Full report: configuration note, summary table and per-scenario detail."""
+    lines = [
+        "# Resultados — TOP na frota real",
+        "",
+        f"Gerado em {generated_at} · {len(runs)} cenários.",
+        "",
+        (
+            "O TOP roda na frota heterogênea do `fleet.csv`: cada ônibus "
+            "mantém a capacidade e a autonomia do seu próprio modelo, sem "
+            "homogeneização. Não há origem nem depósito forçados: o draft "
+            "escolhe o par origem-destino sozinho, respeitando as colunas "
+            "`origin` e `destination_labels` do cenário (que fazem parte da "
+            "definição dele), e a rota nasce no nó de origem do par, sem "
+            "deadhead. As restrições de tempo e de capacidade estão ativas."
+        ),
+        "",
+        (
+            "O custo operacional é calculado por ônibus: combustível = km "
+            "percorridos / (km por litro do veículo que fez a rota) × diesel "
+            "do cenário; motorista = horas de rota × valor da hora do "
+            "cenário. Só entram no custo e na rota de referência as rotas que "
+            "atendem alguém."
+        ),
+        "",
+        "| " + " | ".join(SUMMARY_HEADERS) + " |",
+        "|" + "---|" * len(SUMMARY_HEADERS),
+    ]
+    costs = [operational_cost(run) for run in runs]
+    lines += [
+        "| " + " | ".join(summary_cells(run, cost)) + " |"
+        for run, cost in zip(runs, costs, strict=True)
+    ]
+    lines.append("")
+    for run in runs:
+        lines += _scenario_markdown(run)
+        lines.append("")
+    return "\n".join(lines).rstrip("\n") + "\n"
+
+
+def _print_progress(index: int, total: int, run: ScenarioRun) -> None:
+    scenario = run.scenario
+    served, total_pax, percentage = reporting.served_ratio(run.data, run.plans)
+    used = sum(1 for plan in run.plans if plan.served_passengers > 0)
+    print(
+        f"[{index}/{total}] cenário {scenario['scenario_id']} "
+        f"({scenario['instance_id']}/{scenario['period']}): "
+        f"{served}/{total_pax} pax ({percentage:.0f}%) · "
+        f"{used}/{len(run.buses)} ônibus · {run.elapsed:.1f}s",
+        flush=True,
+    )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, default=OUT_PATH)
+    parser.add_argument(
+        "--only",
+        default=None,
+        help=(
+            "comma-separated scenario ids "
+            f"(default: {','.join(DEFAULT_SCENARIOS)})"
+        ),
+    )
+    args = parser.parse_args()
+
+    ids = (
+        tuple(item.strip() for item in args.only.split(",") if item.strip())
+        if args.only
+        else DEFAULT_SCENARIOS
+    )
+    scenarios = select_scenarios(ids)
+    runs: list[ScenarioRun] = []
+    for index, scenario in enumerate(scenarios, start=1):
+        run = run_scenario(scenario)
+        runs.append(run)
+        _print_progress(index, len(scenarios), run)
+
+    generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+    args.out.write_text(render_markdown(runs, generated_at), encoding="utf-8")
+    print(f"OK: {args.out} ({len(runs)} cenários)")
+
+
+if __name__ == "__main__":
+    main()
