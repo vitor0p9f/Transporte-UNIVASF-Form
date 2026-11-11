@@ -22,11 +22,15 @@ from algorithms.clarke_wright import (
     clarke_wright_ovrp,
     construir_carga_parada,
     detectar_sentido,
+    limitar_frota,
     montar_contexto,
     planos_e_resumo,
+    resolver_cenario,
 )
 from entities.bus import Bus
+from utils.fleet import load_fleet, parse_fleet_ids
 from utils.instances import InstanceData
+from utils.scenarios import load_scenarios
 
 DEPOSITO = 1
 
@@ -76,6 +80,7 @@ def contexto(
     restricoes: str = "ambas",
     carga_parada: dict | None = None,
     deposito: int = DEPOSITO,
+    max_rotas: int | None = None,
 ) -> Contexto:
     if carga_parada is None:
         carga_parada, _ = construir_carga_parada(data.demand, deposito)
@@ -89,6 +94,7 @@ def contexto(
         carga_parada=carga_parada,
         demanda=data.demand,
         restricoes=Restricoes.da_chave(restricoes),
+        max_rotas=max_rotas,
     )
 
 
@@ -468,6 +474,50 @@ class TestAvaliacaoDeAtendimento:
         # a rota não visita o 5: ninguém embarca, e os dois pares sobram
         assert atend.atendida == 0
         assert atend.pares_nao_atendidos == ((2, 5, 3), (3, 5, 1))
+
+
+class TestLimiteDeFrota:
+    def test_sem_teto_e_um_no_op(self):
+        ctx = contexto(linear_data({(2, 4): 1}), capacidade=10)
+        rotas = [Rota(paradas=[2, 4], carga=1), Rota(paradas=[3, 5], carga=1)]
+
+        assert limitar_frota(rotas, ctx) == rotas
+
+    def test_solucao_que_ja_cabe_fica_intacta(self):
+        ctx = contexto(linear_data({(2, 4): 1}), capacidade=10, max_rotas=2)
+        rotas = [Rota(paradas=[2, 4], carga=1), Rota(paradas=[3, 5], carga=1)]
+
+        assert limitar_frota(rotas, ctx) == rotas
+
+    def test_descarta_as_rotas_que_menos_atendem(self):
+        ctx = contexto(
+            linear_data({(2, 5): 4, (3, 6): 1}), capacidade=10, max_rotas=1
+        )
+        cheia = Rota(paradas=[2, 5], carga=4)
+        vazia = Rota(paradas=[3, 6], carga=1)
+
+        assert limitar_frota([vazia, cheia], ctx) == [cheia]
+
+    def test_resolver_nunca_devolve_mais_rotas_que_a_frota(self, root):
+        scenario = next(
+            s for s in load_scenarios(root) if str(s["scenario_id"]) == "54"
+        )
+        buses = load_fleet(
+            root / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
+        )
+        # Cenário 54 é o caso conhecido: o CW-1 puro gera mais rotas que
+        # ônibus (9 para 5); o limite corta antes da avaliação.
+        _data, rotas, ctx, _atend, _lam = resolver_cenario(
+            scenario,
+            restricoes="tempo",
+            lam=1.0,
+            usar_two_phase=False,
+            usar_postimprove=False,
+            seed=42,
+        )
+
+        assert ctx.max_rotas == len(buses)
+        assert len(rotas) <= len(buses)
 
     def test_par_parcialmente_atendido_sobra_com_o_que_faltou(self):
         ctx = contexto(linear_data({(2, 5): 3}), capacidade=2)

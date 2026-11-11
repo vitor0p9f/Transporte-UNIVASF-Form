@@ -189,6 +189,11 @@ class Contexto:
     demanda: np.ndarray
     restricoes: Restricoes = field(default_factory=Restricoes)
     sentido: str = "ida"
+    #: Teto de veículos do cenário (None = sem limite). O CW não conhece a
+    #: frota: ele abre uma rota por parada e funde enquanto as restrições
+    #: deixam. Quando a solução passa do teto, as rotas excedentes não teriam
+    #: ônibus para operar e são descartadas por `limitar_frota`.
+    max_rotas: int | None = None
 
     def cabe(self, carga: int, minutos: float) -> bool:
         """Ponto único da chave: só valida a(s) restrição(ões) ativa(s)."""
@@ -361,12 +366,14 @@ def montar_contexto(
     modelo:        ModeloOnibus | None = None,
     restricoes:    Restricoes | str = "ambas",
     sentido:       str = "auto",
+    max_rotas:     int | None = None,
 ) -> Contexto:
     """Resolve os limites, a chave de restrições e a carga por parada.
 
     `capacidade` e `limite_tempo` são independentes do modelo e do cenário:
     quando omitidos, vêm dele(s). Sem limite de tempo a restrição "tempo" não
-    tem efeito; sem capacidade informada, vale a do modelo.
+    tem efeito; sem capacidade informada, vale a do modelo. `max_rotas` é o
+    teto de veículos do cenário (None = sem limite).
     """
     if isinstance(restricoes, str):
         restricoes = Restricoes.da_chave(restricoes)
@@ -399,6 +406,7 @@ def montar_contexto(
         demanda=data.demand,
         restricoes=restricoes,
         sentido=sentido_usado,
+        max_rotas=max_rotas,
     )
 
 
@@ -1075,6 +1083,41 @@ def _instancia_do_contexto(ctx: Contexto) -> InstanceData:
     )
 
 
+def limitar_frota(rotas: list[Rota], ctx: Contexto) -> list[Rota]:
+    """Descarta rotas até a solução caber na frota do cenário.
+
+    O CW não conhece o número de veículos: ele abre uma rota por parada e
+    funde enquanto as restrições deixam, então pode terminar com mais rotas
+    que ônibus. Rota sem veículo não opera; esta etapa escolhe, por simulação
+    de embarque contra a demanda restante, as `ctx.max_rotas` que mais
+    atendem e descarta o resto (a demanda delas fica como não atendida, do
+    mesmo jeito que o TOP deixa o que não embarcou).
+
+    Sem teto (`max_rotas is None`) ou quando a solução já cabe, é um no-op.
+    """
+    if ctx.max_rotas is None or len(rotas) <= ctx.max_rotas:
+        return rotas
+
+    instancia = _instancia_do_contexto(ctx)
+    restante = np.array(ctx.demanda, copy=True)
+    candidatas = list(rotas)
+    escolhidas: list[Rota] = []
+
+    def simular(rota: Rota):
+        sequencia = (ctx.deposito, *rota.paradas)
+        return simulate_stops(instancia, sequencia, ctx.capacidade, restante)
+
+    while candidatas and len(escolhidas) < ctx.max_rotas:
+        melhor = max(candidatas, key=lambda rota: simular(rota).passengers)
+        resultado = simular(melhor)
+        for origem, destino, quantidade in resultado.pairs:
+            restante[origem, destino] -= quantidade
+        escolhidas.append(melhor)
+        candidatas.remove(melhor)
+
+    return escolhidas
+
+
 def avaliar_atendimento(rotas: list[Rota], ctx: Contexto) -> Atendimento:
     """Mede o atendimento real de cada rota com a simulação do TOP UNIVASF.
 
@@ -1342,10 +1385,17 @@ def _deposito_do_cenario(cenario: dict | None) -> int | None:
     return origens[0] if origens else None
 
 
-def _modelo_do_cenario(
+def modelo_de_referencia(
     cenario: dict | None, capacidade: int, diesel: float
 ) -> ModeloOnibus:
-    """Modelo de custo: um ônibus da frota do cenário, ou um genérico."""
+    """Modelo de custo único do cenário, aplicado às DUAS heurísticas.
+
+    Escolhe o ônibus da frota com a capacidade efetiva (o critério que o CW
+    sempre usou); sem correspondência, o menor da frota. Sem frota declarada,
+    devolve um modelo genérico. O custo operacional dos relatórios usa este
+    mesmo modelo para o TOP e para o CW, para que os valores sejam
+    comparáveis.
+    """
     buses = _frota_do_cenario(cenario)
     if not buses:
         return ModeloOnibus(
@@ -1372,12 +1422,16 @@ def contexto_do_cenario(
     diesel: float | None = None,
     restricoes: str = "ambas",
     sentido: str = "auto",
+    max_rotas: int | None = None,
 ) -> tuple[InstanceData, Contexto]:
     """Resolve um cenário (instância, depósito, frota, limites) num contexto.
 
     Cada parâmetro explícito vence o que o cenário define; é o mesmo caminho
     que a CLI percorre, exposto para o `main.py` rodar as duas heurísticas
     com exatamente os mesmos limites.
+
+    `max_rotas` é o teto de veículos; omitido, vale o tamanho da frota do
+    cenário (None só quando não há frota declarada).
 
     Devolve `(data, ctx)`.
     """
@@ -1406,15 +1460,18 @@ def contexto_do_cenario(
         capacidade = (
             min(b.passenger_capacity for b in buses) if buses else 48
         )
-    modelo = _modelo_do_cenario(cenario, capacidade, diesel)
+    modelo = modelo_de_referencia(cenario, capacidade, diesel)
 
     if limite_tempo is None and cenario.get("max_time_limit"):
         limite_tempo = int(cenario["max_time_limit"])
 
+    if max_rotas is None:
+        max_rotas = len(buses) or None
+
     ctx = montar_contexto(
         data, deposito,
         capacidade=capacidade, limite_tempo=limite_tempo, modelo=modelo,
-        restricoes=restricoes, sentido=sentido,
+        restricoes=restricoes, sentido=sentido, max_rotas=max_rotas,
     )
     return data, ctx
 
@@ -1430,6 +1487,7 @@ def resolver_cenario(
     diesel: float | None = None,
     restricoes: str = "ambas",
     sentido: str = "auto",
+    max_rotas: int | None = None,
     lam: float | None = None,
     usar_two_phase: bool = True,
     usar_postimprove: bool = True,
@@ -1449,7 +1507,7 @@ def resolver_cenario(
         cenario,
         instancia=instancia, periodo=periodo, deposito=deposito,
         capacidade=capacidade, limite_tempo=limite_tempo, diesel=diesel,
-        restricoes=restricoes, sentido=sentido,
+        restricoes=restricoes, sentido=sentido, max_rotas=max_rotas,
     )
     rotas, lam_usado = clarke_wright_ovrp(
         ctx,
@@ -1463,6 +1521,7 @@ def resolver_cenario(
         peso_superlotacao=peso_superlotacao,
         verbose=verbose,
     )
+    rotas = limitar_frota(rotas, ctx)
     atend = avaliar_atendimento(rotas, ctx)
     return data, rotas, ctx, atend, lam_usado
 
@@ -1477,8 +1536,10 @@ def planos_e_resumo(
 
     O CW não tem par travado nem "rounds": a rota nasce no depósito, então
     `origin` é o depósito e `destination` é a última parada. Os ids dos ônibus
-    vêm da frota do cenário em ordem; se o CW precisar de mais veículos que a
-    frota, os excedentes recebem ids sequenciais depois do maior id.
+    vêm da frota do cenário em ordem; `resolver_cenario` já descarta as rotas
+    que passariam do tamanho da frota, mas, numa chamada direta a
+    `clarke_wright_ovrp` sem esse teto, os excedentes ainda recebem ids
+    sequenciais depois do maior id.
     """
     ids = [bus.id for bus in (buses or [])]
     proximo = (max(ids) + 1) if ids else 1
