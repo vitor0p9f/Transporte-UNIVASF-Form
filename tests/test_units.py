@@ -21,6 +21,7 @@ from algorithms.top_univasf.simulation import (
     simulate_stops,
 )
 from entities.bus import Bus
+from utils.fleet import homogenize_fleet
 
 
 def make_data(demand: dict, time: dict | None = None, size: int = 4) -> InstanceData:
@@ -246,3 +247,45 @@ class TestConflictGroups:
 
     def test_no_keys_means_no_group(self):
         assert conflict_groups([]) == []
+
+
+class TestHomogenizeFleet:
+    @staticmethod
+    def make_bus(bus_id: int, capacity: int, autonomy: float) -> Bus:
+        return Bus(
+            id=bus_id,
+            passenger_capacity=capacity,
+            fuel_capacity=150.0,
+            km_autonomy_per_liter=autonomy,
+        )
+
+    def test_copies_capacity_and_autonomy_to_every_bus(self):
+        buses = [
+            self.make_bus(1, 24, 4.61),
+            self.make_bus(2, 50, 2.22),
+        ]
+        result = homogenize_fleet(buses, 24, 3.17)
+
+        assert [bus.id for bus in result] == [1, 2]
+        assert {bus.passenger_capacity for bus in result} == {24}
+        assert {bus.km_autonomy_per_liter for bus in result} == {3.17}
+
+    def test_keeps_each_autonomy_when_none_is_given(self):
+        buses = [
+            self.make_bus(1, 24, 4.61),
+            self.make_bus(2, 50, 2.22),
+        ]
+        result = homogenize_fleet(buses, 24)
+
+        assert [bus.km_autonomy_per_liter for bus in result] == [4.61, 2.22]
+
+    def test_does_not_mutate_the_originals(self):
+        bus = self.make_bus(1, 50, 2.22)
+        homogenize_fleet([bus], 24, 3.17)
+
+        assert (bus.passenger_capacity, bus.km_autonomy_per_liter) == (50, 2.22)
+
+    @pytest.mark.parametrize("autonomy", [0.0, -1.0])
+    def test_rejects_non_positive_autonomy(self, autonomy):
+        with pytest.raises(ValueError):
+            homogenize_fleet([self.make_bus(1, 24, 4.61)], 24, autonomy)
