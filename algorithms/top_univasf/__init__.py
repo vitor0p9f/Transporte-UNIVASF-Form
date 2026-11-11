@@ -23,10 +23,17 @@ drops to zero.
 `destinations`/`draft_origins` (when given) filter the possible
 destination/origin selections of the pair.
 
+The score is passengers per minute (the original objective) or passengers per
+real (R$), selected by ``solve_scenario(..., objective="cost")``. Under the
+cost objective each bus pays fuel with its own km per liter plus the driver;
+maximising pax/R$ is equivalent to minimising R$ per passenger, and the
+marginal insertion minimises R$ per extra passenger.
+
 Modules:
 
     model       data (plans, proposals, work state)
-    scoring     the three scores (pair, marginal, final plan)
+    cost        CostModel and route distance (fuel + driver)
+    scoring     the scores (pair, marginal, final plan), time or cost
     simulation  capacity-locked boarding and candidate nodes
     draft       stage 1: best OD pair and its base route
     expansion   stage 2: inserting one demand-driven point
@@ -35,6 +42,7 @@ Modules:
     solver      solve_scenario: load the scenario and run the fleet
 """
 
+from algorithms.top_univasf.cost import CostModel, route_distance_km
 from algorithms.top_univasf.draft import best_pair_for_bus
 from algorithms.top_univasf.expansion import best_demand_driven_insertion
 from algorithms.top_univasf.fleet import collect_proposals, run_fleet
@@ -50,11 +58,15 @@ from algorithms.top_univasf.model import (
     StopSequence,
     WorkState,
     fleet_summary,
+    with_depot,
 )
 from algorithms.top_univasf.scoring import (
     marginal_passengers_per_minute,
+    marginal_passengers_per_real,
     od_pair_score,
+    od_pair_score_real,
     passengers_per_minute,
+    passengers_per_real,
 )
 from algorithms.top_univasf.simulation import (
     candidate_nodes,
@@ -68,6 +80,7 @@ __all__ = [
     "BoardingOutcome",
     "BusPlan",
     "ConflictKey",
+    "CostModel",
     "DraftProposal",
     "ExpansionProposal",
     "FleetSummary",
@@ -82,10 +95,15 @@ __all__ = [
     "collect_proposals",
     "fleet_summary",
     "marginal_passengers_per_minute",
+    "marginal_passengers_per_real",
     "od_pair_score",
+    "od_pair_score_real",
     "passengers_per_minute",
+    "passengers_per_real",
+    "route_distance_km",
     "run_fleet",
     "segment_passengers",
     "simulate_stops",
     "solve_scenario",
+    "with_depot",
 ]

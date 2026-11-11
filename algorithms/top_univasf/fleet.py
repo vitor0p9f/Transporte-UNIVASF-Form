@@ -3,6 +3,7 @@
 import numpy as np
 
 from algorithms.top_univasf.conflict import conflict_groups
+from algorithms.top_univasf.cost import CostModel
 from algorithms.top_univasf.draft import best_pair_for_bus
 from algorithms.top_univasf.expansion import best_demand_driven_insertion
 from algorithms.top_univasf.model import (
@@ -14,8 +15,12 @@ from algorithms.top_univasf.model import (
     ServedPair,
     WorkState,
     fleet_summary,
+    with_depot,
 )
-from algorithms.top_univasf.scoring import passengers_per_minute
+from algorithms.top_univasf.scoring import (
+    passengers_per_minute,
+    passengers_per_real,
+)
 from algorithms.top_univasf.simulation import simulate_stops
 from entities.bus import Bus
 from utils.instances import InstanceData
@@ -26,21 +31,28 @@ def run_fleet(
     buses: list[Bus],
     time_limit_minutes: int,
     *,
+    cost_model: CostModel | None = None,
     max_rounds: int | None = None,
     destinations: tuple[int, ...] | None = None,
     draft_origins: tuple[int, ...] | None = None,
+    depot: int | None = None,
 ) -> tuple[list[BusPlan], FleetSummary]:
     """Single loop: every bus proposes its best step; without a conflict they
     commit together, in a conflict only the highest score acts.
 
     A bus without a locked pair proposes the pair's base route (score =
-    boardings of the route [o, P, d] / route time -- see `best_pair_for_bus`),
-    restricted to the informed origins (`draft_origins`, None = free) and
-    destinations (`destinations`, None = free); with a locked pair it proposes
-    the demand-driven step (`best_demand_driven_insertion`).
-    Everything is charged against the global demand. The route is born at the
-    pair origin: there is no deadhead, and the scenario origin is not used as a
-    fixed position.
+    boardings of the route [o, P, d] / route time or / route cost -- see
+    `best_pair_for_bus`), restricted to the informed origins (`draft_origins`,
+    None = free) and destinations (`destinations`, None = free); with a locked
+    pair it proposes the demand-driven step (`best_demand_driven_insertion`).
+    With `cost_model`, every score is passengers per real and each bus pays
+    with its own km per liter; without it, the original passengers-per-minute
+    objective is used.
+    Everything is charged against the global demand. By default the route is
+    born at the pair origin (no deadhead). When `depot` is set, every route is
+    simulated with that fixed departure point as a prefix: the deadhead enters
+    the time limit and the score, but the depot stays out of the demand route
+    so it does not become a conflict point shared by every bus.
     """
     if not buses:
         return [], fleet_summary(data.demand.copy(), {}, 0)
@@ -61,8 +73,10 @@ def run_fleet(
             state_by_id,
             remaining,
             time_limit_minutes,
+            cost_model=cost_model,
             destinations=destinations,
             draft_origins=draft_origins,
+            depot=depot,
         )
         if not proposals:
             break
@@ -71,7 +85,9 @@ def run_fleet(
         for index in resolve_conflicts(proposals):
             proposal = proposals[index]
             if isinstance(proposal, DraftProposal):
-                commit_draft(proposal, data, remaining, state_by_id, wins)
+                commit_draft(
+                    proposal, data, remaining, state_by_id, wins, depot=depot
+                )
             else:
                 commit_expansion(proposal, remaining, wins)
             rounds += 1
@@ -79,7 +95,9 @@ def run_fleet(
         if committed == 0:
             break
 
-    return build_plans(buses, state_by_id), fleet_summary(remaining, wins, rounds)
+    return build_plans(buses, state_by_id, cost_model=cost_model), fleet_summary(
+        remaining, wins, rounds
+    )
 
 
 def collect_proposals(
@@ -89,13 +107,17 @@ def collect_proposals(
     remaining: np.ndarray,
     time_limit_minutes: int,
     *,
+    cost_model: CostModel | None = None,
     destinations: tuple[int, ...] | None = None,
     draft_origins: tuple[int, ...] | None = None,
+    depot: int | None = None,
 ) -> list[Proposal]:
     """Every bus proposes one step over the SAME snapshot of `remaining`.
 
     A bus without a locked pair proposes the pair's base route; with a locked
     pair it proposes the demand-driven insertion. Nobody charges demand here.
+    `cost_model` switches the scores to passengers per real; `depot` is
+    forwarded to the draft so the deadhead enters its time and cost.
     """
     proposals: list[Proposal] = []
     draft_cache: dict[tuple, int] = {}
@@ -107,15 +129,21 @@ def collect_proposals(
                 bus,
                 remaining,
                 time_limit_minutes,
+                cost_model=cost_model,
                 destinations=destinations,
                 draft_origins=draft_origins,
                 cache=draft_cache,
+                depot=depot,
             )
             if draft is not None:
                 proposals.append(draft)
         elif state.travel_time_minutes < time_limit_minutes:
             expansion = best_demand_driven_insertion(
-                data, state, remaining, time_limit_minutes
+                data,
+                state,
+                remaining,
+                time_limit_minutes,
+                cost_model=cost_model,
             )
             if expansion is not None:
                 proposals.append(expansion)
@@ -153,15 +181,20 @@ def commit_draft(
     remaining: np.ndarray,
     state_by_id: dict[int, WorkState],
     wins: dict[int, int],
+    depot: int | None = None,
 ) -> None:
     """Lock the bus's pair and create its state with the base route.
 
     The base route already is [o, P, d]: re-simulating it over the current
     demand charges exactly what it boards under the capacity lock (hitchhikers
-    included).
+    included). When `depot` is set, the simulation includes the deadhead; the
+    demand route stored in the state stays depot-free.
     """
     outcome = simulate_stops(
-        data, proposal.stops, proposal.bus.passenger_capacity, remaining
+        data,
+        with_depot(proposal.stops, depot),
+        proposal.bus.passenger_capacity,
+        remaining,
     )
     claimed: dict[tuple[int, int], int] = {}
     _claim_demand(remaining, claimed, outcome.pairs)
@@ -173,6 +206,8 @@ def commit_draft(
         claimed=claimed,
         travel_time_minutes=proposal.travel_time_minutes,
         peak_load=outcome.peak_load,
+        cost=proposal.cost,
+        depot=depot,
     )
     wins[proposal.bus.id] = wins.get(proposal.bus.id, 0) + 1
 
@@ -187,28 +222,41 @@ def commit_expansion(
     state.stops = list(proposal.stops)
     state.travel_time_minutes = proposal.travel_time_minutes
     state.peak_load = proposal.peak_load
+    state.cost = proposal.cost
     _claim_demand(remaining, state.claimed, proposal.claim)
     wins[state.bus.id] = wins.get(state.bus.id, 0) + 1
 
 
-def build_plans(buses: list[Bus], state_by_id: dict[int, WorkState]) -> list[BusPlan]:
+def build_plans(
+    buses: list[Bus],
+    state_by_id: dict[int, WorkState],
+    *,
+    cost_model: CostModel | None = None,
+) -> list[BusPlan]:
     """One plan per bus that served somebody, ordered by bus id.
 
     A zero-score draft that never picked up a hitchhiker becomes a state with 0
     passengers and is dropped: a plan is what actually served a passenger.
+    `cost_model` selects the passengers-per-real score; without it the score is
+    passengers per minute.
     """
     plans = [
         BusPlan(
             bus_id=state.bus.id,
             origin=state.origin,
             destination=state.destination,
-            stops=tuple(state.stops),
+            stops=with_depot(tuple(state.stops), state.depot),
             served_passengers=state.served_passengers,
             travel_time_minutes=state.travel_time_minutes,
             peak_load=state.peak_load,
-            score=passengers_per_minute(
-                state.served_passengers, state.travel_time_minutes
+            score=(
+                passengers_per_real(state.served_passengers, state.cost)
+                if cost_model is not None
+                else passengers_per_minute(
+                    state.served_passengers, state.travel_time_minutes
+                )
             ),
+            cost=state.cost,
             served_pairs=tuple(
                 (origin, destination, quantity)
                 for (origin, destination), quantity in sorted(state.claimed.items())

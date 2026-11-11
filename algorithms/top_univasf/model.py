@@ -14,12 +14,29 @@ StopSequence = tuple[int, ...]
 ConflictKey = tuple[str, int] | tuple[str, int, int]
 
 
+def with_depot(stops: StopSequence, depot: int | None) -> StopSequence:
+    """Prepend the fixed depot to a demand route, when it is not already first.
+
+    The depot is a departure point, not a demand stop: it stays out of the
+    demand route (the sequence used for conflict keys and ``new_points``) and
+    enters only the sequence simulated for time and boarding. When the route
+    already starts at the depot, the sequence is returned unchanged.
+    """
+    stops = tuple(stops)
+    if depot is None or not stops or stops[0] == depot:
+        return stops
+    return (depot, *stops)
+
+
 @dataclass(frozen=True)
 class BusPlan:
     """One bus result: the final route plus what it served.
 
-    `origin`/`destination` are the bus's locked OD pair: the route is born at
-    the pair origin, so both are always set.
+    `origin`/`destination` are the bus's locked OD pair. `stops` is the
+    sequence actually driven; when the fleet runs with a fixed depot, it
+    starts with that depot (the deadhead), so the pair origin may appear later.
+    `score` is passengers per minute or per real, depending on the objective;
+    `cost` is the fuel + driver cost of the route (0.0 for the time objective).
     """
 
     bus_id: int
@@ -30,6 +47,7 @@ class BusPlan:
     travel_time_minutes: int
     peak_load: int
     score: float
+    cost: float = 0.0
     served_pairs: tuple[ServedPair, ...] = ()
 
 
@@ -81,7 +99,12 @@ class BoardingOutcome:
 
 @dataclass
 class WorkState:
-    """Internal state: the locked OD pair plus the route as it grows."""
+    """Internal state: the locked OD pair plus the route as it grows.
+
+    `stops` is the demand route (without the depot). `depot` is the fixed
+    departure point, if any: it is simulated as a prefix and is not part of
+    the demand route. `cost` is the fuel + driver cost of the route so far.
+    """
 
     bus: Bus
     origin: int
@@ -90,6 +113,8 @@ class WorkState:
     claimed: dict[tuple[int, int], int] = field(default_factory=dict)
     travel_time_minutes: int = 0
     peak_load: int = 0
+    cost: float = 0.0
+    depot: int | None = None
 
     @property
     def served_passengers(self) -> int:
@@ -100,8 +125,12 @@ class WorkState:
 class DraftProposal:
     """A bus without a locked OD pair proposes the base route of one pair.
 
-    `stops` is already the scored route: [o, d] or [o, P, d]. The bus is born
-    at `origin`, so there is no deadhead.
+    `stops` is the demand route [o, d] or [o, P, d]. `depot` (when set) is the
+    fixed departure point: it is simulated as a prefix and included in
+    `travel_time_minutes`, but kept out of `stops` so every draft does not
+    conflict on the same depot point. `score` is servable passengers per
+    minute or per real, depending on the objective; `cost` is that route's
+    fuel + driver cost (0.0 for the time objective).
     """
 
     bus: Bus
@@ -111,23 +140,32 @@ class DraftProposal:
     served_passengers: int
     travel_time_minutes: int
     score: float
+    cost: float = 0.0
+    depot: int | None = None
 
     def conflict_keys(self) -> list[ConflictKey]:
-        """Every point and every OD sub-pair of the base route."""
+        """Demand-route points plus the full-route OD sub-pairs.
+
+        The depot prefix is not a point key (every draft would otherwise share
+        it), but OD pairs boarded on the deadhead still conflict. When the pair
+        origin is the depot, it remains a demand-route point.
+        """
+        full = with_depot(self.stops, self.depot)
         return (
             [("point", node) for node in self.stops]
             + [
-                ("od", self.stops[i], self.stops[j])
-                for i in range(len(self.stops))
-                for j in range(i + 1, len(self.stops))
+                ("od", full[i], full[j])
+                for i in range(len(full))
+                for j in range(i + 1, len(full))
             ]
         )
 
     def tie_break_key(self) -> tuple:
-        """Highest score wins; then more passengers, less time, lower bus id."""
+        """Highest score wins; then more passengers, lower cost, less time, lower id."""
         return (
             self.score,
             self.served_passengers,
+            -self.cost,
             -self.travel_time_minutes,
             -self.bus.id,
         )
@@ -148,6 +186,7 @@ class ExpansionProposal:
     travel_time_minutes: int
     peak_load: int
     score: float
+    cost: float = 0.0
 
     def conflict_keys(self) -> list[ConflictKey]:
         """The inserted points plus every OD pair the insertion claims."""
@@ -156,10 +195,11 @@ class ExpansionProposal:
         ]
 
     def tie_break_key(self) -> tuple:
-        """Highest score wins; then more passengers, less time, lower bus id."""
+        """Highest score wins; then more passengers, lower cost, less time, lower id."""
         return (
             self.score,
             sum(quantity for _, _, quantity in self.claim),
+            -self.cost,
             -self.travel_time_minutes,
             -self.state.bus.id,
         )
