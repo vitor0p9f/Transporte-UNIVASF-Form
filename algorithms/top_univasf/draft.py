@@ -1,5 +1,7 @@
 """Stage 1: the best OD pair for one bus, with its scored base route."""
 
+from typing import NamedTuple
+
 import numpy as np
 
 from algorithms.top_univasf.cost import CostModel
@@ -13,6 +15,38 @@ from algorithms.top_univasf.simulation import segment_passengers
 from entities.bus import Bus
 from utils.instances import InstanceData
 
+#: Cache of segment boardings keyed by (capacity, simulated stops).
+DraftCache = dict[tuple[int, StopSequence], int]
+
+
+class _DraftOption(NamedTuple):
+    """One candidate base route before it is scored."""
+
+    margin: int
+    stops: StopSequence
+    minutes: int
+    distance_km: float
+
+
+def _demand_neighbors(
+    remaining: np.ndarray, nodes: list[int]
+) -> tuple[dict[int, list[int]], dict[int, list[int]]]:
+    """Outgoing and incoming demand neighbours for every node."""
+    out_demand: dict[int, list[int]] = {}
+    in_demand: dict[int, list[int]] = {}
+    for node in nodes:
+        out_demand[node] = [
+            other
+            for other in nodes
+            if other != node and int(remaining[node, other]) > 0
+        ]
+        in_demand[node] = [
+            other
+            for other in nodes
+            if other != node and int(remaining[other, node]) > 0
+        ]
+    return out_demand, in_demand
+
 
 def best_pair_for_bus(
     data: InstanceData,
@@ -23,7 +57,7 @@ def best_pair_for_bus(
     cost_model: CostModel | None = None,
     destinations: tuple[int, ...] | None = None,
     draft_origins: tuple[int, ...] | None = None,
-    cache: dict[tuple, int] | None = None,
+    cache: DraftCache | None = None,
     depot: int | None = None,
 ) -> DraftProposal | None:
     """Best OD pair for one bus, already as a base-route proposal.
@@ -47,14 +81,7 @@ def best_pair_for_bus(
         cache = {}
     dest_set = set(destinations) if destinations else None
     draft_set = set(draft_origins) if draft_origins else None
-    out_demand = {
-        o: [p for p in nodes if p != o and int(remaining[o, p]) > 0]
-        for o in nodes
-    }
-    in_demand = {
-        d: [p for p in nodes if p != d and int(remaining[p, d]) > 0]
-        for d in nodes
-    }
+    out_demand, in_demand = _demand_neighbors(remaining, nodes)
 
     best: DraftProposal | None = None
     best_key: tuple | None = None
@@ -80,7 +107,9 @@ def best_pair_for_bus(
             direct_time = int(time[o, d])
             if direct_time < 0:
                 continue
-            direct_distance = float(distance[o, d]) if distance is not None else 0.0
+            direct_distance = (
+                float(distance[o, d]) if distance is not None else 0.0
+            )
             points = set(out_list)
             points.update(in_demand[d])
             points.discard(o)
@@ -88,12 +117,12 @@ def best_pair_for_bus(
             # Candidate routes: the direct pair first (margin -1), then every
             # demand point P, in node order. Each carries its time and,
             # under the cost objective, its distance.
-            options: list[tuple[int, StopSequence, int, float]] = [
-                (
-                    -1,
-                    (o, d),
-                    deadhead_time + direct_time,
-                    deadhead_distance + direct_distance,
+            options: list[_DraftOption] = [
+                _DraftOption(
+                    margin=-1,
+                    stops=(o, d),
+                    minutes=deadhead_time + direct_time,
+                    distance_km=deadhead_distance + direct_distance,
                 )
             ]
             for p in sorted(points):
@@ -106,48 +135,56 @@ def best_pair_for_bus(
                 if distance is not None:
                     leg_distance = float(distance[o, p]) + float(distance[p, d])
                 options.append(
-                    (
-                        p,
-                        (o, p, d),
-                        deadhead_time + first_leg + second_leg,
-                        deadhead_distance + leg_distance,
+                    _DraftOption(
+                        margin=p,
+                        stops=(o, p, d),
+                        minutes=deadhead_time + first_leg + second_leg,
+                        distance_km=deadhead_distance + leg_distance,
                     )
                 )
-            for margin, stops, pair_time, pair_distance in options:
-                if pair_time < 0 or pair_time > time_limit_minutes:
+            for option in options:
+                if option.minutes < 0 or option.minutes > time_limit_minutes:
                     continue
-                full_stops = with_depot(stops, depot)
+                full_stops = with_depot(option.stops, depot)
                 key_cache = (capacity, full_stops)
                 served = cache.get(key_cache)
                 if served is None:
                     served = segment_passengers(full_stops, capacity, remaining)
                     cache[key_cache] = served
-                if pair_time == 0 and served > 0:
+                if option.minutes == 0 and served > 0:
                     continue  # no time to serve it
                 if cost_model is not None:
                     pair_cost = cost_model.route_cost(
-                        pair_distance, pair_time, bus.km_autonomy_per_liter
+                        option.distance_km,
+                        option.minutes,
+                        bus.km_autonomy_per_liter,
                     )
                     score = od_pair_score_real(served, pair_cost)
                 else:
                     pair_cost = 0.0
-                    score = od_pair_score(served, pair_time)
-                if score < 0:
-                    continue
+                    score = od_pair_score(served, option.minutes)
                 # Score tie: more passengers, lower cost (cost objective),
                 # shorter route, lower (o, d) and, last, the direct route: its
                 # margin -1 beats any P >= 1. Under the time objective cost is
                 # always 0.0, so the cost component does not affect the order.
-                key = (score, served, -pair_cost, -pair_time, -o, -d, -margin)
+                key = (
+                    score,
+                    served,
+                    -pair_cost,
+                    -option.minutes,
+                    -o,
+                    -d,
+                    -option.margin,
+                )
                 if best_key is None or key > best_key:
                     best_key = key
                     best = DraftProposal(
                         bus=bus,
                         origin=o,
                         destination=d,
-                        stops=stops,
+                        stops=option.stops,
                         served_passengers=served,
-                        travel_time_minutes=pair_time,
+                        travel_time_minutes=option.minutes,
                         score=score,
                         cost=pair_cost,
                         depot=depot,

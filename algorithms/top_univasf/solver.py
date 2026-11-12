@@ -1,6 +1,7 @@
 """Pipeline entry point: load one scenario and solve its fleet."""
 
 from pathlib import Path
+from typing import Literal
 
 from algorithms.top_univasf.cost import CostModel
 from algorithms.top_univasf.fleet import run_fleet
@@ -8,6 +9,9 @@ from algorithms.top_univasf.model import BusPlan, FleetSummary
 from entities.bus import Bus
 from utils.instances import InstanceData, load_instance_data
 from utils.scenarios import parse_node_labels
+
+#: Scores the TOP can order its proposals by.
+Objective = Literal["time", "cost"]
 
 
 def solve_scenario(
@@ -17,7 +21,7 @@ def solve_scenario(
     *,
     origin: int | None = None,
     depot: int | None = None,
-    objective: str = "time",
+    objective: Objective = "time",
 ) -> tuple[InstanceData, list[BusPlan], FleetSummary]:
     """Full pipeline: load the instance and solve its fleet.
 

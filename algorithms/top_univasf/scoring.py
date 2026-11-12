@@ -10,11 +10,25 @@ The TOP has two objectives:
 """
 
 
+def _per_unit(numerator: int, denominator: float) -> float:
+    """Numerator per unit of denominator; zero when either is non-positive."""
+    if numerator <= 0 or denominator <= 0:
+        return 0.0
+    return numerator / denominator
+
+
+def _marginal_per_unit(delta: int, delta_denominator: float) -> float:
+    """Marginal numerator per extra unit; infinite when the extra unit is free."""
+    if delta <= 0:
+        return 0.0
+    if delta_denominator <= 0:
+        return float("inf")
+    return delta / delta_denominator
+
+
 def passengers_per_minute(served_passengers: int, travel_time_minutes: int) -> float:
     """Passengers per minute. No passengers or no time -> 0.0."""
-    if served_passengers <= 0 or travel_time_minutes <= 0:
-        return 0.0
-    return served_passengers / travel_time_minutes
+    return _per_unit(served_passengers, travel_time_minutes)
 
 
 def od_pair_score(servable_passengers: int, pair_time_minutes: int) -> float:
@@ -24,27 +38,19 @@ def od_pair_score(servable_passengers: int, pair_time_minutes: int) -> float:
     capacity lock; `pair_time_minutes` is time[o, P] + time[P, d] (or time[o, d]
     for the direct option).
     """
-    if servable_passengers <= 0 or pair_time_minutes <= 0:
-        return 0.0
-    return servable_passengers / pair_time_minutes
+    return _per_unit(servable_passengers, pair_time_minutes)
 
 
 def marginal_passengers_per_minute(
     delta_passengers: int, delta_time_minutes: int
 ) -> float:
     """Passengers per minute GAINED by inserting a stop (orders stage 2)."""
-    if delta_passengers <= 0:
-        return 0.0
-    if delta_time_minutes <= 0:
-        return float("inf")
-    return delta_passengers / delta_time_minutes
+    return _marginal_per_unit(delta_passengers, delta_time_minutes)
 
 
 def passengers_per_real(served_passengers: int, cost: float) -> float:
     """Passengers per real. No passengers or no cost -> 0.0."""
-    if served_passengers <= 0 or cost <= 0:
-        return 0.0
-    return served_passengers / cost
+    return _per_unit(served_passengers, cost)
 
 
 def od_pair_score_real(servable_passengers: int, pair_cost: float) -> float:
@@ -54,9 +60,7 @@ def od_pair_score_real(servable_passengers: int, pair_cost: float) -> float:
     bus's own consumption. Maximising this is the same as minimising the cost
     per passenger.
     """
-    if servable_passengers <= 0 or pair_cost <= 0:
-        return 0.0
-    return servable_passengers / pair_cost
+    return _per_unit(servable_passengers, pair_cost)
 
 
 def marginal_passengers_per_real(
@@ -67,8 +71,4 @@ def marginal_passengers_per_real(
     This is the reciprocal of the marginal cost per extra passenger: higher is
     better, so the insertion always seeks the lowest cost per extra passenger.
     """
-    if delta_passengers <= 0:
-        return 0.0
-    if delta_cost <= 0:
-        return float("inf")
-    return delta_passengers / delta_cost
+    return _marginal_per_unit(delta_passengers, delta_cost)

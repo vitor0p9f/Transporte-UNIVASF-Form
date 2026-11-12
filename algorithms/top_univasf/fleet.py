@@ -4,7 +4,7 @@ import numpy as np
 
 from algorithms.top_univasf.conflict import conflict_groups
 from algorithms.top_univasf.cost import CostModel
-from algorithms.top_univasf.draft import best_pair_for_bus
+from algorithms.top_univasf.draft import DraftCache, best_pair_for_bus
 from algorithms.top_univasf.expansion import best_demand_driven_insertion
 from algorithms.top_univasf.model import (
     BusPlan,
@@ -120,7 +120,7 @@ def collect_proposals(
     forwarded to the draft so the deadhead enters its time and cost.
     """
     proposals: list[Proposal] = []
-    draft_cache: dict[tuple, int] = {}
+    draft_cache: DraftCache = {}
     for bus in buses:
         state = state_by_id.get(bus.id)
         if state is None:
@@ -156,9 +156,12 @@ def resolve_conflicts(proposals: list[Proposal]) -> list[int]:
     Proposals sharing a point or an OD pair fall into the same group (directly
     or by transitivity) and only the highest score acts.
     """
+    groups = conflict_groups(
+        [proposal.conflict_keys() for proposal in proposals]
+    )
     return sorted(
         max(group, key=lambda index: proposals[index].tie_break_key())
-        for group in conflict_groups([proposal.conflict_keys() for proposal in proposals])
+        for group in groups
     )
 
 
@@ -169,7 +172,9 @@ def _claim_demand(
 ) -> None:
     """Charge the global demand for what was boarded and accumulate it."""
     for origin, destination, quantity in pairs:
-        claimed[(origin, destination)] = claimed.get((origin, destination), 0) + quantity
+        claimed[(origin, destination)] = (
+            claimed.get((origin, destination), 0) + quantity
+        )
         remaining[origin, destination] = max(
             0, int(remaining[origin, destination]) - quantity
         )
@@ -240,31 +245,36 @@ def build_plans(
     `cost_model` selects the passengers-per-real score; without it the score is
     passengers per minute.
     """
-    plans = [
-        BusPlan(
-            bus_id=state.bus.id,
-            origin=state.origin,
-            destination=state.destination,
-            stops=with_depot(tuple(state.stops), state.depot),
-            served_passengers=state.served_passengers,
-            travel_time_minutes=state.travel_time_minutes,
-            peak_load=state.peak_load,
-            score=(
-                passengers_per_real(state.served_passengers, state.cost)
-                if cost_model is not None
-                else passengers_per_minute(
-                    state.served_passengers, state.travel_time_minutes
-                )
-            ),
-            cost=state.cost,
-            served_pairs=tuple(
-                (origin, destination, quantity)
-                for (origin, destination), quantity in sorted(state.claimed.items())
-                if quantity > 0
-            ),
+    plans: list[BusPlan] = []
+    for bus in buses:
+        state = state_by_id.get(bus.id)
+        if state is None or state.served_passengers <= 0:
+            continue
+        served = state.served_passengers
+        score = (
+            passengers_per_real(served, state.cost)
+            if cost_model is not None
+            else passengers_per_minute(served, state.travel_time_minutes)
         )
-        for state in (state_by_id[bus.id] for bus in buses if bus.id in state_by_id)
-        if state.served_passengers > 0
-    ]
+        plans.append(
+            BusPlan(
+                bus_id=state.bus.id,
+                origin=state.origin,
+                destination=state.destination,
+                stops=with_depot(tuple(state.stops), state.depot),
+                served_passengers=served,
+                travel_time_minutes=state.travel_time_minutes,
+                peak_load=state.peak_load,
+                score=score,
+                cost=state.cost,
+                served_pairs=tuple(
+                    (origin, destination, quantity)
+                    for (origin, destination), quantity in sorted(
+                        state.claimed.items()
+                    )
+                    if quantity > 0
+                ),
+            )
+        )
     plans.sort(key=lambda plan: plan.bus_id)
     return plans

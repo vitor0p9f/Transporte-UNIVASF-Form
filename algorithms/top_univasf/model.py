@@ -12,6 +12,8 @@ ServedPair = tuple[int, int, int]
 StopSequence = tuple[int, ...]
 #: What two proposals fight over: ("point", node) or ("od", origin, destination).
 ConflictKey = tuple[str, int] | tuple[str, int, int]
+#: Proposal ordering: score, passengers, -cost, -time, -bus id.
+TieBreakKey = tuple[float, int, float, int, int]
 
 
 def with_depot(stops: StopSequence, depot: int | None) -> StopSequence:
@@ -160,7 +162,7 @@ class DraftProposal:
             ]
         )
 
-    def tie_break_key(self) -> tuple:
+    def tie_break_key(self) -> TieBreakKey:
         """Highest score wins; then more passengers, lower cost, less time, lower id."""
         return (
             self.score,
@@ -176,7 +178,9 @@ class ExpansionProposal:
     """A bus with a locked OD pair inserts one demand-driven point.
 
     `new_points` lists the nodes the insertion actually adds: in the
-    dobradinha the repeated origin was already on the route.
+    dobradinha the repeated origin was already on the route. `score` is the
+    marginal passengers per minute or per real; `cost` is the route's total
+    fuel + driver cost (0.0 for the time objective).
     """
 
     state: WorkState
@@ -194,7 +198,7 @@ class ExpansionProposal:
             ("od", origin, destination) for origin, destination, _ in self.claim
         ]
 
-    def tie_break_key(self) -> tuple:
+    def tie_break_key(self) -> TieBreakKey:
         """Highest score wins; then more passengers, lower cost, less time, lower id."""
         return (
             self.score,

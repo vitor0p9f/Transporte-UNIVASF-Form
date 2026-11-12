@@ -130,8 +130,8 @@ def segment_passengers(
     without copying the demand matrix: the draft evaluates thousands of tiny
     routes per round.
 
-    Every shape the draft evaluates ([o, d], [o, P, d] and [o, P, o], with an
-    optional depot prefix) never repeats an OD pair, so this fast path and
+    Every shape the draft evaluates ([o, d] and [o, P, d], with an optional
+    depot prefix) never repeats an OD pair, so this fast path and
     `simulate_stops` board exactly the same passengers (see tests/test_units.py).
     A route repeating nodes in disjoint positions only happens during
     expansion, which uses `simulate_stops`.

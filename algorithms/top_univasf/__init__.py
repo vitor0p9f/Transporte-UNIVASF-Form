@@ -6,11 +6,12 @@ for the points P with demand coming from `o` OR going to `d`, scoring the route
 [o, P, d] (plus the direct option [o, d]):
     servable = boardings along that route under the capacity lock
                (o->P alights, so P->d boards, plus o->d along the way)
-    score = servable / (time[o, P] + time[P, d])
+    score = servable / (time[o, P] + time[P, d])   (time objective)
 The P with the highest score wins. The pair does NOT need direct demand
 `o->d`. The globally best score locks the base route [o, P, d] first (the bus
-is born at the pair origin -- there is no deadhead) and charges the demand for
-whatever that route boarded. The others repeat over the updated demand.
+is born at the pair origin, or at the fixed depot when one is given) and
+charges the demand for whatever that route boarded. The others repeat over the
+updated demand.
 
 Stage 2 (global rounds): each round, every bus with a locked pair (o, d)
 proposes one demand-driven step -- the new point enters where the pair tells
@@ -73,7 +74,7 @@ from algorithms.top_univasf.simulation import (
     segment_passengers,
     simulate_stops,
 )
-from algorithms.top_univasf.solver import solve_scenario
+from algorithms.top_univasf.solver import Objective, solve_scenario
 from utils.instances import InstanceData
 
 __all__ = [
@@ -85,6 +86,7 @@ __all__ = [
     "ExpansionProposal",
     "FleetSummary",
     "InstanceData",
+    "Objective",
     "Proposal",
     "ServedPair",
     "StopSequence",
