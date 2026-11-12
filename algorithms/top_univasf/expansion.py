@@ -9,10 +9,7 @@ from algorithms.top_univasf.model import (
     WorkState,
     with_depot,
 )
-from algorithms.top_univasf.scoring import (
-    marginal_passengers_per_minute,
-    marginal_passengers_per_real,
-)
+from algorithms.top_univasf.scoring import marginal_passengers_per_real
 from algorithms.top_univasf.simulation import candidate_nodes, simulate_stops
 from utils.instances import InstanceData
 
@@ -36,7 +33,7 @@ def best_demand_driven_insertion(
     remaining: np.ndarray,
     time_limit_minutes: int,
     *,
-    cost_model: CostModel | None = None,
+    cost_model: CostModel,
 ) -> ExpansionProposal | None:
     """Demand-driven step: the new point's position comes from the pair.
 
@@ -47,29 +44,24 @@ def best_demand_driven_insertion(
     fixed position), it tries the dobradinha `[o, B, o, ...]`, unless `o == d`
     (then the route already ends at `o`, and the final-destination case covers
     it). Every trial is simulated in full (capacity per leg, whoever alights
-    frees a seat) and the marginal score (passengers gained / extra time or /
-    extra real) decides. When the state has a fixed `depot`, the simulation
-    prefixes it (the deadhead); the depot is never inserted as a demand point
-    because it is already the fixed start. Returns the best proposal, or None.
+    frees a seat) and the marginal score (passengers gained / extra real)
+    decides. When the state has a fixed `depot`, the simulation prefixes it
+    (the deadhead); the depot is never inserted as a demand point because it is
+    already the fixed start. Returns the best proposal, or None.
     """
     capacity = state.bus.passenger_capacity
     stops = state.stops
     depot = state.depot
     km_per_liter = state.bus.km_autonomy_per_liter
     last = len(stops) - 1
-    if cost_model is not None:
-        current_stops = with_depot(stops, depot)
-        current = simulate_stops(
-            data, current_stops, capacity, remaining, state.claimed
-        )
-        current_distance = route_distance_km(data.distance, current_stops)
-        current_cost = cost_model.route_cost(
-            current_distance, current.travel_minutes, km_per_liter
-        )
-    else:
-        current = simulate_stops(
-            data, with_depot(stops, depot), capacity, remaining, state.claimed
-        )
+    current_stops = with_depot(stops, depot)
+    current = simulate_stops(
+        data, current_stops, capacity, remaining, state.claimed
+    )
+    current_distance = route_distance_km(data.distance, current_stops)
+    current_cost = cost_model.route_cost(
+        current_distance, current.travel_minutes, km_per_liter
+    )
     current_qty = {
         (origin, destination): quantity
         for origin, destination, quantity in current.pairs
@@ -86,42 +78,26 @@ def best_demand_driven_insertion(
         )
         if outcome.travel_minutes > time_limit_minutes or outcome.peak_load > capacity:
             return
-        if cost_model is not None:
-            trial_distance = route_distance_km(data.distance, trial_stops)
-            trial_cost = cost_model.route_cost(
-                trial_distance, outcome.travel_minutes, km_per_liter
-            )
-            score = marginal_passengers_per_real(
-                outcome.passengers - current.passengers,
-                trial_cost - current_cost,
-            )
-        else:
-            trial_cost = 0.0
-            score = marginal_passengers_per_minute(
-                outcome.passengers - current.passengers,
-                outcome.travel_minutes - current.travel_minutes,
-            )
+        trial_distance = route_distance_km(data.distance, trial_stops)
+        trial_cost = cost_model.route_cost(
+            trial_distance, outcome.travel_minutes, km_per_liter
+        )
+        score = marginal_passengers_per_real(
+            outcome.passengers - current.passengers,
+            trial_cost - current_cost,
+        )
         if score <= 0:
             return
         claim = _claim_delta(current_qty, outcome.pairs)
         if not claim:
             return
-        if cost_model is not None:
-            key = (
-                score,
-                outcome.passengers,
-                -trial_cost,
-                -candidate,
-                tuple(trial),
-            )
-        else:
-            key = (
-                score,
-                outcome.passengers,
-                -outcome.travel_minutes,
-                -candidate,
-                tuple(trial),
-            )
+        key = (
+            score,
+            outcome.passengers,
+            -trial_cost,
+            -candidate,
+            tuple(trial),
+        )
         if best_key is None or key > best_key:
             best_key = key
             best = ExpansionProposal(

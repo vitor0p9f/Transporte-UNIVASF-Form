@@ -2,7 +2,8 @@
 
 The TOP heuristic and Clarke-Wright run on the SAME scenarios and limits, and
 both land in one markdown report (one row each in the summary table) so the
-reader sees the trade-off without lining up two separate reports.
+reader sees the trade-off without lining up two separate reports. TOP scores
+passengers per real (R$), using each bus's own fuel autonomy.
 """
 
 import time
@@ -138,7 +139,7 @@ def _scenario_markdown(outcome: ScenarioOutcome) -> list[str]:
                 f"{served}/{total} pax atendidos ({percentage:.0f}%)"
             ),
             "",
-            "| bus | stops | pax | time | peak | pax/min | origin | destination |",
+            "| bus | stops | pax | time | peak | pax/R$ | origin | destination |",
             "|---|---|---|---|---|---|---|---|",
         ]
         capacity = {bus.id: bus.passenger_capacity for bus in outcome.buses}

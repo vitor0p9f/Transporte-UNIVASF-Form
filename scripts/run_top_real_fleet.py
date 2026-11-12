@@ -7,9 +7,11 @@ autonomy) and calls the solver with no fixed origin and no depot, so the draft
 chooses the OD pair itself -- always respecting the scenario's ``origin`` and
 ``destination_labels`` columns, which are part of the scenario definition.
 
-The operational cost follows the same convention as the other reports (only
-routes that serve someone are charged), but fuel is computed per bus with that
-bus's own km/L, since the fleet is no longer one single vehicle model.
+TOP scores passengers per real: each bus pays fuel with its own km/L plus the
+driver, so the heterogeneous fleet's autonomy is part of the decision. The
+operational cost follows the same convention as the other reports (only routes
+that serve someone are charged), and fuel is computed per bus with that bus's
+own km/L.
 
 Default scenarios: 65 (``base``) plus 19, 16, 32 and 37, in that order.
 
@@ -76,7 +78,7 @@ PLAN_HEADERS = (
     "pax",
     "time",
     "peak",
-    "pax/min",
+    "pax/R$",
     "origin",
     "destination",
 )

@@ -1,7 +1,8 @@
 """Run the report scenarios and write the results to a .md report.
 
 Each scenario runs exactly once: the outcome feeds both the summary table and
-the per-scenario detail (routes, served pairs, idle buses). The rendering
+the per-scenario detail (routes, served pairs, idle buses). TOP scores
+passengers per real (R$), using each bus's own fuel autonomy. The rendering
 itself comes from `reporting`, the same module `main.py` uses.
 
 Default scenarios: 65 (``base``) plus 19, 16, 32 and 37, in that order.

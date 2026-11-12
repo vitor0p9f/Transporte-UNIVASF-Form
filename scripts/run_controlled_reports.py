@@ -1,4 +1,4 @@
-"""Controlled reports: TOP (time) x TOP (cost) x Clarke-Wright.
+"""Controlled reports: TOP (cost) x Clarke-Wright.
 
 The controlled scenarios are the copy in ``scenarios_control.csv`` +
 ``scenarios_base_control.csv``; the fleet is the homogeneous copy in
@@ -6,7 +6,7 @@ The controlled scenarios are the copy in ``scenarios_control.csv`` +
 (24 seats and the same fuel autonomy). Two constraint regimes are reported:
 
 ``apenas_tempo``
-    Only the time limit is enforced. Capacity is switched off in all three
+    Only the time limit is enforced. Capacity is switched off in both
     heuristics: the fleet runs with an "infinite" capacity, so neither the
     decisions nor the boarding simulation reject anyone for lack of room, and
     CW runs with ``restricoes="tempo"``.
@@ -14,19 +14,17 @@ The controlled scenarios are the copy in ``scenarios_control.csv`` +
 ``tempo_capacidade``
     Time and capacity are both enforced.
 
-Each regime runs three heuristics on the same fleet, depot and demand:
+Each regime runs two heuristics on the same fleet, depot and demand:
 
-* **TOP (tempo)** -- the original, scoring passengers per minute;
-* **TOP (custo)** -- the same TOP with the cost objective, scoring passengers
-  per real (R$).
-  Maximising pax/R$ is equivalent to minimising R$ per passenger; in the
-  insertion stage it minimises R$ per extra passenger. Each bus pays fuel with
-  its own km/L plus the driver, priced by the scenario;
+* **TOP (custo)** -- scores passengers per real (R$). Maximising pax/R$ is
+  equivalent to minimising R$ per passenger; in the insertion stage it
+  minimises R$ per extra passenger. Each bus pays fuel with its own km/L plus
+  the driver, priced by the scenario;
 * **Clarke-Wright** -- the existing savings heuristic.
 
 The depot is the first node of the scenario's ``origin`` column, the same for
-all three. The cost is recomputed from the final routes with each bus's own
-km/L (all the same in the controlled fleet), charging only routes that served
+both. The cost is recomputed from the final routes with each bus's own km/L
+(all the same in the controlled fleet), charging only routes that served
 someone.
 
 Outputs:
@@ -80,7 +78,6 @@ CW_KWARGS: dict = {
     "seed": 42,
 }
 
-TOP_TIME = "TOP (tempo)"
 TOP_COST = "TOP (custo)"
 CW = "Clarke-Wright"
 
@@ -165,14 +162,13 @@ def scenario_depot(scenario: dict) -> int | None:
     return origins[0] if origins else None
 
 
-def run_top(scenario: dict, buses, objective: str) -> tuple:
+def run_top(scenario: dict, buses) -> tuple:
     """TOP on the controlled scenario, starting at the scenario depot."""
     data, plans, _summary = top_univasf.solve_scenario(
         scenario,
         buses,
         ROOT,
         origin=scenario_depot(scenario),
-        objective=objective,
     )
     return data, plans
 
@@ -201,10 +197,8 @@ def run_cw(scenario: dict, buses, config: Config) -> tuple:
 def run_heuristic(
     scenario: dict, buses, config: Config, heuristic: str
 ) -> tuple:
-    if heuristic == TOP_TIME:
-        return run_top(scenario, buses, "time")
     if heuristic == TOP_COST:
-        return run_top(scenario, buses, "cost")
+        return run_top(scenario, buses)
     if heuristic == CW:
         return run_cw(scenario, buses, config)
     raise ValueError(f"unknown heuristic: {heuristic}")
@@ -244,12 +238,12 @@ def row_cells(
 
 
 def scenario_rows(scenario: dict, config: Config) -> list[tuple[str, ...]]:
-    """The three heuristic rows of one scenario, in TOP-tempo/TOP-custo/CW order."""
+    """The two heuristic rows of one scenario, in TOP-custo/CW order."""
     buses = scenario_buses(scenario, config)
     reference = controlled_fleet()
     capacity_reference = reference[0].passenger_capacity
     rows = []
-    for heuristic in (TOP_TIME, TOP_COST, CW):
+    for heuristic in (TOP_COST, CW):
         data, plans = run_heuristic(scenario, buses, config, heuristic)
         cost = reporting.operational_cost_per_bus(
             plans,
@@ -323,12 +317,12 @@ def report_note(config: Config, root: str | Path = ROOT) -> str:
     if config.ignore_capacity:
         regime = (
             "Apenas o limite de tempo está ativo: a capacidade foi desativada "
-            "nas decisões e na avaliação das três heurísticas (frota com "
+            "nas decisões e na avaliação das duas heurísticas (frota com "
             "capacidade infinita)."
         )
     else:
         regime = (
-            "As restrições de tempo e de capacidade estão ativas nas três "
+            "As restrições de tempo e de capacidade estão ativas nas duas "
             "heurísticas."
         )
     return (
@@ -336,17 +330,16 @@ def report_note(config: Config, root: str | Path = ROOT) -> str:
         "(`scenarios_control.csv` + `scenarios_base_control.csv`) e a frota é "
         f"a homogênea de `{CONTROLLED_FLEET}`: todos os ônibus são o modelo "
         f"de menor capacidade do `fleet.csv` ({fleet_note(root)}). O depósito "
-        "é o primeiro nó da coluna `origin` do cenário, o mesmo para as três "
+        "é o primeiro nó da coluna `origin` do cenário, o mesmo para as duas "
         "heurísticas, e o Clarke-Wright é limitado ao número de ônibus da "
         "frota.\n\n"
-        "O **TOP (tempo)** pontua passageiros por minuto. O **TOP (custo)** "
-        "pontua passageiros por real: cada rota paga o combustível (km / km "
-        "por litro do ônibus × diesel do cenário) e o motorista (horas × valor "
-        "da hora do cenário). Maximizar passageiros por real é equivalente a "
-        "minimizar o custo por passageiro; na inserção de uma parada, o score "
-        "marginal minimiza o custo por passageiro extra. O custo mostrado é "
-        "recalculado por ônibus a partir das rotas finais, cobrando apenas as "
-        "rotas que atendem alguém."
+        "O **TOP (custo)** pontua passageiros por real: cada rota paga o "
+        "combustível (km / km por litro do ônibus × diesel do cenário) e o "
+        "motorista (horas × valor da hora do cenário). Maximizar passageiros "
+        "por real é equivalente a minimizar o custo por passageiro; na "
+        "inserção de uma parada, o score marginal minimiza o custo por "
+        "passageiro extra. O custo mostrado é recalculado por ônibus a partir "
+        "das rotas finais, cobrando apenas as rotas que atendem alguém."
     )
 
 

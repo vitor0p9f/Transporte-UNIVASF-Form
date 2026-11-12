@@ -33,7 +33,7 @@ PLAN_HEADERS = (
     "pax",
     "time",
     "peak",
-    "pax/min",
+    "pax/R$",
     "origin",
     "destination",
 )

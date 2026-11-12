@@ -11,13 +11,13 @@ flowchart TD
     B -- "no" --> Z["final plans<br/>(only buses with passengers)"]
     B -- "yes" --> C["ROUND: every bus proposes 1 step"]
     C --> D{"does the bus already have<br/>a locked pair?"}
-    D -- "no" --> E["DRAFT<br/>picks the base route [o, d] or [o, P, d]<br/>score = passengers on the route / route time<br/>(or / route cost under the cost objective)"]
-    D -- "yes" --> F["EXPANSION<br/>inserts 1 demand-driven point<br/>score = passengers gained / extra time<br/>(or / extra cost)"]
+    D -- "no" --> E["DRAFT<br/>picks the base route [o, d] or [o, P, d]<br/>score = passengers on the route / route cost"]
+    D -- "yes" --> F["EXPANSION<br/>inserts 1 demand-driven point<br/>score = passengers gained / extra cost"]
     E --> G["CONFLICT: group the proposals that<br/>share a point or an origin-destination pair"]
     F --> G
     G --> H{"any group<br/>with more than one?"}
     H -- "no" --> I["all of them commit together"]
-    H -- "yes" --> J["only the highest score acts<br/>(tie-break: passenger count,<br/>shorter time, lower bus id)"]
+    H -- "yes" --> J["only the highest score acts<br/>(tie-break: passenger count,<br/>lower cost, shorter time, lower bus id)"]
     I --> K["COMMIT: charge the global demand"]
     J --> K
     K --> B
@@ -37,7 +37,7 @@ flowchart TD
     T2 --> S
     T3 --> S
     T4 --> S
-    S --> SC["score = passengers gained / extra time<br/>discard when <= 0, or with no new pair"]
+    S --> SC["score = passengers gained / extra cost<br/>discard when <= 0, or with no new pair"]
     SC --> BE["best proposal of that bus in the round wins"]
 ```
 
@@ -51,16 +51,16 @@ flowchart TD
   start — the only position that revisits the origin.
 - **conflict** — proposals sharing a key (point or origin-destination pair)
   fall into the same group, directly or by transitivity.
-- **scores** — draft: `passengers on the route ÷ route time`; expansion:
-  `passengers gained ÷ extra time`. The final plan reports
-  `total passengers ÷ total time`.
+- **scores** — draft: `passengers on the route ÷ route cost`; expansion:
+  `passengers gained ÷ extra cost`. The final plan reports
+  `total passengers ÷ total cost` (passengers per real).
 
-## 3. Cost objective
+## 3. Objective (cost)
 
-The same implementation can score passengers per real (R$) instead of per
-minute: `solve_scenario(..., objective="cost")` (equivalently, pass a
-`CostModel` to `run_fleet`). Each bus still respects its own capacity, and now
-pays fuel with its own km per liter plus the driver, both priced by the
-scenario. Maximising passengers per real is equivalent to minimising the cost
-per passenger; in the expansion stage it minimises the cost per extra
-passenger. The original time objective remains the default.
+TOP has a single objective: passengers per real (R$). Each bus still respects
+its own capacity, and pays fuel with its own km per liter plus the driver, both
+priced by the scenario. Maximising passengers per real is equivalent to
+minimising the cost per passenger; in the expansion stage it minimises the
+cost per extra passenger. `solve_scenario` builds the `CostModel` from the
+scenario and `run_fleet` requires it, so every bus's autonomy is part of the
+decision.

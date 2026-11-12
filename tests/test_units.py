@@ -10,11 +10,6 @@ from algorithms.top_univasf import (
     WorkState,
 )
 from algorithms.top_univasf.conflict import conflict_groups
-from algorithms.top_univasf.scoring import (
-    marginal_passengers_per_minute,
-    od_pair_score,
-    passengers_per_minute,
-)
 from algorithms.top_univasf.simulation import (
     board_greedily,
     segment_passengers,
@@ -38,27 +33,6 @@ def make_data(demand: dict, time: dict | None = None, size: int = 4) -> Instance
         time=times,
         demand=demands,
     )
-
-
-class TestScoring:
-    def test_passengers_per_minute_zero_inputs(self):
-        assert passengers_per_minute(0, 10) == 0.0
-        assert passengers_per_minute(10, 0) == 0.0
-        assert passengers_per_minute(-1, 10) == 0.0
-
-    def test_passengers_per_minute_ratio(self):
-        assert passengers_per_minute(10, 2) == 5.0
-
-    def test_od_pair_score(self):
-        assert od_pair_score(0, 10) == 0.0
-        assert od_pair_score(9, 3) == 3.0
-
-    def test_marginal_score_ratio(self):
-        assert marginal_passengers_per_minute(0, 5) == 0.0
-        assert marginal_passengers_per_minute(4, 2) == 2.0
-
-    def test_marginal_score_is_infinite_without_extra_time(self):
-        assert marginal_passengers_per_minute(3, 0) == float("inf")
 
 
 class TestSimulateStops:

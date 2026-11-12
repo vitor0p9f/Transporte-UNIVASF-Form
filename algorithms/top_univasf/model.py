@@ -37,8 +37,8 @@ class BusPlan:
     `origin`/`destination` are the bus's locked OD pair. `stops` is the
     sequence actually driven; when the fleet runs with a fixed depot, it
     starts with that depot (the deadhead), so the pair origin may appear later.
-    `score` is passengers per minute or per real, depending on the objective;
-    `cost` is the fuel + driver cost of the route (0.0 for the time objective).
+    `score` is passengers per real; `cost` is the fuel + driver cost of the
+    route under the bus's own km per liter.
     """
 
     bus_id: int
@@ -130,9 +130,8 @@ class DraftProposal:
     `stops` is the demand route [o, d] or [o, P, d]. `depot` (when set) is the
     fixed departure point: it is simulated as a prefix and included in
     `travel_time_minutes`, but kept out of `stops` so every draft does not
-    conflict on the same depot point. `score` is servable passengers per
-    minute or per real, depending on the objective; `cost` is that route's
-    fuel + driver cost (0.0 for the time objective).
+    conflict on the same depot point. `score` is servable passengers per real;
+    `cost` is that route's fuel + driver cost under the bus's own km per liter.
     """
 
     bus: Bus
@@ -179,8 +178,8 @@ class ExpansionProposal:
 
     `new_points` lists the nodes the insertion actually adds: in the
     dobradinha the repeated origin was already on the route. `score` is the
-    marginal passengers per minute or per real; `cost` is the route's total
-    fuel + driver cost (0.0 for the time objective).
+    marginal passengers per real; `cost` is the route's total fuel + driver
+    cost under the bus's own km per liter.
     """
 
     state: WorkState

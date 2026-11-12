@@ -1,11 +1,10 @@
 """Operating cost used to build each bus's intention.
 
-The cost-aware TOP scores proposals by passengers per real (R$) instead of
-passengers per minute. A route's cost is the fuel it burns (route distance
-divided by the bus's own km per liter, priced with the scenario's diesel) plus
-the driver (route minutes priced with the scenario's hourly rate). Every
-proposal is charged with the bus that would drive it, so a thirsty vehicle has
-to earn the demand it takes.
+TOP scores proposals by passengers per real (R$). A route's cost is the fuel
+it burns (route distance divided by the bus's own km per liter, priced with the
+scenario's diesel) plus the driver (route minutes priced with the scenario's
+hourly rate). Every proposal is charged with the bus that would drive it, so a
+thirsty vehicle has to earn the demand it takes.
 """
 
 from dataclasses import dataclass

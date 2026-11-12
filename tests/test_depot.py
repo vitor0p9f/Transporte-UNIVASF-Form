@@ -3,6 +3,7 @@
 import numpy as np
 
 from algorithms.top_univasf import (
+    CostModel,
     DraftProposal,
     InstanceData,
     run_fleet,
@@ -43,6 +44,11 @@ def make_instance() -> InstanceData:
     return make_data(demand={(1, 2): 4}, time={(3, 1): 10, (1, 2): 5})
 
 
+def cost_model() -> CostModel:
+    """Diesel at R$ 10/L and driver at R$ 60/h: one minute costs R$ 1."""
+    return CostModel(diesel_price_per_liter=10.0, driver_hourly_rate=60.0)
+
+
 class TestWithDepot:
     def test_prefixes_when_depot_is_not_first(self):
         assert with_depot((1, 2), 3) == (3, 1, 2)
@@ -67,6 +73,7 @@ class TestDraftWithDepot:
             bus,
             data.demand,
             100,
+            cost_model=cost_model(),
             destinations=(2,),
             draft_origins=(1,),
             depot=3,
@@ -88,6 +95,7 @@ class TestDraftWithDepot:
             bus,
             data.demand,
             100,
+            cost_model=cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )
@@ -126,6 +134,7 @@ class TestFleetWithDepot:
             data,
             [bus],
             100,
+            cost_model=cost_model(),
             destinations=(2,),
             draft_origins=(1,),
             depot=3,
@@ -147,6 +156,7 @@ class TestFleetWithDepot:
             data,
             [bus],
             100,
+            cost_model=cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )

@@ -1,8 +1,8 @@
 """Golden-master regression: every scenario must keep the same outcome.
 
-The fixture in ``tests/fixtures/results_baseline.json`` was generated from
-the code before the refactor (``scripts/dump_results.py``). A diff here means
-a refactor step changed the heuristic, not only its shape.
+The fixture in ``tests/fixtures/results_baseline.json`` was generated from the
+cost-only solver (``scripts/dump_results.py``). A diff here means a refactor
+step changed the heuristic, not only its shape.
 """
 
 import json

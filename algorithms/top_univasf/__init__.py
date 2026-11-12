@@ -6,7 +6,7 @@ for the points P with demand coming from `o` OR going to `d`, scoring the route
 [o, P, d] (plus the direct option [o, d]):
     servable = boardings along that route under the capacity lock
                (o->P alights, so P->d boards, plus o->d along the way)
-    score = servable / (time[o, P] + time[P, d])   (time objective)
+    score = servable / route cost
 The P with the highest score wins. The pair does NOT need direct demand
 `o->d`. The globally best score locks the base route [o, P, d] first (the bus
 is born at the pair origin, or at the fixed depot when one is given) and
@@ -24,17 +24,16 @@ drops to zero.
 `destinations`/`draft_origins` (when given) filter the possible
 destination/origin selections of the pair.
 
-The score is passengers per minute (the original objective) or passengers per
-real (R$), selected by ``solve_scenario(..., objective="cost")``. Under the
-cost objective each bus pays fuel with its own km per liter plus the driver;
-maximising pax/R$ is equivalent to minimising R$ per passenger, and the
-marginal insertion minimises R$ per extra passenger.
+Every score is passengers per real (R$). Each bus pays fuel with its own km per
+liter plus the driver, priced by the scenario; maximising pax/R$ is equivalent
+to minimising R$ per passenger, and the marginal insertion minimises R$ per
+extra passenger.
 
 Modules:
 
     model       data (plans, proposals, work state)
     cost        CostModel and route distance (fuel + driver)
-    scoring     the scores (pair, marginal, final plan), time or cost
+    scoring     the scores (pair, marginal, final plan)
     simulation  capacity-locked boarding and candidate nodes
     draft       stage 1: best OD pair and its base route
     expansion   stage 2: inserting one demand-driven point
@@ -62,11 +61,8 @@ from algorithms.top_univasf.model import (
     with_depot,
 )
 from algorithms.top_univasf.scoring import (
-    marginal_passengers_per_minute,
     marginal_passengers_per_real,
-    od_pair_score,
     od_pair_score_real,
-    passengers_per_minute,
     passengers_per_real,
 )
 from algorithms.top_univasf.simulation import (
@@ -74,7 +70,7 @@ from algorithms.top_univasf.simulation import (
     segment_passengers,
     simulate_stops,
 )
-from algorithms.top_univasf.solver import Objective, solve_scenario
+from algorithms.top_univasf.solver import solve_scenario
 from utils.instances import InstanceData
 
 __all__ = [
@@ -86,7 +82,6 @@ __all__ = [
     "ExpansionProposal",
     "FleetSummary",
     "InstanceData",
-    "Objective",
     "Proposal",
     "ServedPair",
     "StopSequence",
@@ -96,11 +91,8 @@ __all__ = [
     "candidate_nodes",
     "collect_proposals",
     "fleet_summary",
-    "marginal_passengers_per_minute",
     "marginal_passengers_per_real",
-    "od_pair_score",
     "od_pair_score_real",
-    "passengers_per_minute",
     "passengers_per_real",
     "route_distance_km",
     "run_fleet",

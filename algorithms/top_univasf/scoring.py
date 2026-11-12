@@ -1,12 +1,9 @@
 """The scores the heuristic orders its decisions by.
 
-The TOP has two objectives:
-
-* ``time`` -- passengers per minute (the original heuristic);
-* ``cost`` -- passengers per real (R$). Each bus pays fuel with its own km per
-  liter plus the driver, priced by the scenario. Maximising passengers per real
-  is equivalent to minimising real per passenger; in the insertion stage the
-  marginal score minimises real per extra passenger.
+TOP has a single objective: passengers per real (R$). Each bus pays fuel with
+its own km per liter plus the driver, priced by the scenario. Maximising
+passengers per real is equivalent to minimising real per passenger; in the
+insertion stage the marginal score minimises real per extra passenger.
 """
 
 
@@ -24,28 +21,6 @@ def _marginal_per_unit(delta: int, delta_denominator: float) -> float:
     if delta_denominator <= 0:
         return float("inf")
     return delta / delta_denominator
-
-
-def passengers_per_minute(served_passengers: int, travel_time_minutes: int) -> float:
-    """Passengers per minute. No passengers or no time -> 0.0."""
-    return _per_unit(served_passengers, travel_time_minutes)
-
-
-def od_pair_score(servable_passengers: int, pair_time_minutes: int) -> float:
-    """OD pair score: servable / route time. No passengers or no time -> 0.0.
-
-    `servable_passengers` is what the route [o, P, d] would board under the
-    capacity lock; `pair_time_minutes` is time[o, P] + time[P, d] (or time[o, d]
-    for the direct option).
-    """
-    return _per_unit(servable_passengers, pair_time_minutes)
-
-
-def marginal_passengers_per_minute(
-    delta_passengers: int, delta_time_minutes: int
-) -> float:
-    """Passengers per minute GAINED by inserting a stop (orders stage 2)."""
-    return _marginal_per_unit(delta_passengers, delta_time_minutes)
 
 
 def passengers_per_real(served_passengers: int, cost: float) -> float:

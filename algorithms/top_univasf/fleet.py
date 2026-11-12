@@ -17,10 +17,7 @@ from algorithms.top_univasf.model import (
     fleet_summary,
     with_depot,
 )
-from algorithms.top_univasf.scoring import (
-    passengers_per_minute,
-    passengers_per_real,
-)
+from algorithms.top_univasf.scoring import passengers_per_real
 from algorithms.top_univasf.simulation import simulate_stops
 from entities.bus import Bus
 from utils.instances import InstanceData
@@ -31,7 +28,7 @@ def run_fleet(
     buses: list[Bus],
     time_limit_minutes: int,
     *,
-    cost_model: CostModel | None = None,
+    cost_model: CostModel,
     max_rounds: int | None = None,
     destinations: tuple[int, ...] | None = None,
     draft_origins: tuple[int, ...] | None = None,
@@ -41,13 +38,11 @@ def run_fleet(
     commit together, in a conflict only the highest score acts.
 
     A bus without a locked pair proposes the pair's base route (score =
-    boardings of the route [o, P, d] / route time or / route cost -- see
-    `best_pair_for_bus`), restricted to the informed origins (`draft_origins`,
-    None = free) and destinations (`destinations`, None = free); with a locked
-    pair it proposes the demand-driven step (`best_demand_driven_insertion`).
-    With `cost_model`, every score is passengers per real and each bus pays
-    with its own km per liter; without it, the original passengers-per-minute
-    objective is used.
+    boardings of the route [o, P, d] / route cost -- see `best_pair_for_bus`),
+    restricted to the informed origins (`draft_origins`, None = free) and
+    destinations (`destinations`, None = free); with a locked pair it proposes
+    the demand-driven step (`best_demand_driven_insertion`). Every score is
+    passengers per real and each bus pays with its own km per liter.
     Everything is charged against the global demand. By default the route is
     born at the pair origin (no deadhead). When `depot` is set, every route is
     simulated with that fixed departure point as a prefix: the deadhead enters
@@ -95,9 +90,7 @@ def run_fleet(
         if committed == 0:
             break
 
-    return build_plans(buses, state_by_id, cost_model=cost_model), fleet_summary(
-        remaining, wins, rounds
-    )
+    return build_plans(buses, state_by_id), fleet_summary(remaining, wins, rounds)
 
 
 def collect_proposals(
@@ -107,7 +100,7 @@ def collect_proposals(
     remaining: np.ndarray,
     time_limit_minutes: int,
     *,
-    cost_model: CostModel | None = None,
+    cost_model: CostModel,
     destinations: tuple[int, ...] | None = None,
     draft_origins: tuple[int, ...] | None = None,
     depot: int | None = None,
@@ -116,8 +109,8 @@ def collect_proposals(
 
     A bus without a locked pair proposes the pair's base route; with a locked
     pair it proposes the demand-driven insertion. Nobody charges demand here.
-    `cost_model` switches the scores to passengers per real; `depot` is
-    forwarded to the draft so the deadhead enters its time and cost.
+    Every score is passengers per real; `depot` is forwarded to the draft so
+    the deadhead enters its time and cost.
     """
     proposals: list[Proposal] = []
     draft_cache: DraftCache = {}
@@ -235,15 +228,12 @@ def commit_expansion(
 def build_plans(
     buses: list[Bus],
     state_by_id: dict[int, WorkState],
-    *,
-    cost_model: CostModel | None = None,
 ) -> list[BusPlan]:
     """One plan per bus that served somebody, ordered by bus id.
 
     A zero-score draft that never picked up a hitchhiker becomes a state with 0
     passengers and is dropped: a plan is what actually served a passenger.
-    `cost_model` selects the passengers-per-real score; without it the score is
-    passengers per minute.
+    The final score is passengers per real.
     """
     plans: list[BusPlan] = []
     for bus in buses:
@@ -251,11 +241,7 @@ def build_plans(
         if state is None or state.served_passengers <= 0:
             continue
         served = state.served_passengers
-        score = (
-            passengers_per_real(served, state.cost)
-            if cost_model is not None
-            else passengers_per_minute(served, state.travel_time_minutes)
-        )
+        score = passengers_per_real(served, state.cost)
         plans.append(
             BusPlan(
                 bus_id=state.bus.id,

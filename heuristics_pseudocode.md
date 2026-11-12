@@ -5,29 +5,32 @@
 > rodadas é `fleet.py: run_fleet`. O que estiver em `código` é nome do código, dá
 > para buscar direto. O panorama com diagramas está em `heuristics.md`.
 
-**Entradas:** matrizes de tempo e de demanda (a de distância é carregada mas não
-usada), frota (`id` e lugares), limite de tempo por ônibus, filtros opcionais de
-origem/destino e `max_rounds`.
+**Entradas:** matrizes de tempo, distância e demanda, frota (`id`, lugares e
+km/L), preços do diesel e da hora do motorista, limite de tempo por ônibus,
+filtros opcionais de origem/destino e `max_rounds`.
 
 ## Ideia
 
-Servir o máximo de passageiros respeitando lugares e limite de tempo por ônibus.
-Em cada rodada **todo ônibus propõe um passo**; quem não conflita commita junto
-e, num conflito, só o melhor score age. O que commita é descontado da demanda
-global. Quem ainda não tem par travado escolhe a rota (um par OD) e, daí em
-diante, só cresce a rota — um ponto por vez, guiado pela demanda.
+Servir o máximo de passageiros pelo menor custo, respeitando lugares e limite de
+tempo por ônibus. Em cada rodada **todo ônibus propõe um passo**; quem não
+conflita commita junto e, num conflito, só o melhor score age. O que commita é
+descontado da demanda global. Quem ainda não tem par travado escolhe a rota (um
+par OD) e, daí em diante, só cresce a rota — um ponto por vez, guiado pela
+demanda. O score é sempre passageiros por real (R$): cada ônibus paga o
+combustível com o próprio km/L e o motorista, ambos com os preços do cenário.
 
 ## Pontuações
 
 | momento | score |
 |---|---|
-| rota nova (`draft`) | passageiros embarcados ÷ tempo da rota |
-| inserção (`expansão`) | passageiros ganhos ÷ tempo extra |
-| plano final | passageiros ÷ tempo total |
+| rota nova (`draft`) | passageiros embarcados ÷ custo da rota |
+| inserção (`expansão`) | passageiros ganhos ÷ custo extra |
+| plano final | passageiros ÷ custo total |
 
 - A rota nova é `[o, d]` ou `[o, P, d]`; o embarque respeita os lugares na ordem
-  da rota (quem desce em `P` libera lugar). Sem passageiro ou sem tempo, score 0.
-- Expansão: ganho ≤ 0 → score 0; com ganho > 0, tempo extra ≤ 0 → score infinito.
+  da rota (quem desce em `P` libera lugar). Sem passageiro ou sem custo, score 0.
+- Expansão: ganho ≤ 0 → score 0; com ganho > 0, custo extra ≤ 0 → score
+  infinito.
 
 ## Desempate — a ordem importa
 
@@ -39,9 +42,9 @@ igual (determinismo), não para escolher melhor.
 
 | onde | tupla | em palavras |
 |---|---|---|
-| draft, por candidata | `(score, servidos, -tempo_rota, -o, -d, -margin)` | melhor score → mais passageiros → rota mais curta → menor `o` → menor `d` → no empate exato, a **rota direta** (`margin = -1`; uma rota com `P` entra com o id do nó) |
-| expansão, por trial | `(score, passageiros, -tempo, -cand, trial)` | melhor score → mais passageiros → trial mais curto → menor nó inserido → a própria sequência |
-| conflito, por proposta | `DraftProposal (score, servidos, -tempo, -bus.id)`<br>`ExpansionProposal (score, soma do claim, -tempo, -bus.id)` | melhor score → mais passageiros → rota mais curta → menor `bus.id` |
+| draft, por candidata | `(score, servidos, -custo_rota, -tempo_rota, -o, -d, -margin)` | melhor score → mais passageiros → rota mais barata → rota mais curta → menor `o` → menor `d` → no empate exato, a **rota direta** (`margin = -1`; uma rota com `P` entra com o id do nó) |
+| expansão, por trial | `(score, passageiros, -custo, -cand, trial)` | melhor score → mais passageiros → trial mais barato → menor nó inserido → a própria sequência |
+| conflito, por proposta | `DraftProposal (score, servidos, -custo, -tempo, -bus.id)`<br>`ExpansionProposal (score, soma do claim, -custo, -tempo, -bus.id)` | melhor score → mais passageiros → rota mais barata → rota mais curta → menor `bus.id` |
 
 Numa disputa entre draft e expansão os `score` têm unidades diferentes
 (eficiência da rota inteira × eficiência marginal do passo).
@@ -69,12 +72,15 @@ ENQUANTO soma(remaining) > 0:
             limite: pula
           embarcados = embarque na ordem da rota (quem desce libera lugar)
           SE a rota tem tempo 0 e embarcou alguém: pula
-          score = embarcados / tempo da rota     // 0 passa, negativo não
+          custo = (km da rota / km/L do ônibus) × diesel
+                  + (tempo da rota / 60) × valor da hora do motorista
+          score = embarcados / custo             // 0 passa, negativo não
           fica com a melhor tupla de desempate
       SE achou: propõe a rota escolhida      // o par trava aqui; sem deadhead
     SENÃO:
       SE a rota já está no limite de tempo: não propõe
       atual = simula a rota com a demanda já cobrada (`claimed`)
+      custo_atual = combustível + motorista da rota atual
       PARA cada ponto fora da rota que aparece na demanda:
         REGRA A — demanda A→ponto, com A na rota:
           o ponto entra logo depois de A
@@ -85,7 +91,8 @@ ENQUANTO soma(remaining) > 0:
           dobradinha)
         simula o trial inteiro (lugares por perna, tempo e pico), e:
           SE passa do limite de tempo ou dos lugares: descarta
-          score = passageiros ganhos / tempo extra    // precisa ser > 0
+          custo_trial = combustível + motorista do trial
+          score = passageiros ganhos / (custo_trial - custo_atual)  // > 0
           claim = pares que ganharam passageiros       // precisa ser não vazio
           fica com a melhor tupla de desempate
       SE achou: propõe {pontos realmente inseridos + pares do claim}
@@ -109,7 +116,7 @@ O LAÇO TERMINA QUANDO: `remaining` zerou, ou passou `max_rounds`, ou ninguém
 propôs, ou ninguém commitou.
 
 SAÍDA — um plano por ônibus com passageiros > 0:
-  (ônibus, rota, passageiros, tempo, pico, pax/min, pares servidos, par travado)
+  (ônibus, rota, passageiros, tempo, pico, pax/R$, pares servidos, par travado)
   e um resumo: rounds (= commits), vitórias por ônibus, pares e passageiros
   não servidos.
 ```

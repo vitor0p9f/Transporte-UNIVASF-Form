@@ -1,4 +1,4 @@
-"""Unit tests for the cost-aware objective of TOP.
+"""Unit tests for TOP's cost objective.
 
 The score is passengers per real (R$): each bus pays the fuel for its own km
 per liter plus the driver for the route minutes. These tests pin the cost
@@ -197,8 +197,8 @@ class TestFinalPlan:
         assert plan.score == pytest.approx(plan.served_passengers / plan.cost)
 
 
-class TestSolverObjective:
-    def test_cost_objective_fills_cost_and_pax_per_real(self, root):
+class TestSolver:
+    def test_solver_fills_cost_and_pax_per_real(self, root):
         scenario = next(
             s for s in load_scenarios(root) if str(s["scenario_id"]) == "65"
         )
@@ -206,28 +206,11 @@ class TestSolverObjective:
             root / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
         )
 
-        _data, time_plans, _summary = solve_scenario(
-            scenario, buses, root, objective="time"
-        )
-        _data, cost_plans, _summary = solve_scenario(
-            scenario, buses, root, objective="cost"
-        )
+        _data, plans, _summary = solve_scenario(scenario, buses, root)
 
-        assert time_plans and cost_plans
-        assert all(plan.cost == 0.0 for plan in time_plans)
-        assert all(plan.cost > 0.0 for plan in cost_plans)
+        assert plans
+        assert all(plan.cost > 0.0 for plan in plans)
         assert all(
             plan.score == pytest.approx(plan.served_passengers / plan.cost)
-            for plan in cost_plans
+            for plan in plans
         )
-
-    def test_rejects_an_unknown_objective(self, root):
-        scenario = next(
-            s for s in load_scenarios(root) if str(s["scenario_id"]) == "65"
-        )
-        buses = load_fleet(
-            root / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
-        )
-
-        with pytest.raises(ValueError, match="unknown objective"):
-            solve_scenario(scenario, buses, root, objective="distance")
