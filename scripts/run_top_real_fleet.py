@@ -38,10 +38,14 @@ from algorithms.top_univasf import (
 )
 from entities.bus import Bus
 from utils.fleet import load_fleet, parse_fleet_ids
-from utils.scenarios import load_scenarios
+from utils.scenarios import (
+    DEFAULT_REPORT_SCENARIOS,
+    load_scenarios,
+    pick_scenarios,
+)
 
 #: Scenarios run by default, in output order.
-DEFAULT_SCENARIOS = ("65", "19", "16", "32", "37")
+DEFAULT_SCENARIOS = DEFAULT_REPORT_SCENARIOS
 
 OUT_PATH = ROOT / "resultados_top_frota_real.md"
 
@@ -104,11 +108,7 @@ def select_scenarios(
     ``scenarios_base.csv``, so ids such as 65 (the hand-written ``base``
     instance) are found alongside the generated ones.
     """
-    by_id = {str(scenario["scenario_id"]): scenario for scenario in load_scenarios(root)}
-    missing = [scenario_id for scenario_id in ids if scenario_id not in by_id]
-    if missing:
-        raise ValueError(f"unknown scenario ids: {', '.join(missing)}")
-    return [by_id[scenario_id] for scenario_id in ids]
+    return pick_scenarios(load_scenarios(root), ids)
 
 
 def run_scenario(

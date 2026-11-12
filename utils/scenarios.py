@@ -18,6 +18,8 @@ from pathlib import Path
 
 #: Scenario files summed together, in order.
 SCENARIO_FILES = ("scenarios.csv", "scenarios_base.csv")
+#: Scenarios used by the default reports, in output order.
+DEFAULT_REPORT_SCENARIOS = ("65", "19", "16", "32", "37")
 
 
 def parse_node_labels(value: object) -> tuple[int, ...] | None:
@@ -62,3 +64,15 @@ def load_scenarios(
             if (root / "instances" / s["instance_id"] / "distance.csv").exists()
         ]
     return scenarios
+
+
+def pick_scenarios(
+    scenarios: list[dict],
+    ids: tuple[str, ...] = DEFAULT_REPORT_SCENARIOS,
+) -> list[dict]:
+    """Select scenario rows by id, preserving the requested order."""
+    by_id = {str(scenario["scenario_id"]): scenario for scenario in scenarios}
+    missing = [scenario_id for scenario_id in ids if scenario_id not in by_id]
+    if missing:
+        raise ValueError(f"unknown scenario ids: {', '.join(missing)}")
+    return [by_id[scenario_id] for scenario_id in ids]

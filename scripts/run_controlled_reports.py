@@ -37,6 +37,7 @@ Outputs:
 Usage:
   python scripts/run_controlled_reports.py --workers 8
   python scripts/run_controlled_reports.py --only 65,19,16,32,37 --workers 8
+  python scripts/run_controlled_reports.py --only 1,2,3 --workers 8
 """
 
 import argparse
@@ -53,7 +54,12 @@ sys.path.insert(0, str(ROOT))
 import reporting
 from algorithms import clarke_wright, top_univasf
 from utils.fleet import load_fleet, parse_fleet_ids
-from utils.scenarios import load_scenarios, parse_node_labels
+from utils.scenarios import (
+    DEFAULT_REPORT_SCENARIOS,
+    load_scenarios,
+    parse_node_labels,
+    pick_scenarios,
+)
 
 #: Capacity that stands in for "no capacity restriction at all".
 INFINITE_CAPACITY = 10**9
@@ -61,6 +67,8 @@ INFINITE_CAPACITY = 10**9
 #: Controlled inputs (written by scripts/make_controlled_scenarios.py).
 CONTROLLED_SCENARIOS = ("scenarios_control.csv", "scenarios_base_control.csv")
 CONTROLLED_FLEET = "fleet_control.csv"
+#: Scenarios run by default, in output order.
+DEFAULT_SCENARIOS = DEFAULT_REPORT_SCENARIOS
 
 #: Full CW setup for the controlled comparison.
 CW_KWARGS: dict = {
@@ -363,18 +371,10 @@ def render_report(
 
 
 def select_scenarios(
-    ids: tuple[str, ...] | None, root: str | Path = ROOT
+    ids: tuple[str, ...] | None = None, root: str | Path = ROOT
 ) -> list[dict]:
-    """The controlled scenarios, filtered by ids and kept in file order."""
-    scenarios = controlled_scenarios(root)
-    if not ids:
-        return scenarios
-    wanted = set(ids)
-    selected = [s for s in scenarios if str(s["scenario_id"]) in wanted]
-    missing = wanted - {str(s["scenario_id"]) for s in selected}
-    if missing:
-        raise ValueError(f"unknown scenario ids: {', '.join(sorted(missing))}")
-    return selected
+    """The controlled scenarios in requested order (default: 5 report scenarios)."""
+    return pick_scenarios(controlled_scenarios(root), ids or DEFAULT_SCENARIOS)
 
 
 def parse_args() -> argparse.Namespace:
@@ -391,7 +391,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--only",
         default=None,
-        help="comma-separated scenario ids (default: every controlled scenario)",
+        help=(
+            "comma-separated scenario ids "
+            f"(default: {','.join(DEFAULT_SCENARIOS)})"
+        ),
     )
     parser.add_argument(
         "--out-dir",

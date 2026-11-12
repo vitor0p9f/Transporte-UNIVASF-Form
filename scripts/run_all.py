@@ -1,10 +1,13 @@
-"""Run every scenario and write the results to a .md report.
+"""Run the report scenarios and write the results to a .md report.
 
 Each scenario runs exactly once: the outcome feeds both the summary table and
 the per-scenario detail (routes, served pairs, idle buses). The rendering
 itself comes from `reporting`, the same module `main.py` uses.
+
+Default scenarios: 65 (``base``) plus 19, 16, 32 and 37, in that order.
 """
 
+import argparse
 import sys
 import time
 from dataclasses import dataclass, field
@@ -23,10 +26,16 @@ from algorithms.top_univasf import (
 )
 from entities.bus import Bus
 from utils.fleet import load_fleet, parse_fleet_ids
-from utils.scenarios import load_scenarios
+from utils.scenarios import (
+    DEFAULT_REPORT_SCENARIOS,
+    load_scenarios,
+    pick_scenarios,
+)
 from utils.seed import DEFAULT_SEED
 
 OUT = ROOT / "results.md"
+#: Scenarios run by default, in output order.
+DEFAULT_SCENARIOS = DEFAULT_REPORT_SCENARIOS
 #: Scenarios using the `base` instance are fixed, not sampled.
 FIXED_INSTANCE = "base"
 
@@ -145,7 +154,7 @@ def render(runs: list[ScenarioRun], generated_at: str) -> list[str]:
     """Full report: header, summary table and one detail block per scenario."""
     fixed = sum(1 for run in runs if run.scenario["instance_id"] == FIXED_INSTANCE)
     lines = [
-        "# Results — all scenarios (TOP UNIVASF)",
+        "# Results — report scenarios (TOP UNIVASF)",
         "",
         f"Generated on {generated_at} · {len(runs)} scenarios "
         + f"({fixed} fixed base) · generation seed {DEFAULT_SEED} (utils/seed.py).",
@@ -160,8 +169,34 @@ def render(runs: list[ScenarioRun], generated_at: str) -> list[str]:
     return lines
 
 
+def select_scenarios(
+    ids: tuple[str, ...] = DEFAULT_SCENARIOS, root: str | Path = ROOT
+) -> list[dict]:
+    """The requested scenarios, in the requested order."""
+    return pick_scenarios(load_scenarios(root), ids)
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--only",
+        default=None,
+        help=(
+            "comma-separated scenario ids "
+            f"(default: {','.join(DEFAULT_SCENARIOS)})"
+        ),
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
-    scenarios = load_scenarios(ROOT)
+    args = parse_args()
+    ids = (
+        tuple(item.strip() for item in args.only.split(",") if item.strip())
+        if args.only
+        else DEFAULT_SCENARIOS
+    )
+    scenarios = select_scenarios(ids)
     runs = [run_scenario(scenario) for scenario in scenarios]
     generated_at = datetime.now(UTC).astimezone().strftime("%Y-%m-%d %H:%M %Z")
     OUT.write_text("\n".join(render(runs, generated_at)), encoding="utf-8")
