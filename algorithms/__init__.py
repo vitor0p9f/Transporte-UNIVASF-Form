@@ -1,5 +1,5 @@
 """Route-planning heuristics.
 
-Each heuristic is a package with the same public entry point
-(``solve_scenario``), so callers only swap the import.
+`algorithms.top_univasf` exposes `solve_scenario`; `algorithms.clarke_wright`
+exposes `resolver_cenario` + `planos_e_resumo`.
 """
