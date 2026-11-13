@@ -19,7 +19,7 @@ from pathlib import Path
 #: Scenario files summed together, in order.
 SCENARIO_FILES = ("scenarios.csv", "scenarios_base.csv")
 #: Scenarios used by the default reports, in output order.
-DEFAULT_REPORT_SCENARIOS = ("65", "19", "16", "32", "37")
+DEFAULT_REPORT_SCENARIOS = ("17", "19", "32", "65", "69")
 
 
 def parse_node_labels(value: object) -> tuple[int, ...] | None:

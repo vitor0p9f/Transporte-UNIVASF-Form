@@ -34,7 +34,7 @@ Outputs:
 
 Usage:
   python scripts/run_controlled_reports.py --workers 8
-  python scripts/run_controlled_reports.py --only 65,19,16,32,37 --workers 8
+  python scripts/run_controlled_reports.py --only 17,19,32,65,69 --workers 8
   python scripts/run_controlled_reports.py --only 1,2,3 --workers 8
 """
 

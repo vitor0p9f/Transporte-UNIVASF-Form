@@ -1,4 +1,4 @@
-"""Run every scenario with both heuristics and write the results report.
+"""Run the default report scenarios with both heuristics and write the report.
 
 The TOP heuristic and Clarke-Wright run on the SAME scenarios and limits, and
 both land in one markdown report (one row each in the summary table) so the
@@ -23,7 +23,11 @@ from algorithms.top_univasf import (
 )
 from entities.bus import Bus
 from utils.fleet import load_fleet, parse_fleet_ids
-from utils.scenarios import load_scenarios
+from utils.scenarios import (
+    DEFAULT_REPORT_SCENARIOS,
+    load_scenarios,
+    pick_scenarios,
+)
 
 ROOT = Path(__file__).resolve().parent
 
@@ -100,9 +104,10 @@ def run_heuristic(
 def iter_all_scenarios(
     heuristics: list[str] = (TOP_NAME, CW_NAME),
     cw_kwargs: dict | None = None,
+    scenario_ids: tuple[str, ...] = DEFAULT_REPORT_SCENARIOS,
 ) -> Iterator[ScenarioOutcome]:
-    """Run every scenario, each with the given heuristics, in scenario order."""
-    for scenario in load_scenarios(ROOT):
+    """Run the selected scenarios, each with the given heuristics, in order."""
+    for scenario in pick_scenarios(load_scenarios(ROOT), scenario_ids):
         buses = load_fleet(
             ROOT / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
         )
@@ -116,9 +121,10 @@ def iter_all_scenarios(
 def run_all_scenarios(
     heuristics: list[str] = (TOP_NAME, CW_NAME),
     cw_kwargs: dict | None = None,
+    scenario_ids: tuple[str, ...] = DEFAULT_REPORT_SCENARIOS,
 ) -> list[ScenarioOutcome]:
-    """All scenarios with one run per heuristic, as a list."""
-    return list(iter_all_scenarios(heuristics, cw_kwargs))
+    """Selected scenarios with one run per heuristic, as a list."""
+    return list(iter_all_scenarios(heuristics, cw_kwargs, scenario_ids))
 
 
 def _scenario_markdown(outcome: ScenarioOutcome) -> list[str]:
@@ -170,7 +176,7 @@ def _scenario_markdown(outcome: ScenarioOutcome) -> list[str]:
 def render_markdown(outcomes: list[ScenarioOutcome], generated_at: str) -> str:
     """Full markdown report: one summary-table row per scenario × heuristic."""
     lines = [
-        "# Results — all scenarios (TOP + Clarke-Wright)",
+        "# Results — report scenarios (TOP + Clarke-Wright)",
         "",
         (
             f"Generated on {generated_at} · {len(outcomes)} scenarios · "
@@ -284,7 +290,7 @@ def print_results_table(
 
 
 def main() -> None:
-    """Run every scenario with both heuristics and write results.md as it goes."""
+    """Run the default scenarios with both heuristics and write results.md."""
     heuristics: list[str] = [TOP_NAME, CW_NAME]
     outcomes: list[ScenarioOutcome] = []
     for outcome in iter_all_scenarios(heuristics, SWEEP_CW_KWARGS):
