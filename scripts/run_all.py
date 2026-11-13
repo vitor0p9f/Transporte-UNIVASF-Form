@@ -10,8 +10,6 @@ Default scenarios: 16, 19, 32, 65 and 69, in that order.
 
 import argparse
 import sys
-import time
-from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -19,19 +17,14 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 import reporting
-from algorithms.top_univasf import (
-    BusPlan,
-    FleetSummary,
-    InstanceData,
-    solve_scenario,
+from scripts import report_common
+from scripts.report_common import (
+    ScenarioRun,
+    add_only_argument,
+    markdown_table,
+    parse_scenario_ids,
 )
-from entities.bus import Bus
-from utils.fleet import load_fleet, parse_fleet_ids
-from utils.scenarios import (
-    DEFAULT_REPORT_SCENARIOS,
-    load_scenarios,
-    pick_scenarios,
-)
+from utils.scenarios import DEFAULT_REPORT_SCENARIOS
 from utils.seed import DEFAULT_SEED
 
 OUT = ROOT / "results.md"
@@ -39,44 +32,24 @@ OUT = ROOT / "results.md"
 DEFAULT_SCENARIOS = DEFAULT_REPORT_SCENARIOS
 #: Scenarios using the `base` instance are fixed, not sampled.
 FIXED_INSTANCE = "base"
-
-
-@dataclass
-class ScenarioRun:
-    """Everything one scenario produced, including when it failed."""
-
-    scenario: dict
-    buses: list[Bus]
-    elapsed: float
-    data: InstanceData | None = None
-    plans: list[BusPlan] = field(default_factory=list)
-    summary: FleetSummary | None = None
-    error: str = ""
-
-    @property
-    def scenario_id(self) -> str:
-        return self.scenario["scenario_id"]
+#: Header of the summary table, in the same order as `_summary_row`.
+SUMMARY_HEADERS = (
+    "scenario",
+    "instance",
+    "period",
+    "fleet",
+    "limit",
+    "used",
+    "pax",
+    "%",
+    "rounds",
+    "exec (s)",
+)
 
 
 def run_scenario(scenario: dict) -> ScenarioRun:
     """Run one scenario and record its time, plans and summary (or the error)."""
-    buses = load_fleet(ROOT / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"]))
-    start = time.monotonic()
-    try:
-        data, plans, summary = solve_scenario(scenario, buses, ROOT)
-        error = ""
-    except Exception as exc:  # noqa: BLE001 -- record it and move on
-        data, plans, summary, error = None, [], None, f"{type(exc).__name__}: {exc}"
-    elapsed = time.monotonic() - start
-    return ScenarioRun(
-        scenario=scenario,
-        buses=buses,
-        elapsed=elapsed,
-        data=data,
-        plans=plans,
-        summary=summary,
-        error=error,
-    )
+    return report_common.run_scenario(scenario, catch_errors=True)
 
 
 def _scenario_heading(run: ScenarioRun) -> str:
@@ -94,19 +67,24 @@ def _scenario_heading(run: ScenarioRun) -> str:
     )
 
 
-def _summary_row(run: ScenarioRun) -> str:
+def _summary_row(run: ScenarioRun) -> tuple[str, ...]:
     scenario = run.scenario
     prefix = (
-        f"| {scenario['scenario_id']} | {scenario['instance_id']} | {scenario['period']} | "
-        f"[{scenario['fleet_bus_ids']}] | {scenario['max_time_limit']} | "
+        str(scenario["scenario_id"]),
+        str(scenario["instance_id"]),
+        str(scenario["period"]),
+        f"[{scenario['fleet_bus_ids']}]",
+        str(scenario["max_time_limit"]),
     )
     if run.error:
-        return prefix + f"ERROR | — | — | — | {run.elapsed:.1f} |"
+        return prefix + ("ERROR", "—", "—", "—", f"{run.elapsed:.1f}")
     served, total, percentage = reporting.served_ratio(run.data, run.plans)
-    return (
-        prefix
-        + f"{len(run.plans)}/{len(run.buses)} | {served}/{total} | {percentage:.0f}% | "
-        + f"{run.summary.rounds} | {run.elapsed:.1f} |"
+    return prefix + (
+        f"{len(run.plans)}/{len(run.buses)}",
+        f"{served}/{total}",
+        f"{percentage:.0f}%",
+        str(run.summary.rounds),
+        f"{run.elapsed:.1f}",
     )
 
 
@@ -123,13 +101,15 @@ def _detail_lines(run: ScenarioRun) -> list[str]:
         f"{run.summary.rounds} rounds · {run.elapsed:.1f}s"
     )
     lines.append("")
-    lines.append("| " + " | ".join(reporting.PLAN_HEADERS) + " |")
-    lines.append("|" + "---|" * len(reporting.PLAN_HEADERS))
-    for plan in run.plans:
-        cells = reporting.plan_cells(
-            plan, scenario["max_time_limit"], capacity.get(plan.bus_id)
-        )
-        lines.append("| " + " | ".join(cells) + " |")
+    lines += markdown_table(
+        reporting.PLAN_HEADERS,
+        (
+            reporting.plan_cells(
+                plan, scenario["max_time_limit"], capacity.get(plan.bus_id)
+            )
+            for plan in run.plans
+        ),
+    )
     lines.append("")
 
     for line in (
@@ -160,10 +140,8 @@ def render(runs: list[ScenarioRun], generated_at: str) -> list[str]:
         f"Generated on {generated_at} · {len(runs)} scenarios "
         + f"({fixed} fixed base) · generation seed {DEFAULT_SEED} (utils/seed.py).",
         "",
-        "| scenario | instance | period | fleet | limit | used | pax | % | rounds | exec (s) |",
-        "|---|---|---|---|---|---|---|---|---|---|",
     ]
-    lines += [_summary_row(run) for run in runs]
+    lines += markdown_table(SUMMARY_HEADERS, (_summary_row(run) for run in runs))
     lines.append("")
     for run in runs:
         lines += _detail_lines(run)
@@ -174,29 +152,18 @@ def select_scenarios(
     ids: tuple[str, ...] = DEFAULT_SCENARIOS, root: str | Path = ROOT
 ) -> list[dict]:
     """The requested scenarios, in the requested order."""
-    return pick_scenarios(load_scenarios(root), ids)
+    return report_common.select_scenarios(ids, root)
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument(
-        "--only",
-        default=None,
-        help=(
-            "comma-separated scenario ids "
-            f"(default: {','.join(DEFAULT_SCENARIOS)})"
-        ),
-    )
+    add_only_argument(parser, DEFAULT_SCENARIOS)
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    ids = (
-        tuple(item.strip() for item in args.only.split(",") if item.strip())
-        if args.only
-        else DEFAULT_SCENARIOS
-    )
+    ids = parse_scenario_ids(args.only, DEFAULT_SCENARIOS)
     scenarios = select_scenarios(ids)
     runs = [run_scenario(scenario) for scenario in scenarios]
     generated_at = datetime.now(UTC).astimezone().strftime("%Y-%m-%d %H:%M %Z")

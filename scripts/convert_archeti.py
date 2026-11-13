@@ -214,6 +214,88 @@ def append_scenario(scen_path: Path, row: dict) -> None:
         w.writerow(row)
 
 
+def write_instance(out_dir: Path, dist, time, demand_rows) -> None:
+    """Write the distance, time and demand CSVs of one instance."""
+    write_square(out_dir / "distance.csv", dist, lambda v: v)
+    write_square(
+        out_dir / "time.csv", time,
+        lambda v: int(v) if float(v).is_integer() else v,
+    )
+    write_demand(out_dir / "demand.csv", demand_rows)
+
+
+def instance_meta(
+    instance_id: str,
+    file_seed: int,
+    n: int,
+    m: int,
+    tmax: float,
+    profits: list[int],
+    args,
+    total_demand: int,
+) -> dict:
+    """The provenance JSON written next to one converted instance."""
+    return {
+        "instance_id": instance_id,
+        "kind": "archeti",
+        "seed": file_seed,
+        "archeti": {"n": n, "m": m, "tmax": tmax, "profit_sum": sum(profits)},
+        "conversion": {
+            "min_per_unit": args.min_per_unit,
+            "time_noise": [0.9, 1.1],
+            "tmax_to_minutes": args.tmax_to_minutes,
+            "demand": "sparse OD, budget=sum(P), origin uniform, "
+            "destination weighted by P, period uniform",
+        },
+        "num_nodes": n,
+        "num_od_pairs": n * (n - 1),
+        "total_demand": total_demand,
+    }
+
+
+def index_row(
+    instance_id: str,
+    file_seed: int,
+    n: int,
+    total_demand: int,
+) -> dict:
+    """The ``instances/index.csv`` row of one converted instance."""
+    return {
+        "instance_id": instance_id,
+        "path": f"instances/{instance_id}",
+        "seed": file_seed,
+        "kind": "archeti",
+        "num_nodes": n,
+        "num_od_pairs": n * (n - 1),
+        "total_demand": total_demand,
+    }
+
+
+def build_scenario(
+    root: Path,
+    instance_id: str,
+    m: int,
+    tmax: float,
+    fleet_ids: list[int],
+    rng: random.Random,
+    args,
+) -> tuple[int, list[int]]:
+    """Append the scenario row and return its id and the sampled buses."""
+    k = min(max(m, 1), len(fleet_ids))
+    buses = sorted(rng.sample(fleet_ids, k))
+    scen_id = next_scenario_id(root / "scenarios.csv")
+    append_scenario(root / "scenarios.csv", {
+        "scenario_id": scen_id,
+        "instance_id": instance_id,
+        "fleet_bus_ids": ";".join(str(i) for i in buses),
+        "period": args.period or rng.choice(DEMAND_PERIODS),
+        "max_time_limit": round(tmax * args.tmax_to_minutes),
+        "diesel_price_per_liter": round(rng.uniform(5.0, 7.0), 2),
+        "driver_hourly_rate": round(rng.uniform(20.0, 35.0), 2),
+    })
+    return scen_id, buses
+
+
 def convert_one(
     txt: Path,
     root: Path,
@@ -240,59 +322,29 @@ def convert_one(
     demand_rows = build_demand(n, profits, frng)
     total_demand = sum(r[p] for r in demand_rows for p in DEMAND_PERIODS)
 
-    write_square(out_dir / "distance.csv", dist, lambda v: v)
-    write_square(
-        out_dir / "time.csv", time,
-        lambda v: int(v) if float(v).is_integer() else v,
-    )
-    write_demand(out_dir / "demand.csv", demand_rows)
+    write_instance(out_dir, dist, time, demand_rows)
     (out_dir / "meta.json").write_text(
         json.dumps(
-            {
-                "instance_id": instance_id,
-                "kind": "archeti",
-                "seed": file_seed,
-                "archeti": {"n": n, "m": m, "tmax": tmax, "profit_sum": sum(profits)},
-                "conversion": {
-                    "min_per_unit": args.min_per_unit,
-                    "time_noise": [0.9, 1.1],
-                    "tmax_to_minutes": args.tmax_to_minutes,
-                    "demand": "sparse OD, budget=sum(P), origin uniform, "
-                    "destination weighted by P, period uniform",
-                },
-                "num_nodes": n,
-                "num_od_pairs": n * (n - 1),
-                "total_demand": total_demand,
-            },
+            instance_meta(
+                instance_id, file_seed, n, m, tmax, profits, args, total_demand
+            ),
             indent=2,
         ),
         encoding="utf-8",
     )
-    append_index(root / "instances" / "index.csv", {
+    append_index(
+        root / "instances" / "index.csv",
+        index_row(instance_id, file_seed, n, total_demand),
+    )
+    scen_id, buses = build_scenario(
+        root, instance_id, m, tmax, fleet_ids, frng, args
+    )
+    return {
         "instance_id": instance_id,
-        "path": f"instances/{instance_id}",
-        "seed": file_seed,
-        "kind": "archeti",
-        "num_nodes": n,
-        "num_od_pairs": n * (n - 1),
-        "total_demand": total_demand,
-    })
-
-    k = min(max(m, 1), len(fleet_ids))
-    buses = sorted(frng.sample(fleet_ids, k))
-    scen_id = next_scenario_id(root / "scenarios.csv")
-    scenario = {
         "scenario_id": scen_id,
-        "instance_id": instance_id,
-        "fleet_bus_ids": ";".join(str(i) for i in buses),
-        "period": args.period or frng.choice(DEMAND_PERIODS),
-        "max_time_limit": round(tmax * args.tmax_to_minutes),
-        "diesel_price_per_liter": round(frng.uniform(5.0, 7.0), 2),
-        "driver_hourly_rate": round(frng.uniform(20.0, 35.0), 2),
+        "buses": buses,
+        "total_demand": total_demand,
     }
-    append_scenario(root / "scenarios.csv", scenario)
-    return {"instance_id": instance_id, "scenario_id": scen_id,
-            "buses": buses, "total_demand": total_demand}
 
 
 def clean_previous(root: Path, instance_ids: set[str]) -> None:

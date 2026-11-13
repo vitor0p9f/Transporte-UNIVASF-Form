@@ -1,27 +1,13 @@
-"""Tests for the all-scenarios sweep report that main.py renders and writes."""
-
-import numpy as np
+"""Tests for the report scenarios that main.py renders and writes."""
 
 import main
-from algorithms.top_univasf import BusPlan, FleetSummary, InstanceData
-from entities.bus import Bus
-
-
-def make_data(demand: dict, size: int = 8) -> InstanceData:
-    """Tiny instance whose demand matrix only carries the pairs given."""
-    demands = np.zeros((size + 1, size + 1), dtype=int)
-    for (origin, destination), quantity in demand.items():
-        demands[origin, destination] = quantity
-    return InstanceData(
-        nodes=list(range(1, size + 1)),
-        distance=np.zeros((size + 1, size + 1)),
-        time=np.zeros((size + 1, size + 1), dtype=int),
-        demand=demands,
-    )
+from algorithms.top_univasf import BusPlan
+from tests import factories
+from tests.factories import make_bus, make_data, make_summary
 
 
 def make_plan(served: int = 4, peak: int = 2, travel: int = 15) -> BusPlan:
-    return BusPlan(
+    return factories.make_plan(
         bus_id=1,
         origin=1,
         destination=3,
@@ -31,15 +17,6 @@ def make_plan(served: int = 4, peak: int = 2, travel: int = 15) -> BusPlan:
         peak_load=peak,
         score=served / travel if travel else 0.0,
         served_pairs=((1, 3, served),) if served else (),
-    )
-
-
-def make_summary(unserved: int = 0) -> FleetSummary:
-    return FleetSummary(
-        rounds=3,
-        wins_per_bus=((1, 2),),
-        unserved_passengers=unserved,
-        unserved_pairs=((5, 6, unserved),) if unserved else (),
     )
 
 
@@ -55,7 +32,7 @@ def make_outcome(heuristic: str, *, served: int, unserved: int) -> main.Scenario
             "fleet_bus_ids": "1;4;5;10",
             "max_time_limit": 56,
         },
-        buses=[Bus(id=1, passenger_capacity=24, fuel_capacity=121.0, km_autonomy_per_liter=4.61)],
+        buses=[make_bus(1, capacity=24, fuel_capacity=121.0, km_per_liter=4.61)],
         runs=[
             main.Result(heuristic=heuristic, data=data, plans=plans, summary=summary, elapsed=0.0),
             main.Result(
@@ -95,7 +72,7 @@ class TestRenderMarkdown:
                     "fleet_bus_ids": "1;2",
                     "max_time_limit": 120,
                 },
-                buses=[Bus(id=1, passenger_capacity=24, fuel_capacity=121.0, km_autonomy_per_liter=4.61)],
+                buses=[make_bus(1, capacity=24, fuel_capacity=121.0, km_per_liter=4.61)],
                 runs=[
                     main.Result(
                         heuristic="Clarke-Wright",

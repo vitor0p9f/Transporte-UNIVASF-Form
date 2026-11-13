@@ -168,6 +168,67 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def build_synthetic(args, instance_id: str, seed: int, rng: random.Random):
+    """Build one synthetic instance in memory."""
+    nodes = list(range(1, args.num_nodes + 1))
+    distance = build_distance(random_points(len(nodes), rng, args.span_km))
+    time = build_time(distance, rng, args.min_per_unit)
+    demand_rows = build_demand(
+        nodes,
+        demand_budget(len(nodes), args.demand_ratio),
+        rng,
+        pair_ratio=args.pair_ratio,
+    )
+    meta = {
+        "instance_id": instance_id,
+        "kind": "synthetic",
+        "seed": seed,
+        "source": "utils.synth (points, distance, time, demand)",
+        "generator": {
+            "num_nodes": len(nodes),
+            "span_km": args.span_km,
+            "min_per_unit": args.min_per_unit,
+            "demand_ratio": args.demand_ratio,
+            "pair_ratio": args.pair_ratio,
+        },
+    }
+    return nodes, distance, time, demand_rows, meta, "synthetic"
+
+
+def build_perturbed(
+    args, instance_id: str, seed: int, rng: random.Random, base
+):
+    """Build one instance by perturbing the base matrices."""
+    base_nodes, base_distance, base_time, base_demand = base
+    nodes = base_nodes
+    distance = perturb_values(
+        base_distance, rng, 0.9, 1.1, lambda v: round(v, 2)
+    )
+    time = perturb_values(
+        base_time, rng, 0.9, 1.1, lambda v: max(1, round(v))
+    )
+    demand_rows = perturb_demand(base_demand, rng)
+    meta = {
+        "instance_id": instance_id,
+        "kind": "perturbed",
+        "seed": seed,
+        "base": "instances/base",
+        "perturbation": {
+            "distance_factor": [0.9, 1.1],
+            "time_factor": [0.9, 1.1],
+            "demand_factor": [0.8, 1.2],
+        },
+    }
+    return nodes, distance, time, demand_rows, meta, "perturbed"
+
+
+def write_instance(out_dir: Path, nodes, distance, time, demand_rows) -> None:
+    """Write the three matrices of one generated instance."""
+    write_square(out_dir / "distance.csv", nodes, distance)
+    write_square(out_dir / "time.csv", nodes, time, integer_cell)
+    write_demand(out_dir / "demand.csv", demand_rows)
+
+
 def main() -> None:
     args = parse_args()
     if args.num_instances <= 0:
@@ -187,53 +248,11 @@ def main() -> None:
         out_dir = instances_dir / instance_id
 
         if args.mode == "synth":
-            nodes = list(range(1, args.num_nodes + 1))
-            distance = build_distance(random_points(len(nodes), irng, args.span_km))
-            time = build_time(distance, irng, args.min_per_unit)
-            demand_rows = build_demand(
-                nodes,
-                demand_budget(len(nodes), args.demand_ratio),
-                irng,
-                pair_ratio=args.pair_ratio,
-            )
-            write_square(out_dir / "distance.csv", nodes, distance)
-            write_square(out_dir / "time.csv", nodes, time, integer_cell)
-            write_demand(out_dir / "demand.csv", demand_rows)
-            meta = {
-                "instance_id": instance_id,
-                "kind": "synthetic",
-                "seed": seed,
-                "source": "utils.synth (points, distance, time, demand)",
-                "generator": {
-                    "num_nodes": len(nodes),
-                    "span_km": args.span_km,
-                    "min_per_unit": args.min_per_unit,
-                    "demand_ratio": args.demand_ratio,
-                    "pair_ratio": args.pair_ratio,
-                },
-            }
-            kind = "synthetic"
+            built = build_synthetic(args, instance_id, seed, irng)
         else:
-            base_nodes, base_distance, base_time, base_demand = base
-            nodes = base_nodes
-            distance = perturb_values(base_distance, irng, 0.9, 1.1, lambda v: round(v, 2))
-            time = perturb_values(base_time, irng, 0.9, 1.1, lambda v: max(1, round(v)))
-            demand_rows = perturb_demand(base_demand, irng)
-            write_square(out_dir / "distance.csv", nodes, distance)
-            write_square(out_dir / "time.csv", nodes, time, integer_cell)
-            write_demand(out_dir / "demand.csv", demand_rows)
-            meta = {
-                "instance_id": instance_id,
-                "kind": "perturbed",
-                "seed": seed,
-                "base": "instances/base",
-                "perturbation": {
-                    "distance_factor": [0.9, 1.1],
-                    "time_factor": [0.9, 1.1],
-                    "demand_factor": [0.8, 1.2],
-                },
-            }
-            kind = "perturbed"
+            built = build_perturbed(args, instance_id, seed, irng, base)
+        nodes, distance, time, demand_rows, meta, kind = built
+        write_instance(out_dir, nodes, distance, time, demand_rows)
 
         pairs, total = summarize_demand(demand_rows)
         meta.update(

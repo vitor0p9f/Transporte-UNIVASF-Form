@@ -51,13 +51,16 @@ sys.path.insert(0, str(ROOT))
 
 import reporting
 from algorithms import clarke_wright, top_univasf
-from utils.fleet import load_fleet, parse_fleet_ids
-from utils.scenarios import (
-    DEFAULT_REPORT_SCENARIOS,
-    load_scenarios,
-    parse_node_labels,
-    pick_scenarios,
+from scripts import report_common
+from scripts.report_common import (
+    add_only_argument,
+    markdown_table,
+    parse_scenario_ids,
+    run_metrics,
+    scenario_operational_cost,
 )
+from utils.fleet import load_fleet
+from utils.scenarios import DEFAULT_REPORT_SCENARIOS, parse_node_labels
 
 #: Capacity that stands in for "no capacity restriction at all".
 INFINITE_CAPACITY = 10**9
@@ -125,11 +128,6 @@ CONFIGS = {
 }
 
 
-def controlled_scenarios(root: str | Path = ROOT) -> list[dict]:
-    """The controlled scenario copy, in file order."""
-    return load_scenarios(root, files=CONTROLLED_SCENARIOS)
-
-
 def controlled_fleet(root: str | Path = ROOT) -> list:
     """The whole controlled fleet, validating that it is homogeneous."""
     buses = load_fleet(Path(root) / CONTROLLED_FLEET)
@@ -145,9 +143,8 @@ def controlled_fleet(root: str | Path = ROOT) -> list:
 
 def scenario_buses(scenario: dict, config: Config, root: str | Path = ROOT) -> list:
     """The scenario's buses from the controlled fleet, capacity off if asked."""
-    buses = load_fleet(
-        Path(root) / CONTROLLED_FLEET,
-        parse_fleet_ids(scenario["fleet_bus_ids"]),
+    buses = report_common.scenario_buses(
+        scenario, root, fleet=CONTROLLED_FLEET
     )
     if config.ignore_capacity:
         buses = [
@@ -214,26 +211,25 @@ def row_cells(
     cost: reporting.OperationalCost,
 ) -> tuple[str, ...]:
     """One table row, in `TABLE_HEADER` order."""
-    served, total, _percentage = reporting.served_ratio(data, plans)
-    used = sum(1 for plan in plans if plan.served_passengers > 0)
-    reference = reporting.reference_plan(plans)
-    longest = reference.travel_time_minutes if reference else 0
-    peak = reference.peak_load if reference else 0
-    limit = scenario.get("max_time_limit")
-    time_cell = f"{longest}/{int(limit)}" if limit else str(longest)
+    metrics = run_metrics(scenario, data, plans, buses)
+    time_cell = (
+        f"{metrics.longest}/{metrics.limit}"
+        if metrics.limit
+        else str(metrics.longest)
+    )
     return (
         str(scenario["scenario_id"]),
         str(scenario["instance_id"]),
         str(scenario["period"]),
         heuristic,
-        f"{served}/{total}",
-        f"{used}/{len(buses)}",
+        f"{metrics.served}/{metrics.total}",
+        f"{metrics.used}/{len(buses)}",
         time_cell,
-        f"{peak}/{capacity_reference}",
+        f"{metrics.peak}/{capacity_reference}",
         f"{cost.diesel_price:.2f}",
         f"{cost.driver_hourly_rate:.2f}",
         f"{cost.total:.2f}",
-        f"{cost.per_passenger(served):.2f}",
+        f"{cost.per_passenger(metrics.served):.2f}",
     )
 
 
@@ -245,13 +241,7 @@ def scenario_rows(scenario: dict, config: Config) -> list[tuple[str, ...]]:
     rows = []
     for heuristic in (TOP_COST, CW):
         data, plans = run_heuristic(scenario, buses, config, heuristic)
-        cost = reporting.operational_cost_per_bus(
-            plans,
-            data,
-            buses,
-            diesel_price=float(scenario["diesel_price_per_liter"]),
-            driver_hourly_rate=float(scenario["driver_hourly_rate"]),
-        )
+        cost = scenario_operational_cost(scenario, data, plans, buses)
         rows.append(
             row_cells(
                 scenario,
@@ -356,10 +346,8 @@ def render_report(
         "",
         report_note(config),
         "",
-        "| " + " | ".join(TABLE_HEADER) + " |",
-        "|" + "---|" * len(TABLE_HEADER),
     ]
-    lines += ["| " + " | ".join(cells) + " |" for cells in rows]
+    lines += markdown_table(TABLE_HEADER, rows)
     return "\n".join(lines) + "\n\n"
 
 
@@ -367,7 +355,11 @@ def select_scenarios(
     ids: tuple[str, ...] | None = None, root: str | Path = ROOT
 ) -> list[dict]:
     """The controlled scenarios in requested order (default: 5 report scenarios)."""
-    return pick_scenarios(controlled_scenarios(root), ids or DEFAULT_SCENARIOS)
+    return report_common.select_scenarios(
+        ids or DEFAULT_SCENARIOS,
+        root,
+        files=CONTROLLED_SCENARIOS,
+    )
 
 
 def parse_args() -> argparse.Namespace:
@@ -381,14 +373,7 @@ def parse_args() -> argparse.Namespace:
             "per scenario, so use 8 for the full run)"
         ),
     )
-    parser.add_argument(
-        "--only",
-        default=None,
-        help=(
-            "comma-separated scenario ids "
-            f"(default: {','.join(DEFAULT_SCENARIOS)})"
-        ),
-    )
+    add_only_argument(parser, DEFAULT_SCENARIOS)
     parser.add_argument(
         "--out-dir",
         type=Path,
@@ -400,11 +385,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    ids = (
-        tuple(item.strip() for item in args.only.split(",") if item.strip())
-        if args.only
-        else None
-    )
+    ids = parse_scenario_ids(args.only, DEFAULT_SCENARIOS)
     scenarios = select_scenarios(ids)
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
     args.out_dir.mkdir(parents=True, exist_ok=True)

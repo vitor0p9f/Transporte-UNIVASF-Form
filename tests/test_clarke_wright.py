@@ -27,7 +27,7 @@ from algorithms.clarke_wright import (
     planos_e_resumo,
     resolver_cenario,
 )
-from entities.bus import Bus
+from tests import factories
 from utils.fleet import load_fleet, parse_fleet_ids
 from utils.instances import InstanceData
 from utils.scenarios import load_scenarios
@@ -55,15 +55,7 @@ def manual_data(
     distancia: dict, tempo: dict, size: int = 6
 ) -> InstanceData:
     """Instância com as arestas exatamente como dadas (matrizes assimétricas)."""
-    nodes = list(range(1, size + 1))
-    d = np.zeros((size + 1, size + 1), dtype=float)
-    t = np.zeros((size + 1, size + 1), dtype=int)
-    for (a, b), valor in distancia.items():
-        d[a, b] = valor
-    for (a, b), valor in tempo.items():
-        t[a, b] = valor
-    demandas = np.zeros((size + 1, size + 1), dtype=int)
-    return InstanceData(nodes=nodes, distance=d, time=t, demand=demandas)
+    return factories.make_data(time=tempo, distance=distancia, size=size)
 
 
 def modelo(capacidade=10) -> ModeloOnibus:
@@ -532,13 +524,9 @@ class TestLimiteDeFrota:
 class TestPlanosEResumo:
     """A conversão da solução do CW no modelo que o `reporting` lê."""
 
-    def make_bus(self, bus_id: int) -> Bus:
-        return Bus(
-            id=bus_id,
-            passenger_capacity=24,
-            fuel_capacity=150.0,
-            km_autonomy_per_liter=4.0,
-        )
+    @staticmethod
+    def make_bus(bus_id: int):
+        return factories.make_bus(bus_id, capacity=24, fuel_capacity=150.0)
 
     def test_rota_vira_plano_com_deposito_na_frente(self):
         ctx = contexto(linear_data({(2, 4): 1}), capacidade=10)

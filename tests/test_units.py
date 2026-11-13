@@ -6,7 +6,6 @@ import pytest
 from algorithms.top_univasf import (
     DraftProposal,
     ExpansionProposal,
-    InstanceData,
     WorkState,
 )
 from algorithms.top_univasf.conflict import conflict_groups
@@ -16,23 +15,9 @@ from algorithms.top_univasf.simulation import (
     simulate_stops,
 )
 from entities.bus import Bus
+from tests import factories
+from tests.factories import make_data
 from utils.fleet import homogenize_fleet
-
-
-def make_data(demand: dict, time: dict | None = None, size: int = 4) -> InstanceData:
-    """Tiny instance indexed by node id, built from ``{(a, b): quantity}``."""
-    times = np.zeros((size + 1, size + 1), dtype=int)
-    for (a, b), value in (time or {}).items():
-        times[a, b] = value
-    demands = np.zeros((size + 1, size + 1), dtype=int)
-    for (a, b), value in demand.items():
-        demands[a, b] = value
-    return InstanceData(
-        nodes=list(range(1, size + 1)),
-        distance=np.zeros((size + 1, size + 1)),
-        time=times,
-        demand=demands,
-    )
 
 
 class TestSimulateStops:
@@ -136,12 +121,7 @@ class TestSimulateStops:
 
 class TestProposals:
     def _bus(self, bus_id: int, capacity: int = 10) -> Bus:
-        return Bus(
-            id=bus_id,
-            passenger_capacity=capacity,
-            fuel_capacity=100.0,
-            km_autonomy_per_liter=4.0,
-        )
+        return factories.make_bus(bus_id, capacity=capacity)
 
     def _draft(self, stops=(1, 2, 3), score=2.0, served=4, travel=10, bus_id=5):
         return DraftProposal(
@@ -226,11 +206,11 @@ class TestConflictGroups:
 class TestHomogenizeFleet:
     @staticmethod
     def make_bus(bus_id: int, capacity: int, autonomy: float) -> Bus:
-        return Bus(
-            id=bus_id,
-            passenger_capacity=capacity,
+        return factories.make_bus(
+            bus_id,
+            capacity=capacity,
             fuel_capacity=150.0,
-            km_autonomy_per_liter=autonomy,
+            km_per_liter=autonomy,
         )
 
     def test_copies_capacity_and_autonomy_to_every_bus(self):

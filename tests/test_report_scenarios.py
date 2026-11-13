@@ -14,18 +14,13 @@ def test_default_scenarios_are_the_five_report_scenarios():
     assert DEFAULT_REPORT_SCENARIOS == EXPECTED
 
 
-def test_top_runner_uses_the_default_order(root):
-    scenarios = select_top(root=root)
-    assert [scenario["scenario_id"] for scenario in scenarios] == list(EXPECTED)
-
-
-def test_controlled_runner_uses_the_default_order(root):
-    scenarios = select_controlled(root=root)
-    assert [scenario["scenario_id"] for scenario in scenarios] == list(EXPECTED)
-
-
-def test_real_fleet_runner_uses_the_default_order(root):
-    scenarios = select_real(root=root)
+@pytest.mark.parametrize(
+    "selector",
+    [select_top, select_controlled, select_real],
+    ids=["top", "controlled", "real_fleet"],
+)
+def test_runner_uses_the_default_order(selector, root):
+    scenarios = selector(root=root)
     assert [scenario["scenario_id"] for scenario in scenarios] == list(EXPECTED)
 
 

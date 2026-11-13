@@ -1,52 +1,23 @@
 """Tests for the fixed-depot prefix used by the controlled comparison."""
 
-import numpy as np
-
 from algorithms.top_univasf import (
-    CostModel,
     DraftProposal,
     InstanceData,
     run_fleet,
     with_depot,
 )
 from algorithms.top_univasf.draft import best_pair_for_bus
-from entities.bus import Bus
+from tests.factories import make_bus, make_cost_model, make_data
 from utils.fleet import homogenize_fleet
-
-
-def make_data(demand: dict, time: dict, size: int = 4) -> InstanceData:
-    """Tiny instance indexed by node id, built from ``{(a, b): quantity}``."""
-    times = np.zeros((size + 1, size + 1), dtype=int)
-    for (a, b), value in time.items():
-        times[a, b] = value
-    demands = np.zeros((size + 1, size + 1), dtype=int)
-    for (a, b), value in demand.items():
-        demands[a, b] = value
-    return InstanceData(
-        nodes=list(range(1, size + 1)),
-        distance=np.zeros((size + 1, size + 1)),
-        time=times,
-        demand=demands,
-    )
-
-
-def make_bus(bus_id: int = 1, capacity: int = 10) -> Bus:
-    return Bus(
-        id=bus_id,
-        passenger_capacity=capacity,
-        fuel_capacity=100.0,
-        km_autonomy_per_liter=4.0,
-    )
 
 
 def make_instance() -> InstanceData:
     """Demand 1->2, with a 10-minute deadhead from depot 3 to origin 1."""
-    return make_data(demand={(1, 2): 4}, time={(3, 1): 10, (1, 2): 5})
-
-
-def cost_model() -> CostModel:
-    """Diesel at R$ 10/L and driver at R$ 60/h: one minute costs R$ 1."""
-    return CostModel(diesel_price_per_liter=10.0, driver_hourly_rate=60.0)
+    return make_data(
+        demand={(1, 2): 4},
+        time={(3, 1): 10, (1, 2): 5},
+        size=4,
+    )
 
 
 class TestWithDepot:
@@ -73,7 +44,7 @@ class TestDraftWithDepot:
             bus,
             data.demand,
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
             depot=3,
@@ -95,7 +66,7 @@ class TestDraftWithDepot:
             bus,
             data.demand,
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )
@@ -134,7 +105,7 @@ class TestFleetWithDepot:
             data,
             [bus],
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
             depot=3,
@@ -156,7 +127,7 @@ class TestFleetWithDepot:
             data,
             [bus],
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )
@@ -169,9 +140,9 @@ class TestFleetWithDepot:
 class TestHomogenizeFleet:
     def test_keeps_ids_and_count_and_sets_every_capacity(self):
         buses = [
-            Bus(1, 50, 100.0, 4.0),
-            Bus(2, 32, 100.0, 4.0),
-            Bus(3, 24, 100.0, 4.0),
+            make_bus(1, capacity=50),
+            make_bus(2, capacity=32),
+            make_bus(3, capacity=24),
         ]
 
         homogenized = homogenize_fleet(buses, 24)

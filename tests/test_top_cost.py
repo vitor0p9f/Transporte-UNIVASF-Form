@@ -9,7 +9,6 @@ import numpy as np
 import pytest
 
 from algorithms.top_univasf import (
-    CostModel,
     WorkState,
     best_demand_driven_insertion,
     best_pair_for_bus,
@@ -17,43 +16,10 @@ from algorithms.top_univasf import (
     run_fleet,
     solve_scenario,
 )
-from entities.bus import Bus
+from tests.factories import make_bus, make_cost_model, make_data
 from utils.fleet import load_fleet, parse_fleet_ids
 from utils.instances import InstanceData
 from utils.scenarios import load_scenarios
-
-
-def make_bus(bus_id: int, capacity: int = 10, km_per_liter: float = 4.0) -> Bus:
-    return Bus(bus_id, capacity, 100.0, km_per_liter)
-
-
-def make_data(
-    demand: dict[tuple[int, int], int] | None = None,
-    time: dict[tuple[int, int], int] | None = None,
-    distance: dict[tuple[int, int], float] | None = None,
-    size: int = 3,
-) -> InstanceData:
-    """Tiny instance indexed by node id, built from {(a, b): value}."""
-    demands = np.zeros((size + 1, size + 1), dtype=int)
-    for (origin, destination), quantity in (demand or {}).items():
-        demands[origin, destination] = quantity
-    times = np.zeros((size + 1, size + 1), dtype=int)
-    for (origin, destination), minutes in (time or {}).items():
-        times[origin, destination] = minutes
-    distances = np.zeros((size + 1, size + 1))
-    for (origin, destination), km in (distance or {}).items():
-        distances[origin, destination] = km
-    return InstanceData(
-        nodes=list(range(1, size + 1)),
-        distance=distances,
-        time=times,
-        demand=demands,
-    )
-
-
-def cost_model() -> CostModel:
-    """Diesel at R$ 10/L and driver at R$ 60/h: one minute costs R$ 1."""
-    return CostModel(diesel_price_per_liter=10.0, driver_hourly_rate=60.0)
 
 
 def make_instance() -> InstanceData:
@@ -62,18 +28,19 @@ def make_instance() -> InstanceData:
         demand={(1, 2): 4},
         time={(1, 2): 10},
         distance={(1, 2): 8.0},
+        size=3,
     )
 
 
 class TestCostModel:
     def test_fuel_plus_driver(self):
-        cost = cost_model().route_cost(8.0, 10, km_per_liter=4.0)
+        cost = make_cost_model().route_cost(8.0, 10, km_per_liter=4.0)
 
         assert cost == pytest.approx(8 / 4 * 10 + 10 / 60 * 60)
 
     def test_rejects_non_positive_autonomy(self):
         with pytest.raises(ValueError, match="km_per_liter"):
-            cost_model().route_cost(8.0, 10, km_per_liter=0)
+            make_cost_model().route_cost(8.0, 10, km_per_liter=0)
 
     def test_route_distance_counts_repeated_nodes(self):
         distance = np.zeros((4, 4))
@@ -95,7 +62,7 @@ class TestDraftScore:
             make_bus(1, km_per_liter=4.0),
             remaining,
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )
@@ -104,7 +71,7 @@ class TestDraftScore:
             make_bus(2, km_per_liter=2.0),
             remaining,
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )
@@ -121,6 +88,7 @@ class TestDraftScore:
             demand={(1, 2): 20},
             time={(1, 2): 10},
             distance={(1, 2): 8.0},
+            size=3,
         )
 
         small = best_pair_for_bus(
@@ -128,7 +96,7 @@ class TestDraftScore:
             make_bus(1, capacity=5, km_per_liter=4.0),
             data.demand,
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )
@@ -137,7 +105,7 @@ class TestDraftScore:
             make_bus(2, capacity=20, km_per_liter=2.0),
             data.demand,
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )
@@ -154,6 +122,7 @@ class TestExpansionScore:
             demand={(3, 2): 5},
             time={(1, 2): 10, (1, 3): 10, (3, 2): 10},
             distance={(1, 2): 8.0, (1, 3): 10.0, (3, 2): 8.0},
+            size=3,
         )
         bus = make_bus(1, capacity=10, km_per_liter=4.0)
         state = WorkState(
@@ -167,7 +136,7 @@ class TestExpansionScore:
         )
 
         proposal = best_demand_driven_insertion(
-            data, state, data.demand, 100, cost_model=cost_model()
+            data, state, data.demand, 100, cost_model=make_cost_model()
         )
 
         assert proposal is not None
@@ -186,7 +155,7 @@ class TestFinalPlan:
             data,
             buses,
             100,
-            cost_model=cost_model(),
+            cost_model=make_cost_model(),
             destinations=(2,),
             draft_origins=(1,),
         )

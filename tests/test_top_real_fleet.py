@@ -4,10 +4,9 @@ Covers the scenario selection, the per-bus cost and the row rendering; the
 solver itself is already covered by the other suites.
 """
 
-import numpy as np
 import pytest
 
-from algorithms.top_univasf import BusPlan, FleetSummary
+from algorithms.top_univasf import BusPlan
 from entities.bus import Bus
 from reporting import OperationalCost
 from scripts.run_top_real_fleet import (
@@ -18,17 +17,15 @@ from scripts.run_top_real_fleet import (
     run_scenario,
     select_scenarios,
 )
+from tests import factories
+from tests.factories import make_bus
 from utils.instances import InstanceData
-
-
-def make_bus(bus_id: int, capacity: int = 24, km_per_liter: float = 4.0) -> Bus:
-    return Bus(bus_id, capacity, 100.0, km_per_liter)
 
 
 def make_plan(
     bus_id: int, stops: tuple[int, ...], served: int = 4, minutes: int = 10
 ) -> BusPlan:
-    return BusPlan(
+    return factories.make_plan(
         bus_id=bus_id,
         origin=stops[0],
         destination=stops[-1],
@@ -43,14 +40,9 @@ def make_plan(
 
 def make_data(distances: dict[tuple[int, int], float]) -> InstanceData:
     """Synthetic instance: only the distance matrix is read by the cost."""
-    distance = np.zeros((4, 4))
-    for (origin, destination), value in distances.items():
-        distance[origin, destination] = value
-    return InstanceData(
-        nodes=[1, 2, 3],
-        distance=distance,
-        time=np.zeros((4, 4), dtype=int),
-        demand=np.zeros((4, 4), dtype=int),
+    return factories.make_data(
+        distance=distances,
+        size=3,
     )
 
 
@@ -68,9 +60,7 @@ def make_run(buses: list[Bus], plans: list[BusPlan], data: InstanceData) -> Scen
         buses=buses,
         data=data,
         plans=plans,
-        summary=FleetSummary(
-            rounds=1, wins_per_bus=(), unserved_passengers=0, unserved_pairs=()
-        ),
+        summary=factories.make_summary(rounds=1, wins_per_bus=()),
         elapsed=0.0,
     )
 

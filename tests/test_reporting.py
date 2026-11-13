@@ -5,55 +5,7 @@ from types import SimpleNamespace
 import numpy as np
 
 import reporting
-from algorithms.top_univasf import BusPlan, FleetSummary, InstanceData
-from entities.bus import Bus
-
-
-def make_plan(
-    bus_id=1,
-    origin=3,
-    destination=7,
-    stops=(3, 5, 7),
-    served_passengers=4,
-    travel_time_minutes=20,
-    peak_load=2,
-    score=0.2,
-    served_pairs=((3, 7, 4),),
-) -> BusPlan:
-    """A plan with plausible defaults; override only what the test needs."""
-    return BusPlan(
-        bus_id=bus_id,
-        origin=origin,
-        destination=destination,
-        stops=stops,
-        served_passengers=served_passengers,
-        travel_time_minutes=travel_time_minutes,
-        peak_load=peak_load,
-        score=score,
-        served_pairs=served_pairs,
-    )
-
-
-def make_bus(bus_id=1, capacity=24) -> Bus:
-    return Bus(
-        id=bus_id,
-        passenger_capacity=capacity,
-        fuel_capacity=150.0,
-        km_autonomy_per_liter=4.0,
-    )
-
-
-def make_data(demand: dict, size: int = 8) -> InstanceData:
-    """Tiny instance whose demand matrix only carries the pairs given."""
-    demands = np.zeros((size + 1, size + 1), dtype=int)
-    for (origin, destination), quantity in demand.items():
-        demands[origin, destination] = quantity
-    return InstanceData(
-        nodes=list(range(1, size + 1)),
-        distance=np.zeros((size + 1, size + 1)),
-        time=np.zeros((size + 1, size + 1), dtype=int),
-        demand=demands,
-    )
+from tests.factories import make_bus, make_data, make_plan, make_summary
 
 
 class TestPlanCells:
@@ -139,18 +91,15 @@ class TestRouteAndTotalsLines:
 
 class TestUnservedAndServedLines:
     def test_unserved_line_previews_the_demand_left_over(self):
-        summary = FleetSummary(
-            rounds=3,
+        summary = make_summary(
+            unserved=6,
             wins_per_bus=((1, 3),),
-            unserved_passengers=6,
             unserved_pairs=((5, 6, 4), (7, 8, 2)),
         )
         assert reporting.unserved_line(summary) == "Unserved (6 pax): 5→6=4, 7→8=2"
 
     def test_unserved_line_is_empty_when_everything_was_served(self):
-        summary = FleetSummary(
-            rounds=3, wins_per_bus=((1, 3),), unserved_passengers=0, unserved_pairs=()
-        )
+        summary = make_summary(unserved=0, wins_per_bus=((1, 3),))
         assert reporting.unserved_line(summary) == ""
 
     def test_served_pairs_line_prints_every_aggregated_pair(self):
@@ -172,11 +121,10 @@ class TestUnservedAndServedLines:
 
 
 class TestSummaryCells:
-    def make_summary(self, unserved=3) -> FleetSummary:
-        return FleetSummary(
-            rounds=3,
+    def _summary(self, unserved=3):
+        return make_summary(
+            unserved,
             wins_per_bus=((1, 3),),
-            unserved_passengers=unserved,
             unserved_pairs=((5, 6, 4),),
         )
 
@@ -187,7 +135,7 @@ class TestSummaryCells:
             "Greedy OD",
             data,
             [make_plan(served_passengers=4, peak_load=2, travel_time_minutes=20)],
-            self.make_summary(unserved=6),
+            self._summary(unserved=6),
             [make_bus(1), make_bus(2)],
         )
         assert len(cells) == len(reporting.SUMMARY_HEADERS)
@@ -200,7 +148,7 @@ class TestSummaryCells:
             "Clarke-Wright",
             data,
             [make_plan(served_passengers=1), make_plan(bus_id=2, served_passengers=2)],
-            self.make_summary(unserved=7),
+            self._summary(unserved=7),
             [make_bus(1), make_bus(2)],
         )
         assert cells[2:5] == ("10", "3", "7")
@@ -257,9 +205,7 @@ class TestRotaDeReferencia:
 
 def test_lines_return_empty_strings_instead_of_none():
     """Both front ends test the result for truthiness before printing."""
-    summary = FleetSummary(
-        rounds=0, wins_per_bus=(), unserved_passengers=0, unserved_pairs=()
-    )
+    summary = make_summary(rounds=0, wins_per_bus=())
     assert reporting.unserved_line(summary) == ""
     assert reporting.served_pairs_line([]) == ""
     assert reporting.served_pairs_line([make_plan(served_pairs=())]) == ""

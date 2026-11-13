@@ -22,8 +22,6 @@ Usage:
 
 import argparse
 import sys
-import time
-from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
@@ -32,19 +30,18 @@ sys.path.insert(0, str(ROOT))
 
 # Imports must follow the sys.path setup above (same pattern as the other scripts).
 import reporting
-from algorithms.top_univasf import (
-    BusPlan,
-    FleetSummary,
-    InstanceData,
-    solve_scenario,
-)
+from algorithms.top_univasf import BusPlan
 from entities.bus import Bus
-from utils.fleet import load_fleet, parse_fleet_ids
-from utils.scenarios import (
-    DEFAULT_REPORT_SCENARIOS,
-    load_scenarios,
-    pick_scenarios,
+from scripts import report_common
+from scripts.report_common import (
+    ScenarioRun,
+    add_only_argument,
+    markdown_table,
+    parse_scenario_ids,
+    run_metrics,
+    scenario_operational_cost,
 )
+from utils.scenarios import DEFAULT_REPORT_SCENARIOS
 
 #: Scenarios run by default, in output order.
 DEFAULT_SCENARIOS = DEFAULT_REPORT_SCENARIOS
@@ -84,22 +81,6 @@ PLAN_HEADERS = (
 )
 
 
-@dataclass(frozen=True)
-class ScenarioRun:
-    """One scenario solved on its real fleet."""
-
-    scenario: dict
-    buses: list[Bus]
-    data: InstanceData
-    plans: list[BusPlan]
-    summary: FleetSummary
-    elapsed: float
-
-    @property
-    def scenario_id(self) -> str:
-        return str(self.scenario["scenario_id"])
-
-
 def select_scenarios(
     ids: tuple[str, ...] = DEFAULT_SCENARIOS,
     root: str | Path = ROOT,
@@ -110,7 +91,7 @@ def select_scenarios(
     ``scenarios_base.csv``, so ids such as 65 (the hand-written ``base``
     instance) are found alongside the generated ones.
     """
-    return pick_scenarios(load_scenarios(root), ids)
+    return report_common.select_scenarios(ids, root)
 
 
 def run_scenario(
@@ -123,20 +104,7 @@ def run_scenario(
     ``destination_labels``, and the route is born at the chosen pair origin
     (no deadhead).
     """
-    root = Path(root)
-    buses = load_fleet(
-        root / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
-    )
-    start = time.monotonic()
-    data, plans, summary = solve_scenario(scenario, buses, root)
-    return ScenarioRun(
-        scenario=scenario,
-        buses=buses,
-        data=data,
-        plans=plans,
-        summary=summary,
-        elapsed=time.monotonic() - start,
-    )
+    return report_common.run_scenario(scenario, root)
 
 
 def _bus_by_id(buses: list[Bus]) -> dict[int, Bus]:
@@ -151,45 +119,34 @@ def operational_cost(run: ScenarioRun) -> reporting.OperationalCost:
     because they homogenise the fleet). Only routes that serve someone are
     charged, matching the reports' "ônibus usados" column.
     """
-    return reporting.operational_cost_per_bus(
-        run.plans,
-        run.data,
-        run.buses,
-        diesel_price=float(run.scenario["diesel_price_per_liter"]),
-        driver_hourly_rate=float(run.scenario["driver_hourly_rate"]),
+    return scenario_operational_cost(
+        run.scenario, run.data, run.plans, run.buses
     )
-
-
-def _reference_capacity(run: ScenarioRun) -> int:
-    """Capacity of the bus behind the row's reference route."""
-    reference = reporting.reference_plan(run.plans)
-    if reference is None:
-        return 0
-    return _bus_by_id(run.buses)[reference.bus_id].passenger_capacity
 
 
 def summary_cells(run: ScenarioRun, cost: reporting.OperationalCost) -> tuple[str, ...]:
     """One summary row, in `SUMMARY_HEADERS` order."""
     scenario = run.scenario
-    served, total, percentage = reporting.served_ratio(run.data, run.plans)
-    used = sum(1 for plan in run.plans if plan.served_passengers > 0)
-    reference = reporting.reference_plan(run.plans)
-    longest = reference.travel_time_minutes if reference else 0
-    peak = reference.peak_load if reference else 0
-    limit = int(scenario["max_time_limit"])
+    metrics = run_metrics(scenario, run.data, run.plans, run.buses)
+    reference = metrics.reference
+    capacity = (
+        _bus_by_id(run.buses)[reference.bus_id].passenger_capacity
+        if reference
+        else 0
+    )
     return (
         str(scenario["scenario_id"]),
         str(scenario["instance_id"]),
         str(scenario["period"]),
         f"[{scenario['fleet_bus_ids']}]",
-        str(limit),
-        f"{served}/{total}",
-        f"{percentage:.0f}%",
-        f"{used}/{len(run.buses)}",
-        f"{longest}/{limit}",
-        f"{peak}/{_reference_capacity(run)}",
+        str(metrics.limit),
+        f"{metrics.served}/{metrics.total}",
+        f"{metrics.percentage:.0f}%",
+        f"{metrics.used}/{len(run.buses)}",
+        f"{metrics.longest}/{metrics.limit}",
+        f"{metrics.peak}/{capacity}",
         f"{cost.total:.2f}",
-        f"{cost.per_passenger(served):.2f}",
+        f"{cost.per_passenger(metrics.served):.2f}",
         str(run.summary.rounds),
         f"{run.elapsed:.1f}",
     )
@@ -218,15 +175,14 @@ def _scenario_markdown(run: ScenarioRun) -> list[str]:
         "",
         f"Frota [{scenario['fleet_bus_ids']}] · limite {limit} min",
         "",
-        "| " + " | ".join(PLAN_HEADERS) + " |",
-        "|" + "---|" * len(PLAN_HEADERS),
     ]
-    for plan in run.plans:
-        lines.append(
-            "| "
-            + " | ".join(plan_cells(plan, buses[plan.bus_id], limit))
-            + " |"
-        )
+    lines += markdown_table(
+        PLAN_HEADERS,
+        (
+            plan_cells(plan, buses[plan.bus_id], limit)
+            for plan in run.plans
+        ),
+    )
     served_pairs = reporting.served_pairs_line(run.plans)
     if served_pairs:
         lines += ["", served_pairs]
@@ -267,14 +223,15 @@ def render_markdown(runs: list[ScenarioRun], generated_at: str) -> str:
             "atendem alguém."
         ),
         "",
-        "| " + " | ".join(SUMMARY_HEADERS) + " |",
-        "|" + "---|" * len(SUMMARY_HEADERS),
     ]
     costs = [operational_cost(run) for run in runs]
-    lines += [
-        "| " + " | ".join(summary_cells(run, cost)) + " |"
-        for run, cost in zip(runs, costs, strict=True)
-    ]
+    lines += markdown_table(
+        SUMMARY_HEADERS,
+        (
+            summary_cells(run, cost)
+            for run, cost in zip(runs, costs, strict=True)
+        ),
+    )
     lines.append("")
     for run in runs:
         lines += _scenario_markdown(run)
@@ -298,21 +255,10 @@ def _print_progress(index: int, total: int, run: ScenarioRun) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, default=OUT_PATH)
-    parser.add_argument(
-        "--only",
-        default=None,
-        help=(
-            "comma-separated scenario ids "
-            f"(default: {','.join(DEFAULT_SCENARIOS)})"
-        ),
-    )
+    add_only_argument(parser, DEFAULT_SCENARIOS)
     args = parser.parse_args()
 
-    ids = (
-        tuple(item.strip() for item in args.only.split(",") if item.strip())
-        if args.only
-        else DEFAULT_SCENARIOS
-    )
+    ids = parse_scenario_ids(args.only, DEFAULT_SCENARIOS)
     scenarios = select_scenarios(ids)
     runs: list[ScenarioRun] = []
     for index, scenario in enumerate(scenarios, start=1):
