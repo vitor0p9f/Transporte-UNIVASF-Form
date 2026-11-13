@@ -5,7 +5,7 @@ the per-scenario detail (routes, served pairs, idle buses). TOP scores
 passengers per real (R$), using each bus's own fuel autonomy. The rendering
 itself comes from `reporting`, the same module `main.py` uses.
 
-Default scenarios: 17, 19, 32, 65 and 69, in that order.
+Default scenarios: 16, 19, 32, 65 and 69, in that order.
 """
 
 import argparse

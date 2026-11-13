@@ -13,7 +13,7 @@ operational cost follows the same convention as the other reports (only routes
 that serve someone are charged), and fuel is computed per bus with that bus's
 own km/L.
 
-Default scenarios: 17, 19, 32, 65 and 69, in that order.
+Default scenarios: 16, 19, 32, 65 and 69, in that order.
 
 Usage:
   python scripts/run_top_real_fleet.py

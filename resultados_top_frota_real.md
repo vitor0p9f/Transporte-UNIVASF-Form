@@ -1,6 +1,6 @@
 # Resultados — TOP na frota real
 
-Gerado em 2026-11-12 21:31 · 5 cenários.
+Gerado em 2026-11-12 21:36 · 5 cenários.
 
 O TOP roda na frota heterogênea do `fleet.csv`: cada ônibus mantém a capacidade e a autonomia do seu próprio modelo, sem homogeneização. Não há origem nem depósito forçados: o draft escolhe o par origem-destino sozinho, respeitando as colunas `origin` e `destination_labels` do cenário (que fazem parte da definição dele), e a rota nasce no nó de origem do par, sem deadhead. As restrições de tempo e de capacidade estão ativas.
 
@@ -8,34 +8,36 @@ O custo operacional é calculado por ônibus: combustível = km percorridos / (k
 
 | Cenário | Instância | Período | Frota | Limite (min) | Pax atendidos / Total | % | Ônibus usados / Frota | Maior rota / Limite | Pico / Capacidade do ônibus | Custo operacional (R$) | Custo por passageiro (R$) | Rodadas | Exec (s) |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 17 | p1_3_q | afternoon_1 | [2;3;5;6;8;9] | 102 | 15/48 | 31% | 3/6 | 100/102 | 4/32 | 334.95 | 22.33 | 19 | 0.0 |
+| 16 | p1_4_b | night_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 106 | 37/59 | 63% | 4/12 | 104/106 | 3/24 | 471.34 | 12.74 | 39 | 0.0 |
 | 19 | p1_4_r | afternoon_2 | [1;2;3;5;6;10;12] | 171 | 59/66 | 89% | 7/7 | 144/171 | 3/32 | 1103.48 | 18.70 | 51 | 0.0 |
 | 32 | p1_3_h | morning_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 146 | 45/54 | 83% | 6/12 | 139/146 | 5/24 | 767.99 | 17.07 | 46 | 0.0 |
 | 65 | base | morning_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | 196/198 | 99% | 8/12 | 118/120 | 20/24 | 964.13 | 4.92 | 58 | 0.1 |
 | 69 | base | night_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | 158/158 | 100% | 9/12 | 118/120 | 24/24 | 798.20 | 5.05 | 53 | 0.1 |
 
-## Cenário 17 — p1_3_q / afternoon_1
+## Cenário 16 — p1_4_b / night_2
 
-Frota [2;3;5;6;8;9] · limite 102 min
+Frota [1;2;3;4;5;6;7;8;9;10;11;12] · limite 106 min
 
 | bus | lugares | km/L | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|---|---|
-| 3 | 24 | 4.61 | 7 | 5 | 95/102 | 3/24 | 0.05 | 7 | 17 |
-| 5 | 24 | 3.64 | 7 | 5 | 94/102 | 4/24 | 0.04 | 1 | 17 |
-| 6 | 32 | 3.72 | 8 | 5 | 100/102 | 4/32 | 0.04 | 1 | 17 |
+| 1 | 24 | 4.61 | 10 | 9 | 94/106 | 6/24 | 0.08 | 1 | 5 |
+| 3 | 24 | 4.61 | 11 | 10 | 104/106 | 3/24 | 0.08 | 1 | 5 |
+| 6 | 32 | 3.72 | 9 | 9 | 102/106 | 6/32 | 0.07 | 1 | 7 |
+| 10 | 24 | 4.71 | 8 | 9 | 98/106 | 8/24 | 0.08 | 1 | 7 |
 
-Most served pairs: 3→22=1, 7→3=1, 18→22=1, 22→11=1, 29→22=1
+Most served pairs: 29→31=2, 30→27=2, 3→4=1, 4→5=1, 4→19=1
 
-Unserved (33 pax): 21→27=2, 2→5=1, 4→5=1, 5→24=1, 5→29=1, 6→12=1, 6→28=1, 9→4=1 (+24 pairs)
+Unserved (22 pax): 2→22=1, 4→22=1, 5→10=1, 8→15=1, 13→24=1, 14→24=1, 16→31=1, 17→2=1 (+14 pairs)
 
-Idle (3): [2, 8, 9]
+Idle (8): [2, 4, 5, 7, 8, 9, 11, 12]
 
 Routes:
 
 ```
-bus 3 (7 → 17): 7 -> 3 -> 18 -> 29 -> 22 -> 11 -> 17
-bus 5 (1 → 17): 1 -> 17 -> 15 -> 28 -> 25 -> 26 -> 17
-bus 6 (1 → 17): 1 -> 17 -> 19 -> 9 -> 21 -> 13 -> 10 -> 17
+bus 1 (1 → 5): 1 -> 13 -> 9 -> 3 -> 4 -> 8 -> 19 -> 27 -> 6 -> 5
+bus 3 (1 → 5): 1 -> 18 -> 29 -> 31 -> 21 -> 19 -> 26 -> 9 -> 10 -> 3 -> 5
+bus 6 (1 → 7): 1 -> 7 -> 12 -> 30 -> 27 -> 25 -> 26 -> 19 -> 7
+bus 10 (1 → 7): 1 -> 16 -> 13 -> 6 -> 4 -> 15 -> 14 -> 7
 
 ```
 

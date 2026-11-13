@@ -7,7 +7,7 @@ from scripts.run_controlled_reports import select_scenarios as select_controlled
 from scripts.run_top_real_fleet import select_scenarios as select_real
 from utils.scenarios import DEFAULT_REPORT_SCENARIOS, pick_scenarios
 
-EXPECTED = ("17", "19", "32", "65", "69")
+EXPECTED = ("16", "19", "32", "65", "69")
 
 
 def test_default_scenarios_are_the_five_report_scenarios():
