@@ -7,10 +7,9 @@ this order:
     scenarios_base.csv  fixed setup of the ``base`` instance -- hand-written,
                         not sampled (see the generator docstring)
 
-Both use the same columns (see SCENARIO_FIELDS in
-``scripts/generate_scenarios.py``). By default, rows whose instance has no
-``distance.csv`` on disk are dropped -- the same filter the runners
-(`main.py`, `scripts/run_all.py`) already applied.
+Both use the same columns (see `utils.schemas.SCENARIO_FIELDS`). By default,
+rows whose instance has no ``distance.csv`` on disk are dropped -- the same
+filter the runners (`main.py`, `scripts/run_all.py`) already applied.
 """
 
 import csv

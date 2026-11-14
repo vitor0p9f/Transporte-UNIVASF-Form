@@ -18,6 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from utils.fleet import FLEET_FIELDNAMES
 from utils.seed import DEFAULT_SEED
 
 DEFAULT_CAPACITIES = [24, 32, 40, 45, 50]
@@ -61,10 +62,7 @@ def generate_fleet(num_buses: int, capacities: list[int], seed: int) -> list[dic
 def write_fleet(fleet: list[dict], output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=["id", "passenger_capacity", "fuel_capacity", "km_autonomy_per_liter"],
-        )
+        writer = csv.DictWriter(f, fieldnames=FLEET_FIELDNAMES)
         writer.writeheader()
         writer.writerows(fleet)
 

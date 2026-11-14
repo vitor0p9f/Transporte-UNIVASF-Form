@@ -35,45 +35,25 @@ Usage:
 import argparse
 import csv
 import json
-import math
 import random
 import re
 import shutil
+import sys
 from pathlib import Path
 
-DEMAND_PERIODS = [
-    "morning_1",
-    "morning_2",
-    "afternoon_1",
-    "afternoon_2",
-    "night_1",
-    "night_2",
-]
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
-INDEX_FIELDS = [
-    "instance_id",
-    "path",
-    "seed",
-    "kind",
-    "num_nodes",
-    "num_od_pairs",
-    "total_demand",
-]
-
-SCENARIO_FIELDS = [
-    "scenario_id",
-    "instance_id",
-    "fleet_bus_ids",
-    "period",
-    "max_time_limit",
-    "diesel_price_per_liter",
-    "driver_hourly_rate",
-    # Kept (empty) so rows of scenarios.csv do not drift out of alignment: that
-    # file now also carries the possible origins/destinations sampled by
-    # generate_scenarios.py.
-    "origin",
-    "destination_labels",
-]
+from utils.demand import DEMAND_PERIODS
+from utils.fleet import load_fleet
+from utils.schemas import INSTANCE_INDEX_FIELDS, SCENARIO_FIELDS
+from utils.synth import (
+    build_distance,
+    build_time,
+    integer_cell,
+    write_demand,
+    write_square,
+)
 
 
 def parse_archeti(path: Path) -> dict:
@@ -101,30 +81,6 @@ def parse_archeti(path: Path) -> dict:
 def sanitize_id(stem: str) -> str:
     slug = re.sub(r"[^0-9a-zA-Z]+", "_", stem.strip().lower()).strip("_")
     return slug or "archeti"
-
-
-def build_distance(points) -> list[list[float]]:
-    n = len(points)
-    mat = [[0.0] * n for _ in range(n)]
-    for i in range(n):
-        xi, yi, _ = points[i]
-        for j in range(n):
-            if i == j:
-                continue
-            xj, yj, _ = points[j]
-            mat[i][j] = round(math.dist((xi, yi), (xj, yj)), 2)
-    return mat
-
-
-def build_time(dist, rng: random.Random, min_per_unit: float) -> list[list[int]]:
-    n = len(dist)
-    mat = [[0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                continue
-            mat[i][j] = max(1, round(dist[i][j] * min_per_unit * rng.uniform(0.9, 1.1)))
-    return mat
 
 
 def build_demand(n: int, profits: list[int], rng: random.Random) -> list[dict]:
@@ -159,29 +115,6 @@ def build_demand(n: int, profits: list[int], rng: random.Random) -> list[dict]:
     return rows
 
 
-def write_square(path: Path, mat, fmt) -> None:
-    n = len(mat)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
-        w.writerow(["origin/destination"] + [str(i + 1) for i in range(n)])
-        for i, row in enumerate(mat):
-            w.writerow([str(i + 1)] + [fmt(v) for v in row])
-
-
-def write_demand(path: Path, rows) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["origin", "destination"] + DEMAND_PERIODS)
-        w.writeheader()
-        w.writerows(rows)
-
-
-def read_fleet_ids(fleet_path: Path) -> list[int]:
-    with fleet_path.open(newline="", encoding="utf-8") as f:
-        return [int(r["id"]) for r in csv.DictReader(f)]
-
-
 def next_scenario_id(scen_path: Path) -> int:
     if not scen_path.exists():
         return 1
@@ -200,7 +133,7 @@ def append_index(index_path: Path, row: dict) -> None:
     current = [r for r in current if r["instance_id"] != row["instance_id"]]
     current.append(row)
     with index_path.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=INDEX_FIELDS)
+        w = csv.DictWriter(f, fieldnames=INSTANCE_INDEX_FIELDS)
         w.writeheader()
         w.writerows(current)
 
@@ -216,11 +149,9 @@ def append_scenario(scen_path: Path, row: dict) -> None:
 
 def write_instance(out_dir: Path, dist, time, demand_rows) -> None:
     """Write the distance, time and demand CSVs of one instance."""
-    write_square(out_dir / "distance.csv", dist, lambda v: v)
-    write_square(
-        out_dir / "time.csv", time,
-        lambda v: int(v) if float(v).is_integer() else v,
-    )
+    nodes = list(range(1, len(dist) + 1))
+    write_square(out_dir / "distance.csv", nodes, dist)
+    write_square(out_dir / "time.csv", nodes, time, integer_cell)
     write_demand(out_dir / "demand.csv", demand_rows)
 
 
@@ -317,7 +248,7 @@ def convert_one(
         raise FileExistsError(f"{out_dir} exists (use --overwrite)")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    dist = build_distance(points)
+    dist = build_distance([(x, y) for x, y, _ in points])
     time = build_time(dist, frng, args.min_per_unit)
     demand_rows = build_demand(n, profits, frng)
     total_demand = sum(r[p] for r in demand_rows for p in DEMAND_PERIODS)
@@ -358,7 +289,7 @@ def clean_previous(root: Path, instance_ids: set[str]) -> None:
         with idx.open(newline="", encoding="utf-8") as f:
             rows = [r for r in csv.DictReader(f) if r["instance_id"] not in instance_ids]
         with idx.open("w", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(f, fieldnames=INDEX_FIELDS)
+            w = csv.DictWriter(f, fieldnames=INSTANCE_INDEX_FIELDS)
             w.writeheader()
             w.writerows(rows)
     sc = root / "scenarios.csv"
@@ -401,7 +332,7 @@ def main() -> None:
     args = parse_args()
     root = Path(__file__).resolve().parent.parent
     rng = random.Random(args.seed)
-    fleet_ids = read_fleet_ids(root / "fleet.csv")
+    fleet_ids = [bus.id for bus in load_fleet(root / "fleet.csv")]
     if not fleet_ids:
         raise ValueError("fleet.csv has no buses")
     inputs = collect_inputs((root / args.input) if not Path(args.input).is_absolute() else Path(args.input))

@@ -34,6 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from utils.demand import DEMAND_PERIODS
+from utils.schemas import INSTANCE_INDEX_FIELDS
 from utils.seed import DEFAULT_SEED
 from utils.synth import (
     DEFAULT_DEMAND_RATIO,
@@ -50,16 +51,6 @@ from utils.synth import (
     write_demand,
     write_square,
 )
-
-INDEX_FIELDS = [
-    "instance_id",
-    "path",
-    "seed",
-    "kind",
-    "num_nodes",
-    "num_od_pairs",
-    "total_demand",
-]
 
 
 def read_base(base: Path):
@@ -125,7 +116,7 @@ def update_index(index_path: Path, new_rows: list[dict]) -> None:
             order.append(row["instance_id"])
         by_id[row["instance_id"]] = row
     with index_path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=INDEX_FIELDS)
+        writer = csv.DictWriter(f, fieldnames=INSTANCE_INDEX_FIELDS)
         writer.writeheader()
         for item in order:
             writer.writerow(by_id[item])

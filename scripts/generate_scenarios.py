@@ -37,6 +37,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from utils.demand import DEMAND_PERIODS
+from utils.schemas import SCENARIO_FIELDS
 from utils.seed import DEFAULT_SEED
 from utils.synth import (
     DEFAULT_MIN_PER_UNIT,
@@ -45,18 +46,6 @@ from utils.synth import (
     instance_rng,
     load_nodes,
 )
-
-SCENARIO_FIELDS = [
-    "scenario_id",
-    "instance_id",
-    "fleet_bus_ids",
-    "period",
-    "max_time_limit",
-    "diesel_price_per_liter",
-    "driver_hourly_rate",
-    "origin",
-    "destination_labels",
-]
 
 
 def read_fleet_ids(fleet_path: Path) -> list[int]:
