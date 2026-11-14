@@ -2,3 +2,8 @@
 __pycache__/
 *.pyc
 .serena/
+.pytest_cache/
+.ruff_cache/
+
+# JSON dumps written by `algorithms/clarke_wright --salvar`
+algorithms/output/
