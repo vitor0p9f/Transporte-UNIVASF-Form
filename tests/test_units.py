@@ -17,7 +17,7 @@ from algorithms.top_univasf.simulation import (
 from entities.bus import Bus
 from tests import factories
 from tests.factories import make_data
-from utils.fleet import homogenize_fleet
+from utils.fleet import homogenize_fleet, load_fleet
 
 
 class TestSimulateStops:
@@ -201,6 +201,42 @@ class TestConflictGroups:
 
     def test_no_keys_means_no_group(self):
         assert conflict_groups([]) == []
+
+
+class TestLoadFleet:
+    ROWS = (
+        "id,passenger_capacity,fuel_capacity,km_autonomy_per_liter\n"
+        "1,24,148,4.11\n"
+        "2,32,200,2.5\n"
+    )
+
+    @staticmethod
+    def write(tmp_path) -> object:
+        path = tmp_path / "fleet.csv"
+        path.write_text(TestLoadFleet.ROWS, encoding="utf-8")
+        return path
+
+    def test_keeps_the_requested_order(self, tmp_path):
+        buses = load_fleet(self.write(tmp_path), [2, 1])
+
+        assert [bus.id for bus in buses] == [2, 1]
+
+    def test_accepts_a_one_shot_iterator_of_ids(self, tmp_path):
+        ids = (bus_id for bus_id in [2, 1])
+
+        buses = load_fleet(self.write(tmp_path), ids)
+
+        assert [bus.id for bus in buses] == [2, 1]
+
+    def test_unknown_id_is_rejected(self, tmp_path):
+        with pytest.raises(ValueError, match="unknown bus ids 9"):
+            load_fleet(self.write(tmp_path), [1, 9])
+
+    def test_unknown_id_from_an_iterator_is_rejected(self, tmp_path):
+        ids = (bus_id for bus_id in [1, 9])
+
+        with pytest.raises(ValueError, match="unknown bus ids 9"):
+            load_fleet(self.write(tmp_path), ids)
 
 
 class TestHomogenizeFleet:

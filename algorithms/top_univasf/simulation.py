@@ -1,7 +1,5 @@
 """Boarding simulation: capacity-locked, ordered by route position."""
 
-import itertools
-
 import numpy as np
 
 from algorithms.top_univasf.model import (
@@ -10,6 +8,7 @@ from algorithms.top_univasf.model import (
     StopSequence,
 )
 from utils.instances import InstanceData
+from utils.paths import path_time_minutes
 
 
 def board_greedily(
@@ -79,7 +78,7 @@ def simulate_stops(
     the demand that exists -- `remaining` is never changed.
     """
     stops = tuple(stops)
-    travel = sum(int(data.time[a, b]) for a, b in itertools.pairwise(stops))
+    travel = path_time_minutes(data.time, stops)
     leg_loads = [0] * max(0, len(stops) - 1)
 
     if claimed:

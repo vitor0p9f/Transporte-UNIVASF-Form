@@ -51,6 +51,23 @@ class TestCostModel:
         assert route_distance_km(distance, (1, 2, 1, 3)) == pytest.approx(9.0)
         assert route_distance_km(distance, (1,)) == 0.0
 
+    def test_breakdown_splits_fuel_and_driver(self):
+        breakdown = make_cost_model().route_breakdown(
+            8.0, 10, km_per_liter=4.0
+        )
+
+        assert breakdown.liters == pytest.approx(2.0)
+        assert breakdown.fuel == pytest.approx(20.0)
+        assert breakdown.driver == pytest.approx(10.0)
+        assert breakdown.total == pytest.approx(30.0)
+        assert breakdown.total == pytest.approx(
+            make_cost_model().route_cost(8.0, 10, km_per_liter=4.0)
+        )
+
+    def test_breakdown_rejects_negative_inputs(self):
+        with pytest.raises(ValueError, match="non-negative"):
+            make_cost_model().route_breakdown(-1.0, 10, km_per_liter=4.0)
+
 
 class TestDraftScore:
     def test_cheaper_bus_gets_a_higher_pax_per_real(self):

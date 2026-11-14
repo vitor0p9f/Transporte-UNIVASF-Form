@@ -74,11 +74,12 @@ def load_fleet(
             buses[bus.id] = bus
     if bus_ids is None:
         return [buses[k] for k in sorted(buses)]
-    selected = [buses.get(bus_id) for bus_id in bus_ids]
-    unknown = [str(bus_id) for bus_id, bus in zip(bus_ids, selected) if bus is None]
+    ids = list(bus_ids)  # materialise: a generator can only be read once
+    selected = [(bus_id, buses.get(bus_id)) for bus_id in ids]
+    unknown = [str(bus_id) for bus_id, bus in selected if bus is None]
     if unknown:
         raise ValueError(f"{path}: unknown bus ids {', '.join(unknown)}")
-    return [bus for bus in selected if bus is not None]
+    return [bus for _, bus in selected if bus is not None]
 
 
 def homogenize_fleet(

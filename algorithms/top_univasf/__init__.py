@@ -42,7 +42,7 @@ Modules:
     solver      solve_scenario: load the scenario and run the fleet
 """
 
-from algorithms.top_univasf.cost import CostModel, route_distance_km
+from algorithms.top_univasf.cost import CostModel, RouteCost, route_distance_km
 from algorithms.top_univasf.draft import best_pair_for_bus
 from algorithms.top_univasf.expansion import best_demand_driven_insertion
 from algorithms.top_univasf.fleet import collect_proposals, run_fleet
@@ -83,6 +83,7 @@ __all__ = [
     "FleetSummary",
     "InstanceData",
     "Proposal",
+    "RouteCost",
     "ServedPair",
     "StopSequence",
     "WorkState",

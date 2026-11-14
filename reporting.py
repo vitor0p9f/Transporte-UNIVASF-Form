@@ -12,13 +12,14 @@ objects, so it is a view of a run, not a reusable utility.
 from collections import Counter
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
-from itertools import pairwise
 
 from algorithms.top_univasf import (
     BusPlan,
+    CostModel,
     FleetSummary,
     InstanceData,
     ServedPair,
+    route_distance_km,
 )
 from entities.bus import Bus
 
@@ -123,12 +124,7 @@ def plan_distance_km(plan: BusPlan, data: InstanceData) -> float:
     `plan.stops` already starts at the depot, so the first leg is counted;
     repeated nodes (dobradinha) count every time they are driven.
     """
-    stops = plan.stops
-    if len(stops) < 2:
-        return 0.0
-    return float(
-        sum(float(data.distance[a, b]) for a, b in pairwise(stops))
-    )
+    return route_distance_km(data.distance, plan.stops)
 
 
 @dataclass(frozen=True)
@@ -173,17 +169,20 @@ def operational_cost(
     served someone keeps the cost and the "ônibus usados" column talking about
     the same set of routes.
     """
-    if km_per_liter <= 0:
-        raise ValueError(f"km_per_liter must be positive, got {km_per_liter}")
     driven = [plan for plan in plans if plan.served_passengers > 0]
-    distance = sum(plan_distance_km(plan, data) for plan in driven)
-    minutes = sum(plan.travel_time_minutes for plan in driven)
-    liters = distance / km_per_liter
+    breakdown = CostModel(
+        diesel_price_per_liter=diesel_price,
+        driver_hourly_rate=driver_hourly_rate,
+    ).route_breakdown(
+        sum(plan_distance_km(plan, data) for plan in driven),
+        sum(plan.travel_time_minutes for plan in driven),
+        km_per_liter,
+    )
     return OperationalCost(
-        distance_km=distance,
-        liters=liters,
-        fuel=liters * diesel_price,
-        driver=minutes / 60.0 * driver_hourly_rate,
+        distance_km=breakdown.distance_km,
+        liters=breakdown.liters,
+        fuel=breakdown.fuel,
+        driver=breakdown.driver,
         diesel_price=diesel_price,
         driver_hourly_rate=driver_hourly_rate,
     )
@@ -205,26 +204,24 @@ def operational_cost_per_bus(
     charged.
     """
     by_id = {bus.id: bus for bus in buses}
-    distance = liters = fuel = driver = 0.0
-    for plan in plans:
-        if plan.served_passengers <= 0:
-            continue
-        plan_cost = operational_cost(
-            [plan],
-            data,
-            km_per_liter=by_id[plan.bus_id].km_autonomy_per_liter,
-            diesel_price=diesel_price,
-            driver_hourly_rate=driver_hourly_rate,
+    model = CostModel(
+        diesel_price_per_liter=diesel_price,
+        driver_hourly_rate=driver_hourly_rate,
+    )
+    breakdowns = [
+        model.route_breakdown(
+            plan_distance_km(plan, data),
+            plan.travel_time_minutes,
+            by_id[plan.bus_id].km_autonomy_per_liter,
         )
-        distance += plan_cost.distance_km
-        liters += plan_cost.liters
-        fuel += plan_cost.fuel
-        driver += plan_cost.driver
+        for plan in plans
+        if plan.served_passengers > 0
+    ]
     return OperationalCost(
-        distance_km=distance,
-        liters=liters,
-        fuel=fuel,
-        driver=driver,
+        distance_km=sum(breakdown.distance_km for breakdown in breakdowns),
+        liters=sum(breakdown.liters for breakdown in breakdowns),
+        fuel=sum(breakdown.fuel for breakdown in breakdowns),
+        driver=sum(breakdown.driver for breakdown in breakdowns),
         diesel_price=diesel_price,
         driver_hourly_rate=driver_hourly_rate,
     )

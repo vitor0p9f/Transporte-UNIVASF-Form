@@ -8,11 +8,25 @@ thirsty vehicle has to earn the demand it takes.
 """
 
 from dataclasses import dataclass
-from itertools import pairwise
 
 import numpy as np
 
 from algorithms.top_univasf.model import StopSequence
+from utils.paths import path_distance
+
+
+@dataclass(frozen=True)
+class RouteCost:
+    """What one route costs, split into the parts that justify its price."""
+
+    distance_km: float
+    liters: float
+    fuel: float
+    driver: float
+
+    @property
+    def total(self) -> float:
+        return self.fuel + self.driver
 
 
 @dataclass(frozen=True)
@@ -26,6 +40,16 @@ class CostModel:
         self, distance_km: float, minutes: float, km_per_liter: float
     ) -> float:
         """Fuel + driver cost of one route under this bus's consumption."""
+        return self.route_breakdown(distance_km, minutes, km_per_liter).total
+
+    def route_breakdown(
+        self, distance_km: float, minutes: float, km_per_liter: float
+    ) -> RouteCost:
+        """Fuel burned and driver hours paid for one route, priced.
+
+        This is the only place the formula lives: the scoring asks for the
+        total, the reports ask for the parts.
+        """
         if km_per_liter <= 0:
             raise ValueError(f"km_per_liter must be positive, got {km_per_liter}")
         if distance_km < 0 or minutes < 0:
@@ -33,13 +57,15 @@ class CostModel:
                 "distance and minutes must be non-negative, got "
                 f"{distance_km} and {minutes}"
             )
-        fuel = distance_km / km_per_liter * self.diesel_price_per_liter
-        driver = minutes / 60.0 * self.driver_hourly_rate
-        return fuel + driver
+        liters = distance_km / km_per_liter
+        return RouteCost(
+            distance_km=distance_km,
+            liters=liters,
+            fuel=liters * self.diesel_price_per_liter,
+            driver=minutes / 60.0 * self.driver_hourly_rate,
+        )
 
 
 def route_distance_km(distance: np.ndarray, stops: StopSequence) -> float:
     """Distance driven by a route, counting repeated nodes every time."""
-    if len(stops) < 2:
-        return 0.0
-    return float(sum(float(distance[a, b]) for a, b in pairwise(stops)))
+    return path_distance(distance, stops)

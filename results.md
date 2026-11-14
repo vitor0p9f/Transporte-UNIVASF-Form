@@ -1,19 +1,19 @@
 # Results — report scenarios (TOP + Clarke-Wright)
 
-Generated on 2026-11-14 08:46 -03 · 5 scenarios · 10 runs · both heuristics on the same scenario.
+Generated on 2026-11-14 08:57 -03 · 5 scenarios · 10 runs · both heuristics on the same scenario.
 
 | scenario | instance | period | fleet | limit | heuristic | used | pax atendidos / total | pax não atendidos | % | rounds | exec (s) |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 16 | p1_4_b | night_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 106 | TOP (Greedy OD) | 4/12 | 37/59 | 22 | 63% | 39 | 0.0 |
-| 16 | p1_4_b | night_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 106 | Clarke-Wright | 3/12 | 9/59 | 50 | 15% | 0 | 53.5 |
+| 16 | p1_4_b | night_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 106 | Clarke-Wright | 3/12 | 9/59 | 50 | 15% | 0 | 53.3 |
 | 19 | p1_4_r | afternoon_2 | [1;2;3;5;6;10;12] | 171 | TOP (Greedy OD) | 7/7 | 59/66 | 7 | 89% | 51 | 0.0 |
-| 19 | p1_4_r | afternoon_2 | [1;2;3;5;6;10;12] | 171 | Clarke-Wright | 3/7 | 14/66 | 52 | 21% | 0 | 54.4 |
+| 19 | p1_4_r | afternoon_2 | [1;2;3;5;6;10;12] | 171 | Clarke-Wright | 3/7 | 14/66 | 52 | 21% | 0 | 54.1 |
 | 32 | p1_3_h | morning_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 146 | TOP (Greedy OD) | 6/12 | 45/54 | 9 | 83% | 46 | 0.0 |
-| 32 | p1_3_h | morning_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 146 | Clarke-Wright | 3/12 | 10/54 | 44 | 19% | 0 | 51.2 |
+| 32 | p1_3_h | morning_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 146 | Clarke-Wright | 3/12 | 10/54 | 44 | 19% | 0 | 50.8 |
 | 65 | base | morning_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | TOP (Greedy OD) | 8/12 | 196/198 | 2 | 99% | 58 | 0.1 |
-| 65 | base | morning_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | Clarke-Wright | 10/12 | 1/198 | 197 | 1% | 0 | 48.5 |
+| 65 | base | morning_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | Clarke-Wright | 10/12 | 1/198 | 197 | 1% | 0 | 47.4 |
 | 69 | base | night_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | TOP (Greedy OD) | 9/12 | 158/158 | 0 | 100% | 53 | 0.1 |
-| 69 | base | night_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | Clarke-Wright | 4/12 | 11/158 | 147 | 7% | 0 | 17.2 |
+| 69 | base | night_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | Clarke-Wright | 4/12 | 11/158 | 147 | 7% | 0 | 16.6 |
 
 ## Scenario 16 — p1_4_b / night_2
 
@@ -47,7 +47,7 @@ bus 10 (1 → 7): 1 -> 16 -> 13 -> 6 -> 4 -> 15 -> 14 -> 7
 
 ### Clarke-Wright
 
-3 of 12 buses · 9/59 pax (15%) · 0 rounds · 53.5s
+3 of 12 buses · 9/59 pax (15%) · 0 rounds · 53.3s
 
 | bus | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|
@@ -105,7 +105,7 @@ bus 12 (5 → 3): 5 -> 16 -> 21 -> 5 -> 3 -> 7 -> 22 -> 3
 
 ### Clarke-Wright
 
-3 of 7 buses · 14/66 pax (21%) · 0 rounds · 54.4s
+3 of 7 buses · 14/66 pax (21%) · 0 rounds · 54.1s
 
 | bus | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|
@@ -163,7 +163,7 @@ bus 10 (27 → 31): 27 -> 21 -> 8 -> 5 -> 7 -> 10 -> 17 -> 32 -> 23 -> 26 -> 31
 
 ### Clarke-Wright
 
-3 of 12 buses · 10/54 pax (19%) · 0 rounds · 51.2s
+3 of 12 buses · 10/54 pax (19%) · 0 rounds · 50.8s
 
 | bus | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|
@@ -225,7 +225,7 @@ bus 12 (44 → 43): 44 -> 39 -> 40 -> 20 -> 12 -> 8 -> 43
 
 ### Clarke-Wright
 
-10 of 12 buses · 1/198 pax (1%) · 0 rounds · 48.5s
+10 of 12 buses · 1/198 pax (1%) · 0 rounds · 47.4s
 
 | bus | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|
@@ -301,7 +301,7 @@ bus 12 (43 → 45): 43 -> 12 -> 8 -> 7 -> 26 -> 29 -> 31 -> 18 -> 45
 
 ### Clarke-Wright
 
-4 of 12 buses · 11/158 pax (7%) · 0 rounds · 17.2s
+4 of 12 buses · 11/158 pax (7%) · 0 rounds · 16.6s
 
 | bus | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|

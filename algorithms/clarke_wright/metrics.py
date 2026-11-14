@@ -1,6 +1,6 @@
 """Medidas de rota e fórmula de savings OVRP (CW-1)."""
 
-import itertools
+from utils.paths import path_distance, path_time_minutes
 
 from .constants import INF
 from .model import Contexto, Rota, Saving
@@ -13,20 +13,14 @@ def _dist_rota(paradas: list[int], ctx: Contexto) -> float:
     """
     if not paradas:
         return 0.0
-    dist = float(ctx.distancia[ctx.deposito, paradas[0]])
-    for a, b in itertools.pairwise(paradas):
-        dist += float(ctx.distancia[a, b])
-    return round(dist, 4)
+    return round(path_distance(ctx.distancia, paradas, start=ctx.deposito), 4)
 
 
 def _tempo_rota(paradas: list[int], ctx: Contexto) -> int:
     """Tempo total da rota aberta, em minutos (matriz `time` do cenário)."""
     if not paradas:
         return 0
-    total = int(ctx.tempo[ctx.deposito, paradas[0]])
-    for a, b in itertools.pairwise(paradas):
-        total += int(ctx.tempo[a, b])
-    return total
+    return path_time_minutes(ctx.tempo, paradas, start=ctx.deposito)
 
 
 def _atualizar_custo(rota: Rota, ctx: Contexto) -> Rota:
