@@ -49,12 +49,15 @@ def limitar_frota(rotas: list[Rota], ctx: Contexto) -> list[Rota]:
         )
 
     while candidatas and len(escolhidas) < ctx.max_rotas:
-        melhor = max(candidatas, key=lambda rota: simular(rota).passengers)
-        resultado = simular(melhor)
+        # Uma simulação por candidata: a escolhida já vem com o resultado.
+        resultado, melhor = max(
+            ((simular(rota), rota) for rota in candidatas),
+            key=lambda par: par[0].passengers,
+        )
         for origem, destino, quantidade in resultado.pairs:
             restante[origem, destino] -= quantidade
         escolhidas.append(melhor)
-        candidatas.remove(melhor)
+        candidatas = [rota for rota in candidatas if rota is not melhor]
 
     return escolhidas
 

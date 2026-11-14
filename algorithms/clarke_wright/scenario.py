@@ -9,6 +9,7 @@ from utils.instances import InstanceData, load_instance_data
 from utils.scenarios import load_scenarios, parse_node_labels
 
 from .constants import (
+    CAPACIDADE_PADRAO,
     CONSUMO_PADRAO,
     DIESEL_PADRAO,
     ITER_POSTIMPROVE,
@@ -119,7 +120,9 @@ def contexto_do_cenario(
     # rota que o CW monta cabe em qualquer ônibus do cenário.
     if capacidade is None:
         capacidade = (
-            min(b.passenger_capacity for b in buses) if buses else 48
+            min(b.passenger_capacity for b in buses)
+            if buses
+            else CAPACIDADE_PADRAO
         )
     modelo = modelo_de_referencia(cenario, capacidade, diesel)
 

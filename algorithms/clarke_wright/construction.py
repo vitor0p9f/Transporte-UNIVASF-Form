@@ -46,13 +46,13 @@ def _fundir(
     própria (o algoritmo não descarta demanda); o relatório sinaliza o caso.
     """
     # Solução inicial: uma rota por parada
-    rotas: dict[int, Rota] = {}
+    rotas: list[Rota] = []
     extremo: dict[int, Rota] = {}  # extremo → rota que o contém
 
     for p in sorted(paradas_ativas):  # ordem fixa → resultado reprodutível
         r = Rota(paradas=[p], carga=ctx.carga_parada.get(p, 0))
         _atualizar_custo(r, ctx)
-        rotas[id(r)] = r
+        rotas.append(r)
         extremo[p] = r
 
     for s in savings:
@@ -88,18 +88,17 @@ def _fundir(
         nova_rota = Rota(paradas=nova_ordem, carga=carga)
         _atualizar_custo(nova_rota, ctx)
 
-        # Remove rotas antigas
-        rotas.pop(id(ri), None)
-        rotas.pop(id(rj), None)
+        # Remove as rotas fundidas (por identidade: `Rota` compara por valor)
+        rotas = [r for r in rotas if r is not ri and r is not rj]
         for p in ri.paradas + rj.paradas:
             extremo.pop(p, None)
 
         # Registra nova rota
-        rotas[id(nova_rota)] = nova_rota
+        rotas.append(nova_rota)
         extremo[nova_rota.primeira()] = nova_rota
         extremo[nova_rota.ultima()] = nova_rota
 
-    return list(rotas.values())
+    return rotas
 
 
 def _roulette_wheel(savings: list[Saving], tamanho: int) -> list[Saving]:

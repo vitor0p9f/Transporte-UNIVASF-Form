@@ -4,7 +4,7 @@ import numpy as np
 
 from utils.instances import InstanceData
 
-from .constants import CONSUMO_PADRAO, DIESEL_PADRAO, INF
+from .constants import CAPACIDADE_PADRAO, CONSUMO_PADRAO, DIESEL_PADRAO, INF
 from .model import Contexto, ModeloOnibus, Restricoes
 
 
@@ -70,7 +70,9 @@ def montar_contexto(
         restricoes = Restricoes.da_chave(restricoes)
 
     if modelo is None:
-        capacidade_modelo = capacidade if capacidade is not None else 48
+        capacidade_modelo = (
+            capacidade if capacidade is not None else CAPACIDADE_PADRAO
+        )
         modelo = ModeloOnibus(
             nome="genérico",
             capacidade=capacidade_modelo,

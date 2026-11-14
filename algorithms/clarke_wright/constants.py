@@ -13,6 +13,9 @@ DIESEL_PADRAO = 6.00
 #: Consumo usado no modelo genérico (km/L), quando não há frota no cenário.
 CONSUMO_PADRAO = 3.00
 
+#: Capacidade assumida quando nem o cenário nem o chamador informam uma.
+CAPACIDADE_PADRAO = 48
+
 INF = float("inf")
 
 #: Chaves aceitas para escolher quais restrições de rota valem.
