@@ -1,25 +1,30 @@
 """Constants and defaults shared by the Clarke-Wright OVRP heuristic."""
 
-LAMBDA_MIN = 0.1  # range de λ conforme artigo (Tabela 1)
+#: Lambda range from the paper (Table 1).
+LAMBDA_MIN = 0.1
 LAMBDA_MAX = 2.0
+#: Lambda step of the sweep.
 LAMBDA_PASSO = 0.1
-ITER_TWO_PHASE = 5000  # iterações da two-phase selection (artigo: 5000)
-ITER_POSTIMPROVE = 500  # iterações sem melhora para parar post-improvement
+#: Two-phase selection iterations (paper: 5000).
+ITER_TWO_PHASE = 5000
+#: Iterations without improvement before post-improvement stops.
+ITER_POSTIMPROVE = 500
 
-#: Período de demanda usado quando nem a CLI nem o cenário dizem qual.
+#: Demand period used when neither the CLI nor the scenario names one.
 DEFAULT_PERIOD = "morning_1"
-#: Preço do litro usado quando o cenário não traz `diesel_price_per_liter`.
+#: Price per litre used when the scenario has no `diesel_price_per_liter`.
 DEFAULT_DIESEL_PRICE = 6.00
-#: Consumo usado no modelo genérico (km/L), quando não há frota no cenário.
+#: Consumption of the generic model (km/L) when the scenario has no fleet.
 DEFAULT_KM_PER_LITER = 3.00
 
-#: Capacidade assumida quando nem o cenário nem o chamador informam uma.
+#: Capacity assumed when neither the scenario nor the caller gives one.
 DEFAULT_CAPACITY = 48
 
 INF = float("inf")
 
-#: Chaves aceitas para escolher quais restrições de rota valem.
-#: Cada valor é (checar capacidade, checar tempo).
+#: Keys accepted for choosing which route constraints apply.
+#: Each value is (check capacity, check time). The keys stay in pt-BR because
+#: they are user-facing (CLI choices and report text).
 RESTRICTIONS = {
     "capacidade": (True, False),
     "tempo": (False, True),

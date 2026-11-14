@@ -154,7 +154,6 @@ def main() -> None:
             scenario,
             instance=instance,
             period=period,
-
             depot=args.depot,
             capacity=args.capacity,
             max_time=args.max_time,

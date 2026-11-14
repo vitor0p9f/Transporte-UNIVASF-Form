@@ -1,4 +1,4 @@
-"""Algoritmo principal do Clarke-Wright OVRP."""
+"""The Clarke-Wright OVRP algorithm itself."""
 
 import random
 
@@ -27,21 +27,20 @@ def clarke_wright_ovrp(
     seed: int | None = 42,
     verbose: bool = True,
 ) -> tuple[list[Route], float]:
-    """Executa o Clarke-Wright OVRP completo (CW-1 + CW-2 + CW-3).
+    """Run the complete Clarke-Wright OVRP (CW-1 + CW-2 + CW-3).
 
-    Se λ não for fornecido, testa todos os valores de 0.1 a 2.0 (incremento
-    0.1) e usa o que gerar menor custo total — conforme procedimento CW-1 do
-    artigo (Tabela 1).
+    When lambda is not given, every value from 0.1 to 2.0 (step 0.1) is tried
+    and the cheapest one is used -- the CW-1 procedure of the paper (Table 1).
 
-    `seed` fixa o gerador aleatório (two-phase + post-improvement) para que a
-    execução seja reprodutível — essencial para reportar resultados em um
-    artigo. Passe seed=None para variar a cada execução.
+    `seed` fixes the random generator (two-phase + post-improvement) so the run
+    is reproducible, which is essential to report results in a paper. Pass
+    seed=None to vary on every run.
 
-    A(s) restrição(ões) de capacidade/tempo vêm da chave em `ctx.restricoes`;
-    a de tempo só tem efeito se `ctx.limite_tempo` for finito.
+    The capacity/time constraint(s) come from the key in `ctx.restrictions`;
+    the time one only has an effect when `ctx.max_time` is finite.
 
-    Retorna:
-        (rotas, lambda_usado)
+    Returns:
+        (routes, lambda_used)
     """
     if seed is not None:
         random.seed(seed)
@@ -62,7 +61,7 @@ def clarke_wright_ovrp(
             f"restrições: {ctx.restrictions.key} | modelo: {ctx.bus_model.name}"
         )
 
-    # ── CW-1: testa múltiplos λ e guarda o melhor ──────────────────────────
+    # ── CW-1: try several lambdas and keep the best ────────────────────────
     lambdas = (
         [lam]
         if lam is not None
@@ -109,7 +108,7 @@ def clarke_wright_ovrp(
     if verbose:
         print(f"\n  [OK] Melhor lam = {best_lambda} | custo R${best_cost:.2f}")
 
-    # ── CW-3: post-improvement sobre a melhor solução ──────────────────────
+    # ── CW-3: post-improvement over the best solution ──────────────────────
     if use_post_improvement and best_routes:
         if verbose:
             print("  Aplicando post-improvement (2-opt / shift / swap)...")

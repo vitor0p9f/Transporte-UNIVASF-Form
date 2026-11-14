@@ -1,4 +1,4 @@
-"""Sentido da viagem, carga por parada e montagem do contexto."""
+"""Trip sense, load per stop and context assembly."""
 
 import numpy as np
 
@@ -8,42 +8,42 @@ from .constants import DEFAULT_CAPACITY, DEFAULT_DIESEL_PRICE, DEFAULT_KM_PER_LI
 from .model import BusModel, Context, Restrictions
 
 
-def detect_sense(demanda: np.ndarray, depot: int) -> str:
-    """Detecta se a viagem é de "ida" ou de "volta" a partir do depósito.
+def detect_sense(demand: np.ndarray, depot: int) -> str:
+    """Tell whether the trip is "outbound" or "inbound" from the depot.
 
-    - "volta": o depósito é o campus de onde as pessoas SAEM (embarcam ali).
-      A carga de cada parada é o nº de DESEMBARQUES (alighting), pois é quanta
-      gente desce naquele ponto.
-    - "ida": o depósito é a origem e as pessoas embarcam nas paradas rumo ao
-      campus. A carga é o nº de EMBARQUES (boarding).
+    - "volta": the depot is the campus people LEAVE from (they board there).
+      Each stop's load is its number of ALIGHTINGS, since that is how many
+      people get off at that point.
+    - "ida": the depot is the origin and people board at the stops on their way
+      to the campus. The load is the number of BOARDINGS.
     """
-    boardings = int(demanda[depot].sum())  # quem sai do depósito
-    alightings = int(demanda[:, depot].sum())  # quem chega no depósito
+    boardings = int(demand[depot].sum())  # who leaves the depot
+    alightings = int(demand[:, depot].sum())  # who arrives at the depot
     return "volta" if boardings > alightings else "ida"
 
 
 def build_stop_loads(
-    demanda: np.ndarray,
+    demand: np.ndarray,
     depot: int,
     sense: str = "auto",
 ) -> tuple[dict[int, int], str]:
-    """Calcula a carga (passageiros que o ônibus transporta) de cada parada.
+    """Compute the load (passengers the bus carries) of every stop.
 
-    Na ida a carga vem dos embarques (linha da matriz); na volta, dos
-    desembarques (coluna) — porque na volta quase todos embarcam no campus
-    (depósito) e a demanda real de cada parada é quanta gente DESCE ali.
-    Retorna `(carga_parada, sentido_usado)`.
+    Outbound the load comes from the boardings (matrix row); inbound, from the
+    alightings (column) -- inbound almost everyone boards at the campus
+    (depot), so each stop's real demand is how many people get OFF there.
+    Returns `(stop_loads, used_sense)`.
     """
     if sense not in ("auto", "ida", "volta"):
         raise ValueError(f"sentido '{sense}' desconhecido (use: auto, ida, volta)")
     if sense == "auto":
-        sense = detect_sense(demanda, depot)
+        sense = detect_sense(demand, depot)
 
-    per_node = demanda.sum(axis=0) if sense == "volta" else demanda.sum(axis=1)
+    per_node = demand.sum(axis=0) if sense == "volta" else demand.sum(axis=1)
     stop_loads = {
-        no: int(per_node[no])
-        for no in range(1, len(per_node))
-        if no != depot and per_node[no] > 0
+        node: int(per_node[node])
+        for node in range(1, len(per_node))
+        if node != depot and per_node[node] > 0
     }
     return stop_loads, sense
 
@@ -59,12 +59,12 @@ def build_context(
     sense: str = "auto",
     max_routes: int | None = None,
 ) -> Context:
-    """Resolve os limites, a chave de restrições e a carga por parada.
+    """Resolve the limits, the restriction key and the load per stop.
 
-    `capacidade` e `limite_tempo` são independentes do modelo e do cenário:
-    quando omitidos, vêm dele(s). Sem limite de tempo a restrição "tempo" não
-    tem efeito; sem capacidade informada, vale a do modelo. `max_rotas` é o
-    teto de veículos do cenário (None = sem limite).
+    `capacity` and `max_time` are independent of the model and of the scenario:
+    when omitted, they come from them. Without a time limit the "tempo"
+    constraint has no effect; without a given capacity, the model's one is
+    used. `max_routes` is the scenario vehicle cap (None = no cap).
     """
     if isinstance(restrictions, str):
         restrictions = Restrictions.from_key(restrictions)
@@ -88,7 +88,7 @@ def build_context(
         data.demand, depot, sense
     )
     return Context(
-        # float evita surpresa se a instância trouxer a distância como int
+        # float avoids surprises when the instance ships integer distances
         distance=data.distance.astype(float, copy=False),
         time=data.time,
         depot=depot,
@@ -96,7 +96,7 @@ def build_context(
         max_time=max_time,
         bus_model=bus_model,
         stop_loads=stop_loads,
-        demanda=data.demand,
+        demand=data.demand,
         restrictions=restrictions,
         sense=used_sense,
         max_routes=max_routes,

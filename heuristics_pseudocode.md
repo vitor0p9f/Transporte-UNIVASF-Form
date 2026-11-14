@@ -2,8 +2,10 @@
 
 > Documento em português; o código (identificadores e comentários) está em
 > inglês. O código é a fonte da verdade: `algorithms/top_univasf/` — o laço das
-> rodadas é `fleet.py: run_fleet`. O que estiver em `código` é nome do código, dá
-> para buscar direto. O panorama com diagramas está em `heuristics.md`.
+> rodadas é `fleet.py: run_fleet`. Nomes em `código` são os do código quando
+> existem no pacote; os demais (`servidos`, `custo_rota`, `tempo_rota`) são
+> variáveis do pseudocódigo, não identificadores. O panorama com diagramas está
+> em `heuristics.md`.
 
 **Entradas:** matrizes de tempo, distância e demanda, frota (`id`, lugares e
 km/L), preços do diesel e da hora do motorista, limite de tempo por ônibus,
@@ -128,8 +130,11 @@ SAÍDA — um plano por ônibus com passageiros > 0:
   demanda.
 - Draft e expansão disputam na mesma rodada, sob o mesmo `remaining`: nada é
   cobrado durante a proposta.
-- Não existe deadhead: a rota nasce na origem do par (`[o,d]` ou `[o,P,d]`); a
-  origem do cenário só filtra as origens que o draft pode usar.
+- Sem `depot`, não existe deadhead: a rota nasce na origem do par (`[o,d]` ou
+  `[o,P,d]`) e a origem do cenário só filtra as origens que o draft pode usar.
+  Com `depot=`, toda rota é simulada com o depósito como prefixo
+  (`with_depot`): o trecho morto entra no tempo e no score, mas o depósito fica
+  fora da rota de demanda para não virar ponto de conflito de todo ônibus.
 - **Dobradinha:** quando a demanda é `ponto→o` (indo para o início) e a rota não
   termina no início, o ponto entra como `[o, ponto, o, ...]` — é o único formato
   que revisita a origem. Não vale quando `o == d`.

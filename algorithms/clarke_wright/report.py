@@ -1,4 +1,7 @@
-"""Relatório textual e persistência da solução do Clarke-Wright."""
+"""Text report and persistence of the Clarke-Wright solution.
+
+The printed text and the JSON keys stay in pt-BR: they are the report output.
+"""
 
 import json
 from datetime import datetime
@@ -14,7 +17,7 @@ from .scenario import ROOT
 
 
 def _status(route: Route, ctx: Context) -> str:
-    """Marcadores do relatório. Referem-se à CARGA ALOCADA (a do algoritmo)."""
+    """Report markers. They refer to the ALLOCATED LOAD (the algorithm one)."""
     marks = []
     if route.load > ctx.capacity:
         marks.append("[ALOCADA ACIMA DA CAP.]")
@@ -26,7 +29,7 @@ def _status(route: Route, ctx: Context) -> str:
 
 
 def _pairs_text(pairs: tuple, limit: int = 10) -> str:
-    """Lista curta dos pares atendidos: "12->2=1, 22->2=1"."""
+    """Short list of the served pairs: "12->2=1, 22->2=1"."""
     items = [f"{o}->{d}={q}" for o, d, q in pairs[:limit]]
     if len(pairs) > limit:
         items.append(f"(+{len(pairs) - limit})")
@@ -161,9 +164,9 @@ def save_result(
         "num_veiculos": len(routes),
         "dist_total_km": round(sum(r.distance_km for r in routes), 2),
         "custo_total_brl": round(sum(r.cost_brl for r in routes), 2),
-        # Projeção do CVRP (uma demanda por nó) × atendimento medido pela
-        # simulação de embarque/desembarque. Os dois números são diferentes
-        # por construção; ver o docstring do módulo.
+        # CVRP projection (one demand per node) vs. the attendance measured by
+        # the boarding/alighting simulation. The two numbers differ by
+        # construction; see the module docstring.
         "demanda_total": attendance.total_demand,
         "demanda_alocada": attendance.allocated,
         "demanda_alocada_pct": round(attendance.allocated_pct, 1),
@@ -205,7 +208,7 @@ def save_result(
 
 
 def print_fleet() -> None:
-    """Lista o fleet.csv (o que o algoritmo usa como referência)."""
+    """List fleet.csv (what the algorithm uses as reference)."""
     buses = load_fleet(ROOT / "fleet.csv")
     print(f"\n{'=' * 46}")
     print("FROTA  (fleet.csv)")

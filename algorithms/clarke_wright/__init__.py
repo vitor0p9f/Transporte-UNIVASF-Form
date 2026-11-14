@@ -1,9 +1,9 @@
-"""Clarke-Wright OVRP para o transporte universitário UNIVASF.
+"""Clarke-Wright OVRP for the UNIVASF university shuttle.
 
-Os ônibus partem do depósito, percorrem as paradas e FICAM no campus destino —
-não retornam ao depósito. Isso caracteriza o OVRP.
+Buses leave the depot, drive through the stops and STAY at the destination
+campus -- they do not return to the depot. That is what makes it an OVRP.
 
-Baseado em:
+Based on:
   Pichpibul, T. & Kawtummachai, R. (2013). A Heuristic Approach Based on
   Clarke-Wright Algorithm for Open Vehicle Routing Problem. The Scientific
   World Journal, Article ID 874349.
@@ -13,46 +13,46 @@ Baseado em:
   depot to a number of delivery points. Operations Research, 12(4), 568–581.
   https://www.jstor.org/stable/167703
 
-Procedimentos implementados (cf. artigo):
-  CW-1 : Fórmula OVRP modificada com parâmetro λ
-  CW-2 : Construção de rota aberta (sem retorno ao depósito)
-  CW-3 : Post-improvement (2-opt, shift 1-0, swap 1-1)
+Procedures implemented (following the paper):
+  CW-1 : modified OVRP savings formula with the lambda parameter
+  CW-2 : open route construction (no return to the depot)
+  CW-3 : post-improvement (2-opt, shift 1-0, swap 1-1)
 
-Restrições de rota — a chave `restricoes` decide qual (ou quais) vale:
+Route constraints -- the `restrictions` key decides which one(s) apply:
 
-  "capacidade" : a carga da rota não passa da capacidade do ônibus
-  "tempo"      : o tempo da rota não passa do limite do cenário
-  "ambas"      : as duas ao mesmo tempo (padrão)
-  "nenhuma"    : nenhuma; só a função objetivo decide
+  "capacidade" : the route load stays within the bus capacity
+  "tempo"      : the route time stays within the scenario limit
+  "ambas"      : both at once (default)
+  "nenhuma"    : neither; only the objective function decides
 
-A carga de cada parada é ESTÁTICA (embarques na ida, desembarques na volta):
-ninguém libera assento no meio da rota. É a leitura do artigo e a projeção que
-o CVRP clássico usa (uma demanda por nó) — por isso ela é "demanda alocada",
-NÃO "passageiros transportados": nada garante que o destino de quem embarca
-esteja na rota.
+Each stop has a STATIC load (boardings outbound, alightings inbound): nobody
+frees a seat along the route. That is how the paper reads it and the projection
+the classic CVRP uses (one demand per node) -- which makes it "allocated
+demand", NOT "passengers carried": nothing guarantees that the destination of
+whoever boards is on the route.
 
-Para medir o atendimento real (só conta o par origem→destino que cabe na rota,
-na ordem), o relatório roda a simulação de embarque/desembarque da heurística
-TOP UNIVASF DEPOIS de montar a solução. O algoritmo continua decidindo por
-distância + capacidade estática; a simulação é só avaliação
-(`avaliar_atendimento`) e não realimenta nenhuma decisão.
+To measure the real attendance (only the origin->destination pair that fits the
+route, in order, counts), the report runs the TOP UNIVASF boarding/alighting
+simulation AFTER the solution is built. The algorithm still decides by distance
++ static capacity; the simulation is evaluation only (`evaluate_attendance`)
+and never feeds back into a decision.
 
-Módulos:
+Modules:
 
-    constants    limites, defaults e chaves de restrição
-    model        estruturas (contexto, rota, saving, atendimento)
-    context      sentido da viagem, carga por parada e montagem do contexto
-    metrics      distância, tempo e savings (CW-1)
-    objective    combustível + penalidade de superlotação
-    construction fusão de rotas e two-phase selection (CW-2)
-    improvement  2-opt, shift e swap (CW-3)
-    solver       clarke_wright_ovrp e análise de Pareto
-    evaluation   simulação de atendimento e corte pela frota
-    scenario     leitura do cenário e conversão para o modelo de resultados
-    report       impressão, JSON e listagem da frota
-    cli          linha de comando
+    constants    limits, defaults and restriction keys
+    model        data structures (context, route, saving, attendance)
+    context      trip sense, load per stop and context assembly
+    metrics      distance, time and savings (CW-1)
+    objective    fuel cost of the solution
+    construction route merging and two-phase selection (CW-2)
+    improvement  2-opt, shift and swap (CW-3)
+    solver       clarke_wright_ovrp and the lambda sweep
+    evaluation   attendance simulation and fleet cut
+    scenario     scenario reading and conversion to the report model
+    report       printing, JSON and fleet listing
+    cli          command line
 
-Uso:
+Usage:
     python -m algorithms.clarke_wright --cenario 1
     python -m algorithms.clarke_wright --cenario 2 --restricao tempo --deposito 1
     python -m algorithms.clarke_wright --instancia p1_2_a --periodo morning_1 \
@@ -62,6 +62,7 @@ Uso:
 
 from .cli import main
 from .constants import (
+    DEFAULT_CAPACITY,
     DEFAULT_DIESEL_PRICE,
     DEFAULT_KM_PER_LITER,
     DEFAULT_PERIOD,

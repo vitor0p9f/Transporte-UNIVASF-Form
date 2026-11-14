@@ -47,12 +47,13 @@ def _try_move(
 
 
 def _two_opt_route(route: Route, ctx: Context) -> Route:
-    """2-opt intra-rota: inverte segmentos internos e mantém o melhor.
+    """Intra-route 2-opt: reverse inner segments and keep the best.
 
-    Aplica CW-2 (melhor direção) após cada melhoria.
+    Applies CW-2 (best direction) after every improvement.
 
-    A carga não muda, mas o tempo pode: com a restrição ativa, candidato que
-    estoura o limite é descartado (a distância cair não garante tempo menor).
+    The load does not change, but the time can: with the constraint active, a
+    candidate that breaks the limit is dropped (a shorter distance does not
+    guarantee a shorter time).
     """
     stops = list(route.stops)
 
@@ -84,10 +85,10 @@ def _shift_10(
     routes: list[Route],
     ctx: Context,
 ) -> list[Route]:
-    """Shift 1-0: move uma parada de uma rota para outra.
+    """Shift 1-0: move one stop from one route to another.
 
-    Aceita se não violar a(s) restrição(ões) ativa(s) e se reduzir o objetivo
-    (custo de combustível). Atualiza a carga das rotas.
+    Accepted when it does not break the active constraint(s) and it lowers the
+    objective (fuel cost). Updates the route loads.
     """
     improved = True
     while improved:
@@ -106,12 +107,12 @@ def _shift_10(
                     if ctx.restrictions.capacity and load_b > ctx.capacity:
                         continue
 
-                    # Testa inserção no início e fim da rota b
+                    # Try inserting at the start and at the end of route b
                     for pos_j in (0, len(routes[b].stops)):
                         new_a = list(routes[a].stops)
                         new_a.pop(pos_i)
                         if not new_a:
-                            continue  # não cria rota vazia
+                            continue  # never leave a route empty
                         new_b = list(routes[b].stops)
                         new_b.insert(pos_j, stop)
 
@@ -134,10 +135,10 @@ def _swap_11(
     routes: list[Route],
     ctx: Context,
 ) -> list[Route]:
-    """Swap 1-1: troca uma parada entre duas rotas.
+    """Swap 1-1: exchange one stop between two routes.
 
-    Aceita se não violar a(s) restrição(ões) ativa(s) e se reduzir o objetivo
-    (custo de combustível). Atualiza a carga das rotas.
+    Accepted when it does not break the active constraint(s) and it lowers the
+    objective (fuel cost). Updates the route loads.
     """
     improved = True
     while improved:
@@ -184,12 +185,12 @@ def post_improvement(
     ctx: Context,
     max_iterations_without_improvement: int = ITER_POSTIMPROVE,
 ) -> list[Route]:
-    """Procedimento CW-3: aplica busca local até não haver mais melhorias.
+    """CW-3 procedure: run local search until it stops improving.
 
-    Operadores (com igual probabilidade, conforme Tabela 1 do artigo):
-      - 2-opt intra-rota
-      - shift 1-0 inter-rotas
-      - swap 1-1 inter-rotas
+    Operators (with equal probability, following Table 1 of the paper):
+      - intra-route 2-opt
+      - inter-route shift 1-0
+      - inter-route swap 1-1
     """
     routes = [_copy_route(r) for r in routes]
     best_cost = _obj_total(routes)
@@ -217,7 +218,7 @@ def post_improvement(
 
 
 def _copy_route(route: Route) -> Route:
-    """Cópia da rota: os operadores do CW-3 a mutam no lugar."""
+    """Copy of the route: the CW-3 operators mutate it in place."""
     return Route(
         stops=list(route.stops),
         load=route.load,

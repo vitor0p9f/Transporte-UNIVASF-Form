@@ -1,4 +1,4 @@
-"""Construção OVRP: fusão de rotas, direction choice e two-phase selection."""
+"""OVRP construction: route merging, direction choice and two-phase selection."""
 
 import random
 
@@ -9,16 +9,16 @@ from .objective import _obj_total
 
 
 def _best_direction(stops: list[int], ctx: Context) -> list[int]:
-    """Procedimento CW-2: testa as duas direções da rota aberta.
+    """CW-2 procedure: try both directions of the open route.
 
-    Em OVRP:
-      forward : depot → p1 → p2 → ... → pn   (distância D_f)
-      reverse : depot → pn → p(n-1) → ... → p1 (distância D_r)
+    In the OVRP:
+      forward : depot -> p1 -> p2 -> ... -> pn   (distance D_f)
+      reverse : depot -> pn -> p(n-1) -> ... -> p1 (distance D_r)
 
-    Com a restrição de tempo ativa a direção não é indiferente (o primeiro
-    trecho sai do depósito), então direções que já estouram o limite são
-    descartadas antes de escolher a mais curta. Se nenhuma couber, devolve a
-    mais curta e quem chamou rejeita a rota em `Contexto.cabe`.
+    With the time constraint active the direction is not indifferent (the first
+    leg leaves the depot), so directions that already break the limit are
+    dropped before picking the shortest one. If none fits, the shortest one is
+    returned and the caller rejects the route through `Context.fits`.
     """
     directions = [list(stops), list(reversed(stops))]
     if ctx.restrictions.time:
@@ -33,23 +33,23 @@ def _merge(
     active_stops: set[int],
     ctx: Context,
 ) -> list[Route]:
-    """Procedimento de fusão (route merging) do Clarke-Wright paralelo.
+    """Merging procedure of the parallel Clarke-Wright.
 
-    Para cada saving s(i,j) em ordem decrescente:
-      - Se i e j estão em rotas diferentes
-      - Se a fusão não viola a(s) restrição(ões) ativa(s) (capacidade/tempo)
-      - Se i é extremo (início ou fim) da sua rota
-      - Se j é extremo da sua rota
-      → funde as rotas
+    For every saving s(i,j) in descending order:
+      - if i and j sit in different routes
+      - if the merge does not break the active constraint(s) (capacity/time)
+      - if i is an endpoint (start or end) of its route
+      - if j is an endpoint of its route
+      -> merge the routes
 
-    Uma parada cuja demanda sozinha já estoura o limite continua virando rota
-    própria (o algoritmo não descarta demanda); o relatório sinaliza o caso.
+    A stop whose demand alone already breaks the limit still becomes its own
+    route (the algorithm never drops demand); the report flags that case.
     """
-    # Solução inicial: uma rota por parada
+    # Initial solution: one route per stop
     routes: list[Route] = []
-    endpoint: dict[int, Route] = {}  # extremo → rota que o contém
+    endpoint: dict[int, Route] = {}  # endpoint -> the route holding it
 
-    for p in sorted(active_stops):  # ordem fixa → resultado reprodutível
+    for p in sorted(active_stops):  # fixed order -> reproducible result
         r = Route(stops=[p], load=ctx.stop_loads.get(p, 0))
         _update_cost(r, ctx)
         routes.append(r)
@@ -80,7 +80,7 @@ def _merge(
         if new_order is None:
             continue
 
-        # Aplica CW-2: escolhe a melhor direção da rota aberta
+        # Apply CW-2: pick the best direction of the open route
         new_order = _best_direction(new_order, ctx)
         if not ctx.fits(load, _route_time(new_order, ctx)):
             continue
@@ -88,12 +88,12 @@ def _merge(
         new_route = Route(stops=new_order, load=load)
         _update_cost(new_route, ctx)
 
-        # Remove as rotas fundidas (por identidade: `Rota` compara por valor)
+        # Drop the merged routes (by identity: `Route` compares by value)
         routes = [r for r in routes if r is not ri and r is not rj]
         for p in ri.stops + rj.stops:
             endpoint.pop(p, None)
 
-        # Registra nova rota
+        # Register the new route
         routes.append(new_route)
         endpoint[new_route.first()] = new_route
         endpoint[new_route.last()] = new_route
@@ -102,15 +102,15 @@ def _merge(
 
 
 def _roulette_wheel(savings: list[Saving], size: int) -> list[Saving]:
-    """Seleção por roleta sobre os `tamanho` melhores savings (seção 2.3).
+    """Roulette-wheel selection over the `size` best savings (section 2.3).
 
-    Reconstrói a lista de savings embaralhando probabilisticamente os
-    melhores a cada iteração — explora ordens de fusão diferentes.
+    Rebuilds the savings list by probabilistically shuffling the best ones on
+    every iteration -- that explores different merging orders.
 
-    Probabilidade (eq. do artigo): p_n = s_n / Σ s_i, favorecendo savings
-    MAIORES. Como em OVRP s(i,j)=c(depot,j)-λ·c(i,j) pode ser negativo,
-    deslocamos a janela pelo menor valor (em vez de usar abs(), que
-    favoreceria erroneamente savings muito negativos).
+    Probability (paper equation): p_n = s_n / sum(s_i), favouring LARGER
+    savings. Since in the OVRP s(i,j) = c(depot,j) - lambda*c(i,j) can be
+    negative, the window is shifted by the lowest value instead of using abs(),
+    which would wrongly favour very negative savings.
     """
     if len(savings) <= 1:
         return list(savings)
@@ -146,14 +146,14 @@ def two_phase_selection(
     ctx: Context,
     iterations: int = ITER_TWO_PHASE,
 ) -> list[Route]:
-    """Procedimento CW-2: reordena savings via roleta e guarda a melhor."""
+    """CW-2 procedure: reorder the savings through the roulette, keep the best."""
     best_routes = _merge(savings, active_stops, ctx)
     best_cost = _obj_total(best_routes)
 
     current_savings = list(savings)
 
     for _ in range(iterations):
-        # Tamanho do torneio T ∈ [3, 6] conforme o artigo (seção 2.3).
+        # Tournament size T in [3, 6] as in the paper (section 2.3).
         tournament_size = random.randint(
             3, min(6, max(3, len(current_savings)))
         )

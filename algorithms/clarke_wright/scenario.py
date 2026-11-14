@@ -1,4 +1,4 @@
-"""Entrada de cenário/instância e conversão para o modelo de resultados."""
+"""Scenario/instance input and conversion to the report model."""
 
 from pathlib import Path
 
@@ -45,20 +45,19 @@ def _scenario_fleet(scenario: dict | None) -> list[Bus]:
 def _scenario_depot(scenario: dict | None) -> int | None:
     if not scenario:
         return None
-    origens = parse_node_labels(scenario.get("origin"))
-    return origens[0] if origens else None
+    origins = parse_node_labels(scenario.get("origin"))
+    return origins[0] if origins else None
 
 
 def reference_model(
     scenario: dict | None, capacity: int, diesel: float
 ) -> BusModel:
-    """Modelo de custo único do cenário, aplicado às DUAS heurísticas.
+    """Single cost model of the scenario, applied to BOTH heuristics.
 
-    Escolhe o ônibus da frota com a capacidade efetiva (o critério que o CW
-    sempre usou); sem correspondência, o menor da frota. Sem frota declarada,
-    devolve um modelo genérico. O custo operacional dos relatórios usa este
-    mesmo modelo para o TOP e para o CW, para que os valores sejam
-    comparáveis.
+    Picks the fleet bus with the effective capacity (the criterion CW always
+    used); when no bus matches, the smallest one. Without a declared fleet it
+    returns a generic model. The report's operating cost uses this same model
+    for TOP and for CW, so the values are comparable.
     """
     buses = _scenario_fleet(scenario)
     if not buses:
@@ -88,14 +87,14 @@ def scenario_context(
     sense: str = "auto",
     max_routes: int | None = None,
 ) -> tuple[InstanceData, Context]:
-    """Resolve um cenário (instância, depósito, frota, limites) num contexto.
+    """Turn a scenario (instance, depot, fleet, limits) into a context.
 
-    Cada parâmetro explícito vence o que o cenário define; é o mesmo caminho
-    que a CLI percorre, exposto para o `main.py` rodar as duas heurísticas
-    com exatamente os mesmos limites.
+    Every explicit parameter wins over what the scenario defines; it is the
+    same path the CLI walks, exposed so `main.py` can run both heuristics with
+    exactly the same limits.
 
-    `max_rotas` é o teto de veículos; omitido, vale o tamanho da frota do
-    cenário (None só quando não há frota declarada).
+    `max_routes` is the vehicle cap; when omitted, it is the size of the
+    scenario fleet (None only when no fleet is declared).
     """
     scenario = scenario or {}
     instance = instance or scenario.get("instance_id")
@@ -116,8 +115,8 @@ def scenario_context(
             if scenario.get("diesel_price_per_liter")
             else DEFAULT_DIESEL_PRICE
         )
-    # Sem capacidade informada, vale a do menor ônibus da frota: assim toda
-    # rota que o CW monta cabe em qualquer ônibus do cenário.
+    # Without a given capacity, the smallest bus of the fleet sets it: that way
+    # every route CW builds fits any bus of the scenario.
     if capacity is None:
         capacity = (
             min(b.passenger_capacity for b in buses)
@@ -165,10 +164,10 @@ def solve_scenario(
     seed: int = 42,
     verbose: bool = False,
 ) -> tuple[InstanceData, list[Route], Context, Attendance, float]:
-    """Roda o CW num cenário e devolve a solução já avaliada.
+    """Run CW on a scenario and return the solution already evaluated.
 
-    Devolve `(data, rotas, ctx, atendimento, lambda_usado)` — é o que o
-    `main.py` consome para montar a linha do CW na tabela comparativa.
+    Returns `(data, routes, ctx, attendance, lambda_used)` -- what `main.py`
+    consumes to build the CW row of the comparison table.
     """
     data, ctx = scenario_context(
         scenario,
@@ -203,14 +202,14 @@ def plans_and_summary(
     attendance: Attendance,
     buses: list[Bus] | None = None,
 ) -> tuple[list[BusPlan], FleetSummary]:
-    """Converte a solução do CW no modelo de resultado que o `reporting` lê.
+    """Convert the CW solution into the report model `reporting` reads.
 
-    O CW não tem par travado nem "rounds": a rota nasce no depósito, então
-    `origin` é o depósito e `destination` é a última parada. Os ids dos ônibus
-    vêm da frota do cenário em ordem; `resolver_cenario` já descarta as rotas
-    que passariam do tamanho da frota, mas, numa chamada direta a
-    `clarke_wright_ovrp` sem esse teto, os excedentes ainda recebem ids
-    sequenciais depois do maior id.
+    CW has no locked pair and no "rounds": the route is born at the depot, so
+    `origin` is the depot and `destination` is the last stop. The bus ids come
+    from the scenario fleet, in order; `solve_scenario` already drops the
+    routes beyond the fleet size, but on a direct call to
+    `clarke_wright_ovrp` without that cap the extras still get sequential ids
+    after the highest one.
     """
     ids = [bus.id for bus in (buses or [])]
     next_id = (max(ids) + 1) if ids else 1

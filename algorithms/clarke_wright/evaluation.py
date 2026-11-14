@@ -1,4 +1,4 @@
-"""Avaliação do atendimento e corte pela frota disponível."""
+"""Attendance evaluation and the cut by the available fleet."""
 
 import numpy as np
 
@@ -9,34 +9,35 @@ from .model import Attendance, Context, Route
 
 
 def _instance_from_context(ctx: Context) -> InstanceData:
-    """`InstanceData` mínimo para a simulação (ela só lê tempo e demanda)."""
+    """Minimal `InstanceData` for the simulation (it only reads time and demand)."""
     return InstanceData(
-        nodes=[], distance=ctx.distance, time=ctx.time, demand=ctx.demanda
+        nodes=[], distance=ctx.distance, time=ctx.time, demand=ctx.demand
     )
 
 
 def _simulated_sequence(ctx: Context, route: Route) -> tuple[int, ...]:
-    """A rota aberta como o simulador a vê: depósito + paradas."""
+    """The open route as the simulator sees it: depot + stops."""
     return (ctx.depot, *route.stops)
 
 
 def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:
-    """Descarta rotas até a solução caber na frota do cenário.
+    """Drop routes until the solution fits the scenario fleet.
 
-    O CW não conhece o número de veículos: ele abre uma rota por parada e
-    funde enquanto as restrições deixam, então pode terminar com mais rotas
-    que ônibus. Rota sem veículo não opera; esta etapa escolhe, por simulação
-    de embarque contra a demanda restante, as `ctx.max_rotas` que mais
-    atendem e descarta o resto (a demanda delas fica como não atendida, do
-    mesmo jeito que o TOP deixa o que não embarcou).
+    CW does not know the number of vehicles: it opens one route per stop and
+    merges while the constraints allow, so it can end up with more routes than
+    buses. A route without a vehicle does not operate; this step picks, by
+    boarding simulation against the remaining demand, the `ctx.max_routes`
+    that serve the most and drops the rest (their demand stays unserved, the
+    same way TOP leaves whatever did not board).
 
-    Sem teto (`max_rotas is None`) ou quando a solução já cabe, é um no-op.
+    Without a cap (`max_routes is None`), or when the solution already fits,
+    it is a no-op.
     """
     if ctx.max_routes is None or len(routes) <= ctx.max_routes:
         return routes
 
     instance = _instance_from_context(ctx)
-    remaining = np.array(ctx.demanda, copy=True)
+    remaining = np.array(ctx.demand, copy=True)
     candidates = list(routes)
     chosen: list[Route] = []
 
@@ -49,7 +50,7 @@ def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:
         )
 
     while candidates and len(chosen) < ctx.max_routes:
-        # Uma simulação por candidata: a escolhida já vem com o resultado.
+        # One simulation per candidate: the winner comes with its outcome.
         outcome, best = max(
             ((simulate(route), route) for route in candidates),
             key=lambda pair: pair[0].passengers,
@@ -63,17 +64,17 @@ def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:
 
 
 def evaluate_attendance(routes: list[Route], ctx: Context) -> Attendance:
-    """Mede o atendimento real de cada rota com a simulação do TOP UNIVASF.
+    """Measure each route's real attendance with the TOP UNIVASF simulation.
 
-    A rota do CW é aberta e começa no depósito, então a sequência simulada é
-    `[depósito] + paradas` — o trecho que sai do depósito também ocupa
-    assento. A demanda é cobrada em ordem: um par embarcado numa rota sai de
-    `restante` e não é contado de novo na próxima.
+    A CW route is open and starts at the depot, so the simulated sequence is
+    `[depot] + stops` -- the leg leaving the depot occupies seats too. Demand
+    is charged in order: a pair boarded by one route leaves `remaining` and is
+    never counted again by the next one.
 
-    NÃO é critério de decisão: preenche `Rota.pax/pico/pares` depois que a
-    solução está fechada.
+    This is NOT a decision criterion: it fills `Route.passengers/peak_load/
+    pairs` after the solution is closed.
     """
-    remaining = np.array(ctx.demanda, copy=True)
+    remaining = np.array(ctx.demand, copy=True)
     instance = _instance_from_context(ctx)
     all_pairs: list[tuple[int, int, int]] = []
 
@@ -91,7 +92,7 @@ def evaluate_attendance(routes: list[Route], ctx: Context) -> Attendance:
             remaining[origin, destination] -= quantity
         all_pairs.extend(outcome.pairs)
 
-    total = int(ctx.demanda.sum())
+    total = int(ctx.demand.sum())
     served = sum(r.passengers for r in routes)
     unserved = tuple(
         sorted(
