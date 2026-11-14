@@ -1,6 +1,6 @@
 # Resultados — TOP na frota real
 
-Gerado em 2026-11-14 08:57 · 5 cenários.
+Gerado em 2026-11-14 09:18 · 5 cenários.
 
 O TOP roda na frota heterogênea do `fleet.csv`: cada ônibus mantém a capacidade e a autonomia do seu próprio modelo, sem homogeneização. Não há origem nem depósito forçados: o draft escolhe o par origem-destino sozinho, respeitando as colunas `origin` e `destination_labels` do cenário (que fazem parte da definição dele), e a rota nasce no nó de origem do par, sem deadhead. As restrições de tempo e de capacidade estão ativas.
 

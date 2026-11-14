@@ -6,205 +6,205 @@ from datetime import datetime
 from utils.fleet import load_fleet
 
 from .constants import INF
-from .evaluation import avaliar_atendimento
-from .metrics import _limite_texto
-from .model import Atendimento, Contexto, Rota
+from .evaluation import evaluate_attendance
+from .metrics import _time_limit_text
+from .model import Attendance, Context, Route
 from .objective import _obj_total
 from .scenario import ROOT
 
 
-def _situacao(rota: Rota, ctx: Contexto) -> str:
+def _status(route: Route, ctx: Context) -> str:
     """Marcadores do relatório. Referem-se à CARGA ALOCADA (a do algoritmo)."""
-    marcas = []
-    if rota.carga > ctx.capacidade:
-        marcas.append("[ALOCADA ACIMA DA CAP.]")
-    elif rota.carga >= ctx.capacidade:
-        marcas.append("[ALOCADA CHEIA]")
-    if rota.tempo_min > ctx.limite_tempo:
-        marcas.append("[ACIMA DO TEMPO]")
-    return " ".join(marcas)
+    marks = []
+    if route.load > ctx.capacity:
+        marks.append("[ALOCADA ACIMA DA CAP.]")
+    elif route.load >= ctx.capacity:
+        marks.append("[ALOCADA CHEIA]")
+    if route.time_minutes > ctx.max_time:
+        marks.append("[ACIMA DO TEMPO]")
+    return " ".join(marks)
 
 
-def _pares_texto(pares: tuple, limite: int = 10) -> str:
+def _pairs_text(pairs: tuple, limit: int = 10) -> str:
     """Lista curta dos pares atendidos: "12->2=1, 22->2=1"."""
-    itens = [f"{o}->{d}={q}" for o, d, q in pares[:limite]]
-    if len(pares) > limite:
-        itens.append(f"(+{len(pares) - limite})")
-    return ", ".join(itens)
+    items = [f"{o}->{d}={q}" for o, d, q in pairs[:limit]]
+    if len(pairs) > limit:
+        items.append(f"(+{len(pairs) - limit})")
+    return ", ".join(items)
 
 
-def imprimir_solucao(
-    rotas: list[Rota],
-    ctx: Contexto,
-    rotulo: str,
+def print_solution(
+    routes: list[Route],
+    ctx: Context,
+    label: str,
     lam: float,
-    atend: Atendimento | None = None,
+    attendance: Attendance | None = None,
 ) -> None:
-    if atend is None:
-        atend = avaliar_atendimento(rotas, ctx)
+    if attendance is None:
+        attendance = evaluate_attendance(routes, ctx)
 
-    custo_total = _obj_total(rotas)
-    dist_total = sum(r.dist_km for r in rotas)
-    alocada = sum(r.carga for r in rotas)
-    atendida = sum(r.pax for r in rotas)
-    ocup_aloc = (
-        alocada / (len(rotas) * ctx.capacidade) * 100 if rotas else 0.0
+    total_cost = _obj_total(routes)
+    total_distance = sum(r.distance_km for r in routes)
+    allocated = sum(r.load for r in routes)
+    served = sum(r.passengers for r in routes)
+    allocated_occupancy = (
+        allocated / (len(routes) * ctx.capacity) * 100 if routes else 0.0
     )
-    ocup_real = (atend.pico / ctx.capacidade * 100) if ctx.capacidade else 0.0
-    custo_pax = custo_total / atendida if atendida else 0.0
-    n_cheias = sum(1 for r in rotas if r.carga >= ctx.capacidade)
-    maior_tempo = max((r.tempo_min for r in rotas), default=0)
-    fora_tempo = sum(1 for r in rotas if r.tempo_min > ctx.limite_tempo)
+    real_occupancy = (attendance.peak_load / ctx.capacity * 100) if ctx.capacity else 0.0
+    cost_per_passenger = total_cost / served if served else 0.0
+    full_routes = sum(1 for r in routes if r.load >= ctx.capacity)
+    longest_time = max((r.time_minutes for r in routes), default=0)
+    over_time = sum(1 for r in routes if r.time_minutes > ctx.max_time)
 
     print(f"\n{'=' * 65}")
-    print(f"SOLUCAO CLARKE-WRIGHT OVRP  |  {rotulo}  |  lam = {lam}")
-    print(f"Depósito  : {ctx.deposito}")
-    print(f"Modelo    : {ctx.modelo.nome} | R${ctx.modelo.custo_por_km:.4f}/km")
+    print(f"SOLUCAO CLARKE-WRIGHT OVRP  |  {label}  |  lam = {lam}")
+    print(f"Depósito  : {ctx.depot}")
+    print(f"Modelo    : {ctx.bus_model.name} | R${ctx.bus_model.cost_per_km:.4f}/km")
     print(
-        f"Restrições: {ctx.restricoes.chave} "
-        f"(capacidade={'sim' if ctx.restricoes.capacidade else 'não'}, "
-        f"tempo={'sim' if ctx.restricoes.tempo else 'não'})"
+        f"Restrições: {ctx.restrictions.key} "
+        f"(capacidade={'sim' if ctx.restrictions.capacity else 'não'}, "
+        f"tempo={'sim' if ctx.restrictions.time else 'não'})"
     )
-    print(f"Capacidade: {ctx.capacidade} máx")
+    print(f"Capacidade: {ctx.capacity} máx")
     print(
-        f"Tempo     : limite {_limite_texto(ctx.limite_tempo)} | "
-        f"maior rota {maior_tempo} min"
+        f"Tempo     : limite {_time_limit_text(ctx.max_time)} | "
+        f"maior rota {longest_time} min"
     )
     print(f"{'=' * 65}")
-    print(f"  Veículos utilizados  : {len(rotas)}")
-    print(f"  Demanda total        : {atend.demanda_total} pax")
+    print(f"  Veículos utilizados  : {len(routes)}")
+    print(f"  Demanda total        : {attendance.total_demand} pax")
     print(
-        f"  Demanda alocada      : {alocada} "
-        f"({atend.pct_alocada:.0f}%)  [projeção do CVRP]"
+        f"  Demanda alocada      : {allocated} "
+        f"({attendance.allocated_pct:.0f}%)  [projeção do CVRP]"
     )
     print(
-        f"  Passageiros atendidos: {atendida} "
-        f"({atend.pct_atendida:.0f}%)  [simulação]"
+        f"  Passageiros atendidos: {served} "
+        f"({attendance.served_pct:.0f}%)  [simulação]"
     )
-    print(f"  Demanda não atendida : {atend.nao_atendida} pax")
-    print(f"  Distância total      : {dist_total:.1f} km")
-    print(f"  Custo total (comb.)  : R${custo_total:.2f}")
+    print(f"  Demanda não atendida : {attendance.unserved} pax")
+    print(f"  Distância total      : {total_distance:.1f} km")
+    print(f"  Custo total (comb.)  : R${total_cost:.2f}")
     print(
         f"  Custo médio/veículo  : "
-        f"R${custo_total / max(1, len(rotas)):.2f}"
+        f"R${total_cost / max(1, len(routes)):.2f}"
     )
-    print(f"  Custo por pax atend. : R${custo_pax:.2f}")
-    print(f"  Ocupação alocada     : {ocup_aloc:.0f}% da capacidade")
+    print(f"  Custo por pax atend. : R${cost_per_passenger:.2f}")
+    print(f"  Ocupação alocada     : {allocated_occupancy:.0f}% da capacidade")
     print(
         f"  Ocupação real (pico) : "
-        f"{atend.pico}/{ctx.capacidade} ({ocup_real:.0f}%)"
+        f"{attendance.peak_load}/{ctx.capacity} ({real_occupancy:.0f}%)"
     )
     print(
-        f"  Rotas com aloc. cheia: {n_cheias}/{len(rotas)} "
+        f"  Rotas com aloc. cheia: {full_routes}/{len(routes)} "
         "(carga alocada = capacidade)"
     )
-    print(f"  Rotas acima do tempo : {fora_tempo}/{len(rotas)}")
+    print(f"  Rotas acima do tempo : {over_time}/{len(routes)}")
     print()
 
-    for i, rota in enumerate(sorted(rotas, key=lambda r: -r.carga), 1):
-        pct = round(rota.carga / ctx.capacidade * 100)
-        cheio = min(pct, 100)
-        barra = "#" * (cheio // 5) + "." * (20 - cheio // 5)
-        status = _situacao(rota, ctx)
+    for i, route in enumerate(sorted(routes, key=lambda r: -r.load), 1):
+        pct = round(route.load / ctx.capacity * 100)
+        filled = min(pct, 100)
+        bar = "#" * (filled // 5) + "." * (20 - filled // 5)
+        status = _status(route, ctx)
 
         print(
-            f"  Ônibus {i:02d}  [{barra}] {pct:3d}%  "
-            f"aloc {rota.carga:3d}/{ctx.capacidade} | "
-            f"pax {rota.pax:3d} | pico {rota.pico:3d}  "
-            f"{rota.tempo_min}/{_limite_texto(ctx.limite_tempo)}  "
-            f"{rota.dist_km:.1f} km  R${rota.custo_brl:.2f}  {status}"
+            f"  Ônibus {i:02d}  [{bar}] {pct:3d}%  "
+            f"aloc {route.load:3d}/{ctx.capacity} | "
+            f"pax {route.passengers:3d} | pico {route.peak_load:3d}  "
+            f"{route.time_minutes}/{_time_limit_text(ctx.max_time)}  "
+            f"{route.distance_km:.1f} km  R${route.cost_brl:.2f}  {status}"
         )
 
-        rota_str = f"    {ctx.deposito} -> " + " -> ".join(
-            str(p) for p in rota.paradas
+        route_text = f"    {ctx.depot} -> " + " -> ".join(
+            str(p) for p in route.stops
         )
-        if len(rota_str) > 130:
-            rota_str = rota_str[:127] + "..."
-        print(rota_str)
-        if rota.pares:
-            print(f"    atende: {_pares_texto(rota.pares)}")
+        if len(route_text) > 130:
+            route_text = route_text[:127] + "..."
+        print(route_text)
+        if route.pairs:
+            print(f"    atende: {_pairs_text(route.pairs)}")
         else:
             print("    atende: nenhum par origem->destino cabe na rota")
         print()
 
 
-def salvar_resultado(
-    rotas: list[Rota],
-    ctx: Contexto,
-    rotulo: str,
+def save_result(
+    routes: list[Route],
+    ctx: Context,
+    label: str,
     lam: float,
-    atend: Atendimento | None = None,
+    attendance: Attendance | None = None,
 ) -> None:
-    if atend is None:
-        atend = avaliar_atendimento(rotas, ctx)
+    if attendance is None:
+        attendance = evaluate_attendance(routes, ctx)
 
     output_dir = ROOT / "algorithms" / "output"
     output_dir.mkdir(exist_ok=True)
 
-    resultado = {
+    outcome = {
         "algoritmo": "Clarke-Wright OVRP (Pichpibul & Kawtummachai, 2013)",
-        "rotulo": rotulo,
-        "deposito": ctx.deposito,
-        "sentido": ctx.sentido,
+        "rotulo": label,
+        "deposito": ctx.depot,
+        "sentido": ctx.sense,
         "lambda": lam,
-        "restricoes": ctx.restricoes.chave,
-        "capacidade": ctx.capacidade,
-        "limite_tempo": None if ctx.limite_tempo == INF else ctx.limite_tempo,
+        "restricoes": ctx.restrictions.key,
+        "capacidade": ctx.capacity,
+        "limite_tempo": None if ctx.max_time == INF else ctx.max_time,
         "modelo_onibus": {
-            "nome": ctx.modelo.nome,
-            "capacidade": ctx.modelo.capacidade,
-            "consumo_km_l": ctx.modelo.consumo_km_l,
-            "custo_litro": ctx.modelo.custo_litro,
-            "custo_por_km": ctx.modelo.custo_por_km,
+            "nome": ctx.bus_model.name,
+            "capacidade": ctx.bus_model.capacity,
+            "consumo_km_l": ctx.bus_model.km_per_liter,
+            "custo_litro": ctx.bus_model.diesel_price,
+            "custo_por_km": ctx.bus_model.cost_per_km,
         },
         "gerado_em": datetime.now().isoformat(),
-        "num_veiculos": len(rotas),
-        "dist_total_km": round(sum(r.dist_km for r in rotas), 2),
-        "custo_total_brl": round(sum(r.custo_brl for r in rotas), 2),
+        "num_veiculos": len(routes),
+        "dist_total_km": round(sum(r.distance_km for r in routes), 2),
+        "custo_total_brl": round(sum(r.cost_brl for r in routes), 2),
         # Projeção do CVRP (uma demanda por nó) × atendimento medido pela
         # simulação de embarque/desembarque. Os dois números são diferentes
         # por construção; ver o docstring do módulo.
-        "demanda_total": atend.demanda_total,
-        "demanda_alocada": atend.alocada,
-        "demanda_alocada_pct": round(atend.pct_alocada, 1),
-        "pax_atendidos": atend.atendida,
-        "pax_atendidos_pct": round(atend.pct_atendida, 1),
-        "demanda_nao_atendida": atend.nao_atendida,
-        "pico_max": atend.pico,
+        "demanda_total": attendance.total_demand,
+        "demanda_alocada": attendance.allocated,
+        "demanda_alocada_pct": round(attendance.allocated_pct, 1),
+        "pax_atendidos": attendance.served,
+        "pax_atendidos_pct": round(attendance.served_pct, 1),
+        "demanda_nao_atendida": attendance.unserved,
+        "pico_max": attendance.peak_load,
         "pares_atendidos": [
             {"origem": o, "destino": d, "pax": q}
-            for o, d, q in atend.pares_atendidos
+            for o, d, q in attendance.served_pairs
         ],
         "rotas": [
             {
                 "id": i + 1,
-                "paradas": r.paradas,
-                "carga": r.carga,
-                "pax_atendido": r.pax,
-                "pico": r.pico,
+                "paradas": r.stops,
+                "carga": r.load,
+                "pax_atendido": r.passengers,
+                "pico": r.peak_load,
                 "pares": [
                     {"origem": o, "destino": d, "pax": q}
-                    for o, d, q in r.pares
+                    for o, d, q in r.pairs
                 ],
-                "dist_km": r.dist_km,
-                "tempo_min": r.tempo_min,
-                "custo_brl": r.custo_brl,
+                "dist_km": r.distance_km,
+                "tempo_min": r.time_minutes,
+                "custo_brl": r.cost_brl,
             }
-            for i, r in enumerate(rotas)
+            for i, r in enumerate(routes)
         ],
     }
 
-    nome_arquivo = "".join(
-        c if c.isalnum() or c in "-_" else "_" for c in rotulo.lower()
+    file_name = "".join(
+        c if c.isalnum() or c in "-_" else "_" for c in label.lower()
     )
-    arquivo = output_dir / f"cw_ovrp_{nome_arquivo}.json"
-    with open(arquivo, "w", encoding="utf-8") as f:
-        json.dump(resultado, f, ensure_ascii=False, indent=2)
+    output_path = output_dir / f"cw_ovrp_{file_name}.json"
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(outcome, f, ensure_ascii=False, indent=2)
 
-    print(f"[clarke_wright] Resultado salvo em: {arquivo}")
+    print(f"[clarke_wright] Resultado salvo em: {output_path}")
 
 
-def imprimir_frota() -> None:
+def print_fleet() -> None:
     """Lista o fleet.csv (o que o algoritmo usa como referência)."""
     buses = load_fleet(ROOT / "fleet.csv")
     print(f"\n{'=' * 46}")

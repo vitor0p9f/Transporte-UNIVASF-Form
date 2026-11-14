@@ -3,12 +3,12 @@
 import random
 
 from .constants import ITER_TWO_PHASE
-from .metrics import _atualizar_custo, _dist_rota, _tempo_rota
-from .model import Contexto, Rota, Saving
+from .metrics import _route_distance, _route_time, _update_cost
+from .model import Context, Route, Saving
 from .objective import _obj_total
 
 
-def _melhor_direcao(paradas: list[int], ctx: Contexto) -> list[int]:
+def _best_direction(stops: list[int], ctx: Context) -> list[int]:
     """Procedimento CW-2: testa as duas direções da rota aberta.
 
     Em OVRP:
@@ -20,19 +20,19 @@ def _melhor_direcao(paradas: list[int], ctx: Contexto) -> list[int]:
     descartadas antes de escolher a mais curta. Se nenhuma couber, devolve a
     mais curta e quem chamou rejeita a rota em `Contexto.cabe`.
     """
-    direcoes = [list(paradas), list(reversed(paradas))]
-    if ctx.restricoes.tempo:
-        viaveis = [d for d in direcoes if _tempo_rota(d, ctx) <= ctx.limite_tempo]
-        if viaveis:
-            direcoes = viaveis
-    return min(direcoes, key=lambda d: _dist_rota(d, ctx))
+    directions = [list(stops), list(reversed(stops))]
+    if ctx.restrictions.time:
+        feasible = [d for d in directions if _route_time(d, ctx) <= ctx.max_time]
+        if feasible:
+            directions = feasible
+    return min(directions, key=lambda d: _route_distance(d, ctx))
 
 
-def _fundir(
+def _merge(
     savings: list[Saving],
-    paradas_ativas: set[int],
-    ctx: Contexto,
-) -> list[Rota]:
+    active_stops: set[int],
+    ctx: Context,
+) -> list[Route]:
     """Procedimento de fusão (route merging) do Clarke-Wright paralelo.
 
     Para cada saving s(i,j) em ordem decrescente:
@@ -46,62 +46,62 @@ def _fundir(
     própria (o algoritmo não descarta demanda); o relatório sinaliza o caso.
     """
     # Solução inicial: uma rota por parada
-    rotas: list[Rota] = []
-    extremo: dict[int, Rota] = {}  # extremo → rota que o contém
+    routes: list[Route] = []
+    endpoint: dict[int, Route] = {}  # extremo → rota que o contém
 
-    for p in sorted(paradas_ativas):  # ordem fixa → resultado reprodutível
-        r = Rota(paradas=[p], carga=ctx.carga_parada.get(p, 0))
-        _atualizar_custo(r, ctx)
-        rotas.append(r)
-        extremo[p] = r
+    for p in sorted(active_stops):  # ordem fixa → resultado reprodutível
+        r = Route(stops=[p], load=ctx.stop_loads.get(p, 0))
+        _update_cost(r, ctx)
+        routes.append(r)
+        endpoint[p] = r
 
     for s in savings:
-        ri = extremo.get(s.i)
-        rj = extremo.get(s.j)
+        ri = endpoint.get(s.i)
+        rj = endpoint.get(s.j)
 
         if ri is None or rj is None or ri is rj:
             continue
 
-        carga = ri.carga + rj.carga
-        if ctx.restricoes.capacidade and carga > ctx.capacidade:
+        load = ri.load + rj.load
+        if ctx.restrictions.capacity and load > ctx.capacity:
             continue
 
-        nova_ordem = None
+        new_order = None
 
-        if ri.ultima() == s.i and rj.primeira() == s.j:
-            nova_ordem = ri.paradas + rj.paradas
-        elif rj.ultima() == s.j and ri.primeira() == s.i:
-            nova_ordem = rj.paradas + ri.paradas
-        elif ri.ultima() == s.i and rj.ultima() == s.j:
-            nova_ordem = ri.paradas + list(reversed(rj.paradas))
-        elif ri.primeira() == s.i and rj.primeira() == s.j:
-            nova_ordem = list(reversed(ri.paradas)) + rj.paradas
+        if ri.last() == s.i and rj.first() == s.j:
+            new_order = ri.stops + rj.stops
+        elif rj.last() == s.j and ri.first() == s.i:
+            new_order = rj.stops + ri.stops
+        elif ri.last() == s.i and rj.last() == s.j:
+            new_order = ri.stops + list(reversed(rj.stops))
+        elif ri.first() == s.i and rj.first() == s.j:
+            new_order = list(reversed(ri.stops)) + rj.stops
 
-        if nova_ordem is None:
+        if new_order is None:
             continue
 
         # Aplica CW-2: escolhe a melhor direção da rota aberta
-        nova_ordem = _melhor_direcao(nova_ordem, ctx)
-        if not ctx.cabe(carga, _tempo_rota(nova_ordem, ctx)):
+        new_order = _best_direction(new_order, ctx)
+        if not ctx.fits(load, _route_time(new_order, ctx)):
             continue
 
-        nova_rota = Rota(paradas=nova_ordem, carga=carga)
-        _atualizar_custo(nova_rota, ctx)
+        new_route = Route(stops=new_order, load=load)
+        _update_cost(new_route, ctx)
 
         # Remove as rotas fundidas (por identidade: `Rota` compara por valor)
-        rotas = [r for r in rotas if r is not ri and r is not rj]
-        for p in ri.paradas + rj.paradas:
-            extremo.pop(p, None)
+        routes = [r for r in routes if r is not ri and r is not rj]
+        for p in ri.stops + rj.stops:
+            endpoint.pop(p, None)
 
         # Registra nova rota
-        rotas.append(nova_rota)
-        extremo[nova_rota.primeira()] = nova_rota
-        extremo[nova_rota.ultima()] = nova_rota
+        routes.append(new_route)
+        endpoint[new_route.first()] = new_route
+        endpoint[new_route.last()] = new_route
 
-    return rotas
+    return routes
 
 
-def _roulette_wheel(savings: list[Saving], tamanho: int) -> list[Saving]:
+def _roulette_wheel(savings: list[Saving], size: int) -> list[Saving]:
     """Seleção por roleta sobre os `tamanho` melhores savings (seção 2.3).
 
     Reconstrói a lista de savings embaralhando probabilisticamente os
@@ -115,55 +115,55 @@ def _roulette_wheel(savings: list[Saving], tamanho: int) -> list[Saving]:
     if len(savings) <= 1:
         return list(savings)
 
-    nova_lista = []
-    restantes = list(savings)
+    ordered = []
+    remaining = list(savings)
 
-    while restantes:
-        janela = min(tamanho, len(restantes))
-        candidatos = restantes[:janela]
+    while remaining:
+        window = min(size, len(remaining))
+        candidates = remaining[:window]
 
-        menor = min(s.valor for s in candidatos)
-        pesos = [s.valor - menor + 1e-9 for s in candidatos]
-        soma = sum(pesos)
+        lowest = min(s.value for s in candidates)
+        weights = [s.value - lowest + 1e-9 for s in candidates]
+        total = sum(weights)
 
-        r = random.random() * soma
-        acumulado = 0.0
-        idx = janela - 1
-        for k, w in enumerate(pesos):
-            acumulado += w
-            if r <= acumulado:
+        r = random.random() * total
+        cumulative = 0.0
+        idx = window - 1
+        for k, w in enumerate(weights):
+            cumulative += w
+            if r <= cumulative:
                 idx = k
                 break
 
-        nova_lista.append(restantes.pop(idx))
+        ordered.append(remaining.pop(idx))
 
-    return nova_lista
+    return ordered
 
 
 def two_phase_selection(
     savings: list[Saving],
-    paradas_ativas: set[int],
-    ctx: Contexto,
-    iteracoes: int = ITER_TWO_PHASE,
-) -> list[Rota]:
+    active_stops: set[int],
+    ctx: Context,
+    iterations: int = ITER_TWO_PHASE,
+) -> list[Route]:
     """Procedimento CW-2: reordena savings via roleta e guarda a melhor."""
-    melhor_rotas = _fundir(savings, paradas_ativas, ctx)
-    melhor_custo = _obj_total(melhor_rotas)
+    best_routes = _merge(savings, active_stops, ctx)
+    best_cost = _obj_total(best_routes)
 
-    savings_atual = list(savings)
+    current_savings = list(savings)
 
-    for _ in range(iteracoes):
+    for _ in range(iterations):
         # Tamanho do torneio T ∈ [3, 6] conforme o artigo (seção 2.3).
-        tamanho_torneio = random.randint(
-            3, min(6, max(3, len(savings_atual)))
+        tournament_size = random.randint(
+            3, min(6, max(3, len(current_savings)))
         )
-        nova_ordem = _roulette_wheel(savings_atual, tamanho_torneio)
-        novas_rotas = _fundir(nova_ordem, paradas_ativas, ctx)
-        novo_custo = _obj_total(novas_rotas)
+        new_order = _roulette_wheel(current_savings, tournament_size)
+        new_routes = _merge(new_order, active_stops, ctx)
+        new_cost = _obj_total(new_routes)
 
-        if novo_custo < melhor_custo:
-            melhor_custo = novo_custo
-            melhor_rotas = novas_rotas
-            savings_atual = nova_ordem
+        if new_cost < best_cost:
+            best_cost = new_cost
+            best_routes = new_routes
+            current_savings = new_order
 
-    return melhor_rotas
+    return best_routes

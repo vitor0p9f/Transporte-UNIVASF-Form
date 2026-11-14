@@ -10,23 +10,23 @@ from .constants import (
     LAMBDA_MIN,
     LAMBDA_PASSO,
 )
-from .construction import _fundir, two_phase_selection
+from .construction import _merge, two_phase_selection
 from .improvement import post_improvement
-from .metrics import _limite_texto, calcular_savings_ovrp
-from .model import Contexto, Rota
+from .metrics import _time_limit_text, compute_savings_ovrp
+from .model import Context, Route
 from .objective import _obj_total
 
 
 def clarke_wright_ovrp(
-    ctx: Contexto,
+    ctx: Context,
     lam: float | None = None,
-    usar_two_phase: bool = True,
-    usar_postimprove: bool = True,
-    iteracoes: int = ITER_TWO_PHASE,
-    iter_postimprov: int = ITER_POSTIMPROVE,
+    use_two_phase: bool = True,
+    use_post_improvement: bool = True,
+    iterations: int = ITER_TWO_PHASE,
+    post_improvement_iterations: int = ITER_POSTIMPROVE,
     seed: int | None = 42,
     verbose: bool = True,
-) -> tuple[list[Rota], float]:
+) -> tuple[list[Route], float]:
     """Executa o Clarke-Wright OVRP completo (CW-1 + CW-2 + CW-3).
 
     Se λ não for fornecido, testa todos os valores de 0.1 a 2.0 (incremento
@@ -46,20 +46,20 @@ def clarke_wright_ovrp(
     if seed is not None:
         random.seed(seed)
 
-    paradas_ativas = set(ctx.carga_parada.keys())
+    active_stops = set(ctx.stop_loads.keys())
 
-    if not paradas_ativas:
+    if not active_stops:
         if verbose:
             print("[clarke_wright] Nenhuma parada com demanda neste período.")
         return [], 0.0
 
     if verbose:
         print(
-            f"\n[CW-OVRP] {len(paradas_ativas)} paradas | "
-            f"sentido: {ctx.sentido} | depósito: {ctx.deposito} | "
-            f"cap: {ctx.capacidade} | "
-            f"limite: {_limite_texto(ctx.limite_tempo)} | "
-            f"restrições: {ctx.restricoes.chave} | modelo: {ctx.modelo.nome}"
+            f"\n[CW-OVRP] {len(active_stops)} paradas | "
+            f"sentido: {ctx.sense} | depósito: {ctx.depot} | "
+            f"cap: {ctx.capacity} | "
+            f"limite: {_time_limit_text(ctx.max_time)} | "
+            f"restrições: {ctx.restrictions.key} | modelo: {ctx.bus_model.name}"
         )
 
     # ── CW-1: testa múltiplos λ e guarda o melhor ──────────────────────────
@@ -72,62 +72,62 @@ def clarke_wright_ovrp(
         ]
     )
 
-    melhor_rotas: list[Rota] | None = None
-    melhor_custo = INF
-    melhor_lam = lambdas[0]
+    best_routes: list[Route] | None = None
+    best_cost = INF
+    best_lambda = lambdas[0]
 
-    for lam_valor in lambdas:
-        savings = calcular_savings_ovrp(
-            sorted(paradas_ativas), ctx, lam_valor
+    for lambda_value in lambdas:
+        savings = compute_savings_ovrp(
+            sorted(active_stops), ctx, lambda_value
         )
 
-        if usar_two_phase:
-            rotas_lam = two_phase_selection(
+        if use_two_phase:
+            lambda_routes = two_phase_selection(
                 savings,
-                paradas_ativas,
+                active_stops,
                 ctx,
-                iteracoes=iteracoes,
+                iterations=iterations,
             )
         else:
-            rotas_lam = _fundir(savings, paradas_ativas, ctx)
+            lambda_routes = _merge(savings, active_stops, ctx)
 
-        custo_lam = _obj_total(rotas_lam)
+        lambda_cost = _obj_total(lambda_routes)
         if verbose:
-            maior_tempo = max((r.tempo_min for r in rotas_lam), default=0)
+            longest_time = max((r.time_minutes for r in lambda_routes), default=0)
             print(
-                f"  lam={lam_valor:.1f} -> {len(rotas_lam)} veiculos | "
-                f"R${custo_lam:.2f} | "
-                f"{sum(r.dist_km for r in rotas_lam):.1f} km | "
-                f"maior rota {maior_tempo} min"
+                f"  lam={lambda_value:.1f} -> {len(lambda_routes)} veiculos | "
+                f"R${lambda_cost:.2f} | "
+                f"{sum(r.distance_km for r in lambda_routes):.1f} km | "
+                f"maior rota {longest_time} min"
             )
 
-        if custo_lam < melhor_custo:
-            melhor_custo = custo_lam
-            melhor_rotas = rotas_lam
-            melhor_lam = lam_valor
+        if lambda_cost < best_cost:
+            best_cost = lambda_cost
+            best_routes = lambda_routes
+            best_lambda = lambda_value
 
     if verbose:
-        print(f"\n  [OK] Melhor lam = {melhor_lam} | custo R${melhor_custo:.2f}")
+        print(f"\n  [OK] Melhor lam = {best_lambda} | custo R${best_cost:.2f}")
 
     # ── CW-3: post-improvement sobre a melhor solução ──────────────────────
-    if usar_postimprove and melhor_rotas:
+    if use_post_improvement and best_routes:
         if verbose:
             print("  Aplicando post-improvement (2-opt / shift / swap)...")
-        melhor_rotas = post_improvement(
-            melhor_rotas,
+        best_routes = post_improvement(
+            best_routes,
             ctx,
-            max_iter_sem_melhora=iter_postimprov,
+            max_iterations_without_improvement=post_improvement_iterations,
         )
-        custo_pos = _obj_total(melhor_rotas)
+        improved_cost = _obj_total(best_routes)
         if verbose:
-            reducao = (
-                round((melhor_custo - custo_pos) / melhor_custo * 100, 2)
-                if melhor_custo > 0
+            reduction = (
+                round((best_cost - improved_cost) / best_cost * 100, 2)
+                if best_cost > 0
                 else 0.0
             )
             print(
-                f"  [OK] Apos post-improvement: R${custo_pos:.2f} "
-                f"(-{reducao}%)"
+                f"  [OK] Apos post-improvement: R${improved_cost:.2f} "
+                f"(-{reduction}%)"
             )
 
-    return melhor_rotas or [], melhor_lam
+    return best_routes or [], best_lambda

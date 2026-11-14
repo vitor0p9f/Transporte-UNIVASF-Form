@@ -7,20 +7,20 @@ ITER_TWO_PHASE = 5000  # iterações da two-phase selection (artigo: 5000)
 ITER_POSTIMPROVE = 500  # iterações sem melhora para parar post-improvement
 
 #: Período de demanda usado quando nem a CLI nem o cenário dizem qual.
-PERIODO_PADRAO = "morning_1"
+DEFAULT_PERIOD = "morning_1"
 #: Preço do litro usado quando o cenário não traz `diesel_price_per_liter`.
-DIESEL_PADRAO = 6.00
+DEFAULT_DIESEL_PRICE = 6.00
 #: Consumo usado no modelo genérico (km/L), quando não há frota no cenário.
-CONSUMO_PADRAO = 3.00
+DEFAULT_KM_PER_LITER = 3.00
 
 #: Capacidade assumida quando nem o cenário nem o chamador informam uma.
-CAPACIDADE_PADRAO = 48
+DEFAULT_CAPACITY = 48
 
 INF = float("inf")
 
 #: Chaves aceitas para escolher quais restrições de rota valem.
 #: Cada valor é (checar capacidade, checar tempo).
-RESTRICOES = {
+RESTRICTIONS = {
     "capacidade": (True, False),
     "tempo": (False, True),
     "ambas": (True, True),

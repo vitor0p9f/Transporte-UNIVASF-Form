@@ -3,21 +3,21 @@
 import random
 
 from .constants import ITER_POSTIMPROVE
-from .construction import _melhor_direcao
-from .metrics import _atualizar_custo, _atualizar_rota, _dist_rota, _tempo_rota
-from .model import Contexto, Rota
+from .construction import _best_direction
+from .metrics import _route_distance, _route_time, _update_cost, _update_route
+from .model import Context, Route
 from .objective import _obj_total
 
 
-def _tentar_movimento(
-    rotas: list[Rota],
+def _try_move(
+    routes: list[Route],
     a: int,
     b: int,
-    novas_a: list[int],
-    novas_b: list[int],
-    carga_a: int,
-    carga_b: int,
-    ctx: Contexto,
+    new_a: list[int],
+    new_b: list[int],
+    load_a: int,
+    load_b: int,
+    ctx: Context,
 ) -> bool:
     """Commit a move of the pair (a, b) when it is legal and cheaper.
 
@@ -26,27 +26,27 @@ def _tentar_movimento(
     commit only if the pair's fuel cost drops. The comparison is against the
     routes' current cost, so the caller does not have to read it beforehand.
     """
-    novas_a = _melhor_direcao(novas_a, ctx)
-    novas_b = _melhor_direcao(novas_b, ctx)
+    new_a = _best_direction(new_a, ctx)
+    new_b = _best_direction(new_b, ctx)
     if not (
-        ctx.cabe(carga_a, _tempo_rota(novas_a, ctx))
-        and ctx.cabe(carga_b, _tempo_rota(novas_b, ctx))
+        ctx.fits(load_a, _route_time(new_a, ctx))
+        and ctx.fits(load_b, _route_time(new_b, ctx))
     ):
         return False
 
-    custo_antes = rotas[a].custo_brl + rotas[b].custo_brl
-    custo_depois = ctx.modelo.custo_rota(
-        _dist_rota(novas_a, ctx)
-    ) + ctx.modelo.custo_rota(_dist_rota(novas_b, ctx))
-    if custo_depois >= custo_antes - 1e-6:
+    cost_before = routes[a].cost_brl + routes[b].cost_brl
+    cost_after = ctx.bus_model.route_cost(
+        _route_distance(new_a, ctx)
+    ) + ctx.bus_model.route_cost(_route_distance(new_b, ctx))
+    if cost_after >= cost_before - 1e-6:
         return False
 
-    _atualizar_rota(rotas[a], novas_a, carga_a, ctx)
-    _atualizar_rota(rotas[b], novas_b, carga_b, ctx)
+    _update_route(routes[a], new_a, load_a, ctx)
+    _update_route(routes[b], new_b, load_b, ctx)
     return True
 
 
-def _2opt_rota(rota: Rota, ctx: Contexto) -> Rota:
+def _two_opt_route(route: Route, ctx: Context) -> Route:
     """2-opt intra-rota: inverte segmentos internos e mantém o melhor.
 
     Aplica CW-2 (melhor direção) após cada melhoria.
@@ -54,136 +54,136 @@ def _2opt_rota(rota: Rota, ctx: Contexto) -> Rota:
     A carga não muda, mas o tempo pode: com a restrição ativa, candidato que
     estoura o limite é descartado (a distância cair não garante tempo menor).
     """
-    paradas = list(rota.paradas)
+    stops = list(route.stops)
 
-    melhorou = True
-    while melhorou:
-        melhorou = False
-        dist_atual = _dist_rota(paradas, ctx)
-        for i in range(len(paradas) - 1):
-            for j in range(i + 2, len(paradas)):
-                nova = (
-                    paradas[: i + 1]
-                    + list(reversed(paradas[i + 1 : j + 1]))
-                    + paradas[j + 1 :]
+    improved = True
+    while improved:
+        improved = False
+        current_distance = _route_distance(stops, ctx)
+        for i in range(len(stops) - 1):
+            for j in range(i + 2, len(stops)):
+                new_stops = (
+                    stops[: i + 1]
+                    + list(reversed(stops[i + 1 : j + 1]))
+                    + stops[j + 1 :]
                 )
-                nova = _melhor_direcao(nova, ctx)
-                if not ctx.cabe(rota.carga, _tempo_rota(nova, ctx)):
+                new_stops = _best_direction(new_stops, ctx)
+                if not ctx.fits(route.load, _route_time(new_stops, ctx)):
                     continue
-                d_nova = _dist_rota(nova, ctx)
-                if d_nova < dist_atual - 1e-6:
-                    paradas = nova
-                    dist_atual = d_nova
-                    melhorou = True
+                new_distance = _route_distance(new_stops, ctx)
+                if new_distance < current_distance - 1e-6:
+                    stops = new_stops
+                    current_distance = new_distance
+                    improved = True
 
-    rota.paradas = paradas
-    return _atualizar_custo(rota, ctx)
+    route.stops = stops
+    return _update_cost(route, ctx)
 
 
 def _shift_10(
-    rotas: list[Rota],
-    ctx: Contexto,
-) -> list[Rota]:
+    routes: list[Route],
+    ctx: Context,
+) -> list[Route]:
     """Shift 1-0: move uma parada de uma rota para outra.
 
     Aceita se não violar a(s) restrição(ões) ativa(s) e se reduzir o objetivo
     (custo de combustível). Atualiza a carga das rotas.
     """
-    melhorou = True
-    while melhorou:
-        melhorou = False
-        for a in range(len(rotas)):
-            for pos_i in range(len(rotas[a].paradas)):
-                parada = rotas[a].paradas[pos_i]
-                delta = ctx.carga_parada.get(parada, 0)
+    improved = True
+    while improved:
+        improved = False
+        for a in range(len(routes)):
+            for pos_i in range(len(routes[a].stops)):
+                stop = routes[a].stops[pos_i]
+                delta = ctx.stop_loads.get(stop, 0)
 
-                for b in range(len(rotas)):
+                for b in range(len(routes)):
                     if a == b:
                         continue
 
-                    carga_a = rotas[a].carga - delta
-                    carga_b = rotas[b].carga + delta
-                    if ctx.restricoes.capacidade and carga_b > ctx.capacidade:
+                    load_a = routes[a].load - delta
+                    load_b = routes[b].load + delta
+                    if ctx.restrictions.capacity and load_b > ctx.capacity:
                         continue
 
                     # Testa inserção no início e fim da rota b
-                    for pos_j in (0, len(rotas[b].paradas)):
-                        novas_a = list(rotas[a].paradas)
-                        novas_a.pop(pos_i)
-                        if not novas_a:
+                    for pos_j in (0, len(routes[b].stops)):
+                        new_a = list(routes[a].stops)
+                        new_a.pop(pos_i)
+                        if not new_a:
                             continue  # não cria rota vazia
-                        novas_b = list(rotas[b].paradas)
-                        novas_b.insert(pos_j, parada)
+                        new_b = list(routes[b].stops)
+                        new_b.insert(pos_j, stop)
 
-                        if _tentar_movimento(
-                            rotas, a, b, novas_a, novas_b, carga_a, carga_b, ctx
+                        if _try_move(
+                            routes, a, b, new_a, new_b, load_a, load_b, ctx
                         ):
-                            melhorou = True
+                            improved = True
                             break
-                    if melhorou:
+                    if improved:
                         break
-                if melhorou:
+                if improved:
                     break
-            if melhorou:
+            if improved:
                 break
 
-    return rotas
+    return routes
 
 
 def _swap_11(
-    rotas: list[Rota],
-    ctx: Contexto,
-) -> list[Rota]:
+    routes: list[Route],
+    ctx: Context,
+) -> list[Route]:
     """Swap 1-1: troca uma parada entre duas rotas.
 
     Aceita se não violar a(s) restrição(ões) ativa(s) e se reduzir o objetivo
     (custo de combustível). Atualiza a carga das rotas.
     """
-    melhorou = True
-    while melhorou:
-        melhorou = False
-        for a in range(len(rotas)):
-            for b in range(a + 1, len(rotas)):
-                for pos_i in range(len(rotas[a].paradas)):
-                    for pos_j in range(len(rotas[b].paradas)):
-                        pi = rotas[a].paradas[pos_i]
-                        pj = rotas[b].paradas[pos_j]
-                        cp_i = ctx.carga_parada.get(pi, 0)
-                        cp_j = ctx.carga_parada.get(pj, 0)
+    improved = True
+    while improved:
+        improved = False
+        for a in range(len(routes)):
+            for b in range(a + 1, len(routes)):
+                for pos_i in range(len(routes[a].stops)):
+                    for pos_j in range(len(routes[b].stops)):
+                        stop_i = routes[a].stops[pos_i]
+                        stop_j = routes[b].stops[pos_j]
+                        stop_load_i = ctx.stop_loads.get(stop_i, 0)
+                        stop_load_j = ctx.stop_loads.get(stop_j, 0)
 
-                        carga_a = rotas[a].carga - cp_i + cp_j
-                        carga_b = rotas[b].carga - cp_j + cp_i
-                        if ctx.restricoes.capacidade and (
-                            carga_a > ctx.capacidade
-                            or carga_b > ctx.capacidade
+                        load_a = routes[a].load - stop_load_i + stop_load_j
+                        load_b = routes[b].load - stop_load_j + stop_load_i
+                        if ctx.restrictions.capacity and (
+                            load_a > ctx.capacity
+                            or load_b > ctx.capacity
                         ):
                             continue
 
-                        novas_a = list(rotas[a].paradas)
-                        novas_b = list(rotas[b].paradas)
-                        novas_a[pos_i] = pj
-                        novas_b[pos_j] = pi
+                        new_a = list(routes[a].stops)
+                        new_b = list(routes[b].stops)
+                        new_a[pos_i] = stop_j
+                        new_b[pos_j] = stop_i
 
-                        if _tentar_movimento(
-                            rotas, a, b, novas_a, novas_b, carga_a, carga_b, ctx
+                        if _try_move(
+                            routes, a, b, new_a, new_b, load_a, load_b, ctx
                         ):
-                            melhorou = True
+                            improved = True
                             break
-                    if melhorou:
+                    if improved:
                         break
-                if melhorou:
+                if improved:
                     break
-            if melhorou:
+            if improved:
                 break
 
-    return rotas
+    return routes
 
 
 def post_improvement(
-    rotas: list[Rota],
-    ctx: Contexto,
-    max_iter_sem_melhora: int = ITER_POSTIMPROVE,
-) -> list[Rota]:
+    routes: list[Route],
+    ctx: Context,
+    max_iterations_without_improvement: int = ITER_POSTIMPROVE,
+) -> list[Route]:
     """Procedimento CW-3: aplica busca local até não haver mais melhorias.
 
     Operadores (com igual probabilidade, conforme Tabela 1 do artigo):
@@ -191,37 +191,37 @@ def post_improvement(
       - shift 1-0 inter-rotas
       - swap 1-1 inter-rotas
     """
-    rotas = [_copiar_rota(r) for r in rotas]
-    melhor_custo = _obj_total(rotas)
-    iter_sem_melhora = 0
+    routes = [_copy_route(r) for r in routes]
+    best_cost = _obj_total(routes)
+    iterations_without_improvement = 0
 
-    operadores = [
-        lambda r: [_2opt_rota(x, ctx) for x in r],
+    operators = [
+        lambda r: [_two_opt_route(x, ctx) for x in r],
         lambda r: _shift_10(r, ctx),
         lambda r: _swap_11(r, ctx),
     ]
 
-    while iter_sem_melhora < max_iter_sem_melhora:
-        op = random.choice(operadores)
-        rotas_novas = op(rotas)
-        novo_custo = _obj_total(rotas_novas)
+    while iterations_without_improvement < max_iterations_without_improvement:
+        operator = random.choice(operators)
+        new_routes = operator(routes)
+        new_cost = _obj_total(new_routes)
 
-        if novo_custo < melhor_custo - 1e-6:
-            melhor_custo = novo_custo
-            rotas = rotas_novas
-            iter_sem_melhora = 0
+        if new_cost < best_cost - 1e-6:
+            best_cost = new_cost
+            routes = new_routes
+            iterations_without_improvement = 0
         else:
-            iter_sem_melhora += 1
+            iterations_without_improvement += 1
 
-    return rotas
+    return routes
 
 
-def _copiar_rota(rota: Rota) -> Rota:
+def _copy_route(route: Route) -> Route:
     """Cópia da rota: os operadores do CW-3 a mutam no lugar."""
-    return Rota(
-        paradas=list(rota.paradas),
-        carga=rota.carga,
-        dist_km=rota.dist_km,
-        tempo_min=rota.tempo_min,
-        custo_brl=rota.custo_brl,
+    return Route(
+        stops=list(route.stops),
+        load=route.load,
+        distance_km=route.distance_km,
+        time_minutes=route.time_minutes,
+        cost_brl=route.cost_brl,
     )

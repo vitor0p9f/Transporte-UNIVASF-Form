@@ -72,10 +72,10 @@ DEFAULT_SCENARIOS = DEFAULT_REPORT_SCENARIOS
 #: Full CW setup for the controlled comparison.
 CW_KWARGS: dict = {
     "lam": None,
-    "usar_two_phase": True,
-    "usar_postimprove": True,
-    "iteracoes": 2000,
-    "iter_postimprov": 500,
+    "use_two_phase": True,
+    "use_post_improvement": True,
+    "iterations": 2000,
+    "post_improvement_iterations": 500,
     "seed": 42,
 }
 
@@ -175,15 +175,15 @@ def run_cw(scenario: dict, buses, config: Config) -> tuple:
         if config.ignore_capacity
         else min(bus.passenger_capacity for bus in buses)
     )
-    data, routes, context, attendance, _lam = clarke_wright.resolver_cenario(
+    data, routes, context, attendance, _lam = clarke_wright.solve_scenario(
         scenario,
-        deposito=scenario_depot(scenario),
-        restricoes=config.cw_restricao,
-        capacidade=capacity,
-        max_rotas=len(buses),
+        depot=scenario_depot(scenario),
+        restrictions=config.cw_restricao,
+        capacity=capacity,
+        max_routes=len(buses),
         **CW_KWARGS,
     )
-    plans, _summary = clarke_wright.planos_e_resumo(
+    plans, _summary = clarke_wright.plans_and_summary(
         routes, context, attendance, buses
     )
     return data, plans

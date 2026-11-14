@@ -1,6 +1,6 @@
 # Resultados controlados — Apenas Restrição Temporal
 
-Gerado em 2026-11-14 08:57.
+Gerado em 2026-11-14 09:18.
 
 Apenas o limite de tempo está ativo: a capacidade foi desativada nas decisões e na avaliação das duas heurísticas (frota com capacidade infinita). Os cenários são a cópia controlada (`scenarios_control.csv` + `scenarios_base_control.csv`) e a frota é a homogênea de `fleet_control.csv`: todos os ônibus são o modelo de menor capacidade do `fleet.csv` (24 lugares e 4.61 km/L). O depósito é o primeiro nó da coluna `origin` do cenário, o mesmo para as duas heurísticas, e o Clarke-Wright é limitado ao número de ônibus da frota.
 

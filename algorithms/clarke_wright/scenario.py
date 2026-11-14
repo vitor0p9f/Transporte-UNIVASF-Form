@@ -9,22 +9,22 @@ from utils.instances import InstanceData, load_instance_data
 from utils.scenarios import load_scenarios, parse_node_labels
 
 from .constants import (
-    CAPACIDADE_PADRAO,
-    CONSUMO_PADRAO,
-    DIESEL_PADRAO,
+    DEFAULT_CAPACITY,
+    DEFAULT_DIESEL_PRICE,
+    DEFAULT_KM_PER_LITER,
+    DEFAULT_PERIOD,
     ITER_POSTIMPROVE,
     ITER_TWO_PHASE,
-    PERIODO_PADRAO,
 )
-from .context import montar_contexto
-from .evaluation import avaliar_atendimento, limitar_frota
-from .model import Atendimento, Contexto, ModeloOnibus, Rota, modelo_de_bus
+from .context import build_context
+from .evaluation import evaluate_attendance, limit_fleet
+from .model import Attendance, BusModel, Context, Route, bus_model
 from .solver import clarke_wright_ovrp
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def _buscar_cenario(scenario_id: str) -> dict:
+def _find_scenario(scenario_id: str) -> dict:
     for scenario in load_scenarios(ROOT):
         if str(scenario["scenario_id"]) == str(scenario_id):
             return scenario
@@ -34,24 +34,24 @@ def _buscar_cenario(scenario_id: str) -> dict:
     )
 
 
-def _frota_do_cenario(cenario: dict | None) -> list[Bus]:
-    if not cenario or not cenario.get("fleet_bus_ids"):
+def _scenario_fleet(scenario: dict | None) -> list[Bus]:
+    if not scenario or not scenario.get("fleet_bus_ids"):
         return []
     return load_fleet(
-        ROOT / "fleet.csv", parse_fleet_ids(cenario["fleet_bus_ids"])
+        ROOT / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
     )
 
 
-def _deposito_do_cenario(cenario: dict | None) -> int | None:
-    if not cenario:
+def _scenario_depot(scenario: dict | None) -> int | None:
+    if not scenario:
         return None
-    origens = parse_node_labels(cenario.get("origin"))
+    origens = parse_node_labels(scenario.get("origin"))
     return origens[0] if origens else None
 
 
-def modelo_de_referencia(
-    cenario: dict | None, capacidade: int, diesel: float
-) -> ModeloOnibus:
+def reference_model(
+    scenario: dict | None, capacity: int, diesel: float
+) -> BusModel:
     """Modelo de custo único do cenário, aplicado às DUAS heurísticas.
 
     Escolhe o ônibus da frota com a capacidade efetiva (o critério que o CW
@@ -60,34 +60,34 @@ def modelo_de_referencia(
     mesmo modelo para o TOP e para o CW, para que os valores sejam
     comparáveis.
     """
-    buses = _frota_do_cenario(cenario)
+    buses = _scenario_fleet(scenario)
     if not buses:
-        return ModeloOnibus(
-            nome="genérico",
-            capacidade=capacidade,
-            consumo_km_l=CONSUMO_PADRAO,
-            custo_litro=diesel,
+        return BusModel(
+            name="genérico",
+            capacity=capacity,
+            km_per_liter=DEFAULT_KM_PER_LITER,
+            diesel_price=diesel,
         )
-    referencia = next(
-        (b for b in buses if b.passenger_capacity == capacidade),
+    reference = next(
+        (b for b in buses if b.passenger_capacity == capacity),
         min(buses, key=lambda b: b.passenger_capacity),
     )
-    return modelo_de_bus(referencia, diesel)
+    return bus_model(reference, diesel)
 
 
-def contexto_do_cenario(
-    cenario: dict | None,
+def scenario_context(
+    scenario: dict | None,
     *,
-    instancia: str | None = None,
-    periodo: str | None = None,
-    deposito: int | None = None,
-    capacidade: int | None = None,
-    limite_tempo: float | None = None,
+    instance: str | None = None,
+    period: str | None = None,
+    depot: int | None = None,
+    capacity: int | None = None,
+    max_time: float | None = None,
     diesel: float | None = None,
-    restricoes: str = "ambas",
-    sentido: str = "auto",
-    max_rotas: int | None = None,
-) -> tuple[InstanceData, Contexto]:
+    restrictions: str = "ambas",
+    sense: str = "auto",
+    max_routes: int | None = None,
+) -> tuple[InstanceData, Context]:
     """Resolve um cenário (instância, depósito, frota, limites) num contexto.
 
     Cada parâmetro explícito vence o que o cenário define; é o mesmo caminho
@@ -97,110 +97,110 @@ def contexto_do_cenario(
     `max_rotas` é o teto de veículos; omitido, vale o tamanho da frota do
     cenário (None só quando não há frota declarada).
     """
-    cenario = cenario or {}
-    instancia = instancia or cenario.get("instance_id")
-    if not instancia:
+    scenario = scenario or {}
+    instance = instance or scenario.get("instance_id")
+    if not instance:
         raise ValueError("informe a instância (o cenário não define uma)")
-    periodo = periodo or cenario.get("period") or PERIODO_PADRAO
-    data = load_instance_data(ROOT / "instances" / instancia, period=periodo)
+    period = period or scenario.get("period") or DEFAULT_PERIOD
+    data = load_instance_data(ROOT / "instances" / instance, period=period)
 
-    if deposito is None:
-        deposito = _deposito_do_cenario(cenario)
-    if deposito is None:
+    if depot is None:
+        depot = _scenario_depot(scenario)
+    if depot is None:
         raise ValueError("informe o depósito (o cenário não define uma origem)")
 
-    buses = _frota_do_cenario(cenario)
+    buses = _scenario_fleet(scenario)
     if diesel is None:
         diesel = (
-            float(cenario["diesel_price_per_liter"])
-            if cenario.get("diesel_price_per_liter")
-            else DIESEL_PADRAO
+            float(scenario["diesel_price_per_liter"])
+            if scenario.get("diesel_price_per_liter")
+            else DEFAULT_DIESEL_PRICE
         )
     # Sem capacidade informada, vale a do menor ônibus da frota: assim toda
     # rota que o CW monta cabe em qualquer ônibus do cenário.
-    if capacidade is None:
-        capacidade = (
+    if capacity is None:
+        capacity = (
             min(b.passenger_capacity for b in buses)
             if buses
-            else CAPACIDADE_PADRAO
+            else DEFAULT_CAPACITY
         )
-    modelo = modelo_de_referencia(cenario, capacidade, diesel)
+    bus_model = reference_model(scenario, capacity, diesel)
 
-    if limite_tempo is None and cenario.get("max_time_limit"):
-        limite_tempo = int(cenario["max_time_limit"])
+    if max_time is None and scenario.get("max_time_limit"):
+        max_time = int(scenario["max_time_limit"])
 
-    if max_rotas is None:
-        max_rotas = len(buses) or None
+    if max_routes is None:
+        max_routes = len(buses) or None
 
-    ctx = montar_contexto(
+    ctx = build_context(
         data,
-        deposito,
-        capacidade=capacidade,
-        limite_tempo=limite_tempo,
-        modelo=modelo,
-        restricoes=restricoes,
-        sentido=sentido,
-        max_rotas=max_rotas,
+        depot,
+        capacity=capacity,
+        max_time=max_time,
+        bus_model=bus_model,
+        restrictions=restrictions,
+        sense=sense,
+        max_routes=max_routes,
     )
     return data, ctx
 
 
-def resolver_cenario(
-    cenario: dict,
+def solve_scenario(
+    scenario: dict,
     *,
-    instancia: str | None = None,
-    periodo: str | None = None,
-    deposito: int | None = None,
-    capacidade: int | None = None,
-    limite_tempo: float | None = None,
+    instance: str | None = None,
+    period: str | None = None,
+    depot: int | None = None,
+    capacity: int | None = None,
+    max_time: float | None = None,
     diesel: float | None = None,
-    restricoes: str = "ambas",
-    sentido: str = "auto",
-    max_rotas: int | None = None,
+    restrictions: str = "ambas",
+    sense: str = "auto",
+    max_routes: int | None = None,
     lam: float | None = None,
-    usar_two_phase: bool = True,
-    usar_postimprove: bool = True,
-    iteracoes: int = ITER_TWO_PHASE,
-    iter_postimprov: int = ITER_POSTIMPROVE,
+    use_two_phase: bool = True,
+    use_post_improvement: bool = True,
+    iterations: int = ITER_TWO_PHASE,
+    post_improvement_iterations: int = ITER_POSTIMPROVE,
     seed: int = 42,
     verbose: bool = False,
-) -> tuple[InstanceData, list[Rota], Contexto, Atendimento, float]:
+) -> tuple[InstanceData, list[Route], Context, Attendance, float]:
     """Roda o CW num cenário e devolve a solução já avaliada.
 
     Devolve `(data, rotas, ctx, atendimento, lambda_usado)` — é o que o
     `main.py` consome para montar a linha do CW na tabela comparativa.
     """
-    data, ctx = contexto_do_cenario(
-        cenario,
-        instancia=instancia,
-        periodo=periodo,
-        deposito=deposito,
-        capacidade=capacidade,
-        limite_tempo=limite_tempo,
+    data, ctx = scenario_context(
+        scenario,
+        instance=instance,
+        period=period,
+        depot=depot,
+        capacity=capacity,
+        max_time=max_time,
         diesel=diesel,
-        restricoes=restricoes,
-        sentido=sentido,
-        max_rotas=max_rotas,
+        restrictions=restrictions,
+        sense=sense,
+        max_routes=max_routes,
     )
-    rotas, lam_usado = clarke_wright_ovrp(
+    routes, lambda_used = clarke_wright_ovrp(
         ctx,
         lam=lam,
-        usar_two_phase=usar_two_phase,
-        usar_postimprove=usar_postimprove,
-        iteracoes=iteracoes,
-        iter_postimprov=iter_postimprov,
+        use_two_phase=use_two_phase,
+        use_post_improvement=use_post_improvement,
+        iterations=iterations,
+        post_improvement_iterations=post_improvement_iterations,
         seed=seed,
         verbose=verbose,
     )
-    rotas = limitar_frota(rotas, ctx)
-    atend = avaliar_atendimento(rotas, ctx)
-    return data, rotas, ctx, atend, lam_usado
+    routes = limit_fleet(routes, ctx)
+    attendance = evaluate_attendance(routes, ctx)
+    return data, routes, ctx, attendance, lambda_used
 
 
-def planos_e_resumo(
-    rotas: list[Rota],
-    ctx: Contexto,
-    atend: Atendimento,
+def plans_and_summary(
+    routes: list[Route],
+    ctx: Context,
+    attendance: Attendance,
     buses: list[Bus] | None = None,
 ) -> tuple[list[BusPlan], FleetSummary]:
     """Converte a solução do CW no modelo de resultado que o `reporting` lê.
@@ -213,37 +213,37 @@ def planos_e_resumo(
     sequenciais depois do maior id.
     """
     ids = [bus.id for bus in (buses or [])]
-    proximo = (max(ids) + 1) if ids else 1
-    planos: list[BusPlan] = []
+    next_id = (max(ids) + 1) if ids else 1
+    plans: list[BusPlan] = []
 
-    for indice, rota in enumerate(rotas):
-        if indice < len(ids):
-            bus_id = ids[indice]
+    for index, route in enumerate(routes):
+        if index < len(ids):
+            bus_id = ids[index]
         else:
-            bus_id = proximo
-            proximo += 1
-        planos.append(
+            bus_id = next_id
+            next_id += 1
+        plans.append(
             BusPlan(
                 bus_id=bus_id,
-                origin=ctx.deposito,
+                origin=ctx.depot,
                 destination=(
-                    rota.paradas[-1] if rota.paradas else ctx.deposito
+                    route.stops[-1] if route.stops else ctx.depot
                 ),
-                stops=(ctx.deposito, *rota.paradas),
-                served_passengers=rota.pax,
-                travel_time_minutes=rota.tempo_min,
-                peak_load=rota.pico,
+                stops=(ctx.depot, *route.stops),
+                served_passengers=route.passengers,
+                travel_time_minutes=route.time_minutes,
+                peak_load=route.peak_load,
                 score=(
-                    rota.pax / rota.tempo_min if rota.tempo_min else 0.0
+                    route.passengers / route.time_minutes if route.time_minutes else 0.0
                 ),
-                served_pairs=tuple(rota.pares),
+                served_pairs=tuple(route.pairs),
             )
         )
 
-    resumo = FleetSummary(
+    summary = FleetSummary(
         rounds=0,
         wins_per_bus=(),
-        unserved_passengers=atend.nao_atendida,
-        unserved_pairs=atend.pares_nao_atendidos,
+        unserved_passengers=attendance.unserved,
+        unserved_pairs=attendance.unserved_pairs,
     )
-    return planos, resumo
+    return plans, summary

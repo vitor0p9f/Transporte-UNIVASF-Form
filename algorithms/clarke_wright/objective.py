@@ -1,8 +1,8 @@
 """Função objetivo: custo de combustível da solução."""
 
-from .model import Rota
+from .model import Route
 
 
-def _obj_total(rotas: list[Rota]) -> float:
+def _obj_total(routes: list[Route]) -> float:
     """Custo de combustível (R$) de um conjunto de rotas."""
-    return sum(r.custo_brl for r in rotas)
+    return sum(r.cost_brl for r in routes)

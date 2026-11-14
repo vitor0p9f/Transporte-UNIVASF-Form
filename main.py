@@ -43,8 +43,8 @@ CW_NAME = "Clarke-Wright"
 #: paper (two-phase, post-improvement); the sweep trades generality for runtime.
 SWEEP_CW_KWARGS: dict = {
     "lam": 1.0,            # λ fixo (CW-1) em vez de varrer 0.1–2.0
-    "usar_two_phase": False,  # CW-1: without the two-phase selection
-    "usar_postimprove": False,  # CW-1: without post-improvement
+    "use_two_phase": False,  # CW-1: without the two-phase selection
+    "use_post_improvement": False,  # CW-1: without post-improvement
 }
 
 
@@ -198,10 +198,10 @@ def solve_clarke_wright(
     The scenario's fleet is the same one `load_fleet` gave the caller, so the
     bus ids assigned by `planos_e_resumo` match the ones in the table.
     """
-    data, routes, context, attendance, _lam = clarke_wright.resolver_cenario(
+    data, routes, context, attendance, _lam = clarke_wright.solve_scenario(
         scenario, **(cw_kwargs or {})
     )
-    plans, summary = clarke_wright.planos_e_resumo(
+    plans, summary = clarke_wright.plans_and_summary(
         routes, context, attendance, buses
     )
     return data, plans, summary

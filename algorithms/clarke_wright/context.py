@@ -4,11 +4,11 @@ import numpy as np
 
 from utils.instances import InstanceData
 
-from .constants import CAPACIDADE_PADRAO, CONSUMO_PADRAO, DIESEL_PADRAO, INF
-from .model import Contexto, ModeloOnibus, Restricoes
+from .constants import DEFAULT_CAPACITY, DEFAULT_DIESEL_PRICE, DEFAULT_KM_PER_LITER, INF
+from .model import BusModel, Context, Restrictions
 
 
-def detectar_sentido(demanda: np.ndarray, deposito: int) -> str:
+def detect_sense(demanda: np.ndarray, depot: int) -> str:
     """Detecta se a viagem é de "ida" ou de "volta" a partir do depósito.
 
     - "volta": o depósito é o campus de onde as pessoas SAEM (embarcam ali).
@@ -17,15 +17,15 @@ def detectar_sentido(demanda: np.ndarray, deposito: int) -> str:
     - "ida": o depósito é a origem e as pessoas embarcam nas paradas rumo ao
       campus. A carga é o nº de EMBARQUES (boarding).
     """
-    embarques = int(demanda[deposito].sum())  # quem sai do depósito
-    desembarques = int(demanda[:, deposito].sum())  # quem chega no depósito
-    return "volta" if embarques > desembarques else "ida"
+    boardings = int(demanda[depot].sum())  # quem sai do depósito
+    alightings = int(demanda[:, depot].sum())  # quem chega no depósito
+    return "volta" if boardings > alightings else "ida"
 
 
-def construir_carga_parada(
+def build_stop_loads(
     demanda: np.ndarray,
-    deposito: int,
-    sentido: str = "auto",
+    depot: int,
+    sense: str = "auto",
 ) -> tuple[dict[int, int], str]:
     """Calcula a carga (passageiros que o ônibus transporta) de cada parada.
 
@@ -34,31 +34,31 @@ def construir_carga_parada(
     (depósito) e a demanda real de cada parada é quanta gente DESCE ali.
     Retorna `(carga_parada, sentido_usado)`.
     """
-    if sentido not in ("auto", "ida", "volta"):
-        raise ValueError(f"sentido '{sentido}' desconhecido (use: auto, ida, volta)")
-    if sentido == "auto":
-        sentido = detectar_sentido(demanda, deposito)
+    if sense not in ("auto", "ida", "volta"):
+        raise ValueError(f"sentido '{sense}' desconhecido (use: auto, ida, volta)")
+    if sense == "auto":
+        sense = detect_sense(demanda, depot)
 
-    por_no = demanda.sum(axis=0) if sentido == "volta" else demanda.sum(axis=1)
-    carga_parada = {
-        no: int(por_no[no])
-        for no in range(1, len(por_no))
-        if no != deposito and por_no[no] > 0
+    per_node = demanda.sum(axis=0) if sense == "volta" else demanda.sum(axis=1)
+    stop_loads = {
+        no: int(per_node[no])
+        for no in range(1, len(per_node))
+        if no != depot and per_node[no] > 0
     }
-    return carga_parada, sentido
+    return stop_loads, sense
 
 
-def montar_contexto(
+def build_context(
     data: InstanceData,
-    deposito: int,
+    depot: int,
     *,
-    capacidade: int | None = None,
-    limite_tempo: float | None = None,
-    modelo: ModeloOnibus | None = None,
-    restricoes: Restricoes | str = "ambas",
-    sentido: str = "auto",
-    max_rotas: int | None = None,
-) -> Contexto:
+    capacity: int | None = None,
+    max_time: float | None = None,
+    bus_model: BusModel | None = None,
+    restrictions: Restrictions | str = "ambas",
+    sense: str = "auto",
+    max_routes: int | None = None,
+) -> Context:
     """Resolve os limites, a chave de restrições e a carga por parada.
 
     `capacidade` e `limite_tempo` são independentes do modelo e do cenário:
@@ -66,38 +66,38 @@ def montar_contexto(
     tem efeito; sem capacidade informada, vale a do modelo. `max_rotas` é o
     teto de veículos do cenário (None = sem limite).
     """
-    if isinstance(restricoes, str):
-        restricoes = Restricoes.da_chave(restricoes)
+    if isinstance(restrictions, str):
+        restrictions = Restrictions.from_key(restrictions)
 
-    if modelo is None:
-        capacidade_modelo = (
-            capacidade if capacidade is not None else CAPACIDADE_PADRAO
+    if bus_model is None:
+        model_capacity = (
+            capacity if capacity is not None else DEFAULT_CAPACITY
         )
-        modelo = ModeloOnibus(
-            nome="genérico",
-            capacidade=capacidade_modelo,
-            consumo_km_l=CONSUMO_PADRAO,
-            custo_litro=DIESEL_PADRAO,
+        bus_model = BusModel(
+            name="genérico",
+            capacity=model_capacity,
+            km_per_liter=DEFAULT_KM_PER_LITER,
+            diesel_price=DEFAULT_DIESEL_PRICE,
         )
-    if capacidade is None:
-        capacidade = modelo.capacidade
-    if limite_tempo is None:
-        limite_tempo = INF
+    if capacity is None:
+        capacity = bus_model.capacity
+    if max_time is None:
+        max_time = INF
 
-    carga_parada, sentido_usado = construir_carga_parada(
-        data.demand, deposito, sentido
+    stop_loads, used_sense = build_stop_loads(
+        data.demand, depot, sense
     )
-    return Contexto(
+    return Context(
         # float evita surpresa se a instância trouxer a distância como int
-        distancia=data.distance.astype(float, copy=False),
-        tempo=data.time,
-        deposito=deposito,
-        capacidade=capacidade,
-        limite_tempo=limite_tempo,
-        modelo=modelo,
-        carga_parada=carga_parada,
+        distance=data.distance.astype(float, copy=False),
+        time=data.time,
+        depot=depot,
+        capacity=capacity,
+        max_time=max_time,
+        bus_model=bus_model,
+        stop_loads=stop_loads,
         demanda=data.demand,
-        restricoes=restricoes,
-        sentido=sentido_usado,
-        max_rotas=max_rotas,
+        restrictions=restrictions,
+        sense=used_sense,
+        max_routes=max_routes,
     )

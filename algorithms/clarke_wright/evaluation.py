@@ -5,22 +5,22 @@ import numpy as np
 from algorithms.top_univasf.simulation import simulate_stops
 from utils.instances import InstanceData
 
-from .model import Atendimento, Contexto, Rota
+from .model import Attendance, Context, Route
 
 
-def _instancia_do_contexto(ctx: Contexto) -> InstanceData:
+def _instance_from_context(ctx: Context) -> InstanceData:
     """`InstanceData` mínimo para a simulação (ela só lê tempo e demanda)."""
     return InstanceData(
-        nodes=[], distance=ctx.distancia, time=ctx.tempo, demand=ctx.demanda
+        nodes=[], distance=ctx.distance, time=ctx.time, demand=ctx.demanda
     )
 
 
-def _sequencia_simulada(ctx: Contexto, rota: Rota) -> tuple[int, ...]:
+def _simulated_sequence(ctx: Context, route: Route) -> tuple[int, ...]:
     """A rota aberta como o simulador a vê: depósito + paradas."""
-    return (ctx.deposito, *rota.paradas)
+    return (ctx.depot, *route.stops)
 
 
-def limitar_frota(rotas: list[Rota], ctx: Contexto) -> list[Rota]:
+def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:
     """Descarta rotas até a solução caber na frota do cenário.
 
     O CW não conhece o número de veículos: ele abre uma rota por parada e
@@ -32,37 +32,37 @@ def limitar_frota(rotas: list[Rota], ctx: Contexto) -> list[Rota]:
 
     Sem teto (`max_rotas is None`) ou quando a solução já cabe, é um no-op.
     """
-    if ctx.max_rotas is None or len(rotas) <= ctx.max_rotas:
-        return rotas
+    if ctx.max_routes is None or len(routes) <= ctx.max_routes:
+        return routes
 
-    instancia = _instancia_do_contexto(ctx)
-    restante = np.array(ctx.demanda, copy=True)
-    candidatas = list(rotas)
-    escolhidas: list[Rota] = []
+    instance = _instance_from_context(ctx)
+    remaining = np.array(ctx.demanda, copy=True)
+    candidates = list(routes)
+    chosen: list[Route] = []
 
-    def simular(rota: Rota):
+    def simulate(route: Route):
         return simulate_stops(
-            instancia,
-            _sequencia_simulada(ctx, rota),
-            ctx.capacidade,
-            restante,
+            instance,
+            _simulated_sequence(ctx, route),
+            ctx.capacity,
+            remaining,
         )
 
-    while candidatas and len(escolhidas) < ctx.max_rotas:
+    while candidates and len(chosen) < ctx.max_routes:
         # Uma simulação por candidata: a escolhida já vem com o resultado.
-        resultado, melhor = max(
-            ((simular(rota), rota) for rota in candidatas),
-            key=lambda par: par[0].passengers,
+        outcome, best = max(
+            ((simulate(route), route) for route in candidates),
+            key=lambda pair: pair[0].passengers,
         )
-        for origem, destino, quantidade in resultado.pairs:
-            restante[origem, destino] -= quantidade
-        escolhidas.append(melhor)
-        candidatas = [rota for rota in candidatas if rota is not melhor]
+        for origin, destination, quantity in outcome.pairs:
+            remaining[origin, destination] -= quantity
+        chosen.append(best)
+        candidates = [route for route in candidates if route is not best]
 
-    return escolhidas
+    return chosen
 
 
-def avaliar_atendimento(rotas: list[Rota], ctx: Contexto) -> Atendimento:
+def evaluate_attendance(routes: list[Route], ctx: Context) -> Attendance:
     """Mede o atendimento real de cada rota com a simulação do TOP UNIVASF.
 
     A rota do CW é aberta e começa no depósito, então a sequência simulada é
@@ -73,42 +73,42 @@ def avaliar_atendimento(rotas: list[Rota], ctx: Contexto) -> Atendimento:
     NÃO é critério de decisão: preenche `Rota.pax/pico/pares` depois que a
     solução está fechada.
     """
-    restante = np.array(ctx.demanda, copy=True)
-    instancia = _instancia_do_contexto(ctx)
-    pares_totais: list[tuple[int, int, int]] = []
+    remaining = np.array(ctx.demanda, copy=True)
+    instance = _instance_from_context(ctx)
+    all_pairs: list[tuple[int, int, int]] = []
 
-    for rota in rotas:
-        resultado = simulate_stops(
-            instancia,
-            _sequencia_simulada(ctx, rota),
-            ctx.capacidade,
-            restante,
+    for route in routes:
+        outcome = simulate_stops(
+            instance,
+            _simulated_sequence(ctx, route),
+            ctx.capacity,
+            remaining,
         )
-        rota.pax = resultado.passengers
-        rota.pico = resultado.peak_load
-        rota.pares = tuple(resultado.pairs)
-        for origem, destino, quantidade in resultado.pairs:
-            restante[origem, destino] -= quantidade
-        pares_totais.extend(resultado.pairs)
+        route.passengers = outcome.passengers
+        route.peak_load = outcome.peak_load
+        route.pairs = tuple(outcome.pairs)
+        for origin, destination, quantity in outcome.pairs:
+            remaining[origin, destination] -= quantity
+        all_pairs.extend(outcome.pairs)
 
     total = int(ctx.demanda.sum())
-    atendida = sum(r.pax for r in rotas)
-    nao_atendidos = tuple(
+    served = sum(r.passengers for r in routes)
+    unserved = tuple(
         sorted(
             (
-                (origem, destino, int(quantidade))
-                for (origem, destino), quantidade in np.ndenumerate(restante)
-                if quantidade > 0
+                (origin, destination, int(quantity))
+                for (origin, destination), quantity in np.ndenumerate(remaining)
+                if quantity > 0
             ),
-            key=lambda par: (-par[2], par[0], par[1]),
+            key=lambda pair: (-pair[2], pair[0], pair[1]),
         )
     )
-    return Atendimento(
-        demanda_total=total,
-        alocada=sum(r.carga for r in rotas),
-        atendida=atendida,
-        nao_atendida=total - atendida,
-        pico=max((r.pico for r in rotas), default=0),
-        pares_atendidos=tuple(pares_totais),
-        pares_nao_atendidos=nao_atendidos,
+    return Attendance(
+        total_demand=total,
+        allocated=sum(r.load for r in routes),
+        served=served,
+        unserved=total - served,
+        peak_load=max((r.peak_load for r in routes), default=0),
+        served_pairs=tuple(all_pairs),
+        unserved_pairs=unserved,
     )

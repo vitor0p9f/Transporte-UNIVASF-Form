@@ -3,46 +3,46 @@
 from utils.paths import path_distance, path_time_minutes
 
 from .constants import INF
-from .model import Contexto, Rota, Saving
+from .model import Context, Route, Saving
 
 
-def _dist_rota(paradas: list[int], ctx: Contexto) -> float:
+def _route_distance(stops: list[int], ctx: Context) -> float:
     """Distância da rota aberta: depot → p1 → p2 → ... → pn.
 
     Não inclui retorno ao depósito (OVRP).
     """
-    if not paradas:
+    if not stops:
         return 0.0
-    return round(path_distance(ctx.distancia, paradas, start=ctx.deposito), 4)
+    return round(path_distance(ctx.distance, stops, start=ctx.depot), 4)
 
 
-def _tempo_rota(paradas: list[int], ctx: Contexto) -> int:
+def _route_time(stops: list[int], ctx: Context) -> int:
     """Tempo total da rota aberta, em minutos (matriz `time` do cenário)."""
-    if not paradas:
+    if not stops:
         return 0
-    return path_time_minutes(ctx.tempo, paradas, start=ctx.deposito)
+    return path_time_minutes(ctx.time, stops, start=ctx.depot)
 
 
-def _atualizar_custo(rota: Rota, ctx: Contexto) -> Rota:
+def _update_cost(route: Route, ctx: Context) -> Route:
     """Recalcula dist_km, tempo_min e custo_brl da rota."""
-    rota.dist_km = _dist_rota(rota.paradas, ctx)
-    rota.tempo_min = _tempo_rota(rota.paradas, ctx)
-    rota.custo_brl = ctx.modelo.custo_rota(rota.dist_km)
-    return rota
+    route.distance_km = _route_distance(route.stops, ctx)
+    route.time_minutes = _route_time(route.stops, ctx)
+    route.cost_brl = ctx.bus_model.route_cost(route.distance_km)
+    return route
 
 
-def _atualizar_rota(
-    rota: Rota, paradas: list[int], carga: int, ctx: Contexto
-) -> Rota:
+def _update_route(
+    route: Route, stops: list[int], load: int, ctx: Context
+) -> Route:
     """Troca as paradas/carga e recalcula as medidas da rota."""
-    rota.paradas = paradas
-    rota.carga = carga
-    return _atualizar_custo(rota, ctx)
+    route.stops = stops
+    route.load = load
+    return _update_cost(route, ctx)
 
 
-def calcular_savings_ovrp(
-    paradas: list[int],
-    ctx: Contexto,
+def compute_savings_ovrp(
+    stops: list[int],
+    ctx: Context,
     lam: float,
 ) -> list[Saving]:
     """Fórmula OVRP modificada (equação 5 do artigo).
@@ -58,19 +58,19 @@ def calcular_savings_ovrp(
         lam: parâmetro de forma λ ∈ [0.1, 2.0]
     """
     savings = []
-    for idx_i in range(len(paradas)):
-        for idx_j in range(idx_i + 1, len(paradas)):
-            pi, pj = paradas[idx_i], paradas[idx_j]
+    for idx_i in range(len(stops)):
+        for idx_j in range(idx_i + 1, len(stops)):
+            stop_i, stop_j = stops[idx_i], stops[idx_j]
 
             # Equação 5 do artigo (OVRP com λ)
-            s = float(ctx.distancia[ctx.deposito, pj]) - lam * float(
-                ctx.distancia[pi, pj]
+            s = float(ctx.distance[ctx.depot, stop_j]) - lam * float(
+                ctx.distance[stop_i, stop_j]
             )
-            savings.append(Saving(i=pi, j=pj, valor=round(s, 6)))
+            savings.append(Saving(i=stop_i, j=stop_j, value=round(s, 6)))
 
     savings.sort()  # decrescente via __lt__
     return savings
 
 
-def _limite_texto(limite: float) -> str:
-    return "sem limite" if limite == INF else f"{limite:g} min"
+def _time_limit_text(limit: float) -> str:
+    return "sem limite" if limit == INF else f"{limit:g} min"
