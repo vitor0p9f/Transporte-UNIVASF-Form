@@ -1,16 +1,17 @@
-"""Rendering one scenario outcome, shared by main.py and scripts/run_all.py.
+"""Rendering one scenario outcome, shared by every report runner.
 
-Both the interactive CLI and the sweep report show the same facts about a run:
-how many buses were used, which pairs were served, which buses stayed idle and
-which routes came out. The formatting helpers live here so the two front ends
-only decide their own layout (aligned plain text vs markdown).
+All the report front ends show the same facts about a run: how many buses were
+used, which pairs were served, which buses stayed idle and which routes came
+out. The formatting helpers live here so the front ends only decide their own
+layout (aligned plain text vs markdown) and their own columns.
 
 This module sits above the packages on purpose: it reads `algorithms` model
 objects, so it is a view of a run, not a reusable utility.
 """
 
 from collections import Counter
-from dataclasses import dataclass
+from collections.abc import Iterable, Sequence
+from dataclasses import dataclass, field
 from itertools import pairwise
 
 from algorithms.top_univasf import (
@@ -38,17 +39,58 @@ PLAN_HEADERS = (
     "destination",
 )
 
-#: Header of the per-scenario summary table, in the same order as `summary_cells`.
-SUMMARY_HEADERS = (
-    "Cenário",
-    "Heurística",
-    "Total de passageiros",
-    "Passageiros atendidos",
-    "Passageiros não atendidos",
-    "Pico de passageiros simultâneos",
-    "Tempo da maior rota",
-    "Ônibus usados",
-)
+
+@dataclass
+class ScenarioRun:
+    """One heuristic's outcome for one scenario, including a failure.
+
+    The runners build one of these per (scenario, heuristic): the summary
+    tables read the numbers through `run_metrics`, the detail blocks read the
+    plans, and `error` carries a failed run so a batch report can keep going.
+    """
+
+    scenario: dict
+    buses: list[Bus]
+    elapsed: float
+    data: InstanceData | None = None
+    plans: list[BusPlan] = field(default_factory=list)
+    summary: FleetSummary | None = None
+    error: str = ""
+    heuristic: str = ""
+
+    @property
+    def scenario_id(self) -> str:
+        return str(self.scenario["scenario_id"])
+
+    @property
+    def instance_id(self) -> str:
+        return str(self.scenario["instance_id"])
+
+    @property
+    def period(self) -> str:
+        return str(self.scenario["period"])
+
+    @property
+    def fleet(self) -> str:
+        return str(self.scenario["fleet_bus_ids"])
+
+    @property
+    def limit(self) -> str:
+        return str(self.scenario["max_time_limit"])
+
+
+@dataclass(frozen=True)
+class RunMetrics:
+    """Numbers shared by the summary tables of the report runners."""
+
+    served: int
+    total: int
+    percentage: float
+    used: int
+    limit: int
+    longest: int
+    peak: int
+    reference: BusPlan | None
 
 
 def served_ratio(data: InstanceData, plans: list[BusPlan]) -> tuple[int, int, float]:
@@ -57,16 +99,6 @@ def served_ratio(data: InstanceData, plans: list[BusPlan]) -> tuple[int, int, fl
     served = sum(plan.served_passengers for plan in plans)
     percentage = 100.0 * served / total if total else 0.0
     return served, total, percentage
-
-
-def peak_load(plans: list[BusPlan]) -> int:
-    """Highest simultaneous load among the plans; 0 when no bus formed a route."""
-    return max((plan.peak_load for plan in plans), default=0)
-
-
-def longest_route_minutes(plans: list[BusPlan]) -> int:
-    """Travel time of the longest plan; 0 when no bus formed a route."""
-    return max((plan.travel_time_minutes for plan in plans), default=0)
 
 
 def reference_plan(plans: list[BusPlan]) -> BusPlan | None:
@@ -198,28 +230,6 @@ def operational_cost_per_bus(
     )
 
 
-def summary_cells(
-    scenario_id: str,
-    heuristic: str,
-    data: InstanceData,
-    plans: list[BusPlan],
-    summary: FleetSummary,
-    buses: list[Bus],
-) -> tuple[str, ...]:
-    """One scenario's cells, in `SUMMARY_HEADERS` order."""
-    served, total, _ = served_ratio(data, plans)
-    return (
-        str(scenario_id),
-        heuristic,
-        str(total),
-        str(served),
-        str(summary.unserved_passengers),
-        str(peak_load(plans)),
-        str(longest_route_minutes(plans)),
-        f"{len(plans)}/{len(buses)}",
-    )
-
-
 def top_served_pairs(
     plans: list[BusPlan], limit: int = TOP_PAIRS
 ) -> list[ServedPair]:
@@ -313,3 +323,78 @@ def served_pairs_line(plans: list[BusPlan]) -> str:
     if not pairs:
         return ""
     return "Most served pairs: " + pairs_preview(pairs, limit=len(pairs))
+
+
+def idle_line(run: ScenarioRun) -> str:
+    """Buses that never formed a route, or "" when the whole fleet ran."""
+    idle = idle_bus_ids(run.buses, run.plans)
+    return f"Idle ({len(idle)}): {idle}" if idle else ""
+
+
+def run_metrics(
+    scenario: dict,
+    data: InstanceData,
+    plans: list[BusPlan],
+    buses: list[Bus],
+) -> RunMetrics:
+    """The served/used/route numbers every summary row reads."""
+    served, total, percentage = served_ratio(data, plans)
+    reference = reference_plan(plans)
+    raw_limit = scenario.get("max_time_limit")
+    return RunMetrics(
+        served=served,
+        total=total,
+        percentage=percentage,
+        used=sum(1 for plan in plans if plan.served_passengers > 0),
+        limit=int(raw_limit) if raw_limit else 0,
+        longest=reference.travel_time_minutes if reference else 0,
+        peak=reference.peak_load if reference else 0,
+        reference=reference,
+    )
+
+
+def markdown_table(
+    headers: Sequence[str],
+    rows: Iterable[Sequence[str]],
+) -> list[str]:
+    """Header, separator and body of a markdown table."""
+    return [
+        "| " + " | ".join(headers) + " |",
+        "|" + "---|" * len(headers),
+        *["| " + " | ".join(row) + " |" for row in rows],
+    ]
+
+
+def scenario_detail_lines(
+    run: ScenarioRun,
+    heading: list[str],
+    metrics_line: str,
+    plan_table: list[str],
+) -> list[str]:
+    """One run's detail block: heading, bus table and the shared tail.
+
+    The heading, the metrics line and the per-bus table are rendered by the
+    caller because each report lays them out differently; the tail (served
+    pairs, idle buses, unserved demand and routes) is the same everywhere.
+    """
+    if run.error:
+        return [
+            *heading,
+            "",
+            f"ERROR after {run.elapsed:.1f}s: `{run.error}`",
+            "",
+        ]
+
+    lines = [*heading, "", metrics_line, "", *plan_table, ""]
+    for line in (
+        served_pairs_line(run.plans),
+        unserved_line(run.summary),
+        idle_line(run),
+    ):
+        if line:
+            lines += [line, ""]
+
+    lines += ["Routes:", "", "```"]
+    lines += [route_line(plan) for plan in run.plans]
+    lines += ["```", ""]
+    return lines

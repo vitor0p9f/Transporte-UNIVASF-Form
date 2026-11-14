@@ -8,10 +8,9 @@ import pytest
 
 from algorithms.top_univasf import BusPlan
 from entities.bus import Bus
-from reporting import OperationalCost
+from reporting import OperationalCost, ScenarioRun
 from scripts.run_top_real_fleet import (
     PLAN_HEADERS,
-    ScenarioRun,
     operational_cost,
     plan_cells,
     run_scenario,

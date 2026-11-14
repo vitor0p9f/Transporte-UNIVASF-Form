@@ -1,6 +1,6 @@
 # Resultados — TOP na frota real
 
-Gerado em 2026-11-12 21:37 · 5 cenários.
+Gerado em 2026-11-14 08:46 · 5 cenários.
 
 O TOP roda na frota heterogênea do `fleet.csv`: cada ônibus mantém a capacidade e a autonomia do seu próprio modelo, sem homogeneização. Não há origem nem depósito forçados: o draft escolhe o par origem-destino sozinho, respeitando as colunas `origin` e `destination_labels` do cenário (que fazem parte da definição dele), e a rota nasce no nó de origem do par, sem deadhead. As restrições de tempo e de capacidade estão ativas.
 
@@ -17,6 +17,8 @@ O custo operacional é calculado por ônibus: combustível = km percorridos / (k
 ## Cenário 16 — p1_4_b / night_2
 
 Frota [1;2;3;4;5;6;7;8;9;10;11;12] · limite 106 min
+
+4 of 12 buses · 37/59 pax (63%) · 39 rodadas · 0.0s
 
 | bus | lugares | km/L | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|---|---|
@@ -38,13 +40,14 @@ bus 1 (1 → 5): 1 -> 13 -> 9 -> 3 -> 4 -> 8 -> 19 -> 27 -> 6 -> 5
 bus 3 (1 → 5): 1 -> 18 -> 29 -> 31 -> 21 -> 19 -> 26 -> 9 -> 10 -> 3 -> 5
 bus 6 (1 → 7): 1 -> 7 -> 12 -> 30 -> 27 -> 25 -> 26 -> 19 -> 7
 bus 10 (1 → 7): 1 -> 16 -> 13 -> 6 -> 4 -> 15 -> 14 -> 7
-
 ```
 
 
 ## Cenário 19 — p1_4_r / afternoon_2
 
 Frota [1;2;3;5;6;10;12] · limite 171 min
+
+7 of 7 buses · 59/66 pax (89%) · 51 rodadas · 0.0s
 
 | bus | lugares | km/L | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|---|---|
@@ -70,13 +73,14 @@ bus 5 (5 → 10): 5 -> 17 -> 20 -> 11 -> 6 -> 30 -> 10
 bus 6 (5 → 24): 5 -> 2 -> 22 -> 8 -> 12 -> 5 -> 21 -> 24 -> 26 -> 24
 bus 10 (5 → 3): 5 -> 2 -> 13 -> 8 -> 21 -> 11 -> 10 -> 1 -> 29 -> 17 -> 14 -> 16 -> 3
 bus 12 (5 → 3): 5 -> 16 -> 21 -> 5 -> 3 -> 7 -> 22 -> 3
-
 ```
 
 
 ## Cenário 32 — p1_3_h / morning_2
 
 Frota [1;2;3;4;5;6;7;8;9;10;11;12] · limite 146 min
+
+6 of 12 buses · 45/54 pax (83%) · 46 rodadas · 0.0s
 
 | bus | lugares | km/L | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|---|---|
@@ -102,13 +106,14 @@ bus 3 (27 → 6): 27 -> 26 -> 22 -> 2 -> 4 -> 18 -> 3 -> 10 -> 11 -> 6
 bus 5 (27 → 6): 27 -> 28 -> 15 -> 16 -> 6 -> 4 -> 21 -> 6
 bus 6 (27 → 31): 27 -> 20 -> 30 -> 7 -> 11 -> 17 -> 8 -> 10 -> 12 -> 31
 bus 10 (27 → 31): 27 -> 21 -> 8 -> 5 -> 7 -> 10 -> 17 -> 32 -> 23 -> 26 -> 31
-
 ```
 
 
 ## Cenário 65 — base / morning_1
 
 Frota [1;2;3;4;5;6;7;8;9;10;11;12] · limite 120 min
+
+8 of 12 buses · 196/198 pax (99%) · 58 rodadas · 0.1s
 
 | bus | lugares | km/L | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|---|---|
@@ -138,13 +143,14 @@ bus 6 (44 → 44): 44 -> 11 -> 2 -> 10 -> 35 -> 39 -> 8 -> 7 -> 44
 bus 9 (44 → 44): 44 -> 16 -> 36 -> 9 -> 12 -> 8 -> 7 -> 44
 bus 10 (44 → 44): 44 -> 20 -> 38 -> 6 -> 7 -> 45 -> 37 -> 24 -> 40 -> 30 -> 44
 bus 12 (44 → 43): 44 -> 39 -> 40 -> 20 -> 12 -> 8 -> 43
-
 ```
 
 
 ## Cenário 69 — base / night_1
 
 Frota [1;2;3;4;5;6;7;8;9;10;11;12] · limite 120 min
+
+9 of 12 buses · 158/158 pax (100%) · 53 rodadas · 0.1s
 
 | bus | lugares | km/L | stops | pax | time | peak | pax/R$ | origin | destination |
 |---|---|---|---|---|---|---|---|---|---|
@@ -174,5 +180,4 @@ bus 7 (44 → 45): 44 -> 1 -> 45
 bus 9 (43 → 45): 43 -> 7 -> 36 -> 2 -> 45
 bus 10 (45 → 44): 45 -> 30 -> 7 -> 18 -> 5 -> 44 -> 32 -> 19 -> 37 -> 29 -> 44
 bus 12 (43 → 45): 43 -> 12 -> 8 -> 7 -> 26 -> 29 -> 31 -> 18 -> 45
-
 ```

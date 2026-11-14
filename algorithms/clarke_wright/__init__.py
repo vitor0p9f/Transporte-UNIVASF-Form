@@ -112,13 +112,6 @@ from .model import (
     Saving,
     modelo_de_bus,
 )
-from .objective import (  # noqa: F401
-    _custo_total,
-    _excesso,
-    _obj_carga,
-    _obj_rota,
-    _obj_total,
-)
 from .report import (  # noqa: F401
     _pares_texto,
     _situacao,
@@ -136,7 +129,7 @@ from .scenario import (  # noqa: F401
     planos_e_resumo,
     resolver_cenario,
 )
-from .solver import analise_pareto, clarke_wright_ovrp
+from .solver import clarke_wright_ovrp
 
 __all__ = [
     "CONSUMO_PADRAO",
@@ -158,7 +151,6 @@ __all__ = [
     "Restricoes",
     "Rota",
     "Saving",
-    "analise_pareto",
     "avaliar_atendimento",
     "calcular_savings_ovrp",
     "clarke_wright_ovrp",

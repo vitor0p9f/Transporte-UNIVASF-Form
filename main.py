@@ -4,14 +4,16 @@ The TOP heuristic and Clarke-Wright run on the SAME scenarios and limits, and
 both land in one markdown report (one row each in the summary table) so the
 reader sees the trade-off without lining up two separate reports. TOP scores
 passengers per real (R$), using each bus's own fuel autonomy.
+
+This is the single producer of ``results.md``; ``scripts/run_all.py`` is a thin
+``--only`` wrapper around it.
 """
 
-import time
 from collections.abc import Iterator
-from dataclasses import dataclass
 from datetime import UTC, datetime
+from functools import partial
+from itertools import groupby
 from pathlib import Path
-from typing import NamedTuple
 
 import reporting
 from algorithms import clarke_wright
@@ -22,6 +24,7 @@ from algorithms.top_univasf import (
     solve_scenario,
 )
 from entities.bus import Bus
+from scripts import report_common
 from utils.fleet import load_fleet, parse_fleet_ids
 from utils.scenarios import (
     DEFAULT_REPORT_SCENARIOS,
@@ -45,174 +48,139 @@ SWEEP_CW_KWARGS: dict = {
 }
 
 
-class Result(NamedTuple):
-    """One heuristic's outcome on the scenario, ready for the summary table."""
-
-    heuristic: str
-    data: InstanceData
-    plans: list[BusPlan]
-    summary: FleetSummary
-    elapsed: float
-
-
-@dataclass
-class ScenarioOutcome:
-    """One scenario with one run per heuristic (TOP and/or Clarke-Wright)."""
-
-    scenario: dict
-    buses: list[Bus]
-    runs: list[Result]
-
-    @property
-    def scenario_id(self) -> str:
-        return str(self.scenario.get("scenario_id"))
-
-    @property
-    def instance_id(self) -> str:
-        return str(self.scenario.get("instance_id"))
-
-    @property
-    def period(self) -> str:
-        return str(self.scenario.get("period"))
-
-    @property
-    def fleet(self) -> str:
-        return str(self.scenario.get("fleet_bus_ids"))
-
-    @property
-    def limit(self) -> str:
-        return str(self.scenario.get("max_time_limit"))
-
-
 def run_heuristic(
     scenario: dict,
     buses: list[Bus],
     heuristic: str,
     cw_kwargs: dict | None = None,
-) -> Result:
+) -> reporting.ScenarioRun:
     """One heuristic's outcome for one scenario (TOP or Clarke-Wright)."""
-    start = time.monotonic()
     if heuristic == TOP_NAME:
-        data, plans, summary = solve_scenario(scenario, buses, ROOT)
+        solver = solve_scenario
     elif heuristic == CW_NAME:
-        data, plans, summary = solve_clarke_wright(scenario, buses, cw_kwargs)
+        solver = partial(solve_clarke_wright, cw_kwargs=cw_kwargs)
     else:
-        raise ValueError(f"heurística desconhecida: {heuristic}")
-    return Result(heuristic, data, plans, summary, time.monotonic() - start)
+        raise ValueError(f"unknown heuristic: {heuristic}")
+    return report_common.run_scenario(
+        scenario,
+        ROOT,
+        solver=solver,
+        buses=buses,
+        heuristic=heuristic,
+    )
 
 
-def iter_all_scenarios(
-    heuristics: list[str] = (TOP_NAME, CW_NAME),
+def iter_scenario_runs(
+    heuristics: tuple[str, ...] = (TOP_NAME, CW_NAME),
     cw_kwargs: dict | None = None,
     scenario_ids: tuple[str, ...] = DEFAULT_REPORT_SCENARIOS,
-) -> Iterator[ScenarioOutcome]:
-    """Run the selected scenarios, each with the given heuristics, in order."""
+) -> Iterator[reporting.ScenarioRun]:
+    """Every (scenario, heuristic) run, in scenario order."""
     for scenario in pick_scenarios(load_scenarios(ROOT), scenario_ids):
         buses = load_fleet(
             ROOT / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
         )
-        runs = [
-            run_heuristic(scenario, buses, heuristic, cw_kwargs)
-            for heuristic in heuristics
-        ]
-        yield ScenarioOutcome(scenario=scenario, buses=buses, runs=runs)
+        for heuristic in heuristics:
+            yield run_heuristic(scenario, buses, heuristic, cw_kwargs)
 
 
-def run_all_scenarios(
-    heuristics: list[str] = (TOP_NAME, CW_NAME),
-    cw_kwargs: dict | None = None,
-    scenario_ids: tuple[str, ...] = DEFAULT_REPORT_SCENARIOS,
-) -> list[ScenarioOutcome]:
-    """Selected scenarios with one run per heuristic, as a list."""
-    return list(iter_all_scenarios(heuristics, cw_kwargs, scenario_ids))
-
-
-def _scenario_markdown(outcome: ScenarioOutcome) -> list[str]:
+def _scenario_detail(
+    runs: list[reporting.ScenarioRun],
+) -> list[str]:
+    """One scenario's detail: heading, then one block per heuristic."""
+    first = runs[0]
+    capacity = {bus.id: bus.passenger_capacity for bus in first.buses}
+    time_limit = int(first.scenario.get("max_time_limit") or 0) or 60
+    origin = f" · origin {first.scenario['origin']}" if first.scenario.get("origin") else ""
+    destinations = (
+        f" -> [{first.scenario['destination_labels']}]"
+        if first.scenario.get("destination_labels")
+        else ""
+    )
     lines = [
-        f"## Scenario {outcome.scenario_id} — {outcome.instance_id} / {outcome.period}",
+        f"## Scenario {first.scenario_id} — {first.instance_id} / {first.period}",
         "",
-        f"Fleet [{outcome.fleet}] · limit {outcome.limit} min",
+        f"Fleet [{first.fleet}] · limit {first.limit} min{origin}{destinations}",
         "",
     ]
-    for result in outcome.runs:
-        served, total, percentage = reporting.served_ratio(result.data, result.plans)
-        lines += [
-            f"### {result.heuristic}",
-            "",
-            (
-                f"{reporting.fleet_totals_line(result.plans, outcome.buses, result.data)} · "
-                f"{result.summary.rounds} rounds · {result.elapsed:.1f}s · "
-                f"{served}/{total} pax atendidos ({percentage:.0f}%)"
-            ),
-            "",
-            "| bus | stops | pax | time | peak | pax/R$ | origin | destination |",
-            "|---|---|---|---|---|---|---|---|",
-        ]
-        capacity = {bus.id: bus.passenger_capacity for bus in outcome.buses}
-        time_limit = int(outcome.scenario.get("max_time_limit") or 0) or 60
-        for plan in result.plans:
-            lines.append(
-                "| "
-                + " | ".join(
-                    reporting.plan_cells(plan, time_limit, capacity.get(plan.bus_id))
-                )
-                + " |"
+    for run in runs:
+        heading = [f"### {run.heuristic}"]
+        if run.error:
+            lines += reporting.scenario_detail_lines(
+                run, heading=heading, metrics_line="", plan_table=[]
             )
-        served_pairs = reporting.served_pairs_line(result.plans)
-        if served_pairs:
-            lines += ["", served_pairs]
-        unserved = reporting.unserved_line(result.summary)
-        if unserved:
-            lines += ["", unserved]
-        idle = reporting.idle_bus_ids(outcome.buses, result.plans)
-        if idle:
-            lines += ["", f"Idle ({len(idle)}): {idle}"]
-        lines += ["", "Routes:", "", "```"]
-        lines += [reporting.route_line(plan) for plan in result.plans]
-        lines += ["", "```", ""]
+            continue
+        metrics_line = (
+            f"{reporting.fleet_totals_line(run.plans, run.buses, run.data)} · "
+            f"{run.summary.rounds} rounds · {run.elapsed:.1f}s"
+        )
+        plan_table = reporting.markdown_table(
+            reporting.PLAN_HEADERS,
+            (
+                reporting.plan_cells(
+                    plan, time_limit, capacity.get(plan.bus_id)
+                )
+                for plan in run.plans
+            ),
+        )
+        lines += reporting.scenario_detail_lines(
+            run,
+            heading=heading,
+            metrics_line=metrics_line,
+            plan_table=plan_table,
+        )
     return lines
 
 
-def render_markdown(outcomes: list[ScenarioOutcome], generated_at: str) -> str:
+def _summary_row(run: reporting.ScenarioRun) -> str:
+    """One row of the summary table (scenario × heuristic)."""
+    prefix = (
+        f"| {run.scenario_id} | {run.instance_id} | {run.period} | "
+        f"[{run.fleet}] | {run.limit} | {run.heuristic} | "
+    )
+    if run.error:
+        return prefix + "ERROR | — | — | — | — | — | " f"{run.elapsed:.1f} |"
+    served, total, percentage = reporting.served_ratio(run.data, run.plans)
+    return (
+        prefix
+        + f"{len(run.plans)}/{len(run.buses)} | {served}/{total} | "
+        f"{run.summary.unserved_passengers} | {percentage:.0f}% | "
+        f"{run.summary.rounds} | {run.elapsed:.1f} |"
+    )
+
+
+def render_markdown(
+    runs: list[reporting.ScenarioRun], generated_at: str
+) -> str:
     """Full markdown report: one summary-table row per scenario × heuristic."""
+    scenarios = len({run.scenario_id for run in runs})
     lines = [
         "# Results — report scenarios (TOP + Clarke-Wright)",
         "",
         (
-            f"Generated on {generated_at} · {len(outcomes)} scenarios · "
-            f"{sum(len(outcome.runs) for outcome in outcomes)} runs · both heuristics "
-            "on the same scenario."
+            f"Generated on {generated_at} · {scenarios} scenarios · "
+            f"{len(runs)} runs · both heuristics on the same scenario."
         ),
         "",
         (
             "| scenario | instance | period | fleet | limit | heuristic | used | "
-            "pax total | pax atendidos | pax não atendidos | % | rounds | exec (s) |"
+            "pax atendidos / total | pax não atendidos | % | rounds | exec (s) |"
         ),
-        "|---|---|---|---|---|---|---|---|---|---|---|---|---|",
+        "|---|---|---|---|---|---|---|---|---|---|---|---|",
     ]
-    for outcome in outcomes:
-        for result in outcome.runs:
-            served, total, percentage = reporting.served_ratio(result.data, result.plans)
-            lines.append(
-                f"| {outcome.scenario_id} | {outcome.instance_id} | {outcome.period} | "
-                f"[{outcome.fleet}] | {outcome.limit} | {result.heuristic} | "
-                f"{len(result.plans)}/{len(outcome.buses)} | {served}/{total} | {served} | "
-                f"{result.summary.unserved_passengers} | {percentage:.0f}% | "
-                f"{result.summary.rounds} | {result.elapsed:.1f} |"
-            )
+    lines += [_summary_row(run) for run in runs]
     lines.append("")
-    for outcome in outcomes:
-        lines += _scenario_markdown(outcome)
-        lines.append("")
+    for _, group in groupby(runs, key=lambda run: run.scenario_id):
+        lines += _scenario_detail(list(group))
     return "\n".join(lines).rstrip("\n") + "\n"
 
 
 def write_markdown(
-    outcomes: list[ScenarioOutcome], path: Path = OUT_PATH
+    runs: list[reporting.ScenarioRun], path: Path = OUT_PATH
 ) -> str:
-    """Write the sweep report to `results.md` and return the text."""
+    """Write the sweep report to `path` and return the text."""
     markdown = render_markdown(
-        outcomes,
+        runs,
         datetime.now(UTC).astimezone().strftime("%Y-%m-%d %H:%M %Z"),
     )
     path.write_text(markdown, encoding="utf-8")
@@ -220,7 +188,10 @@ def write_markdown(
 
 
 def solve_clarke_wright(
-    scenario: dict, buses: list[Bus], cw_kwargs: dict | None = None
+    scenario: dict,
+    buses: list[Bus],
+    root: Path = ROOT,
+    cw_kwargs: dict | None = None,
 ) -> tuple[InstanceData, list[BusPlan], FleetSummary]:
     """Run CW on the scenario and reshape its solution into the run model.
 
@@ -236,68 +207,21 @@ def solve_clarke_wright(
     return data, plans, summary
 
 
-def print_results_table(
-    scenario: dict, results: list[Result], buses: list[Bus]
-) -> None:
-    print("\n=== Results ===")
-    print(
-        "atendidos = medida pela simulação de embarque/desembarque · "
-        "peak = maior pico simultâneo entre as rotas · "
-        "tempo = duração da rota mais longa (min)"
-    )
-
-    header = reporting.SUMMARY_HEADERS
-    rows = [
-        reporting.summary_cells(
-            scenario["scenario_id"],
-            result.heuristic,
-            result.data,
-            result.plans,
-            result.summary,
-            buses,
-        )
-        for result in results
-    ]
-    widths = [len(cell) for cell in header]
-    for row in rows:
-        for index, cell in enumerate(row):
-            widths[index] = max(widths[index], len(cell))
-    fmt = "  ".join(f"{{:<{w}}}" for w in widths)
-    print(fmt.format(*header))
-    print(fmt.format(*["-" * width for width in widths]))
-    for row in rows:
-        print(fmt.format(*row))
-
-    for result in results:
-        print(f"\n--- {result.heuristic} ({result.elapsed:.1f}s) ---")
-        print(f"Σ {reporting.fleet_totals_line(result.plans, buses, result.data)}")
-
-        served_pairs = reporting.served_pairs_line(result.plans)
-        if served_pairs:
-            print(served_pairs)
-        idle = reporting.idle_bus_ids(buses, result.plans)
-        if idle:
-            print(f"Idle ({len(idle)}): {idle} — no route formed")
-        unserved = reporting.unserved_line(result.summary)
-        if unserved:
-            print(unserved)
-
-        print("Routes:")
-        for plan in result.plans:
-            print(f"  {reporting.route_line(plan)}")
-        if not result.plans:
-            print("  (no bus formed a feasible route)")
+def run(
+    scenario_ids: tuple[str, ...] = DEFAULT_REPORT_SCENARIOS,
+    path: Path = OUT_PATH,
+) -> Path:
+    """Run the selected scenarios and write the report; return its path."""
+    runs = list(iter_scenario_runs(scenario_ids=scenario_ids))
+    write_markdown(runs, path)
+    scenarios = len({run.scenario_id for run in runs})
+    print(f"OK: {path} ({scenarios} scenarios, {len(runs)} runs)")
+    return path
 
 
 def main() -> None:
     """Run the default scenarios with both heuristics and write results.md."""
-    heuristics: list[str] = [TOP_NAME, CW_NAME]
-    outcomes: list[ScenarioOutcome] = []
-    for outcome in iter_all_scenarios(heuristics, SWEEP_CW_KWARGS):
-        outcomes.append(outcome)
-        write_markdown(outcomes, OUT_PATH)
-    print(f"OK: {OUT_PATH} ({len(outcomes)} scenarios, "
-          f"{sum(len(outcome.runs) for outcome in outcomes)} runs)")
+    run()
 
 
 if __name__ == "__main__":

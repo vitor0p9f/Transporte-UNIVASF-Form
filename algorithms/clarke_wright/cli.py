@@ -16,7 +16,7 @@ from .scenario import (
     _frota_do_cenario,
     contexto_do_cenario,
 )
-from .solver import analise_pareto, clarke_wright_ovrp
+from .solver import clarke_wright_ovrp
 
 
 def main() -> None:
@@ -103,27 +103,10 @@ def main() -> None:
         help="ida=carga por embarque; volta=carga por desembarque",
     )
     parser.add_argument(
-        "--conforto",
-        type=int,
-        default=None,
-        help="lotação confortável por ônibus (padrão: do modelo)",
-    )
-    parser.add_argument(
-        "--peso-superlotacao",
-        type=float,
-        default=0.0,
-        help="penalidade R$ por passageiro acima do conforto (0 = custo puro)",
-    )
-    parser.add_argument(
         "--seed",
         type=int,
         default=42,
         help="semente do gerador aleatório (reprodutibilidade)",
-    )
-    parser.add_argument(
-        "--pareto",
-        action="store_true",
-        help="varre capacidades e mostra o trade-off custo × superlotação",
     )
     parser.add_argument(
         "--salvar",
@@ -172,10 +155,6 @@ def main() -> None:
             f"[{', '.join(str(b.id) for b in buses)}]"
         )
 
-    if args.pareto:
-        analise_pareto(ctx)
-        return
-
     rotas, lam_usado = clarke_wright_ovrp(
         ctx,
         lam=args.lambda_val,
@@ -184,15 +163,11 @@ def main() -> None:
         iteracoes=args.iteracoes,
         iter_postimprov=args.iter_postimprov,
         seed=args.seed,
-        conforto=args.conforto,
-        peso_superlotacao=args.peso_superlotacao,
         verbose=True,
     )
 
     atend = avaliar_atendimento(rotas, ctx)
-    imprimir_solucao(
-        rotas, ctx, rotulo, lam_usado, conforto=args.conforto, atend=atend
-    )
+    imprimir_solucao(rotas, ctx, rotulo, lam_usado, atend=atend)
 
     if args.salvar:
         salvar_resultado(rotas, ctx, rotulo, lam_usado, atend=atend)

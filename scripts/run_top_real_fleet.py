@@ -34,11 +34,8 @@ from algorithms.top_univasf import BusPlan
 from entities.bus import Bus
 from scripts import report_common
 from scripts.report_common import (
-    ScenarioRun,
     add_only_argument,
-    markdown_table,
     parse_scenario_ids,
-    run_metrics,
     scenario_operational_cost,
 )
 from utils.scenarios import DEFAULT_REPORT_SCENARIOS
@@ -96,7 +93,7 @@ def select_scenarios(
 
 def run_scenario(
     scenario: dict, root: str | Path = ROOT
-) -> ScenarioRun:
+) -> reporting.ScenarioRun:
     """Solve one scenario on the real fleet, letting TOP pick the OD pair.
 
     No ``origin=`` and no ``depot=``: the draft scans the origins allowed by
@@ -111,7 +108,7 @@ def _bus_by_id(buses: list[Bus]) -> dict[int, Bus]:
     return {bus.id: bus for bus in buses}
 
 
-def operational_cost(run: ScenarioRun) -> reporting.OperationalCost:
+def operational_cost(run: reporting.ScenarioRun) -> reporting.OperationalCost:
     """Fuel + driver cost of one run, charging each route its own bus.
 
     The fleet is heterogeneous, so each plan's fuel is computed with the
@@ -124,10 +121,10 @@ def operational_cost(run: ScenarioRun) -> reporting.OperationalCost:
     )
 
 
-def summary_cells(run: ScenarioRun, cost: reporting.OperationalCost) -> tuple[str, ...]:
+def summary_cells(run: reporting.ScenarioRun, cost: reporting.OperationalCost) -> tuple[str, ...]:
     """One summary row, in `SUMMARY_HEADERS` order."""
     scenario = run.scenario
-    metrics = run_metrics(scenario, run.data, run.plans, run.buses)
+    metrics = reporting.run_metrics(scenario, run.data, run.plans, run.buses)
     reference = metrics.reference
     capacity = (
         _bus_by_id(run.buses)[reference.bus_id].passenger_capacity
@@ -163,42 +160,38 @@ def plan_cells(plan: BusPlan, bus: Bus, time_limit_minutes: int) -> tuple[str, .
     )
 
 
-def _scenario_markdown(run: ScenarioRun) -> list[str]:
+def _scenario_markdown(run: reporting.ScenarioRun) -> list[str]:
     scenario = run.scenario
     limit = int(scenario["max_time_limit"])
     buses = _bus_by_id(run.buses)
-    lines = [
+    heading = [
         (
             f"## Cenário {scenario['scenario_id']} — "
             f"{scenario['instance_id']} / {scenario['period']}"
         ),
         "",
         f"Frota [{scenario['fleet_bus_ids']}] · limite {limit} min",
-        "",
     ]
-    lines += markdown_table(
+    metrics_line = (
+        f"{reporting.fleet_totals_line(run.plans, run.buses, run.data)} · "
+        f"{run.summary.rounds} rodadas · {run.elapsed:.1f}s"
+    )
+    plan_table = reporting.markdown_table(
         PLAN_HEADERS,
         (
             plan_cells(plan, buses[plan.bus_id], limit)
             for plan in run.plans
         ),
     )
-    served_pairs = reporting.served_pairs_line(run.plans)
-    if served_pairs:
-        lines += ["", served_pairs]
-    unserved = reporting.unserved_line(run.summary)
-    if unserved:
-        lines += ["", unserved]
-    idle = reporting.idle_bus_ids(run.buses, run.plans)
-    if idle:
-        lines += ["", f"Idle ({len(idle)}): {idle}"]
-    lines += ["", "Routes:", "", "```"]
-    lines += [reporting.route_line(plan) for plan in run.plans]
-    lines += ["", "```", ""]
-    return lines
+    return reporting.scenario_detail_lines(
+        run,
+        heading=heading,
+        metrics_line=metrics_line,
+        plan_table=plan_table,
+    )
 
 
-def render_markdown(runs: list[ScenarioRun], generated_at: str) -> str:
+def render_markdown(runs: list[reporting.ScenarioRun], generated_at: str) -> str:
     """Full report: configuration note, summary table and per-scenario detail."""
     lines = [
         "# Resultados — TOP na frota real",
@@ -225,7 +218,7 @@ def render_markdown(runs: list[ScenarioRun], generated_at: str) -> str:
         "",
     ]
     costs = [operational_cost(run) for run in runs]
-    lines += markdown_table(
+    lines += reporting.markdown_table(
         SUMMARY_HEADERS,
         (
             summary_cells(run, cost)
@@ -239,7 +232,7 @@ def render_markdown(runs: list[ScenarioRun], generated_at: str) -> str:
     return "\n".join(lines).rstrip("\n") + "\n"
 
 
-def _print_progress(index: int, total: int, run: ScenarioRun) -> None:
+def _print_progress(index: int, total: int, run: reporting.ScenarioRun) -> None:
     scenario = run.scenario
     served, total_pax, percentage = reporting.served_ratio(run.data, run.plans)
     used = sum(1 for plan in run.plans if plan.served_passengers > 0)
@@ -260,7 +253,7 @@ def main() -> None:
 
     ids = parse_scenario_ids(args.only, DEFAULT_SCENARIOS)
     scenarios = select_scenarios(ids)
-    runs: list[ScenarioRun] = []
+    runs: list[reporting.ScenarioRun] = []
     for index, scenario in enumerate(scenarios, start=1):
         run = run_scenario(scenario)
         runs.append(run)

@@ -5,22 +5,21 @@ from datetime import datetime
 
 from utils.fleet import load_fleet
 
+from .constants import INF
 from .evaluation import avaliar_atendimento
 from .metrics import _limite_texto
 from .model import Atendimento, Contexto, Rota
-from .objective import _custo_total, _excesso
+from .objective import _obj_total
 from .scenario import ROOT
 
 
-def _situacao(rota: Rota, ctx: Contexto, conforto: int) -> str:
+def _situacao(rota: Rota, ctx: Contexto) -> str:
     """Marcadores do relatório. Referem-se à CARGA ALOCADA (a do algoritmo)."""
     marcas = []
     if rota.carga > ctx.capacidade:
         marcas.append("[ALOCADA ACIMA DA CAP.]")
     elif rota.carga >= ctx.capacidade:
         marcas.append("[ALOCADA CHEIA]")
-    elif rota.carga > conforto:
-        marcas.append("[aloc. desconforto]")
     if rota.tempo_min > ctx.limite_tempo:
         marcas.append("[ACIMA DO TEMPO]")
     return " ".join(marcas)
@@ -39,15 +38,12 @@ def imprimir_solucao(
     ctx: Contexto,
     rotulo: str,
     lam: float,
-    conforto: int | None = None,
     atend: Atendimento | None = None,
 ) -> None:
-    if conforto is None:
-        conforto = ctx.modelo.capacidade_conforto or ctx.capacidade
     if atend is None:
         atend = avaliar_atendimento(rotas, ctx)
 
-    custo_total = _custo_total(rotas)
+    custo_total = _obj_total(rotas)
     dist_total = sum(r.dist_km for r in rotas)
     alocada = sum(r.carga for r in rotas)
     atendida = sum(r.pax for r in rotas)
@@ -57,7 +53,6 @@ def imprimir_solucao(
     ocup_real = (atend.pico / ctx.capacidade * 100) if ctx.capacidade else 0.0
     custo_pax = custo_total / atendida if atendida else 0.0
     n_cheias = sum(1 for r in rotas if r.carga >= ctx.capacidade)
-    desconforto = sum(_excesso(r.carga, conforto) for r in rotas)
     maior_tempo = max((r.tempo_min for r in rotas), default=0)
     fora_tempo = sum(1 for r in rotas if r.tempo_min > ctx.limite_tempo)
 
@@ -70,7 +65,7 @@ def imprimir_solucao(
         f"(capacidade={'sim' if ctx.restricoes.capacidade else 'não'}, "
         f"tempo={'sim' if ctx.restricoes.tempo else 'não'})"
     )
-    print(f"Capacidade: {ctx.capacidade} máx / {conforto} conforto")
+    print(f"Capacidade: {ctx.capacidade} máx")
     print(
         f"Tempo     : limite {_limite_texto(ctx.limite_tempo)} | "
         f"maior rota {maior_tempo} min"
@@ -103,10 +98,6 @@ def imprimir_solucao(
         f"  Rotas com aloc. cheia: {n_cheias}/{len(rotas)} "
         "(carga alocada = capacidade)"
     )
-    print(
-        f"  Alocados em desconforto: {desconforto} "
-        f"(acima de {conforto}/ônibus)"
-    )
     print(f"  Rotas acima do tempo : {fora_tempo}/{len(rotas)}")
     print()
 
@@ -114,7 +105,7 @@ def imprimir_solucao(
         pct = round(rota.carga / ctx.capacidade * 100)
         cheio = min(pct, 100)
         barra = "#" * (cheio // 5) + "." * (20 - cheio // 5)
-        status = _situacao(rota, ctx, conforto)
+        status = _situacao(rota, ctx)
 
         print(
             f"  Ônibus {i:02d}  [{barra}] {pct:3d}%  "
@@ -158,7 +149,7 @@ def salvar_resultado(
         "lambda": lam,
         "restricoes": ctx.restricoes.chave,
         "capacidade": ctx.capacidade,
-        "limite_tempo": None if ctx.limite_tempo == float("inf") else ctx.limite_tempo,
+        "limite_tempo": None if ctx.limite_tempo == INF else ctx.limite_tempo,
         "modelo_onibus": {
             "nome": ctx.modelo.nome,
             "capacidade": ctx.modelo.capacidade,

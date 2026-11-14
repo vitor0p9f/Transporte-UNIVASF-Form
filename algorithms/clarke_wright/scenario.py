@@ -160,8 +160,6 @@ def resolver_cenario(
     iteracoes: int = ITER_TWO_PHASE,
     iter_postimprov: int = ITER_POSTIMPROVE,
     seed: int = 42,
-    conforto: int | None = None,
-    peso_superlotacao: float = 0.0,
     verbose: bool = False,
 ) -> tuple[InstanceData, list[Rota], Contexto, Atendimento, float]:
     """Roda o CW num cenário e devolve a solução já avaliada.
@@ -189,8 +187,6 @@ def resolver_cenario(
         iteracoes=iteracoes,
         iter_postimprov=iter_postimprov,
         seed=seed,
-        conforto=conforto,
-        peso_superlotacao=peso_superlotacao,
         verbose=verbose,
     )
     rotas = limitar_frota(rotas, ctx)

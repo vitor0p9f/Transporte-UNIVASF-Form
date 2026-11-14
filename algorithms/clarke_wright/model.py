@@ -57,7 +57,6 @@ class ModeloOnibus:
     capacidade: int
     consumo_km_l: float
     custo_litro: float
-    capacidade_conforto: int | None = None
 
     @property
     def custo_por_km(self) -> float:
@@ -145,16 +144,6 @@ class Rota:
 
     def ultima(self) -> int:
         return self.paradas[-1]
-
-    def __repr__(self) -> str:
-        return (
-            f"Rota({len(self.paradas)} paradas | "
-            f"{self.carga} aloc. | "
-            f"{self.pax} pax | "
-            f"{self.dist_km:.1f} km | "
-            f"{self.tempo_min} min | "
-            f"R${self.custo_brl:.2f})"
-        )
 
 
 @dataclass(frozen=True)

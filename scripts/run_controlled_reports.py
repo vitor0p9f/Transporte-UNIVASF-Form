@@ -54,9 +54,7 @@ from algorithms import clarke_wright, top_univasf
 from scripts import report_common
 from scripts.report_common import (
     add_only_argument,
-    markdown_table,
     parse_scenario_ids,
-    run_metrics,
     scenario_operational_cost,
 )
 from utils.fleet import load_fleet
@@ -211,7 +209,7 @@ def row_cells(
     cost: reporting.OperationalCost,
 ) -> tuple[str, ...]:
     """One table row, in `TABLE_HEADER` order."""
-    metrics = run_metrics(scenario, data, plans, buses)
+    metrics = reporting.run_metrics(scenario, data, plans, buses)
     time_cell = (
         f"{metrics.longest}/{metrics.limit}"
         if metrics.limit
@@ -347,7 +345,7 @@ def render_report(
         report_note(config),
         "",
     ]
-    lines += markdown_table(TABLE_HEADER, rows)
+    lines += reporting.markdown_table(TABLE_HEADER, rows)
     return "\n".join(lines) + "\n\n"
 
 

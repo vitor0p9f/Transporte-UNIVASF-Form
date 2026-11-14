@@ -1,15 +1,15 @@
 """Helpers shared by the markdown report runners.
 
 The report scripts differ in what they solve and how they lay the result out,
-but they all select scenarios, time a run and format markdown tables the same
-way. Keeping those pieces here avoids the copies drifting apart.
+but they all select scenarios, time a run and build the cost the same way. The
+scenario record, the metrics and the markdown formatting live in `reporting`;
+this module keeps scenario selection and the solver invocation.
 """
 
 import argparse
 import sys
 import time
-from collections.abc import Iterable, Sequence
-from dataclasses import dataclass, field
+from collections.abc import Callable
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -17,50 +17,18 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import reporting
-from algorithms.top_univasf import (
-    BusPlan,
-    FleetSummary,
-    InstanceData,
-    solve_scenario,
-)
+from algorithms.top_univasf import solve_scenario
 from entities.bus import Bus
 from utils.fleet import load_fleet, parse_fleet_ids
 from utils.scenarios import (
     DEFAULT_REPORT_SCENARIOS,
+    SCENARIO_FILES,
     load_scenarios,
     pick_scenarios,
 )
 
-
-@dataclass
-class ScenarioRun:
-    """Everything one scenario produced, including when it failed."""
-
-    scenario: dict
-    buses: list[Bus]
-    elapsed: float
-    data: InstanceData | None = None
-    plans: list[BusPlan] = field(default_factory=list)
-    summary: FleetSummary | None = None
-    error: str = ""
-
-    @property
-    def scenario_id(self) -> str:
-        return str(self.scenario["scenario_id"])
-
-
-@dataclass(frozen=True)
-class RunMetrics:
-    """Numbers shared by the summary tables of the report runners."""
-
-    served: int
-    total: int
-    percentage: float
-    used: int
-    limit: int
-    longest: int
-    peak: int
-    reference: BusPlan | None
+#: What a runner passes to `run_scenario` to solve one scenario.
+Solver = Callable[[dict, list[Bus], Path], tuple]
 
 
 def select_scenarios(
@@ -74,12 +42,7 @@ def select_scenarios(
     ``files`` lets the controlled runner select from its own scenario copy
     while keeping the same ordering and validation rules.
     """
-    scenarios = (
-        load_scenarios(root, files=files)
-        if files is not None
-        else load_scenarios(root)
-    )
-    return pick_scenarios(scenarios, ids)
+    return pick_scenarios(load_scenarios(root, files=files or SCENARIO_FILES), ids)
 
 
 def parse_scenario_ids(
@@ -126,23 +89,30 @@ def run_scenario(
     *,
     fleet: str = "fleet.csv",
     catch_errors: bool = False,
-) -> ScenarioRun:
+    solver: Solver = solve_scenario,
+    buses: list[Bus] | None = None,
+    heuristic: str = "",
+) -> reporting.ScenarioRun:
     """Solve one scenario and record its time, plans and summary.
 
-    With ``catch_errors`` the failure is stored on the result so a batch report
-    can keep going; otherwise the exception propagates.
+    `solver` is the pipeline to run (TOP by default; main.py passes its
+    Clarke-Wright adapter). `buses` lets a caller that already loaded the
+    scenario fleet reuse it across heuristics. With ``catch_errors`` the
+    failure is stored on the result so a batch report can keep going;
+    otherwise the exception propagates.
     """
     root = Path(root)
-    buses = scenario_buses(scenario, root, fleet=fleet)
+    if buses is None:
+        buses = scenario_buses(scenario, root, fleet=fleet)
     start = time.monotonic()
     try:
-        data, plans, summary = solve_scenario(scenario, buses, root)
+        data, plans, summary = solver(scenario, buses, root)
         error = ""
     except Exception as exc:
         if not catch_errors:
             raise
         data, plans, summary, error = None, [], None, f"{type(exc).__name__}: {exc}"
-    return ScenarioRun(
+    return reporting.ScenarioRun(
         scenario=scenario,
         buses=buses,
         elapsed=time.monotonic() - start,
@@ -150,35 +120,14 @@ def run_scenario(
         plans=plans,
         summary=summary,
         error=error,
-    )
-
-
-def run_metrics(
-    scenario: dict,
-    data: InstanceData,
-    plans: list[BusPlan],
-    buses: list[Bus],
-) -> RunMetrics:
-    """The served/used/route numbers every summary row reads."""
-    served, total, percentage = reporting.served_ratio(data, plans)
-    reference = reporting.reference_plan(plans)
-    raw_limit = scenario.get("max_time_limit")
-    return RunMetrics(
-        served=served,
-        total=total,
-        percentage=percentage,
-        used=sum(1 for plan in plans if plan.served_passengers > 0),
-        limit=int(raw_limit) if raw_limit else 0,
-        longest=reference.travel_time_minutes if reference else 0,
-        peak=reference.peak_load if reference else 0,
-        reference=reference,
+        heuristic=heuristic,
     )
 
 
 def scenario_operational_cost(
     scenario: dict,
-    data: InstanceData,
-    plans: list[BusPlan],
+    data,
+    plans,
     buses: list[Bus],
 ) -> reporting.OperationalCost:
     """Cost of a run, charging each route its own bus's fuel autonomy."""
@@ -189,15 +138,3 @@ def scenario_operational_cost(
         diesel_price=float(scenario["diesel_price_per_liter"]),
         driver_hourly_rate=float(scenario["driver_hourly_rate"]),
     )
-
-
-def markdown_table(
-    headers: Sequence[str],
-    rows: Iterable[Sequence[str]],
-) -> list[str]:
-    """Header, separator and body of a markdown table."""
-    return [
-        "| " + " | ".join(headers) + " |",
-        "|" + "---|" * len(headers),
-        *["| " + " | ".join(row) + " |" for row in rows],
-    ]

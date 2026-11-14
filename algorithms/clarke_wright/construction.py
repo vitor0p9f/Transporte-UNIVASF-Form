@@ -146,15 +146,10 @@ def two_phase_selection(
     paradas_ativas: set[int],
     ctx: Contexto,
     iteracoes: int = ITER_TWO_PHASE,
-    peso_superlotacao: float = 0.0,
-    conforto: int | None = None,
 ) -> list[Rota]:
     """Procedimento CW-2: reordena savings via roleta e guarda a melhor."""
-    if conforto is None:
-        conforto = ctx.modelo.capacidade_conforto or ctx.capacidade
-
     melhor_rotas = _fundir(savings, paradas_ativas, ctx)
-    melhor_custo = _obj_total(melhor_rotas, peso_superlotacao, conforto)
+    melhor_custo = _obj_total(melhor_rotas)
 
     savings_atual = list(savings)
 
@@ -165,7 +160,7 @@ def two_phase_selection(
         )
         nova_ordem = _roulette_wheel(savings_atual, tamanho_torneio)
         novas_rotas = _fundir(nova_ordem, paradas_ativas, ctx)
-        novo_custo = _obj_total(novas_rotas, peso_superlotacao, conforto)
+        novo_custo = _obj_total(novas_rotas)
 
         if novo_custo < melhor_custo:
             melhor_custo = novo_custo

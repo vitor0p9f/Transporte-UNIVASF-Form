@@ -6,7 +6,7 @@ from .constants import ITER_POSTIMPROVE
 from .construction import _melhor_direcao
 from .metrics import _atualizar_custo, _atualizar_rota, _dist_rota, _tempo_rota
 from .model import Contexto, Rota
-from .objective import _obj_carga, _obj_rota, _obj_total
+from .objective import _obj_total
 
 
 def _2opt_rota(rota: Rota, ctx: Contexto) -> Rota:
@@ -46,16 +46,12 @@ def _2opt_rota(rota: Rota, ctx: Contexto) -> Rota:
 def _shift_10(
     rotas: list[Rota],
     ctx: Contexto,
-    peso_superlotacao: float = 0.0,
-    conforto: int | None = None,
 ) -> list[Rota]:
     """Shift 1-0: move uma parada de uma rota para outra.
 
     Aceita se não violar a(s) restrição(ões) ativa(s) e se reduzir o objetivo
-    (combustível + penalidade de superlotação). Atualiza a carga das rotas.
+    (custo de combustível). Atualiza a carga das rotas.
     """
-    if conforto is None:
-        conforto = ctx.modelo.capacidade_conforto or ctx.capacidade
     melhorou = True
     while melhorou:
         melhorou = False
@@ -73,9 +69,7 @@ def _shift_10(
                     if ctx.restricoes.capacidade and carga_b > ctx.capacidade:
                         continue
 
-                    obj_antes = _obj_rota(
-                        rotas[a], peso_superlotacao, conforto
-                    ) + _obj_rota(rotas[b], peso_superlotacao, conforto)
+                    obj_antes = rotas[a].custo_brl + rotas[b].custo_brl
 
                     # Testa inserção no início e fim da rota b
                     for pos_j in [0, len(rotas[b].paradas)]:
@@ -99,11 +93,7 @@ def _shift_10(
                         dist_b = _dist_rota(novas_b, ctx)
                         custo_a = ctx.modelo.custo_rota(dist_a)
                         custo_b = ctx.modelo.custo_rota(dist_b)
-                        obj_depois = _obj_carga(
-                            custo_a, carga_a, peso_superlotacao, conforto
-                        ) + _obj_carga(
-                            custo_b, carga_b, peso_superlotacao, conforto
-                        )
+                        obj_depois = custo_a + custo_b
 
                         if obj_depois < obj_antes - 1e-6:
                             _atualizar_rota(rotas[a], novas_a, carga_a, ctx)
@@ -123,16 +113,12 @@ def _shift_10(
 def _swap_11(
     rotas: list[Rota],
     ctx: Contexto,
-    peso_superlotacao: float = 0.0,
-    conforto: int | None = None,
 ) -> list[Rota]:
     """Swap 1-1: troca uma parada entre duas rotas.
 
     Aceita se não violar a(s) restrição(ões) ativa(s) e se reduzir o objetivo
-    (combustível + penalidade de superlotação). Atualiza a carga das rotas.
+    (custo de combustível). Atualiza a carga das rotas.
     """
-    if conforto is None:
-        conforto = ctx.modelo.capacidade_conforto or ctx.capacidade
     melhorou = True
     while melhorou:
         melhorou = False
@@ -153,9 +139,7 @@ def _swap_11(
                         ):
                             continue
 
-                        obj_antes = _obj_rota(
-                            rotas[a], peso_superlotacao, conforto
-                        ) + _obj_rota(rotas[b], peso_superlotacao, conforto)
+                        obj_antes = rotas[a].custo_brl + rotas[b].custo_brl
 
                         novas_a = list(rotas[a].paradas)
                         novas_b = list(rotas[b].paradas)
@@ -174,11 +158,7 @@ def _swap_11(
                         dist_b = _dist_rota(novas_b, ctx)
                         custo_a = ctx.modelo.custo_rota(dist_a)
                         custo_b = ctx.modelo.custo_rota(dist_b)
-                        obj_depois = _obj_carga(
-                            custo_a, carga_a, peso_superlotacao, conforto
-                        ) + _obj_carga(
-                            custo_b, carga_b, peso_superlotacao, conforto
-                        )
+                        obj_depois = custo_a + custo_b
 
                         if obj_depois < obj_antes - 1e-6:
                             _atualizar_rota(rotas[a], novas_a, carga_a, ctx)
@@ -199,8 +179,6 @@ def post_improvement(
     rotas: list[Rota],
     ctx: Contexto,
     max_iter_sem_melhora: int = ITER_POSTIMPROVE,
-    peso_superlotacao: float = 0.0,
-    conforto: int | None = None,
 ) -> list[Rota]:
     """Procedimento CW-3: aplica busca local até não haver mais melhorias.
 
@@ -208,27 +186,21 @@ def post_improvement(
       - 2-opt intra-rota
       - shift 1-0 inter-rotas
       - swap 1-1 inter-rotas
-
-    Com peso_superlotacao > 0 os operadores inter-rotas também redistribuem
-    passageiros para aliviar ônibus lotados além do conforto.
     """
-    if conforto is None:
-        conforto = ctx.modelo.capacidade_conforto or ctx.capacidade
-
     rotas = [_copiar_rota(r) for r in rotas]
-    melhor_custo = _obj_total(rotas, peso_superlotacao, conforto)
+    melhor_custo = _obj_total(rotas)
     iter_sem_melhora = 0
 
     operadores = [
         lambda r: [_2opt_rota(x, ctx) for x in r],
-        lambda r: _shift_10(r, ctx, peso_superlotacao, conforto),
-        lambda r: _swap_11(r, ctx, peso_superlotacao, conforto),
+        lambda r: _shift_10(r, ctx),
+        lambda r: _swap_11(r, ctx),
     ]
 
     while iter_sem_melhora < max_iter_sem_melhora:
         op = random.choice(operadores)
         rotas_novas = op(rotas)
-        novo_custo = _obj_total(rotas_novas, peso_superlotacao, conforto)
+        novo_custo = _obj_total(rotas_novas)
 
         if novo_custo < melhor_custo - 1e-6:
             melhor_custo = novo_custo
