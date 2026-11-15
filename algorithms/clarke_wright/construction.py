@@ -62,9 +62,9 @@ def _merge(
         if ri is None or rj is None or ri is rj:
             continue
 
+        # Capacity check deferred to post-merge simulation (evaluate_attendance)
+        # which uses simulate_stops with ctx.capacity, so we do not block merges here.
         load = ri.load + rj.load
-        if ctx.restrictions.capacity and load > ctx.capacity:
-            continue
 
         new_order = None
 
