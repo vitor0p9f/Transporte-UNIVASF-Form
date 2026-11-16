@@ -11,12 +11,12 @@ from .objective import _obj_total
 def _best_direction(stops: list[int], ctx: Context) -> list[int]:
     """CW-2 procedure: try both directions of the open route.
 
-    In the OVRP:
-      forward : depot -> p1 -> p2 -> ... -> pn   (distance D_f)
-      reverse : depot -> pn -> p(n-1) -> ... -> p1 (distance D_r)
+    Each order independently selects its permitted origin and destination:
+      forward : origin -> p1 -> p2 -> ... -> pn -> destination
+      reverse : origin -> pn -> p(n-1) -> ... -> p1 -> destination
 
-    With the time constraint active the direction is not indifferent (the first
-    leg leaves the depot), so directions that already break the limit are
+    With the time constraint active both access and terminal legs count, so
+    directions that already break the limit are
     dropped before picking the shortest one. If none fits, the shortest one is
     returned and the caller rejects the route through `Context.fits`.
     """
@@ -42,8 +42,8 @@ def _merge(
       - if j is an endpoint of its route
       -> merge the routes
 
-    A stop whose demand alone already breaks the limit still becomes its own
-    route (the algorithm never drops demand); the report flags that case.
+    With endpoint constraints, an infeasible complete singleton is left
+    unserved. The legacy unrestricted-end API retains its singleton behavior.
     """
     # Initial solution: one route per stop
     routes: list[Route] = []
@@ -52,6 +52,8 @@ def _merge(
     for p in sorted(active_stops):  # fixed order -> reproducible result
         r = Route(stops=[p], load=ctx.stop_loads.get(p, 0))
         _update_cost(r, ctx)
+        if (ctx.origins or ctx.destinations) and not ctx.fits(r.load, r.time_minutes):
+            continue
         routes.append(r)
         endpoint[p] = r
 

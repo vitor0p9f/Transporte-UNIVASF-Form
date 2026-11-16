@@ -225,4 +225,6 @@ def _copy_route(route: Route) -> Route:
         distance_km=route.distance_km,
         time_minutes=route.time_minutes,
         cost_brl=route.cost_brl,
+        origin=route.origin,
+        destination=route.destination,
     )

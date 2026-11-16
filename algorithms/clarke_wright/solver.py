@@ -55,7 +55,8 @@ def clarke_wright_ovrp(
     if verbose:
         print(
             f"\n[CW-OVRP] {len(active_stops)} paradas | "
-            f"sentido: {ctx.sense} | depósito: {ctx.depot} | "
+            f"sentido: {ctx.sense} | origens: {ctx.origins or (ctx.depot,)} | "
+            f"destinos: {ctx.destinations or 'livre'} | "
             f"cap: {ctx.capacity} | "
             f"limite: {_time_limit_text(ctx.max_time)} | "
             f"restrições: {ctx.restrictions.key} | modelo: {ctx.bus_model.name}"

@@ -8,7 +8,9 @@ from .constants import DEFAULT_CAPACITY, DEFAULT_DIESEL_PRICE, DEFAULT_KM_PER_LI
 from .model import BusModel, Context, Restrictions
 
 
-def detect_sense(demand: np.ndarray, depot: int) -> str:
+def detect_sense(
+    demand: np.ndarray, depot: int, origins: tuple[int, ...] | None = None
+) -> str:
     """Tell whether the trip is "outbound" or "inbound" from the depot.
 
     - "volta": the depot is the campus people LEAVE from (they board there).
@@ -17,8 +19,9 @@ def detect_sense(demand: np.ndarray, depot: int) -> str:
     - "ida": the depot is the origin and people board at the stops on their way
       to the campus. The load is the number of BOARDINGS.
     """
-    boardings = int(demand[depot].sum())  # who leaves the depot
-    alightings = int(demand[:, depot].sum())  # who arrives at the depot
+    allowed = list(origins or (depot,))
+    boardings = int(demand[allowed, :].sum())
+    alightings = int(demand[:, allowed].sum())
     return "volta" if boardings > alightings else "ida"
 
 
@@ -26,6 +29,8 @@ def build_stop_loads(
     demand: np.ndarray,
     depot: int,
     sense: str = "auto",
+    *,
+    origins: tuple[int, ...] | None = None,
 ) -> tuple[dict[int, int], str]:
     """Compute the load (passengers the bus carries) of every stop.
 
@@ -37,13 +42,15 @@ def build_stop_loads(
     if sense not in ("auto", "ida", "volta"):
         raise ValueError(f"sentido '{sense}' desconhecido (use: auto, ida, volta)")
     if sense == "auto":
-        sense = detect_sense(demand, depot)
+        sense = detect_sense(demand, depot, origins)
 
     per_node = demand.sum(axis=0) if sense == "volta" else demand.sum(axis=1)
     stop_loads = {
         node: int(per_node[node])
         for node in range(1, len(per_node))
-        if node != depot and per_node[node] > 0
+        # With multiple origins the reference depot can itself be visited by
+        # a route starting elsewhere, so it must not lose its customer load.
+        if (node != depot or (origins and len(origins) > 1)) and per_node[node] > 0
     }
     return stop_loads, sense
 
@@ -58,6 +65,8 @@ def build_context(
     restrictions: Restrictions | str = "ambas",
     sense: str = "auto",
     max_routes: int | None = None,
+    origins: tuple[int, ...] | None = None,
+    destinations: tuple[int, ...] | None = None,
 ) -> Context:
     """Resolve the limits, the restriction key and the load per stop.
 
@@ -84,8 +93,20 @@ def build_context(
     if max_time is None:
         max_time = INF
 
+    def endpoints(labels, name):
+        if labels is None:
+            return None
+        result = tuple(sorted(set(labels)))
+        if not result or any(node not in data.nodes for node in result):
+            raise ValueError(f"{name} must contain valid instance node labels")
+        return result
+
+    origins = endpoints(origins, "origins")
+    destinations = endpoints(destinations, "destinations")
+    if depot not in data.nodes:
+        raise ValueError("depot must be a valid instance node label")
     stop_loads, used_sense = build_stop_loads(
-        data.demand, depot, sense
+        data.demand, depot, sense, origins=origins
     )
     return Context(
         # float avoids surprises when the instance ships integer distances
@@ -100,4 +121,6 @@ def build_context(
         restrictions=restrictions,
         sense=used_sense,
         max_routes=max_routes,
+        origins=origins,
+        destinations=destinations,
     )

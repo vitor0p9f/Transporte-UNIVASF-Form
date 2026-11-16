@@ -6,6 +6,7 @@ from algorithms.top_univasf.simulation import simulate_stops
 from utils.instances import InstanceData
 
 from .model import Attendance, Context, Route
+from .metrics import _route_path
 
 
 def _instance_from_context(ctx: Context) -> InstanceData:
@@ -16,8 +17,8 @@ def _instance_from_context(ctx: Context) -> InstanceData:
 
 
 def _simulated_sequence(ctx: Context, route: Route) -> tuple[int, ...]:
-    """The open route as the simulator sees it: depot + stops."""
-    return (ctx.depot, *route.stops)
+    """Use the same complete path as construction and the time checks."""
+    return _route_path(route.stops, ctx)
 
 
 def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:
@@ -66,8 +67,8 @@ def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:
 def evaluate_attendance(routes: list[Route], ctx: Context) -> Attendance:
     """Measure each route's real attendance with the TOP UNIVASF simulation.
 
-    A CW route is open and starts at the depot, so the simulated sequence is
-    `[depot] + stops` -- the leg leaving the depot occupies seats too. Demand
+    The simulated sequence includes the selected origin, customer stops and
+    permitted destination, matching construction and all time checks. Demand
     is charged in order: a pair boarded by one route leaves `remaining` and is
     never counted again by the next one.
 

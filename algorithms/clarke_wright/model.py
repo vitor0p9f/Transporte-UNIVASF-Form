@@ -83,9 +83,8 @@ def bus_model(bus: Bus, diesel_price: float) -> BusModel:
 class Context:
     """Everything one route needs to be measured and validated.
 
-    It carries the two matrices (distance and time), the depot, the limits and
-    the restriction key, so the internal functions receive one object instead
-    of six or seven loose parameters.
+    It carries both matrices, permitted endpoints, reference depot, limits and
+    restriction key, so the internal functions share one context.
 
     `stop_loads` is the CVRP projection (demand per node, which the decisions
     use); `demand` is the raw OD matrix, read only by the attendance
@@ -107,6 +106,9 @@ class Context:
     #: allow. When the solution exceeds the cap, the extra routes would have no
     #: bus to operate them and are dropped by `limit_fleet`.
     max_routes: int | None = None
+    #: Allowed route endpoints; None preserves the single-depot/open-end API.
+    origins: tuple[int, ...] | None = None
+    destinations: tuple[int, ...] | None = None
 
     def fits(self, load: int, minutes: float) -> bool:
         """Single check point: only the active constraint(s) are enforced."""
@@ -129,7 +131,7 @@ class Saving:
 
 @dataclass
 class Route:
-    """Open route: depot -> p1 -> p2 -> ... -> pn (no return to the depot)."""
+    """Customer order plus selected endpoints and complete travel measures."""
 
     stops: list[int] = field(default_factory=list)
     load: int = 0  # allocated demand (CVRP projection)
@@ -139,6 +141,8 @@ class Route:
     passengers: int = 0  # passengers served (simulation, after the solution)
     peak_load: int = 0  # highest simultaneous occupancy (simulation)
     pairs: Pairs = ()  # (origin, destination, quantity) boarded
+    origin: int | None = None
+    destination: int | None = None
 
     def first(self) -> int:
         return self.stops[0]

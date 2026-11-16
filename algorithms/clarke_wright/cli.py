@@ -46,7 +46,7 @@ def main() -> None:
         dest="depot",
         type=int,
         default=None,
-        help="nó de origem da frota (padrão: 1º origin do cenário)",
+        help="força uma origem única (padrão: todas as origens do cenário)",
     )
     parser.add_argument(
         "--capacidade",

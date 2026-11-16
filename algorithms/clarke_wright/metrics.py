@@ -6,27 +6,69 @@ from .constants import INF
 from .model import Context, Route, Saving
 
 
-def _route_distance(stops: list[int], ctx: Context) -> float:
-    """Distance of the open route: depot -> p1 -> p2 -> ... -> pn.
+def _route_endpoints(
+    stops: list[int], ctx: Context
+) -> tuple[int, int | None, float, int]:
+    """Choose permitted endpoints for this order, including both access legs.
 
-    The return leg to the depot is not counted (OVRP).
+    A feasible endpoint pair always wins over a shorter, over-time pair.
+    If none is feasible we return the shortest one so ``Context.fits`` can
+    reject the candidate. Ties use node labels, not the input list order.
     """
     if not stops:
-        return 0.0
-    return round(path_distance(ctx.distance, stops, start=ctx.depot), 4)
+        return ctx.depot, None, 0.0, 0
+    inner_distance = path_distance(ctx.distance, stops)
+    inner_time = path_time_minutes(ctx.time, stops)
+    best = None
+    for origin in ctx.origins or (ctx.depot,):
+        distance = inner_distance + float(ctx.distance[origin, stops[0]])
+        minutes = inner_time + int(ctx.time[origin, stops[0]])
+        for destination in ctx.destinations or (None,):
+            total_distance = distance
+            total_time = minutes
+            if destination is not None:
+                total_distance += float(ctx.distance[stops[-1], destination])
+                total_time += int(ctx.time[stops[-1], destination])
+            key = (
+                ctx.restrictions.time and total_time > ctx.max_time,
+                total_distance, total_time, origin,
+                stops[-1] if destination is None else destination,
+            )
+            if best is None or key < best[0]:
+                best = (key, origin, destination, total_distance, total_time)
+    return best[1:]
+
+
+def _route_path(stops: list[int], ctx: Context) -> tuple[int, ...]:
+    """Full driven sequence shared by measurements, simulation and reports."""
+    origin, destination, _, _ = _route_endpoints(stops, ctx)
+    path = list(stops)
+    if not path or path[0] != origin:
+        path.insert(0, origin)
+    if destination is not None and path[-1] != destination:
+        path.append(destination)
+    return tuple(path)
+
+
+def _route_distance(stops: list[int], ctx: Context) -> float:
+    """Distance including the selected origin and permitted terminal node."""
+    return round(_route_endpoints(stops, ctx)[2], 4)
 
 
 def _route_time(stops: list[int], ctx: Context) -> int:
-    """Total time of the open route, in minutes (the scenario `time` matrix)."""
-    if not stops:
-        return 0
-    return path_time_minutes(ctx.time, stops, start=ctx.depot)
+    """Time including the selected origin and permitted terminal node."""
+    return _route_endpoints(stops, ctx)[3]
 
 
 def _update_cost(route: Route, ctx: Context) -> Route:
     """Recompute the route's distance_km, time_minutes and cost_brl."""
-    route.distance_km = _route_distance(route.stops, ctx)
-    route.time_minutes = _route_time(route.stops, ctx)
+    origin, destination, distance, minutes = _route_endpoints(route.stops, ctx)
+    route.origin = origin
+    route.destination = destination if destination is not None else (
+        route.stops[-1] if route.stops else origin
+    )
+    route.distance_km = round(distance, 4)
+    route.time_minutes = minutes
     route.cost_brl = ctx.bus_model.route_cost(route.distance_km)
     return route
 
@@ -45,12 +87,16 @@ def compute_savings_ovrp(
     ctx: Context,
     lam: float,
 ) -> list[Saving]:
-    """Modified OVRP formula (equation 5 of the paper).
+    """Modified OVRP savings, extended to account for permitted endpoints.
 
     s(i,j) = c(depot, j) - lambda * c(i, j)
 
     Compared to the CVRP it drops the c(i, depot) term, because the vehicle does
     not return to the depot after visiting i.
+
+    With endpoint filters, use complete singleton costs minus the merged cost
+    and the lambda adjustment on the joining arc. The formula above is
+    recovered for a single depot with no destination filter.
 
     Args:
         stops: list of stops (the depot is not one of them)
@@ -62,10 +108,21 @@ def compute_savings_ovrp(
         for idx_j in range(idx_i + 1, len(stops)):
             stop_i, stop_j = stops[idx_i], stops[idx_j]
 
-            # Equation 5 of the paper (OVRP with lambda)
-            s = float(ctx.distance[ctx.depot, stop_j]) - lam * float(
-                ctx.distance[stop_i, stop_j]
-            )
+            if ctx.origins is None and ctx.destinations is None:
+                # Legacy single-depot/open-end equation (paper equation 5).
+                s = float(ctx.distance[ctx.depot, stop_j]) - lam * float(
+                    ctx.distance[stop_i, stop_j]
+                )
+            else:
+                # Savings from joining complete routes, with their permitted
+                # endpoints. For one depot and an unrestricted end this reduces
+                # to c(depot,j) - lambda*c(i,j).
+                s = (
+                    _route_distance([stop_i], ctx)
+                    + _route_distance([stop_j], ctx)
+                    - _route_distance([stop_i, stop_j], ctx)
+                    - (lam - 1.0) * float(ctx.distance[stop_i, stop_j])
+                )
             savings.append(Saving(i=stop_i, j=stop_j, value=round(s, 6)))
 
     savings.sort()  # descending, via __lt__
