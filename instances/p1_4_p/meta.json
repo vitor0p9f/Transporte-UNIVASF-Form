@@ -1,0 +1,23 @@
+{
+  "instance_id": "p1_4_p",
+  "kind": "archeti",
+  "seed": 1193887545,
+  "archeti": {
+    "n": 32,
+    "m": 4,
+    "tmax": 18.8,
+    "profit_sum": 285
+  },
+  "conversion": {
+    "min_per_unit": 2.2,
+    "time_noise": [
+      0.9,
+      1.1
+    ],
+    "tmax_to_minutes": 60.0,
+    "demand": "sparse OD, budget=sum(P), origin uniform, destination weighted by P, period uniform"
+  },
+  "num_nodes": 32,
+  "num_od_pairs": 992,
+  "total_demand": 285
+}
