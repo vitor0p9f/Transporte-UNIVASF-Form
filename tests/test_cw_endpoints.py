@@ -169,8 +169,8 @@ def test_scenario_without_destination_filter_keeps_an_open_end(monkeypatch):
     scenario = synthetic_scenario(monkeypatch, data, origins="1", destinations="")
     _, routes, ctx, attendance, _ = fast_solve(scenario)
     plans, _ = cw.plans_and_summary(routes, ctx, attendance)
-    assert plans[0].stops == (1, 2)
-    assert attendance.served == 0  # No forced terminal visit when the list is absent.
+    assert plans[0].stops == (1, 2, 6)
+    assert attendance.served == 1  # Drop-offs are now active, even without a terminal filter.
 
 
 def test_savings_include_the_terminal_leg():

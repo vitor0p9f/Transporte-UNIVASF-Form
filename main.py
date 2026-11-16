@@ -86,6 +86,7 @@ def iter_scenario_runs(
 
 def _scenario_detail(
     runs: list[reporting.ScenarioRun],
+    reproducible: bool = False,
 ) -> list[str]:
     """One scenario's detail: heading, then one block per heuristic."""
     first = runs[0]
@@ -112,7 +113,8 @@ def _scenario_detail(
             continue
         metrics_line = (
             f"{reporting.fleet_totals_line(run.plans, run.buses, run.data)} · "
-            f"{run.summary.rounds} rounds · {run.elapsed:.1f}s"
+            f"{run.summary.rounds} rounds"
+            + ("" if reproducible else f" · {run.elapsed:.1f}s")
         )
         plan_table = reporting.markdown_table(
             reporting.PLAN_HEADERS,
@@ -132,25 +134,26 @@ def _scenario_detail(
     return lines
 
 
-def _summary_row(run: reporting.ScenarioRun) -> str:
+def _summary_row(run: reporting.ScenarioRun, reproducible: bool = False) -> str:
     """One row of the summary table (scenario × heuristic)."""
     prefix = (
         f"| {run.scenario_id} | {run.instance_id} | {run.period} | "
         f"[{run.fleet}] | {run.limit} | {run.heuristic} | "
     )
+    elapsed = '—' if reproducible else f'{run.elapsed:.1f}'
     if run.error:
-        return prefix + "ERROR | — | — | — | — | — | " f"{run.elapsed:.1f} |"
+        return prefix + f"ERROR | — | — | — | — | — | {elapsed} |"
     served, total, percentage = reporting.served_ratio(run.data, run.plans)
     return (
         prefix
-        + f"{len(run.plans)}/{len(run.buses)} | {served}/{total} | "
+        + f"{sum(p.served_passengers > 0 for p in run.plans)}/{len(run.buses)} | {served}/{total} | "
         f"{run.summary.unserved_passengers} | {percentage:.0f}% | "
-        f"{run.summary.rounds} | {run.elapsed:.1f} |"
+        f"{run.summary.rounds} | {elapsed} |"
     )
 
 
 def render_markdown(
-    runs: list[reporting.ScenarioRun], generated_at: str
+    runs: list[reporting.ScenarioRun], generated_at: str, *, reproducible: bool = False
 ) -> str:
     """Full markdown report: one summary-table row per scenario × heuristic."""
     scenarios = len({run.scenario_id for run in runs})
@@ -158,7 +161,8 @@ def render_markdown(
         "# Results — report scenarios (TOP + Clarke-Wright)",
         "",
         (
-            f"Generated on {generated_at} · {scenarios} scenarios · "
+            ("Reproducible report · seed 42 · " if reproducible else f"Generated on {generated_at} · ")
+            + f"{scenarios} scenarios · "
             f"{len(runs)} runs · both heuristics on the same scenario."
         ),
         "",
@@ -168,22 +172,30 @@ def render_markdown(
         ),
         "|---|---|---|---|---|---|---|---|---|---|---|---|",
     ]
-    lines += [_summary_row(run) for run in runs]
+    if reproducible:
+        lines[4:4] = [
+            'CW is an adapted baseline: distance savings construct routes; selection ranks exact service first and operational cost second. Static merge load counts OD demand touching customer stops once. Anchoring precedes fleet selection and CW-3. The two-phase bound is optimistic, not simulated service. Runtime is measured separately and omitted here for byte-identical reports.',
+            '',
+            'Standard fleet caveat: TOP uses each vehicle capacity; CW constructs with the smallest fleet capacity and a reference vehicle cost. Controlled reports use the same homogeneous fleet for both methods; this standard report does not isolate fleet-model effects.',
+            '',
+        ]
+    lines += [_summary_row(run, reproducible) for run in runs]
     lines.append("")
     for _, group in groupby(runs, key=lambda run: run.scenario_id):
-        lines += _scenario_detail(list(group))
+        lines += _scenario_detail(list(group), reproducible)
     return "\n".join(lines).rstrip("\n") + "\n"
 
 
 def write_markdown(
-    runs: list[reporting.ScenarioRun], path: Path = OUT_PATH
+    runs: list[reporting.ScenarioRun], path: Path = OUT_PATH, *, reproducible: bool = True
 ) -> str:
     """Write the sweep report to `path` and return the text."""
     markdown = render_markdown(
         runs,
         datetime.now(UTC).astimezone().strftime("%Y-%m-%d %H:%M %Z"),
+        reproducible=reproducible,
     )
-    path.write_text(markdown, encoding="utf-8")
+    path.write_text(markdown, encoding="utf-8", newline="\n")
     return markdown
 
 

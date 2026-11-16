@@ -48,7 +48,7 @@ class Restrictions:
 
 @dataclass(frozen=True)
 class BusModel:
-    """The vehicle's cost model: km per litre and price per litre.
+    """Operating cost model: fuel consumption/price and driver hourly rate.
 
     The data comes from one row of `fleet.csv` (capacity and autonomy) and from
     the scenario (diesel price).
@@ -58,16 +58,17 @@ class BusModel:
     capacity: int
     km_per_liter: float
     diesel_price: float
+    driver_hourly_rate: float = 0.0
 
     @property
     def cost_per_km(self) -> float:
         return self.diesel_price / self.km_per_liter
 
-    def route_cost(self, distance_km: float) -> float:
-        return distance_km * self.cost_per_km
+    def route_cost(self, distance_km: float, time_minutes: float = 0.0) -> float:
+        return distance_km * self.cost_per_km + time_minutes / 60 * self.driver_hourly_rate
 
 
-def bus_model(bus: Bus, diesel_price: float) -> BusModel:
+def bus_model(bus: Bus, diesel_price: float, driver_hourly_rate: float = 0.0) -> BusModel:
     """Turn one row of `fleet.csv` into the algorithm's cost model."""
     if bus.km_autonomy_per_liter <= 0:
         raise ValueError(f"bus {bus.id}: km_autonomy_per_liter deve ser > 0")
@@ -76,6 +77,7 @@ def bus_model(bus: Bus, diesel_price: float) -> BusModel:
         capacity=bus.passenger_capacity,
         km_per_liter=bus.km_autonomy_per_liter,
         diesel_price=diesel_price,
+        driver_hourly_rate=driver_hourly_rate,
     )
 
 
@@ -86,9 +88,9 @@ class Context:
     It carries both matrices, permitted endpoints, reference depot, limits and
     restriction key, so the internal functions share one context.
 
-    `stop_loads` is the CVRP projection (demand per node, which the decisions
-    use); `demand` is the raw OD matrix, read only by the attendance
-    simulation.
+    `stop_loads` describes incident demand per node. Merge load is the union
+    of touching OD pairs, not the sum of node loads. Raw OD demand also feeds
+    the optimistic bound and exact selection/boarding evaluations.
     """
 
     distance: np.ndarray
@@ -109,6 +111,23 @@ class Context:
     #: Allowed route endpoints; None preserves the single-depot/open-end API.
     origins: tuple[int, ...] | None = None
     destinations: tuple[int, ...] | None = None
+    _cache: dict = field(default_factory=dict, init=False, repr=False, compare=False)
+    od_origins: np.ndarray = field(init=False, repr=False, compare=False)
+    od_destinations: np.ndarray = field(init=False, repr=False, compare=False)
+    od_quantities: tuple[int, ...] = field(init=False, repr=False, compare=False)
+    touch_masks: tuple[int, ...] = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self):
+        origins, destinations = np.nonzero(self.demand > 0)
+        quantities = tuple(int(self.demand[o, d]) for o, d in zip(origins, destinations))
+        masks = [0] * len(self.demand)
+        for index, (o, d) in enumerate(zip(origins, destinations)):
+            masks[o] |= 1 << index
+            masks[d] |= 1 << index
+        object.__setattr__(self, 'od_origins', origins)
+        object.__setattr__(self, 'od_destinations', destinations)
+        object.__setattr__(self, 'od_quantities', quantities)
+        object.__setattr__(self, 'touch_masks', tuple(masks))
 
     def fits(self, load: int, minutes: float) -> bool:
         """Single check point: only the active constraint(s) are enforced."""
@@ -134,7 +153,7 @@ class Route:
     """Customer order plus selected endpoints and complete travel measures."""
 
     stops: list[int] = field(default_factory=list)
-    load: int = 0  # allocated demand (CVRP projection)
+    load: int = 0  # static demand touching customer stops, OD pair counted once
     distance_km: float = 0.0  # total route distance (km)
     time_minutes: int = 0  # total route time (min)
     cost_brl: float = 0.0  # fuel cost (BRL)
@@ -143,6 +162,9 @@ class Route:
     pairs: Pairs = ()  # (origin, destination, quantity) boarded
     origin: int | None = None
     destination: int | None = None
+    anchored: bool = False
+    load_mask: int = 0
+    node_mask: int = 0
 
     def first(self) -> int:
         return self.stops[0]
@@ -155,10 +177,10 @@ class Route:
 class Attendance:
     """How much of the demand the routes actually deliver.
 
-    `allocated` is the CVRP projection (sum of the demand of the visited stops,
-    which is what the algorithm optimises); `served` is what the
-    boarding/alighting simulation confirms. Only the second one counts as
-    "passengers carried".
+    `allocated` sums static per-route loads and may repeat a pair across
+    different routes. It is a diagnostic, not transported passengers.
+    `served` is deduplicated by shared boarding simulation and is the primary
+    solution-selection criterion.
     """
 
     total_demand: int

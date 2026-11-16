@@ -18,7 +18,7 @@ from .constants import (
 )
 from .context import build_context
 from .evaluation import evaluate_attendance, limit_fleet
-from .metrics import _route_path
+from .metrics import route_path
 from .model import Attendance, BusModel, Context, Route, bus_model
 from .solver import clarke_wright_ovrp
 
@@ -54,12 +54,12 @@ def _scenario_depot(scenario: dict | None) -> int | None:
 def reference_model(
     scenario: dict | None, capacity: int, diesel: float
 ) -> BusModel:
-    """Single cost model of the scenario, applied to BOTH heuristics.
+    """Reference construction model for CW, including fuel and driver.
 
     Picks the fleet bus with the effective capacity (the criterion CW always
     used); when no bus matches, the smallest one. Without a declared fleet it
-    returns a generic model. The report's operating cost uses this same model
-    for TOP and for CW, so the values are comparable.
+    returns a generic model. The controlled fleet uses the same reference for
+    both methods. Standard reports recalculate cost using each assigned bus.
     """
     buses = _scenario_fleet(scenario)
     if not buses:
@@ -68,12 +68,13 @@ def reference_model(
             capacity=capacity,
             km_per_liter=DEFAULT_KM_PER_LITER,
             diesel_price=diesel,
+            driver_hourly_rate=float((scenario or {}).get('driver_hourly_rate') or 0),
         )
     reference = next(
         (b for b in buses if b.passenger_capacity == capacity),
         min(buses, key=lambda b: b.passenger_capacity),
     )
-    return bus_model(reference, diesel)
+    return bus_model(reference, diesel, float((scenario or {}).get('driver_hourly_rate') or 0))
 
 
 def scenario_context(
@@ -200,7 +201,6 @@ def solve_scenario(
         seed=seed,
         verbose=verbose,
     )
-    routes = limit_fleet(routes, ctx)
     attendance = evaluate_attendance(routes, ctx)
     return data, routes, ctx, attendance, lambda_used
 
@@ -225,7 +225,7 @@ def plans_and_summary(
     plans: list[BusPlan] = []
 
     for index, route in enumerate(routes):
-        path = _route_path(route.stops, ctx)
+        path = route_path(route, ctx)
         if index < len(ids):
             bus_id = ids[index]
         else:
@@ -241,7 +241,7 @@ def plans_and_summary(
                 travel_time_minutes=route.time_minutes,
                 peak_load=route.peak_load,
                 score=(
-                    route.passengers / route.time_minutes if route.time_minutes else 0.0
+                    route.passengers / route.cost_brl if route.cost_brl else 0.0
                 ),
                 served_pairs=tuple(route.pairs),
             )

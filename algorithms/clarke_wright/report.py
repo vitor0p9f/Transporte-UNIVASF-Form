@@ -10,7 +10,7 @@ from utils.fleet import load_fleet
 
 from .constants import INF
 from .evaluation import evaluate_attendance
-from .metrics import _route_path, _time_limit_text
+from .metrics import route_path, _time_limit_text
 from .model import Attendance, Context, Route
 from .objective import _obj_total
 from .scenario import ROOT
@@ -80,7 +80,7 @@ def print_solution(
     print(f"  Demanda total        : {attendance.total_demand} pax")
     print(
         f"  Demanda alocada      : {allocated} "
-        f"({attendance.allocated_pct:.0f}%)  [projeção do CVRP]"
+        f"({attendance.allocated_pct:.0f}%)  [carga estática; não é atendimento]"
     )
     print(
         f"  Passageiros atendidos: {served} "
@@ -88,7 +88,7 @@ def print_solution(
     )
     print(f"  Demanda não atendida : {attendance.unserved} pax")
     print(f"  Distância total      : {total_distance:.1f} km")
-    print(f"  Custo total (comb.)  : R${total_cost:.2f}")
+    print(f"  Custo total (diesel + motorista): R${total_cost:.2f}")
     print(
         f"  Custo médio/veículo  : "
         f"R${total_cost / max(1, len(routes)):.2f}"
@@ -121,7 +121,7 @@ def print_solution(
         )
 
         route_text = "    " + " -> ".join(
-            str(p) for p in _route_path(route.stops, ctx)
+            str(p) for p in route_path(route, ctx)
         )
         if len(route_text) > 130:
             route_text = route_text[:127] + "..."
@@ -186,9 +186,9 @@ def save_result(
             {
                 "id": i + 1,
                 "paradas": r.stops,
-                "origem": _route_path(r.stops, ctx)[0],
-                "destino": _route_path(r.stops, ctx)[-1],
-                "percurso": list(_route_path(r.stops, ctx)),
+                "origem": route_path(r, ctx)[0],
+                "destino": route_path(r, ctx)[-1],
+                "percurso": list(route_path(r, ctx)),
                 "carga": r.load,
                 "pax_atendido": r.passengers,
                 "pico": r.peak_load,

@@ -301,7 +301,7 @@ def fleet_totals_line(
     """One-line summary: buses used and passengers served."""
     served, total, percentage = served_ratio(data, plans)
     return (
-        f"{len(plans)} of {len(buses)} buses · {served}/{total} pax "
+        f"{sum(p.served_passengers > 0 for p in plans)} of {len(buses)} buses · {served}/{total} pax "
         f"({percentage:.0f}%)"
     )
 

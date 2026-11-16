@@ -160,7 +160,7 @@ def plan_cells(plan: BusPlan, bus: Bus, time_limit_minutes: int) -> tuple[str, .
     )
 
 
-def _scenario_markdown(run: reporting.ScenarioRun) -> list[str]:
+def _scenario_markdown(run: reporting.ScenarioRun, reproducible: bool = False) -> list[str]:
     scenario = run.scenario
     limit = int(scenario["max_time_limit"])
     buses = _bus_by_id(run.buses)
@@ -174,7 +174,7 @@ def _scenario_markdown(run: reporting.ScenarioRun) -> list[str]:
     ]
     metrics_line = (
         f"{reporting.fleet_totals_line(run.plans, run.buses, run.data)} · "
-        f"{run.summary.rounds} rodadas · {run.elapsed:.1f}s"
+        f"{run.summary.rounds} rodadas" + ("" if reproducible else f" · {run.elapsed:.1f}s")
     )
     plan_table = reporting.markdown_table(
         PLAN_HEADERS,
@@ -191,12 +191,12 @@ def _scenario_markdown(run: reporting.ScenarioRun) -> list[str]:
     )
 
 
-def render_markdown(runs: list[reporting.ScenarioRun], generated_at: str) -> str:
+def render_markdown(runs: list[reporting.ScenarioRun], generated_at: str, *, reproducible: bool = False) -> str:
     """Full report: configuration note, summary table and per-scenario detail."""
     lines = [
         "# Resultados — TOP na frota real",
         "",
-        f"Gerado em {generated_at} · {len(runs)} cenários.",
+        (f"Relatório reprodutível · seed 42 · {len(runs)} cenários. Tempos de execução omitidos." if reproducible else f"Gerado em {generated_at} · {len(runs)} cenários."),
         "",
         (
             "O TOP roda na frota heterogênea do `fleet.csv`: cada ônibus "
@@ -221,13 +221,13 @@ def render_markdown(runs: list[reporting.ScenarioRun], generated_at: str) -> str
     lines += reporting.markdown_table(
         SUMMARY_HEADERS,
         (
-            summary_cells(run, cost)
+            (*summary_cells(run, cost)[:-1], '—') if reproducible else summary_cells(run, cost)
             for run, cost in zip(runs, costs, strict=True)
         ),
     )
     lines.append("")
     for run in runs:
-        lines += _scenario_markdown(run)
+        lines += _scenario_markdown(run, reproducible)
         lines.append("")
     return "\n".join(lines).rstrip("\n") + "\n"
 
@@ -260,7 +260,7 @@ def main() -> None:
         _print_progress(index, len(scenarios), run)
 
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-    args.out.write_text(render_markdown(runs, generated_at), encoding="utf-8")
+    args.out.write_text(render_markdown(runs, generated_at, reproducible=True), encoding="utf-8", newline="\n")
     print(f"OK: {args.out} ({len(runs)} cenários)")
 
 

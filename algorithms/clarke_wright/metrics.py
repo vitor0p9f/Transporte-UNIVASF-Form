@@ -17,6 +17,10 @@ def _route_endpoints(
     """
     if not stops:
         return ctx.depot, None, 0.0, 0
+    cache = ctx._cache.setdefault('geometry', {})
+    cache_key = tuple(stops)
+    if cache_key in cache:
+        return cache[cache_key]
     inner_distance = path_distance(ctx.distance, stops)
     inner_time = path_time_minutes(ctx.time, stops)
     best = None
@@ -36,7 +40,25 @@ def _route_endpoints(
             )
             if best is None or key < best[0]:
                 best = (key, origin, destination, total_distance, total_time)
+    if len(cache) >= 65536:
+        cache.clear()
+    cache[cache_key] = best[1:]
     return best[1:]
+
+
+def anchored_path(stops, origin, destination):
+    path = tuple(stops)
+    if not path or path[0] != origin:
+        path = (origin, *path)
+    if destination is not None and path[-1] != destination:
+        path += (destination,)
+    return path
+
+
+def route_path(route: Route, ctx: Context) -> tuple[int, ...]:
+    if route.anchored:
+        return anchored_path(route.stops, route.origin, route.destination)
+    return _route_path(route.stops, ctx)
 
 
 def _route_path(stops: list[int], ctx: Context) -> tuple[int, ...]:
@@ -62,6 +84,12 @@ def _route_time(stops: list[int], ctx: Context) -> int:
 
 def _update_cost(route: Route, ctx: Context) -> Route:
     """Recompute the route's distance_km, time_minutes and cost_brl."""
+    if route.anchored:
+        path = route_path(route, ctx)
+        route.distance_km = round(path_distance(ctx.distance, path), 4)
+        route.time_minutes = path_time_minutes(ctx.time, path)
+        route.cost_brl = ctx.bus_model.route_cost(route.distance_km, route.time_minutes)
+        return route
     origin, destination, distance, minutes = _route_endpoints(route.stops, ctx)
     route.origin = origin
     route.destination = destination if destination is not None else (
@@ -69,7 +97,7 @@ def _update_cost(route: Route, ctx: Context) -> Route:
     )
     route.distance_km = round(distance, 4)
     route.time_minutes = minutes
-    route.cost_brl = ctx.bus_model.route_cost(route.distance_km)
+    route.cost_brl = ctx.bus_model.route_cost(route.distance_km, route.time_minutes)
     return route
 
 

@@ -6,7 +6,7 @@ from algorithms.top_univasf.simulation import simulate_stops
 from utils.instances import InstanceData
 
 from .model import Attendance, Context, Route
-from .metrics import _route_path
+from .metrics import route_path
 
 
 def _instance_from_context(ctx: Context) -> InstanceData:
@@ -18,7 +18,7 @@ def _instance_from_context(ctx: Context) -> InstanceData:
 
 def _simulated_sequence(ctx: Context, route: Route) -> tuple[int, ...]:
     """Use the same complete path as construction and the time checks."""
-    return _route_path(route.stops, ctx)
+    return route_path(route, ctx)
 
 
 def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:

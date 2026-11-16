@@ -146,3 +146,52 @@ SAÍDA — um plano por ônibus com passageiros > 0:
   descartado).
 - No empate exato do draft fica a rota direta, que também é mais barata de
   coordenar: entra nas chaves de conflito com menos pontos e menos pares.
+
+## Clarke-Wright adaptado como baseline
+
+```text
+ENTRADA: demanda OD, distâncias, tempos, frota, origens e destinos permitidos,
+         restrições ativas, diesel, motorista, seed 42.
+
+CHAVE(atendidos, custo) = (-atendidos, custo)
+ATIVOS = todos os nós com embarque OU desembarque positivo.
+CARGA(paradas) = soma da demanda OD que toca qualquer parada intermediária,
+                contando cada par uma única vez, mesmo se toca duas paradas.
+As âncoras de origem/destino não são clientes dessa carga estática, mas são
+visitadas e entram integralmente na simulação e no custo da viagem.
+
+PARA cada lambda de 0,1 a 2,0, passo 0,1:
+  constrói economias de DISTÂNCIA (não substitui savings por demanda OD)
+  inicia uma rota por nó ativo; funde rotas por economias, respeitando carga
+    estática da união e tempo quando essas restrições estão ativas
+  repete até 5.000 seleções de ordem por torneios de roleta ponderada:
+    constrói a solução candidata pelas mesmas regras de fusão
+    calcula LIMITE_OD: demanda com os dois extremos visitáveis na ordem certa
+      (máscaras numpy; sem limite de assentos; união otimista das âncoras)
+    compara CHAVE(LIMITE_OD, custo), guardando os recordes e a construção inicial
+  DECISÃO FINAL dos recordes, agora por atendimento EXATO:
+    ANCHORING: testa os sentidos e pares de âncoras permitidos;
+      escolhe mais passageiros e usa custo como desempate
+    CORTE DE FROTA: mantém no máximo a quantidade de veículos disponível
+    simula embarques/desembarques e compara CHAVE(atendidos reais, custo)
+  compara o resultado exato com o melhor lambda já selecionado
+
+CW-3, somente sobre a frota já ancorada e cortada:
+  testa 2-opt, shift e swap, preservando as âncoras escolhidas
+  recalcula carga de união, duração, custo e atendimento global exato
+  aceita apenas melhora estrita de CHAVE(atendidos reais, custo)
+  candidato rejeitado não pode modificar a solução incumbente
+  para após 500 tentativas sem melhora OU ao esgotar as três vizinhanças
+
+AVALIAÇÃO FINAL: mesma simulação de embarque do TOP, retirando demanda já
+atendida para impedir dupla contagem; registra rotas, ocupação e demanda residual.
+Não executa novo anchoring depois do CW-3.
+```
+
+O limite OD é aproximação otimista, não quantidade efetivamente transportada.
+A amostragem em torneios limitados é uma adaptação explícita do baseline.
+Na comparação controlada, ambas as heurísticas recebem a mesma frota homogênea
+e a mesma fórmula de custo. No relatório padrão, o CW ainda usa capacidade mínima
+e veículo de referência na construção; o TOP usa as características individuais.
+Os relatórios reprodutíveis não incluem data e cronômetro variáveis. Os tempos são
+medidos separadamente pelo script `scripts/validate_cw.py`.

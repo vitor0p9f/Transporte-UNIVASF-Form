@@ -32,27 +32,51 @@ def build_stop_loads(
     *,
     origins: tuple[int, ...] | None = None,
 ) -> tuple[dict[int, int], str]:
-    """Compute the load (passengers the bus carries) of every stop.
+    """Incident OD demand per node, including both pickups and drop-offs.
 
-    Outbound the load comes from the boardings (matrix row); inbound, from the
-    alightings (column) -- inbound almost everyone boards at the campus
-    (depot), so each stop's real demand is how many people get OFF there.
-    Returns `(stop_loads, used_sense)`.
+    Sense is retained as descriptive metadata; it no longer removes the
+    opposite endpoint of a request. Merge load uses route_load rather than
+    adding these per-node quantities, to avoid counting a pair twice.
     """
     if sense not in ("auto", "ida", "volta"):
         raise ValueError(f"sentido '{sense}' desconhecido (use: auto, ida, volta)")
     if sense == "auto":
         sense = detect_sense(demand, depot, origins)
 
-    per_node = demand.sum(axis=0) if sense == "volta" else demand.sum(axis=1)
+    per_node = demand.sum(axis=0) + demand.sum(axis=1) - np.diag(demand)
     stop_loads = {
         node: int(per_node[node])
         for node in range(1, len(per_node))
-        # With multiple origins the reference depot can itself be visited by
-        # a route starting elsewhere, so it must not lose its customer load.
-        if (node != depot or (origins and len(origins) > 1)) and per_node[node] > 0
+        if per_node[node] > 0
     }
     return stop_loads, sense
+
+
+def build_active_nodes(demand: np.ndarray) -> set[int]:
+    """Every positive-demand pickup AND drop-off, including campus nodes."""
+    return {int(n) for n in np.flatnonzero((demand > 0).any(axis=0) | (demand > 0).any(axis=1)) if n > 0}
+
+
+def route_load(stops, ctx: Context) -> int:
+    """Static CW load: OD demand touching any customer stop, each pair once.
+
+    Chosen origin/destination anchors are not customer stops, just as a depot
+    is not a CVRP customer. They are still visited and simulated for boarding.
+    """
+    if not ctx.od_quantities:
+        return sum(ctx.stop_loads.get(n, 0) for n in set(stops))
+    mask = 0
+    for n in stops:
+        mask |= ctx.touch_masks[n]
+    cache = ctx._cache.setdefault('loads', {})
+    if mask not in cache:
+        total, remaining = 0, mask
+        while remaining:
+            bit = remaining & -remaining
+            total += ctx.od_quantities[bit.bit_length() - 1]
+            remaining ^= bit
+        cache[mask] = total
+    return cache[mask]
 
 
 def build_context(

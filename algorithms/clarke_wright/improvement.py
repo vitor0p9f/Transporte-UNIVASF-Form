@@ -1,230 +1,120 @@
-"""Post-improvement local search (CW-3)."""
+"""CW-3 with service-first acceptance and locked, already anchored endpoints."""
 
 import random
-
+from dataclasses import replace
 from .constants import ITER_POSTIMPROVE
 from .construction import _best_direction
-from .metrics import _route_distance, _route_time, _update_cost, _update_route
+from .context import route_load
+from .metrics import _update_route
 from .model import Context, Route
-from .objective import _obj_total
+from .objective import exact_key
 
 
-def _try_move(
-    routes: list[Route],
-    a: int,
-    b: int,
-    new_a: list[int],
-    new_b: list[int],
-    load_a: int,
-    load_b: int,
-    ctx: Context,
-) -> bool:
-    """Commit a move of the pair (a, b) when it is legal and cheaper.
+def _copy_route(route: Route) -> Route:
+    return replace(route, stops=list(route.stops))
 
-    Both inter-route operators end the same way: take the best direction of each
-    new route, keep the pair only if the active constraints accept it, and
-    commit only if the pair's fuel cost drops. The comparison is against the
-    routes' current cost, so the caller does not have to read it beforehand.
-    """
-    new_a = _best_direction(new_a, ctx)
-    new_b = _best_direction(new_b, ctx)
-    if not (
-        ctx.fits(load_a, _route_time(new_a, ctx))
-        and ctx.fits(load_b, _route_time(new_b, ctx))
-    ):
+
+def _trial(route: Route, stops, ctx: Context) -> Route | None:
+    result = _copy_route(route)
+    if not route.anchored:
+        stops = _best_direction(stops, ctx)
+    _update_route(result, list(stops), route_load(stops, ctx), ctx)
+    return result if ctx.fits(result.load, result.time_minutes) else None
+
+
+def _try_move(routes, a, b, new_a, new_b, load_a, load_b, ctx):
+    """Accept only a strict improvement of global exact (-served, cost)."""
+    ra, rb = _trial(routes[a], new_a, ctx), _trial(routes[b], new_b, ctx)
+    if ra is None or rb is None:
         return False
-
-    cost_before = routes[a].cost_brl + routes[b].cost_brl
-    cost_after = ctx.bus_model.route_cost(
-        _route_distance(new_a, ctx)
-    ) + ctx.bus_model.route_cost(_route_distance(new_b, ctx))
-    if cost_after >= cost_before - 1e-6:
+    candidate = list(routes)
+    candidate[a], candidate[b] = ra, rb
+    if exact_key(candidate, ctx) >= exact_key(routes, ctx):
         return False
-
-    _update_route(routes[a], new_a, load_a, ctx)
-    _update_route(routes[b], new_b, load_b, ctx)
+    routes[a], routes[b] = ra, rb
     return True
 
 
 def _two_opt_route(route: Route, ctx: Context) -> Route:
-    """Intra-route 2-opt: reverse inner segments and keep the best.
-
-    Applies CW-2 (best direction) after every improvement.
-
-    The load does not change, but the time can: with the constraint active, a
-    candidate that breaks the limit is dropped (a shorter distance does not
-    guarantee a shorter time).
-    """
-    stops = list(route.stops)
-
-    improved = True
-    while improved:
-        improved = False
-        current_distance = _route_distance(stops, ctx)
-        for i in range(len(stops) - 1):
-            for j in range(i + 2, len(stops)):
-                new_stops = (
-                    stops[: i + 1]
-                    + list(reversed(stops[i + 1 : j + 1]))
-                    + stops[j + 1 :]
-                )
-                new_stops = _best_direction(new_stops, ctx)
-                if not ctx.fits(route.load, _route_time(new_stops, ctx)):
-                    continue
-                new_distance = _route_distance(new_stops, ctx)
-                if new_distance < current_distance - 1e-6:
-                    stops = new_stops
-                    current_distance = new_distance
-                    improved = True
-
-    route.stops = stops
-    return _update_cost(route, ctx)
+    route = _copy_route(route)
+    while True:
+        best = route
+        best_key = exact_key([route], ctx)
+        for i in range(len(route.stops) - 1):
+            for j in range(i + 2, len(route.stops) + 1):
+                stops = route.stops[:i] + route.stops[i:j][::-1] + route.stops[j:]
+                candidate = _trial(route, stops, ctx)
+                if candidate is not None:
+                    key = exact_key([candidate], ctx)
+                    if key < best_key:
+                        best, best_key = candidate, key
+        if best is route:
+            return route
+        route = best
 
 
-def _shift_10(
-    routes: list[Route],
-    ctx: Context,
-) -> list[Route]:
-    """Shift 1-0: move one stop from one route to another.
-
-    Accepted when it does not break the active constraint(s) and it lowers the
-    objective (fuel cost). Updates the route loads.
-    """
-    improved = True
-    while improved:
-        improved = False
+def _shift_10(routes: list[Route], ctx: Context) -> list[Route]:
+    while True:
+        changed = False
         for a in range(len(routes)):
-            for pos_i in range(len(routes[a].stops)):
-                stop = routes[a].stops[pos_i]
-                delta = ctx.stop_loads.get(stop, 0)
-
+            for i in range(len(routes[a].stops)):
                 for b in range(len(routes)):
                     if a == b:
                         continue
-
-                    load_a = routes[a].load - delta
-                    load_b = routes[b].load + delta
-                    if ctx.restrictions.capacity and load_b > ctx.capacity:
-                        continue
-
-                    # Try inserting at the start and at the end of route b
-                    for pos_j in (0, len(routes[b].stops)):
-                        new_a = list(routes[a].stops)
-                        new_a.pop(pos_i)
-                        if not new_a:
-                            continue  # never leave a route empty
-                        new_b = list(routes[b].stops)
-                        new_b.insert(pos_j, stop)
-
-                        if _try_move(
-                            routes, a, b, new_a, new_b, load_a, load_b, ctx
-                        ):
-                            improved = True
+                    for j in range(len(routes[b].stops) + 1):
+                        new_a = routes[a].stops[:i] + routes[a].stops[i + 1:]
+                        if not new_a and not routes[a].anchored:
+                            continue
+                        new_b = routes[b].stops[:j] + [routes[a].stops[i]] + routes[b].stops[j:]
+                        if _try_move(routes, a, b, new_a, new_b, 0, 0, ctx):
+                            changed = True
                             break
-                    if improved:
-                        break
-                if improved:
-                    break
-            if improved:
-                break
-
-    return routes
+                    if changed: break
+                if changed: break
+            if changed: break
+        if not changed:
+            return routes
 
 
-def _swap_11(
-    routes: list[Route],
-    ctx: Context,
-) -> list[Route]:
-    """Swap 1-1: exchange one stop between two routes.
-
-    Accepted when it does not break the active constraint(s) and it lowers the
-    objective (fuel cost). Updates the route loads.
-    """
-    improved = True
-    while improved:
-        improved = False
+def _swap_11(routes: list[Route], ctx: Context) -> list[Route]:
+    while True:
+        changed = False
         for a in range(len(routes)):
             for b in range(a + 1, len(routes)):
-                for pos_i in range(len(routes[a].stops)):
-                    for pos_j in range(len(routes[b].stops)):
-                        stop_i = routes[a].stops[pos_i]
-                        stop_j = routes[b].stops[pos_j]
-                        stop_load_i = ctx.stop_loads.get(stop_i, 0)
-                        stop_load_j = ctx.stop_loads.get(stop_j, 0)
-
-                        load_a = routes[a].load - stop_load_i + stop_load_j
-                        load_b = routes[b].load - stop_load_j + stop_load_i
-                        if ctx.restrictions.capacity and (
-                            load_a > ctx.capacity
-                            or load_b > ctx.capacity
-                        ):
-                            continue
-
-                        new_a = list(routes[a].stops)
-                        new_b = list(routes[b].stops)
-                        new_a[pos_i] = stop_j
-                        new_b[pos_j] = stop_i
-
-                        if _try_move(
-                            routes, a, b, new_a, new_b, load_a, load_b, ctx
-                        ):
-                            improved = True
+                for i in range(len(routes[a].stops)):
+                    for j in range(len(routes[b].stops)):
+                        new_a, new_b = list(routes[a].stops), list(routes[b].stops)
+                        new_a[i], new_b[j] = new_b[j], new_a[i]
+                        if _try_move(routes, a, b, new_a, new_b, 0, 0, ctx):
+                            changed = True
                             break
-                    if improved:
-                        break
-                if improved:
-                    break
-            if improved:
-                break
-
-    return routes
+                    if changed: break
+                if changed: break
+            if changed: break
+        if not changed:
+            return routes
 
 
-def post_improvement(
-    routes: list[Route],
-    ctx: Context,
-    max_iterations_without_improvement: int = ITER_POSTIMPROVE,
-) -> list[Route]:
-    """CW-3 procedure: run local search until it stops improving.
+def post_improvement(routes, ctx, max_iterations_without_improvement=ITER_POSTIMPROVE):
+    """Reject service regressions and never mutate the incumbent on rejection.
 
-    Operators (with equal probability, following Table 1 of the paper):
-      - intra-route 2-opt
-      - inter-route shift 1-0
-      - inter-route swap 1-1
+    Stop early if all exhaustive neighborhoods are exhausted for this incumbent;
+    repeating them 500 times cannot find a new move.
     """
     routes = [_copy_route(r) for r in routes]
-    best_cost = _obj_total(routes)
-    iterations_without_improvement = 0
-
-    operators = [
-        lambda r: [_two_opt_route(x, ctx) for x in r],
-        lambda r: _shift_10(r, ctx),
-        lambda r: _swap_11(r, ctx),
-    ]
-
-    while iterations_without_improvement < max_iterations_without_improvement:
-        operator = random.choice(operators)
-        new_routes = operator(routes)
-        new_cost = _obj_total(new_routes)
-
-        if new_cost < best_cost - 1e-6:
-            best_cost = new_cost
-            routes = new_routes
-            iterations_without_improvement = 0
+    best_key = exact_key(routes, ctx)
+    operators = [lambda rs: [_two_opt_route(r, ctx) for r in rs],
+                 lambda rs: _shift_10(rs, ctx), lambda rs: _swap_11(rs, ctx)]
+    exhausted, failures = set(), 0
+    while failures < max_iterations_without_improvement and len(exhausted) < len(operators):
+        index = random.choice([i for i in range(len(operators)) if i not in exhausted])
+        candidates = operators[index]([_copy_route(r) for r in routes])
+        key = exact_key(candidates, ctx)
+        if key < best_key:
+            routes, best_key = candidates, key
+            exhausted.clear()
+            failures = 0
         else:
-            iterations_without_improvement += 1
-
+            exhausted.add(index)
+            failures += 1
     return routes
-
-
-def _copy_route(route: Route) -> Route:
-    """Copy of the route: the CW-3 operators mutate it in place."""
-    return Route(
-        stops=list(route.stops),
-        load=route.load,
-        distance_km=route.distance_km,
-        time_minutes=route.time_minutes,
-        cost_brl=route.cost_brl,
-        origin=route.origin,
-        destination=route.destination,
-    )

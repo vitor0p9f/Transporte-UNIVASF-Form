@@ -1,133 +1,67 @@
-"""The Clarke-Wright OVRP algorithm itself."""
+"""Service-first selection of distance-based Clarke-Wright constructions."""
 
 import random
-
-from .constants import (
-    INF,
-    ITER_POSTIMPROVE,
-    ITER_TWO_PHASE,
-    LAMBDA_MAX,
-    LAMBDA_MIN,
-    LAMBDA_PASSO,
-)
+from dataclasses import replace
+from .constants import ITER_POSTIMPROVE, ITER_TWO_PHASE, LAMBDA_MIN, LAMBDA_MAX, LAMBDA_PASSO
 from .construction import _merge, two_phase_selection
+from .context import build_active_nodes, route_load
+from .anchoring import anchor_routes
+from .evaluation import limit_fleet
 from .improvement import post_improvement
-from .metrics import _time_limit_text, compute_savings_ovrp
+from .metrics import compute_savings_ovrp
 from .model import Context, Route
-from .objective import _obj_total
+from .objective import exact_key
 
 
 def clarke_wright_ovrp(
-    ctx: Context,
-    lam: float | None = None,
-    use_two_phase: bool = True,
-    use_post_improvement: bool = True,
-    iterations: int = ITER_TWO_PHASE,
+    ctx: Context, lam: float | None = None, use_two_phase: bool = True,
+    use_post_improvement: bool = True, iterations: int = ITER_TWO_PHASE,
     post_improvement_iterations: int = ITER_POSTIMPROVE,
-    seed: int | None = 42,
-    verbose: bool = True,
+    seed: int | None = 42, verbose: bool = True,
 ) -> tuple[list[Route], float]:
-    """Run the complete Clarke-Wright OVRP (CW-1 + CW-2 + CW-3).
+    """Construct -> anchor -> fleet cut -> CW-3; evaluation follows in scenario.
 
-    When lambda is not given, every value from 0.1 to 2.0 (step 0.1) is tried
-    and the cheapest one is used -- the CW-1 procedure of the paper (Table 1).
-
-    `seed` fixes the random generator (two-phase + post-improvement) so the run
-    is reproducible, which is essential to report results in a paper. Pass
-    seed=None to vary on every run.
-
-    The capacity/time constraint(s) come from the key in `ctx.restrictions`;
-    the time one only has an effect when `ctx.max_time` is finite.
-
-    Returns:
-        (routes, lambda_used)
+    The two-phase loop uses an optimistic service_bound (not exact boarding).
+    Lambda candidates are selected by exact shared boarding, then full cost.
+    No service-first rule is substituted for the savings merge construction.
     """
     if seed is not None:
         random.seed(seed)
-
-    active_stops = set(ctx.stop_loads.keys())
-
-    if not active_stops:
-        if verbose:
-            print("[clarke_wright] Nenhuma parada com demanda neste período.")
+    active = build_active_nodes(ctx.demand)
+    if not active:
         return [], 0.0
-
-    if verbose:
-        print(
-            f"\n[CW-OVRP] {len(active_stops)} paradas | "
-            f"sentido: {ctx.sense} | origens: {ctx.origins or (ctx.depot,)} | "
-            f"destinos: {ctx.destinations or 'livre'} | "
-            f"cap: {ctx.capacity} | "
-            f"limite: {_time_limit_text(ctx.max_time)} | "
-            f"restrições: {ctx.restrictions.key} | modelo: {ctx.bus_model.name}"
-        )
-
-    # ── CW-1: try several lambdas and keep the best ────────────────────────
-    lambdas = (
-        [lam]
-        if lam is not None
-        else [
-            round(LAMBDA_MIN + i * LAMBDA_PASSO, 1)
-            for i in range(round((LAMBDA_MAX - LAMBDA_MIN) / LAMBDA_PASSO) + 1)
-        ]
-    )
-
-    best_routes: list[Route] | None = None
-    best_cost = INF
-    best_lambda = lambdas[0]
-
-    for lambda_value in lambdas:
-        savings = compute_savings_ovrp(
-            sorted(active_stops), ctx, lambda_value
-        )
-
-        if use_two_phase:
-            lambda_routes = two_phase_selection(
-                savings,
-                active_stops,
-                ctx,
-                iterations=iterations,
+    raw_ctx = replace(ctx, origins=None, destinations=None)
+    lambdas = [lam] if lam is not None else [
+        round(LAMBDA_MIN + i * LAMBDA_PASSO, 1)
+        for i in range(round((LAMBDA_MAX - LAMBDA_MIN) / LAMBDA_PASSO) + 1)
+    ]
+    best_routes, best_lambda, best_key = [], lambdas[0], None
+    prepared = {}
+    def prepare(routes):
+        key = tuple(tuple(r.stops) for r in routes)
+        if key not in prepared:
+            result = anchor_routes(routes, ctx)
+            result = [r for r in result if ctx.fits(r.load, r.time_minutes)]
+            prepared[key] = limit_fleet(result, ctx)
+        return prepared[key]
+    for value in lambdas:
+        savings = compute_savings_ovrp(sorted(active), raw_ctx, value)
+        if ctx.restrictions.capacity:
+            # Touch-load is monotone, making this a safe prefilter.
+            savings = [s for s in savings if route_load((s.i, s.j), raw_ctx) <= ctx.capacity]
+        if use_two_phase and savings:
+            routes = two_phase_selection(
+                savings, active, raw_ctx, iterations, selection_ctx=ctx,
+                finalize=lambda routes: exact_key(prepare(routes), ctx),
             )
         else:
-            lambda_routes = _merge(savings, active_stops, ctx)
-
-        lambda_cost = _obj_total(lambda_routes)
+            routes = _merge(savings, active, raw_ctx)
+        routes = prepare(routes)
+        key = exact_key(routes, ctx)
         if verbose:
-            longest_time = max((r.time_minutes for r in lambda_routes), default=0)
-            print(
-                f"  lam={lambda_value:.1f} -> {len(lambda_routes)} veiculos | "
-                f"R${lambda_cost:.2f} | "
-                f"{sum(r.distance_km for r in lambda_routes):.1f} km | "
-                f"maior rota {longest_time} min"
-            )
-
-        if lambda_cost < best_cost:
-            best_cost = lambda_cost
-            best_routes = lambda_routes
-            best_lambda = lambda_value
-
-    if verbose:
-        print(f"\n  [OK] Melhor lam = {best_lambda} | custo R${best_cost:.2f}")
-
-    # ── CW-3: post-improvement over the best solution ──────────────────────
+            print(f'  lam={value:.1f}: served={-key[0]} cost=R${key[1]:.2f}', flush=True)
+        if best_key is None or key < best_key:
+            best_routes, best_lambda, best_key = routes, value, key
     if use_post_improvement and best_routes:
-        if verbose:
-            print("  Aplicando post-improvement (2-opt / shift / swap)...")
-        best_routes = post_improvement(
-            best_routes,
-            ctx,
-            max_iterations_without_improvement=post_improvement_iterations,
-        )
-        improved_cost = _obj_total(best_routes)
-        if verbose:
-            reduction = (
-                round((best_cost - improved_cost) / best_cost * 100, 2)
-                if best_cost > 0
-                else 0.0
-            )
-            print(
-                f"  [OK] Apos post-improvement: R${improved_cost:.2f} "
-                f"(-{reduction}%)"
-            )
-
-    return best_routes or [], best_lambda
+        best_routes = post_improvement(best_routes, ctx, post_improvement_iterations)
+    return best_routes, best_lambda

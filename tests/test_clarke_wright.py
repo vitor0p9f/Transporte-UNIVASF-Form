@@ -172,17 +172,17 @@ class TestRouteMeasures:
 
 
 class TestStopLoads:
-    def test_outbound_uses_boardings_and_inbound_uses_alightings(self):
+    def test_static_load_includes_pickups_and_dropoffs_in_both_senses(self):
         data = linear_data({(2, 3): 4, (4, 3): 2, (1, 5): 9})
         outbound, _ = build_stop_loads(data.demand, DEPOT, sense="ida")
         inbound, _ = build_stop_loads(data.demand, DEPOT, sense="volta")
-        assert outbound == {2: 4, 4: 2}
-        assert inbound == {3: 6, 5: 9}
+        assert outbound == {1: 9, 2: 4, 3: 6, 4: 2, 5: 9}
+        assert inbound == outbound
 
-    def test_the_depot_never_becomes_a_stop(self):
+    def test_campus_nodes_are_active_when_they_have_demand(self):
         data = linear_data({(1, 5): 3})
         load, _ = build_stop_loads(data.demand, DEPOT, sense="ida")
-        assert DEPOT not in load
+        assert load == {1: 3, 5: 3}
 
     def test_auto_detects_inbound_when_the_depot_concentrates_boardings(self):
         data = linear_data({(DEPOT, 3): 10, (3, DEPOT): 1})
@@ -358,7 +358,7 @@ class TestBuildContext:
         data = linear_data({(2, 3): 4})
         ctx = build_context(data, DEPOT, capacity=10, sense="volta")
         assert ctx.sense == "volta"
-        assert ctx.stop_loads == {3: 4}
+        assert ctx.stop_loads == {2: 4, 3: 4}
 
 
 class TestAttendanceEvaluation:

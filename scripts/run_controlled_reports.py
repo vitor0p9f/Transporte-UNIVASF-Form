@@ -74,7 +74,7 @@ CW_KWARGS: dict = {
     "lam": None,
     "use_two_phase": True,
     "use_post_improvement": True,
-    "iterations": 2000,
+    "iterations": 5000,
     "post_improvement_iterations": 500,
     "seed": 42,
 }
@@ -327,7 +327,16 @@ def report_note(config: Config, root: str | Path = ROOT) -> str:
         "por real é equivalente a minimizar o custo por passageiro; na "
         "inserção de uma parada, o score marginal minimiza o custo por "
         "passageiro extra. O custo mostrado é recalculado por ônibus a partir "
-        "das rotas finais, cobrando apenas as rotas que atendem alguém."
+        "das rotas finais, cobrando apenas as rotas que atendem alguém. "
+        "O CW é um baseline adaptado: as economias de distância constroem as "
+        "rotas, e a seleção prioriza atendimento, com custo operacional como "
+        "desempate. A carga estática da fusão soma a demanda OD que toca as "
+        "paradas intermediárias, contando cada par uma vez; as âncoras não são "
+        "clientes dessa projeção, mas entram na simulação de embarque. "
+        "O pipeline é construção → anchoring → corte da frota → CW-3 → "
+        "avaliação. A two-phase usa limite superior otimista, não atendimento "
+        "exato. As duas heurísticas são avaliadas pela mesma simulação, mesmos "
+        "limites, frota homogênea e fórmula de custo (diesel + motorista)."
     )
 
 
@@ -335,12 +344,13 @@ def render_report(
     config: Config,
     rows: list[tuple[str, ...]],
     generated_at: str,
+    *, reproducible: bool = False,
 ) -> str:
     """Full markdown report: title, date, note and the summary table."""
     lines = [
         f"# {config.title}",
         "",
-        f"Gerado em {generated_at}.",
+        'Relatório reprodutível · seed 42.' if reproducible else f"Gerado em {generated_at}.",
         "",
         report_note(config),
         "",
@@ -392,7 +402,7 @@ def main() -> None:
         rows = build_rows(config, scenarios, workers=args.workers)
         path = args.out_dir / config.filename
         path.write_text(
-            render_report(config, rows, generated_at), encoding="utf-8"
+            render_report(config, rows, generated_at, reproducible=True), encoding="utf-8", newline="\n"
         )
         print(f"OK: {path} ({len(rows)} rows)", flush=True)
 

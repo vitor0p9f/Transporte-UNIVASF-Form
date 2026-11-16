@@ -15,7 +15,7 @@ Based on:
   depot to a number of delivery points. Operations Research, 12(4), 568–581.
   https://www.jstor.org/stable/167703
 
-Procedures implemented (following the paper):
+Procedures inspired by the paper, with the adaptations documented below:
   CW-1 : modified OVRP savings formula with the lambda parameter
   CW-2 : open route construction (no return to the depot)
   CW-3 : post-improvement (2-opt, shift 1-0, swap 1-1)
@@ -27,17 +27,17 @@ Route constraints -- the `restrictions` key decides which one(s) apply:
   "ambas"      : both at once (default)
   "nenhuma"    : neither; only the objective function decides
 
-Each stop has a STATIC load (boardings outbound, alightings inbound): nobody
-frees a seat along the route. That is how the paper reads it and the projection
-the classic CVRP uses (one demand per node) -- which makes it "allocated
-demand", NOT "passengers carried": nothing guarantees that the destination of
-whoever boards is on the route.
+The baseline adapts static CVRP load to OD demand touching any customer stop,
+counting a pair only once. Pickup-only and drop-off-only nodes are both active.
+Chosen campus anchors are endpoints, not customer-load stops. This is an explicit
+adaptation, not a reproduction of the original single-demand-per-customer model.
 
 To measure the real attendance (only the origin->destination pair that fits the
 route, in order, counts), the report runs the TOP UNIVASF boarding/alighting
-simulation AFTER the solution is built. The algorithm still decides by distance
-+ static capacity; the simulation is evaluation only (`evaluate_attendance`)
-and never feeds back into a decision.
+simulation. Construction still uses distance savings and static capacity.
+Selection ranks passengers served first and full operating cost second. Only the
+two-phase inner loop uses an optimistic OD-order bound in place of exact boarding.
+The pipeline is construction -> anchoring -> fleet cut -> CW-3 -> evaluation.
 
 Modules:
 
@@ -82,7 +82,8 @@ from .construction import (  # noqa: F401
     _roulette_wheel,
     two_phase_selection,
 )
-from .context import build_context, build_stop_loads, detect_sense
+from .context import build_context, build_stop_loads, detect_sense, build_active_nodes, route_load
+from .objective import solution_key, service_bound
 from .evaluation import (  # noqa: F401
     _instance_from_context,
     _simulated_sequence,

@@ -1,0 +1,173 @@
+{
+  "seed": 42,
+  "iterations": 5000,
+  "post_improvement_iterations": 500,
+  "measurements": [
+    {
+      "repetition": 1,
+      "scenario": "16",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 37,
+      "total": 59,
+      "elapsed": 0.031
+    },
+    {
+      "repetition": 1,
+      "scenario": "16",
+      "heuristic": "Clarke-Wright",
+      "served": 31,
+      "total": 59,
+      "elapsed": 13.782
+    },
+    {
+      "repetition": 1,
+      "scenario": "19",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 59,
+      "total": 66,
+      "elapsed": 0.015
+    },
+    {
+      "repetition": 1,
+      "scenario": "19",
+      "heuristic": "Clarke-Wright",
+      "served": 30,
+      "total": 66,
+      "elapsed": 13.875
+    },
+    {
+      "repetition": 1,
+      "scenario": "32",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 45,
+      "total": 54,
+      "elapsed": 0.031
+    },
+    {
+      "repetition": 1,
+      "scenario": "32",
+      "heuristic": "Clarke-Wright",
+      "served": 32,
+      "total": 54,
+      "elapsed": 13.079
+    },
+    {
+      "repetition": 1,
+      "scenario": "65",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 196,
+      "total": 198,
+      "elapsed": 0.093
+    },
+    {
+      "repetition": 1,
+      "scenario": "65",
+      "heuristic": "Clarke-Wright",
+      "served": 56,
+      "total": 198,
+      "elapsed": 11.375
+    },
+    {
+      "repetition": 1,
+      "scenario": "69",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 158,
+      "total": 158,
+      "elapsed": 0.094
+    },
+    {
+      "repetition": 1,
+      "scenario": "69",
+      "heuristic": "Clarke-Wright",
+      "served": 72,
+      "total": 158,
+      "elapsed": 11.828
+    },
+    {
+      "repetition": 2,
+      "scenario": "16",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 37,
+      "total": 59,
+      "elapsed": 0.031
+    },
+    {
+      "repetition": 2,
+      "scenario": "16",
+      "heuristic": "Clarke-Wright",
+      "served": 31,
+      "total": 59,
+      "elapsed": 14.25
+    },
+    {
+      "repetition": 2,
+      "scenario": "19",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 59,
+      "total": 66,
+      "elapsed": 0.031
+    },
+    {
+      "repetition": 2,
+      "scenario": "19",
+      "heuristic": "Clarke-Wright",
+      "served": 30,
+      "total": 66,
+      "elapsed": 14.188
+    },
+    {
+      "repetition": 2,
+      "scenario": "32",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 45,
+      "total": 54,
+      "elapsed": 0.031
+    },
+    {
+      "repetition": 2,
+      "scenario": "32",
+      "heuristic": "Clarke-Wright",
+      "served": 32,
+      "total": 54,
+      "elapsed": 13.391
+    },
+    {
+      "repetition": 2,
+      "scenario": "65",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 196,
+      "total": 198,
+      "elapsed": 0.093
+    },
+    {
+      "repetition": 2,
+      "scenario": "65",
+      "heuristic": "Clarke-Wright",
+      "served": 56,
+      "total": 198,
+      "elapsed": 11.828
+    },
+    {
+      "repetition": 2,
+      "scenario": "69",
+      "heuristic": "TOP (Greedy OD)",
+      "served": 158,
+      "total": 158,
+      "elapsed": 0.094
+    },
+    {
+      "repetition": 2,
+      "scenario": "69",
+      "heuristic": "Clarke-Wright",
+      "served": 72,
+      "total": 158,
+      "elapsed": 12.094
+    }
+  ],
+  "report_sha256": {
+    "results.md": "9a3d35545e409034d8884a62ae8ff83d5f9e553f1e81a0d213e42c9933fe3121",
+    "resultados_top_frota_real.md": "51dccc6f8d802cdc79449729c56e7eccad62daf30a2ef45b1f8c592eafc9d890",
+    "resultados_controlados_apenas_tempo.md": "0ec4fee658713d1d2c2e28d8ae1b5a77d1ab81918d3fbc3db404c46683f67ae0",
+    "resultados_controlados_tempo_capacidade.md": "fe2c4da1b8af7645eb43d7aa995d6175ca5ca82dea0a7efd48d8ee0a782d8906"
+  }
+}

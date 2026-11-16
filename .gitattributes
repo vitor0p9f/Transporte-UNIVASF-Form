@@ -1,0 +1,5 @@
+# Keep reproducible report bytes stable on Windows checkouts as well.
+/results.md text eol=lf
+/resultados_controlados_apenas_tempo.md text eol=lf
+/resultados_controlados_tempo_capacidade.md text eol=lf
+/resultados_top_frota_real.md text eol=lf
