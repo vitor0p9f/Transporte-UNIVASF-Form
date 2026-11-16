@@ -10,7 +10,7 @@ from utils.fleet import load_fleet
 
 from .constants import INF
 from .evaluation import evaluate_attendance
-from .metrics import _time_limit_text
+from .metrics import _route_path, _time_limit_text
 from .model import Attendance, Context, Route
 from .objective import _obj_total
 from .scenario import ROOT
@@ -61,7 +61,9 @@ def print_solution(
 
     print(f"\n{'=' * 65}")
     print(f"SOLUCAO CLARKE-WRIGHT OVRP  |  {label}  |  lam = {lam}")
-    print(f"Depósito  : {ctx.depot}")
+    print(f"Depósito de referência: {ctx.depot}")
+    print(f"Origens permitidas: {ctx.origins or (ctx.depot,)}")
+    print(f"Destinos permitidos: {ctx.destinations or 'livre'}")
     print(f"Modelo    : {ctx.bus_model.name} | R${ctx.bus_model.cost_per_km:.4f}/km")
     print(
         f"Restrições: {ctx.restrictions.key} "
@@ -118,8 +120,8 @@ def print_solution(
             f"{route.distance_km:.1f} km  R${route.cost_brl:.2f}  {status}"
         )
 
-        route_text = f"    {ctx.depot} -> " + " -> ".join(
-            str(p) for p in route.stops
+        route_text = "    " + " -> ".join(
+            str(p) for p in _route_path(route.stops, ctx)
         )
         if len(route_text) > 130:
             route_text = route_text[:127] + "..."
@@ -148,6 +150,8 @@ def save_result(
         "algoritmo": "Clarke-Wright OVRP (Pichpibul & Kawtummachai, 2013)",
         "rotulo": label,
         "deposito": ctx.depot,
+        "origens_permitidas": list(ctx.origins or (ctx.depot,)),
+        "destinos_permitidos": list(ctx.destinations) if ctx.destinations else None,
         "sentido": ctx.sense,
         "lambda": lam,
         "restricoes": ctx.restrictions.key,
@@ -182,6 +186,9 @@ def save_result(
             {
                 "id": i + 1,
                 "paradas": r.stops,
+                "origem": _route_path(r.stops, ctx)[0],
+                "destino": _route_path(r.stops, ctx)[-1],
+                "percurso": list(_route_path(r.stops, ctx)),
                 "carga": r.load,
                 "pax_atendido": r.passengers,
                 "pico": r.peak_load,

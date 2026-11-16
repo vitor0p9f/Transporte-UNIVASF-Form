@@ -18,6 +18,7 @@ from .constants import (
 )
 from .context import build_context
 from .evaluation import evaluate_attendance, limit_fleet
+from .metrics import _route_path
 from .model import Attendance, BusModel, Context, Route, bus_model
 from .solver import clarke_wright_ovrp
 
@@ -43,6 +44,7 @@ def _scenario_fleet(scenario: dict | None) -> list[Bus]:
 
 
 def _scenario_depot(scenario: dict | None) -> int | None:
+    """Legacy reference depot; scenario_context separately keeps all origins."""
     if not scenario:
         return None
     origins = parse_node_labels(scenario.get("origin"))
@@ -87,7 +89,7 @@ def scenario_context(
     sense: str = "auto",
     max_routes: int | None = None,
 ) -> tuple[InstanceData, Context]:
-    """Turn a scenario (instance, depot, fleet, limits) into a context.
+    """Turn a scenario (instance, permitted endpoints, fleet, limits) into a context.
 
     Every explicit parameter wins over what the scenario defines; it is the
     same path the CLI walks, exposed so `main.py` can run both heuristics with
@@ -95,6 +97,10 @@ def scenario_context(
 
     `max_routes` is the vehicle cap; when omitted, it is the size of the
     scenario fleet (None only when no fleet is declared).
+
+    Without an explicit depot, every node in ``origin`` can start a route.
+    An explicit depot overrides only that list. ``destination_labels`` always
+    constrains the terminal node when present.
     """
     scenario = scenario or {}
     instance = instance or scenario.get("instance_id")
@@ -103,6 +109,7 @@ def scenario_context(
     period = period or scenario.get("period") or DEFAULT_PERIOD
     data = load_instance_data(ROOT / "instances" / instance, period=period)
 
+    origins = (depot,) if depot is not None else parse_node_labels(scenario.get("origin"))
     if depot is None:
         depot = _scenario_depot(scenario)
     if depot is None:
@@ -140,6 +147,8 @@ def scenario_context(
         restrictions=restrictions,
         sense=sense,
         max_routes=max_routes,
+        origins=origins,
+        destinations=parse_node_labels(scenario.get("destination_labels")),
     )
     return data, ctx
 
@@ -204,8 +213,8 @@ def plans_and_summary(
 ) -> tuple[list[BusPlan], FleetSummary]:
     """Convert the CW solution into the report model `reporting` reads.
 
-    CW has no locked pair and no "rounds": the route is born at the depot, so
-    `origin` is the depot and `destination` is the last stop. The bus ids come
+    CW has no "rounds". Each plan uses the complete path, including its
+    selected origin and permitted destination. The bus ids come
     from the scenario fleet, in order; `solve_scenario` already drops the
     routes beyond the fleet size, but on a direct call to
     `clarke_wright_ovrp` without that cap the extras still get sequential ids
@@ -216,6 +225,7 @@ def plans_and_summary(
     plans: list[BusPlan] = []
 
     for index, route in enumerate(routes):
+        path = _route_path(route.stops, ctx)
         if index < len(ids):
             bus_id = ids[index]
         else:
@@ -224,11 +234,9 @@ def plans_and_summary(
         plans.append(
             BusPlan(
                 bus_id=bus_id,
-                origin=ctx.depot,
-                destination=(
-                    route.stops[-1] if route.stops else ctx.depot
-                ),
-                stops=(ctx.depot, *route.stops),
+                origin=path[0],
+                destination=path[-1],
+                stops=path,
                 served_passengers=route.passengers,
                 travel_time_minutes=route.time_minutes,
                 peak_load=route.peak_load,

@@ -1,7 +1,9 @@
 """Clarke-Wright OVRP for the UNIVASF university shuttle.
 
-Buses leave the depot, drive through the stops and STAY at the destination
-campus -- they do not return to the depot. That is what makes it an OVRP.
+Buses choose among the scenario's permitted origins and destinations. Both
+endpoint legs participate in route construction, time checks and evaluation.
+With no endpoint lists, the legacy single-depot open-route API is preserved.
+Origin equal to destination is allowed when the scenario permits a circuit.
 
 Based on:
   Pichpibul, T. & Kawtummachai, R. (2013). A Heuristic Approach Based on
