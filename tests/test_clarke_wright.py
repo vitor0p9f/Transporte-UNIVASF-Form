@@ -17,6 +17,7 @@ from algorithms.clarke_wright import (
     _shift_10,
     _swap_11,
     _update_cost,
+    anchor_routes,
     build_context,
     build_stop_loads,
     clarke_wright_ovrp,
@@ -25,6 +26,7 @@ from algorithms.clarke_wright import (
     evaluate_attendance,
     limit_fleet,
     plans_and_summary,
+    served_by,
     solve_scenario,
 )
 from tests import factories
@@ -172,12 +174,29 @@ class TestRouteMeasures:
 
 
 class TestStopLoads:
-    def test_outbound_uses_boardings_and_inbound_uses_alightings(self):
+    def test_the_stop_set_holds_both_ends_of_every_pair(self):
         data = linear_data({(2, 3): 4, (4, 3): 2, (1, 5): 9})
         outbound, _ = build_stop_loads(data.demand, DEPOT, sense="ida")
         inbound, _ = build_stop_loads(data.demand, DEPOT, sense="volta")
-        assert outbound == {2: 4, 4: 2}
-        assert inbound == {3: 6, 5: 9}
+        # the load is the side that boards: boardings outbound, alightings
+        # inbound; the nodes kept are the same, the pair's two ends
+        assert outbound == {2: 4, 3: 0, 4: 2, 5: 0}
+        assert inbound == {2: 0, 3: 6, 4: 0, 5: 9}
+
+    def test_a_stop_that_only_receives_passengers_is_kept(self):
+        # node 5 only appears as a destination: a route still has to visit it,
+        # but nobody boards there, so it adds no seat
+        data = linear_data({(1, 5): 9})
+        loads, _ = build_stop_loads(data.demand, DEPOT, sense="ida")
+        assert loads == {5: 0}
+
+    def test_the_capacity_caps_the_projection(self):
+        # 30 people get off at node 5: no single bus carries all of them
+        data = linear_data({(1, 5): 30})
+        loads, _ = build_stop_loads(
+            data.demand, DEPOT, sense="volta", capacity=24
+        )
+        assert loads == {5: 24}
 
     def test_the_depot_never_becomes_a_stop(self):
         data = linear_data({(1, 5): 3})
@@ -201,10 +220,20 @@ class TestStopLoads:
 class TestMergeUnderRestrictions:
     """`_merge` only blocks the merge when the requested restriction is active."""
 
-    def make(self, restrictions: str, capacity=10, max_time=float("inf")):
-        data = linear_data()
+    #: Two stops 10 min from the depot, but 110 min apart: the singletons fit
+    #: the time limit and the merged route does not.
+    DETOUR = manual_data(
+        distance={
+            (1, 2): 1, (2, 1): 1, (1, 3): 1, (3, 1): 1, (2, 3): 10, (3, 2): 10
+        },
+        time={
+            (1, 2): 10, (2, 1): 10, (1, 3): 10, (3, 1): 10, (2, 3): 100, (3, 2): 100
+        },
+    )
+
+    def make(self, restrictions: str, capacity=10, max_time=float("inf"), data=None):
         return make_context(
-            data,
+            data if data is not None else linear_data(),
             capacity=capacity,
             max_time=max_time,
             restrictions=restrictions,
@@ -225,7 +254,7 @@ class TestMergeUnderRestrictions:
         assert self.merge(ctx) == [[2, 3]]
 
     def test_active_time_blocks_it(self):
-        ctx = self.make("tempo", max_time=15)  # 1 -> 2 -> 3 = 20 min
+        ctx = self.make("tempo", max_time=50, data=self.DETOUR)
         assert self.merge(ctx) == [[2], [3]]
 
     def test_time_off_allows_it(self):
@@ -233,16 +262,20 @@ class TestMergeUnderRestrictions:
         assert self.merge(ctx) == [[2, 3]]
 
     def test_both_active_require_both(self):
-        ctx = self.make("ambas", capacity=8, max_time=5)
+        ctx = self.make("ambas", capacity=8, max_time=50, data=self.DETOUR)
         assert self.merge(ctx) == [[2], [3]]
-        ctx = self.make("ambas", capacity=8, max_time=100)
+        ctx = self.make("ambas", capacity=8, max_time=200, data=self.DETOUR)
         assert self.merge(ctx) == [[2], [3]]  # the capacity still breaks
-        ctx = self.make("ambas", capacity=100, max_time=100)
+        ctx = self.make("ambas", capacity=100, max_time=200, data=self.DETOUR)
         assert self.merge(ctx) == [[2, 3]]
 
     def test_no_restriction_always_merges(self):
         ctx = self.make("nenhuma", capacity=1, max_time=1)
         assert self.merge(ctx) == [[2, 3]]
+
+    def test_a_singleton_that_breaks_the_time_is_not_a_route(self):
+        ctx = self.make("tempo", max_time=5)  # 1 -> 2 alone takes 10 min
+        assert self.merge(ctx) == []
 
     def test_merged_route_leaves_with_its_time_measured(self):
         ctx = self.make("nenhuma")
@@ -358,7 +391,8 @@ class TestBuildContext:
         data = linear_data({(2, 3): 4})
         ctx = build_context(data, DEPOT, capacity=10, sense="volta")
         assert ctx.sense == "volta"
-        assert ctx.stop_loads == {3: 4}
+        # the sense no longer filters the stops: both ends are kept
+        assert ctx.stop_loads == {2: 0, 3: 4}
 
 
 class TestAttendanceEvaluation:
@@ -472,6 +506,43 @@ class TestAttendanceEvaluation:
         # the route never visits 5: nobody boards, and both pairs stay behind
         assert attendance.served == 0
         assert attendance.unserved_pairs == ((2, 5, 3), (3, 5, 1))
+
+
+class TestAnchoring:
+    def test_the_origin_that_carries_more_passengers_wins_over_the_closer_one(self):
+        # (6, 2) only boards when the route starts at 6; (2, 3) boards either
+        # way, so origin 1 is cheaper but origin 6 carries both passengers.
+        data = linear_data({(6, 2): 1, (2, 3): 1})
+        ctx = build_context(
+            data, DEPOT, capacity=10, origins=(1, 6), destinations=(3,)
+        )
+        route = _update_cost(Route(stops=[2], load=1), ctx)
+        assert route.origin == 1  # the construction only looks at the distance
+
+        (anchored,) = anchor_routes([route], ctx)
+
+        assert anchored is route
+        assert anchored.origin == 6
+        assert anchored.destination == 3
+        assert served_by([anchored], ctx) == 2
+
+    def test_the_stops_and_their_order_are_never_changed(self):
+        data = linear_data({(2, 3): 1})
+        ctx = build_context(
+            data, DEPOT, capacity=10, origins=(1, 6), destinations=(3,)
+        )
+        route = _update_cost(Route(stops=[3, 2], load=1), ctx)
+
+        (anchored,) = anchor_routes([route], ctx)
+
+        assert anchored.stops == [3, 2]
+        # the measures follow the anchored endpoints
+        assert anchored.distance_km == _route_distance(
+            anchored.stops, ctx, anchored.origin, anchored.destination
+        )
+        assert anchored.time_minutes == _route_time(
+            anchored.stops, ctx, anchored.origin, anchored.destination
+        )
 
 
 class TestFleetLimit:

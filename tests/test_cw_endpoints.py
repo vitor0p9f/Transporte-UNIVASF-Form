@@ -56,15 +56,15 @@ def assert_plan_geometry(plans, data, origins, destinations, limit, capacity):
 
 
 def test_scenario_uses_both_origins_and_both_destinations(monkeypatch):
-    data = line_data({(2, 3): 1, (5, 4): 1})
-    scenario = synthetic_scenario(monkeypatch, data)
+    data = line_data({(2, 3): 1, (5, 6): 1})
+    scenario = synthetic_scenario(monkeypatch, data, destinations="3;6")
     data, routes, ctx, attendance, _ = fast_solve(scenario)
     plans, _ = cw.plans_and_summary(routes, ctx, attendance)
 
     assert {p.origin for p in plans} == {1, 6}
-    assert {p.destination for p in plans} == {3, 4}
+    assert {p.destination for p in plans} == {3, 6}
     assert attendance.served == 2
-    assert_plan_geometry(plans, data, {1, 6}, {3, 4}, 100, 1)
+    assert_plan_geometry(plans, data, {1, 6}, {3, 6}, 100, 1)
 
 
 def test_a_single_allowed_destination_is_really_visited(monkeypatch):
@@ -169,8 +169,12 @@ def test_scenario_without_destination_filter_keeps_an_open_end(monkeypatch):
     scenario = synthetic_scenario(monkeypatch, data, origins="1", destinations="")
     _, routes, ctx, attendance, _ = fast_solve(scenario)
     plans, _ = cw.plans_and_summary(routes, ctx, attendance)
-    assert plans[0].stops == (1, 2)
-    assert attendance.served == 0  # No forced terminal visit when the list is absent.
+
+    # No terminal is forced beyond the stops: node 6 is a stop here because the
+    # passenger gets off there, and the open route ends at its last stop.
+    assert ctx.destinations is None
+    assert plans[0].stops == (1, 2, 6)
+    assert attendance.served == 1
 
 
 def test_savings_include_the_terminal_leg():
@@ -183,6 +187,7 @@ def test_savings_include_the_terminal_leg():
 
 def test_printed_and_saved_routes_include_the_permitted_terminal(monkeypatch, tmp_path, capsys):
     import json
+
     from algorithms.clarke_wright import report as report_module
 
     data = line_data({(2, 6): 1})

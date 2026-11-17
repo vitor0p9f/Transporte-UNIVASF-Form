@@ -3,12 +3,43 @@
 import random
 
 from .constants import ITER_TWO_PHASE
-from .metrics import _route_distance, _route_time, _update_cost
+from .metrics import _route_distance, _route_path, _route_time, _update_cost
 from .model import Context, Route, Saving
-from .objective import _obj_total
+from .objective import (
+    _obj_total,
+    estimated_served,
+    served_bound,
+    solution_key,
+)
 
 
-def _best_direction(stops: list[int], ctx: Context) -> list[int]:
+def _projected_load(stops: list[int], ctx: Context) -> int:
+    """The CVRP load of a route: the demand that boards at its stops.
+
+    The per-node projection the context carries, summed over the route -- the
+    constraint of the original algorithm, adapted to the pickup-and-delivery
+    demand. It is compared with the capacity as it is: capping it would hide
+    the routes that do not fit.
+    """
+    return sum(ctx.stop_loads.get(stop, 0) for stop in stops)
+
+
+def _stored_load(stops: list[int], ctx: Context) -> int:
+    """The load the model reports: the projection, capped by one bus.
+
+    A single bus cannot allocate more than its own capacity, so the reported
+    value stops there; the merge still compares the uncapped projection.
+    """
+    load = _projected_load(stops, ctx)
+    return min(load, ctx.capacity) if ctx.restrictions.capacity else load
+
+
+def _best_direction(
+    stops: list[int],
+    ctx: Context,
+    origin: int | None = None,
+    destination: int | None = None,
+) -> list[int]:
     """CW-2 procedure: try both directions of the open route.
 
     Each order independently selects its permitted origin and destination:
@@ -19,13 +50,29 @@ def _best_direction(stops: list[int], ctx: Context) -> list[int]:
     directions that already break the limit are
     dropped before picking the shortest one. If none fits, the shortest one is
     returned and the caller rejects the route through `Context.fits`.
+
+    Adaptation to the pickup-and-delivery problem: a passenger only boards
+    when the bus reaches the origin before the destination, so the direction
+    that carries more passengers comes first. The shortest distance is the
+    tie-break (the CW-2 criterion of the paper).
     """
     directions = [list(stops), list(reversed(stops))]
     if ctx.restrictions.time:
-        feasible = [d for d in directions if _route_time(d, ctx) <= ctx.max_time]
+        feasible = [
+            d
+            for d in directions
+            if _route_time(d, ctx, origin, destination) <= ctx.max_time
+        ]
         if feasible:
             directions = feasible
-    return min(directions, key=lambda d: _route_distance(d, ctx))
+    return min(
+        directions,
+        key=lambda d: (
+            -served_bound(_route_path(d, ctx, origin, destination), ctx.demand),
+            _route_distance(d, ctx, origin, destination),
+            d,
+        ),
+    )
 
 
 def _merge(
@@ -43,16 +90,21 @@ def _merge(
       -> merge the routes
 
     With endpoint constraints, an infeasible complete singleton is left
-    unserved. The legacy unrestricted-end API retains its singleton behavior.
+    unserved. A singleton that already breaks the time limit is not a route
+    either: it is dropped before the merges, whatever the endpoints.
+
+    The capacity is the CVRP constraint of the original algorithm, projected on
+    the OD demand: the route cannot hold more passengers than the seats it has,
+    and the demand of its stops is what it would have to carry.
     """
     # Initial solution: one route per stop
     routes: list[Route] = []
     endpoint: dict[int, Route] = {}  # endpoint -> the route holding it
 
     for p in sorted(active_stops):  # fixed order -> reproducible result
-        r = Route(stops=[p], load=ctx.stop_loads.get(p, 0))
+        r = Route(stops=[p], load=_stored_load([p], ctx))
         _update_cost(r, ctx)
-        if (ctx.origins or ctx.destinations) and not ctx.fits(r.load, r.time_minutes):
+        if ctx.restrictions.time and r.time_minutes > ctx.max_time:
             continue
         routes.append(r)
         endpoint[p] = r
@@ -62,10 +114,6 @@ def _merge(
         rj = endpoint.get(s.j)
 
         if ri is None or rj is None or ri is rj:
-            continue
-
-        load = ri.load + rj.load
-        if ctx.restrictions.capacity and load > ctx.capacity:
             continue
 
         new_order = None
@@ -84,10 +132,14 @@ def _merge(
 
         # Apply CW-2: pick the best direction of the open route
         new_order = _best_direction(new_order, ctx)
+
+        load = _projected_load(new_order, ctx)
+        if ctx.restrictions.capacity and load > ctx.capacity:
+            continue
         if not ctx.fits(load, _route_time(new_order, ctx)):
             continue
 
-        new_route = Route(stops=new_order, load=load)
+        new_route = Route(stops=new_order, load=_stored_load(new_order, ctx))
         _update_cost(new_route, ctx)
 
         # Drop the merged routes (by identity: `Route` compares by value)
@@ -148,9 +200,17 @@ def two_phase_selection(
     ctx: Context,
     iterations: int = ITER_TWO_PHASE,
 ) -> list[Route]:
-    """CW-2 procedure: reorder the savings through the roulette, keep the best."""
+    """CW-2 procedure: reorder the savings through the roulette, keep the best.
+
+    The best solution is the one that carries the most passengers (the
+    boarding simulation is too slow to run on every iteration, so the search
+    ranks the candidates by the demand each route holds), with the fuel cost
+    as the tie-break.
+    """
     best_routes = _merge(savings, active_stops, ctx)
-    best_cost = _obj_total(best_routes)
+    best_key = solution_key(
+        estimated_served(best_routes, ctx), _obj_total(best_routes)
+    )
 
     current_savings = list(savings)
 
@@ -161,10 +221,12 @@ def two_phase_selection(
         )
         new_order = _roulette_wheel(current_savings, tournament_size)
         new_routes = _merge(new_order, active_stops, ctx)
-        new_cost = _obj_total(new_routes)
+        new_key = solution_key(
+            estimated_served(new_routes, ctx), _obj_total(new_routes)
+        )
 
-        if new_cost < best_cost:
-            best_cost = new_cost
+        if new_key < best_key:
+            best_key = new_key
             best_routes = new_routes
             current_savings = new_order
 

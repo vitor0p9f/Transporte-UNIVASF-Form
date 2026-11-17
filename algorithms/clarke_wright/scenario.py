@@ -17,7 +17,7 @@ from .constants import (
     ITER_TWO_PHASE,
 )
 from .context import build_context
-from .evaluation import evaluate_attendance, limit_fleet
+from .evaluation import evaluate_attendance
 from .metrics import _route_path
 from .model import Attendance, BusModel, Context, Route, bus_model
 from .solver import clarke_wright_ovrp
@@ -200,7 +200,8 @@ def solve_scenario(
         seed=seed,
         verbose=verbose,
     )
-    routes = limit_fleet(routes, ctx)
+    # The solver already cut the routes by the fleet and ran the local search
+    # on them; here they are only measured.
     attendance = evaluate_attendance(routes, ctx)
     return data, routes, ctx, attendance, lambda_used
 
@@ -225,7 +226,7 @@ def plans_and_summary(
     plans: list[BusPlan] = []
 
     for index, route in enumerate(routes):
-        path = _route_path(route.stops, ctx)
+        path = _route_path(route.stops, ctx, route.origin, route.destination)
         if index < len(ids):
             bus_id = ids[index]
         else:

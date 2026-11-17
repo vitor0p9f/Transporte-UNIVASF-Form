@@ -121,7 +121,10 @@ def print_solution(
         )
 
         route_text = "    " + " -> ".join(
-            str(p) for p in _route_path(route.stops, ctx)
+            str(p)
+            for p in _route_path(
+                route.stops, ctx, route.origin, route.destination
+            )
         )
         if len(route_text) > 130:
             route_text = route_text[:127] + "..."
@@ -186,9 +189,9 @@ def save_result(
             {
                 "id": i + 1,
                 "paradas": r.stops,
-                "origem": _route_path(r.stops, ctx)[0],
-                "destino": _route_path(r.stops, ctx)[-1],
-                "percurso": list(_route_path(r.stops, ctx)),
+                "origem": _route_path(r.stops, ctx, r.origin, r.destination)[0],
+                "destino": _route_path(r.stops, ctx, r.origin, r.destination)[-1],
+                "percurso": list(_route_path(r.stops, ctx, r.origin, r.destination)),
                 "carga": r.load,
                 "pax_atendido": r.passengers,
                 "pico": r.peak_load,

@@ -31,27 +31,51 @@ def build_stop_loads(
     sense: str = "auto",
     *,
     origins: tuple[int, ...] | None = None,
+    capacity: int | None = None,
 ) -> tuple[dict[int, int], str]:
     """Compute the load (passengers the bus carries) of every stop.
 
-    Outbound the load comes from the boardings (matrix row); inbound, from the
-    alightings (column) -- inbound almost everyone boards at the campus
-    (depot), so each stop's real demand is how many people get OFF there.
-    Returns `(stop_loads, used_sense)`.
+    A node is a stop when someone boards there OR gets off there: a stop that
+    only receives passengers still has to be visited, otherwise the demand that
+    ends there can never be served. The depot is not a stop -- it is where the
+    route starts and ends.
+
+    The load of a stop is the demand that boards there: outbound, the
+    boardings (matrix row); inbound, the alightings (column) -- inbound almost
+    everyone boards at the campus, so the seats are released at the stops and
+    each stop's projection is how many people get OFF there. Counting the
+    boarding side only is what keeps the projection from taking a pair twice
+    (once at its origin, once at its destination): the destination releases
+    the seat, it does not occupy another one.
+
+    `capacity`, when given, caps the projection: demand larger than one bus is
+    served by more than one vehicle, so it cannot be allocated to a single
+    route.
+
+    The trip sense is still detected and returned: it describes the trip, not
+    the set of stops. Returns `(stop_loads, used_sense)`.
     """
     if sense not in ("auto", "ida", "volta"):
         raise ValueError(f"sentido '{sense}' desconhecido (use: auto, ida, volta)")
     if sense == "auto":
         sense = detect_sense(demand, depot, origins)
 
-    per_node = demand.sum(axis=0) if sense == "volta" else demand.sum(axis=1)
-    stop_loads = {
-        node: int(per_node[node])
-        for node in range(1, len(per_node))
+    boardings = demand.sum(axis=1)
+    alightings = demand.sum(axis=0)
+    per_node = alightings if sense == "volta" else boardings
+    stop_loads = {}
+    for node in range(1, len(boardings)):
         # With multiple origins the reference depot can itself be visited by
         # a route starting elsewhere, so it must not lose its customer load.
-        if (node != depot or (origins and len(origins) > 1)) and per_node[node] > 0
-    }
+        if node == depot and not (origins and len(origins) > 1):
+            continue
+        # Every node with demand belongs to the set, even when the boarding
+        # side is zero: a stop that only receives passengers still has to be
+        # visited.
+        if boardings[node] <= 0 and alightings[node] <= 0:
+            continue
+        load = int(per_node[node])
+        stop_loads[node] = min(load, capacity) if capacity else load
     return stop_loads, sense
 
 
@@ -106,7 +130,7 @@ def build_context(
     if depot not in data.nodes:
         raise ValueError("depot must be a valid instance node label")
     stop_loads, used_sense = build_stop_loads(
-        data.demand, depot, sense, origins=origins
+        data.demand, depot, sense, origins=origins, capacity=capacity
     )
     return Context(
         # float avoids surprises when the instance ships integer distances

@@ -5,8 +5,8 @@ import numpy as np
 from algorithms.top_univasf.simulation import simulate_stops
 from utils.instances import InstanceData
 
-from .model import Attendance, Context, Route
 from .metrics import _route_path
+from .model import Attendance, Context, Route
 
 
 def _instance_from_context(ctx: Context) -> InstanceData:
@@ -18,7 +18,7 @@ def _instance_from_context(ctx: Context) -> InstanceData:
 
 def _simulated_sequence(ctx: Context, route: Route) -> tuple[int, ...]:
     """Use the same complete path as construction and the time checks."""
-    return _route_path(route.stops, ctx)
+    return _route_path(route.stops, ctx, route.origin, route.destination)
 
 
 def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:
@@ -62,6 +62,30 @@ def limit_fleet(routes: list[Route], ctx: Context) -> list[Route]:
         candidates = [route for route in candidates if route is not best]
 
     return chosen
+
+
+def served_by(routes: list[Route], ctx: Context) -> int:
+    """The passengers a set of routes would carry, charging the demand in order.
+
+    The same boarding simulation the report uses, without touching the
+    routes: the demand a route picks up leaves the pool for the next one. It
+    is the measure the selection steps compare -- the local search asks how
+    many passengers a candidate carries before keeping it.
+    """
+    remaining = np.array(ctx.demand, copy=True)
+    instance = _instance_from_context(ctx)
+    served = 0
+    for route in routes:
+        outcome = simulate_stops(
+            instance,
+            _simulated_sequence(ctx, route),
+            ctx.capacity,
+            remaining,
+        )
+        for origin, destination, quantity in outcome.pairs:
+            remaining[origin, destination] -= quantity
+        served += outcome.passengers
+    return served
 
 
 def evaluate_attendance(routes: list[Route], ctx: Context) -> Attendance:

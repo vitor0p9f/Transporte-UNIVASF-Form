@@ -39,9 +39,19 @@ def _route_endpoints(
     return best[1:]
 
 
-def _route_path(stops: list[int], ctx: Context) -> tuple[int, ...]:
-    """Full driven sequence shared by measurements, simulation and reports."""
-    origin, destination, _, _ = _route_endpoints(stops, ctx)
+def _route_path(
+    stops: list[int],
+    ctx: Context,
+    origin: int | None = None,
+    destination: int | None = None,
+) -> tuple[int, ...]:
+    """Full driven sequence shared by measurements, simulation and reports.
+
+    Without explicit endpoints they are the best ones for this order; with
+    them, the sequence keeps the endpoints the route was anchored on.
+    """
+    if origin is None:
+        origin, destination, _, _ = _route_endpoints(stops, ctx)
     path = list(stops)
     if not path or path[0] != origin:
         path.insert(0, origin)
@@ -50,25 +60,44 @@ def _route_path(stops: list[int], ctx: Context) -> tuple[int, ...]:
     return tuple(path)
 
 
-def _route_distance(stops: list[int], ctx: Context) -> float:
+def _route_distance(
+    stops: list[int],
+    ctx: Context,
+    origin: int | None = None,
+    destination: int | None = None,
+) -> float:
     """Distance including the selected origin and permitted terminal node."""
-    return round(_route_endpoints(stops, ctx)[2], 4)
+    path = _route_path(stops, ctx, origin, destination)
+    return round(path_distance(ctx.distance, path), 4)
 
 
-def _route_time(stops: list[int], ctx: Context) -> int:
+def _route_time(
+    stops: list[int],
+    ctx: Context,
+    origin: int | None = None,
+    destination: int | None = None,
+) -> int:
     """Time including the selected origin and permitted terminal node."""
-    return _route_endpoints(stops, ctx)[3]
+    return path_time_minutes(ctx.time, _route_path(stops, ctx, origin, destination))
 
 
 def _update_cost(route: Route, ctx: Context) -> Route:
-    """Recompute the route's distance_km, time_minutes and cost_brl."""
-    origin, destination, distance, minutes = _route_endpoints(route.stops, ctx)
-    route.origin = origin
-    route.destination = destination if destination is not None else (
-        route.stops[-1] if route.stops else origin
-    )
-    route.distance_km = round(distance, 4)
-    route.time_minutes = minutes
+    """Recompute the route's distance_km, time_minutes and cost_brl.
+
+    A route that already has endpoints keeps them: the anchoring chose them by
+    attendance, and recomputing them by distance here would throw that choice
+    away. A new route (no origin yet) gets the best pair for its order.
+    """
+    if route.origin is None:
+        origin, destination, _, _ = _route_endpoints(route.stops, ctx)
+        route.origin = origin
+        route.destination = destination if destination is not None else (
+            route.stops[-1] if route.stops else origin
+        )
+
+    path = _route_path(route.stops, ctx, route.origin, route.destination)
+    route.distance_km = round(path_distance(ctx.distance, path), 4)
+    route.time_minutes = path_time_minutes(ctx.time, path)
     route.cost_brl = ctx.bus_model.route_cost(route.distance_km)
     return route
 

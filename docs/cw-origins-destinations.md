@@ -18,14 +18,56 @@ on the joining arc. Without endpoint lists, the original single-depot/open-end
 formula and API remain available.
 
 An explicit `depot` argument (or CLI `--deposito`) deliberately overrides the origin
-list with a single origin. It does not disable the destination filter. The
-controlled-experiment runner still supplies this override to both heuristics by
-design; the standard scenario runner uses every permitted origin. With no
-destination filter, the route may still end at its last customer.
+list with a single origin. It does not disable the destination filter. Neither
+report runner supplies it: the controlled comparison and the standard report
+(`main.py`, TOP only) both let any permitted origin start a route, while
+`destination_labels` still constrains the terminal node. The API keeps that
+multi-origin behaviour when no `depot` is given. With no destination filter,
+the route may still end at its last customer.
 
-Capacity remains the existing static demand projection during construction and is
-also checked by the boarding simulation. This change does not implement a fully
-heterogeneous CW or replace that projection with TOP's decision rules.
+Capacity is a single reference value for the whole run: 24 seats in the
+controlled comparison (the smallest bus of `fleet.csv`) and, in general, the
+smallest bus of the scenario fleet. It is checked both in construction and in
+the boarding simulation. This does not implement a heterogeneous CW: the
+individual bus capacities are not explored, and the projection is still the
+static demand-per-stop rule described below.
+
+## Attendance-first selection
+
+The report compares both heuristics by the passengers they carry, so the CW
+selection steps rank a solution by attendance: more passengers served first,
+then less fuel cost (`objective.solution_key`, the same criterion everywhere).
+It applies to the lambda sweep, to the two-phase selection and to the
+post-improvement keep-best. The two-phase search and the post-improvement also
+reject a move that would carry fewer passengers, so the criterion is never
+traded for distance.
+
+The selection ranks candidates with a cheap estimate (the demand each route
+holds, capped by the bus capacity). The exact figure always comes from the same
+TOP UNIVASF boarding simulation the report uses.
+
+## Anchoring the allowed endpoints
+
+The construction merges stops around the reference depot; it does not know
+which endpoint pair carries more passengers. `anchoring` closes that gap without
+touching the stops or their order: it tries every allowed
+`(origin, destination)` pair for each route against the demand that is still
+free, keeps the pair that carries the most, charges that demand, and moves on to
+the next route. The fuel cost, the distance and the node labels are the
+tie-breaks, so the choice is deterministic. The route then keeps that pair
+through the local search (the cost update preserves endpoints already set).
+
+This is an adaptation to the pickup-and-delivery demand, not a change to the
+savings formula or to the merging procedure: the savings remain the complete
+singleton and merged route costs with the lambda adjustment on the joining arc.
+
+## Stop set and capacity projection
+
+A node is a stop when someone boards there OR gets off there. The load of a stop
+is the side that boards the bus (boardings outbound, alightings inbound), capped
+by the bus capacity, so a pair is never counted twice (origin and destination).
+The destination releases the seat; it does not occupy another one. The depot is
+not a stop, except when multiple origins make it a customer node.
 
 ## Tests
 

@@ -33,11 +33,14 @@ the classic CVRP uses (one demand per node) -- which makes it "allocated
 demand", NOT "passengers carried": nothing guarantees that the destination of
 whoever boards is on the route.
 
-To measure the real attendance (only the origin->destination pair that fits the
-route, in order, counts), the report runs the TOP UNIVASF boarding/alighting
-simulation AFTER the solution is built. The algorithm still decides by distance
-+ static capacity; the simulation is evaluation only (`evaluate_attendance`)
-and never feeds back into a decision.
+The attendance is what the steps SELECT on: the lambda sweep, the two-phase
+selection and the post-improvement keep the solution that carries the most
+passengers, with the fuel cost as the tie-break (`objective.solution_key`). A
+stop belongs to the set when someone boards OR gets off there, and the endpoint
+step (`anchoring`) gives each route the allowed origin/destination that carries
+more passengers. The final figures still come from the TOP UNIVASF
+boarding/alighting simulation (`evaluate_attendance`), which is the same
+simulation the selection uses.
 
 Modules:
 
@@ -45,8 +48,9 @@ Modules:
     model        data structures (context, route, saving, attendance)
     context      trip sense, load per stop and context assembly
     metrics      distance, time and savings (CW-1)
-    objective    fuel cost of the solution
+    objective    solution key, attendance estimates and fuel cost
     construction route merging and two-phase selection (CW-2)
+    anchoring    the allowed endpoints that carry the most passengers
     improvement  2-opt, shift and swap (CW-3)
     solver       clarke_wright_ovrp and the lambda sweep
     evaluation   attendance simulation and fleet cut
@@ -62,6 +66,7 @@ Usage:
     python -m algorithms.clarke_wright --frota
 """
 
+from .anchoring import anchor_routes
 from .cli import main
 from .constants import (
     DEFAULT_CAPACITY,
@@ -88,6 +93,7 @@ from .evaluation import (  # noqa: F401
     _simulated_sequence,
     evaluate_attendance,
     limit_fleet,
+    served_by,
 )
 from .improvement import (  # noqa: F401
     _copy_route,
@@ -114,6 +120,12 @@ from .model import (
     Route,
     Saving,
     bus_model,
+)
+from .objective import (
+    captured_demand,
+    estimated_served,
+    served_bound,
+    solution_key,
 )
 from .report import (  # noqa: F401
     _pairs_text,
@@ -155,12 +167,15 @@ __all__ = [
     "Restrictions",
     "Route",
     "Saving",
+    "anchor_routes",
     "build_context",
     "build_stop_loads",
     "bus_model",
+    "captured_demand",
     "clarke_wright_ovrp",
     "compute_savings_ovrp",
     "detect_sense",
+    "estimated_served",
     "evaluate_attendance",
     "limit_fleet",
     "main",
@@ -171,6 +186,9 @@ __all__ = [
     "reference_model",
     "save_result",
     "scenario_context",
+    "served_bound",
+    "served_by",
+    "solution_key",
     "solve_scenario",
     "two_phase_selection",
 ]
