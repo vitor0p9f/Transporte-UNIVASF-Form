@@ -14,7 +14,7 @@ The controlled scenarios are the copy in ``scenarios_control.csv`` +
 ``tempo_capacidade``
     Time and capacity are both enforced.
 
-Each regime runs two heuristics on the same fleet, depot and demand:
+Each regime runs two heuristics on the same fleet, allowed endpoints and demand:
 
 * **TOP (custo)** -- scores passengers per real (R$). Maximising pax/R$ is
   equivalent to minimising R$ per passenger; in the insertion stage it
@@ -22,10 +22,11 @@ Each regime runs two heuristics on the same fleet, depot and demand:
   the driver, priced by the scenario;
 * **Clarke-Wright** -- the existing savings heuristic.
 
-The depot is the first node of the scenario's ``origin`` column, the same for
-both. The cost is recomputed from the final routes with each bus's own km/L
-(all the same in the controlled fleet), charging only routes that served
-someone.
+Both heuristics read the allowed endpoints from the scenario: any node of the
+``origin`` column may start a route, and ``destination_labels`` constrains the
+terminal node. The cost is recomputed from the final routes with each bus's
+own km/L (all the same in the controlled fleet), charging only routes that
+served someone.
 
 Outputs:
 
@@ -58,7 +59,7 @@ from scripts.report_common import (
     scenario_operational_cost,
 )
 from utils.fleet import load_fleet
-from utils.scenarios import DEFAULT_REPORT_SCENARIOS, parse_node_labels
+from utils.scenarios import DEFAULT_REPORT_SCENARIOS
 
 #: Capacity that stands in for "no capacity restriction at all".
 INFINITE_CAPACITY = 10**9
@@ -152,24 +153,22 @@ def scenario_buses(scenario: dict, config: Config, root: str | Path = ROOT) -> l
     return buses
 
 
-def scenario_depot(scenario: dict) -> int | None:
-    origins = parse_node_labels(scenario.get("origin"))
-    return origins[0] if origins else None
-
-
 def run_top(scenario: dict, buses) -> tuple:
-    """TOP on the controlled scenario, starting at the scenario depot."""
+    """TOP on the controlled scenario, using the scenario's allowed endpoints.
+
+    No `origin`/`depot` override: the draft chooses the OD pair among the
+    scenario's `origin` and `destination_labels` columns.
+    """
     data, plans, _summary = top_univasf.solve_scenario(
         scenario,
         buses,
         ROOT,
-        origin=scenario_depot(scenario),
     )
     return data, plans
 
 
 def run_cw(scenario: dict, buses, config: Config) -> tuple:
-    """Clarke-Wright on the controlled scenario, with the same depot."""
+    """Clarke-Wright on the controlled scenario, with the same endpoints."""
     capacity = (
         INFINITE_CAPACITY
         if config.ignore_capacity
@@ -177,7 +176,6 @@ def run_cw(scenario: dict, buses, config: Config) -> tuple:
     )
     data, routes, context, attendance, _lam = clarke_wright.solve_scenario(
         scenario,
-        depot=scenario_depot(scenario),
         restrictions=config.cw_restricao,
         capacity=capacity,
         max_routes=len(buses),
@@ -317,10 +315,10 @@ def report_note(config: Config, root: str | Path = ROOT) -> str:
         f"{regime} Os cenários são a cópia controlada "
         "(`scenarios_control.csv` + `scenarios_base_control.csv`) e a frota é "
         f"a homogênea de `{CONTROLLED_FLEET}`: todos os ônibus são o modelo "
-        f"de menor capacidade do `fleet.csv` ({fleet_note(root)}). O depósito "
-        "é o primeiro nó da coluna `origin` do cenário, o mesmo para as duas "
-        "heurísticas, e o Clarke-Wright é limitado ao número de ônibus da "
-        "frota.\n\n"
+        f"de menor capacidade do `fleet.csv` ({fleet_note(root)}). As origens e "
+        "os destinos permitidos vêm das colunas `origin` e "
+        "`destination_labels` do cenário, as mesmas para as duas heurísticas, "
+        "e o Clarke-Wright é limitado ao número de ônibus da frota.\n\n"
         "O **TOP (custo)** pontua passageiros por real: cada rota paga o "
         "combustível (km / km por litro do ônibus × diesel do cenário) e o "
         "motorista (horas × valor da hora do cenário). Maximizar passageiros "
