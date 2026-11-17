@@ -69,12 +69,12 @@ CONTROLLED_FLEET = "fleet_control.csv"
 #: Scenarios run by default, in output order.
 DEFAULT_SCENARIOS = DEFAULT_REPORT_SCENARIOS
 
-#: Full CW setup for the controlled comparison.
+#: Full CW setup for the controlled comparison: the paper's parameters.
 CW_KWARGS: dict = {
     "lam": None,
     "use_two_phase": True,
     "use_post_improvement": True,
-    "iterations": 2000,
+    "iterations": clarke_wright.ITER_TWO_PHASE,
     "post_improvement_iterations": 500,
     "seed": 42,
 }
