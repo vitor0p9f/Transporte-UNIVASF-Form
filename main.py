@@ -1,9 +1,10 @@
-"""Run the default report scenarios with both heuristics and write the report.
+"""Run the default report scenarios with TOP and write the report.
 
-The TOP heuristic and Clarke-Wright run on the SAME scenarios and limits, and
-both land in one markdown report (one row each in the summary table) so the
-reader sees the trade-off without lining up two separate reports. TOP scores
-passengers per real (R$), using each bus's own fuel autonomy.
+TOP runs on the real scenario fleet and limits. This is the standard
+operational view; the Clarke-Wright comparison lives in the controlled reports
+(``scripts/run_controlled_reports.py``), where both heuristics share the same
+homogeneous fleet and the same scenario filters. TOP scores passengers per
+real (R$), using each bus's own fuel autonomy.
 
 This is the single producer of ``results.md``; ``scripts/run_all.py`` is a thin
 ``--only`` wrapper around it.
@@ -11,18 +12,11 @@ This is the single producer of ``results.md``; ``scripts/run_all.py`` is a thin
 
 from collections.abc import Iterator
 from datetime import UTC, datetime
-from functools import partial
 from itertools import groupby
 from pathlib import Path
 
 import reporting
-from algorithms import clarke_wright
-from algorithms.top_univasf import (
-    BusPlan,
-    FleetSummary,
-    InstanceData,
-    solve_scenario,
-)
+from algorithms.top_univasf import solve_scenario
 from entities.bus import Bus
 from scripts import report_common
 from utils.fleet import load_fleet, parse_fleet_ids
@@ -37,51 +31,32 @@ ROOT = Path(__file__).resolve().parent
 OUT_PATH = ROOT / "results.md"
 
 TOP_NAME = "TOP (Greedy OD)"
-CW_NAME = "Clarke-Wright"
-
-#: Solver settings used by the sweep in `main`. The CW defaults come from the
-#: paper (two-phase, post-improvement); the sweep trades generality for runtime.
-SWEEP_CW_KWARGS: dict = {
-    "lam": 1.0,            # λ fixo (CW-1) em vez de varrer 0.1–2.0
-    "use_two_phase": False,  # CW-1: without the two-phase selection
-    "use_post_improvement": False,  # CW-1: without post-improvement
-}
 
 
-def run_heuristic(
-    scenario: dict,
-    buses: list[Bus],
-    heuristic: str,
-    cw_kwargs: dict | None = None,
-) -> reporting.ScenarioRun:
-    """One heuristic's outcome for one scenario (TOP or Clarke-Wright)."""
-    if heuristic == TOP_NAME:
-        solver = solve_scenario
-    elif heuristic == CW_NAME:
-        solver = partial(solve_clarke_wright, cw_kwargs=cw_kwargs)
-    else:
-        raise ValueError(f"unknown heuristic: {heuristic}")
+def run_top(scenario: dict, buses: list[Bus]) -> reporting.ScenarioRun:
+    """TOP's outcome for one scenario, on the scenario's real fleet.
+
+    No `origin`/`depot` override: the draft chooses the OD pair among the
+    scenario's `origin` and `destination_labels` columns.
+    """
     return report_common.run_scenario(
         scenario,
         ROOT,
-        solver=solver,
+        solver=solve_scenario,
         buses=buses,
-        heuristic=heuristic,
+        heuristic=TOP_NAME,
     )
 
 
 def iter_scenario_runs(
-    heuristics: tuple[str, ...] = (TOP_NAME, CW_NAME),
-    cw_kwargs: dict | None = None,
     scenario_ids: tuple[str, ...] = DEFAULT_REPORT_SCENARIOS,
 ) -> Iterator[reporting.ScenarioRun]:
-    """Every (scenario, heuristic) run, in scenario order."""
+    """One TOP run per scenario, in scenario order."""
     for scenario in pick_scenarios(load_scenarios(ROOT), scenario_ids):
         buses = load_fleet(
             ROOT / "fleet.csv", parse_fleet_ids(scenario["fleet_bus_ids"])
         )
-        for heuristic in heuristics:
-            yield run_heuristic(scenario, buses, heuristic, cw_kwargs)
+        yield run_top(scenario, buses)
 
 
 def _scenario_detail(
@@ -155,11 +130,11 @@ def render_markdown(
     """Full markdown report: one summary-table row per scenario × heuristic."""
     scenarios = len({run.scenario_id for run in runs})
     lines = [
-        "# Results — report scenarios (TOP + Clarke-Wright)",
+        "# Results — report scenarios (TOP)",
         "",
         (
             f"Generated on {generated_at} · {scenarios} scenarios · "
-            f"{len(runs)} runs · both heuristics on the same scenario."
+            f"{len(runs)} runs."
         ),
         "",
         (
@@ -187,26 +162,6 @@ def write_markdown(
     return markdown
 
 
-def solve_clarke_wright(
-    scenario: dict,
-    buses: list[Bus],
-    root: Path = ROOT,
-    cw_kwargs: dict | None = None,
-) -> tuple[InstanceData, list[BusPlan], FleetSummary]:
-    """Run CW on the scenario and reshape its solution into the run model.
-
-    The scenario's fleet is the same one `load_fleet` gave the caller, so the
-    bus ids assigned by `planos_e_resumo` match the ones in the table.
-    """
-    data, routes, context, attendance, _lam = clarke_wright.solve_scenario(
-        scenario, **(cw_kwargs or {})
-    )
-    plans, summary = clarke_wright.plans_and_summary(
-        routes, context, attendance, buses
-    )
-    return data, plans, summary
-
-
 def run(
     scenario_ids: tuple[str, ...] = DEFAULT_REPORT_SCENARIOS,
     path: Path = OUT_PATH,
@@ -220,7 +175,7 @@ def run(
 
 
 def main() -> None:
-    """Run the default scenarios with both heuristics and write results.md."""
+    """Run the default scenarios with TOP and write results.md."""
     run()
 
 

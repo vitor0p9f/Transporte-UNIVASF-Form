@@ -95,9 +95,9 @@ def run_scenario(
 ) -> reporting.ScenarioRun:
     """Solve one scenario and record its time, plans and summary.
 
-    `solver` is the pipeline to run (TOP by default; main.py passes its
-    Clarke-Wright adapter). `buses` lets a caller that already loaded the
-    scenario fleet reuse it across heuristics. With ``catch_errors`` the
+    `solver` is the pipeline to run (TOP by default; the controlled report
+    passes both TOP and Clarke-Wright). `buses` lets a caller that already
+    loaded the scenario fleet reuse it across heuristics. With ``catch_errors`` the
     failure is stored on the result so a batch report can keep going;
     otherwise the exception propagates.
     """

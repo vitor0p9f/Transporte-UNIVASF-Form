@@ -1,9 +1,10 @@
 """Run the report scenarios and write results.md.
 
 This is a thin ``--only`` wrapper around ``main.py``, the single producer of
-``results.md``: TOP and Clarke-Wright run on the same scenarios and land in one
-comparative report. Kept so existing ``python scripts/run_all.py`` calls (and
-the scenario-selection tests) keep working.
+``results.md``: TOP runs on the real scenario fleet. The Clarke-Wright
+comparison lives in ``scripts/run_controlled_reports.py``. Kept so existing
+``python scripts/run_all.py`` calls (and the scenario-selection tests) keep
+working.
 
 Default scenarios: 16, 19, 32, 65 and 69, in that order.
 """
