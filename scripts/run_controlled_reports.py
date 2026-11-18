@@ -20,7 +20,9 @@ Each regime runs two heuristics on the same fleet, allowed endpoints and demand:
   equivalent to minimising R$ per passenger; in the insertion stage it
   minimises R$ per extra passenger. Each bus pays fuel with its own km/L plus
   the driver, priced by the scenario;
-* **Clarke-Wright** -- the existing savings heuristic.
+* **Clarke-Wright** -- the savings heuristic, with the savings and the
+  tie-break of its selections measured in the same operating cost (fuel +
+  driver) under a single reference model;
 
 Both heuristics read the allowed endpoints from the scenario: any node of the
 ``origin`` column may start a route, and ``destination_labels`` constrains the
@@ -324,8 +326,13 @@ def report_note(config: Config, root: str | Path = ROOT) -> str:
         "motorista (horas × valor da hora do cenário). Maximizar passageiros "
         "por real é equivalente a minimizar o custo por passageiro; na "
         "inserção de uma parada, o score marginal minimiza o custo por "
-        "passageiro extra. O custo mostrado é recalculado por ônibus a partir "
-        "das rotas finais, cobrando apenas as rotas que atendem alguém."
+        "passageiro extra. O **Clarke-Wright** usa esse mesmo custo: os "
+        "savings do CW-1 e o desempate das seleções (λ, two-phase e "
+        "pós-melhoria) são medidos em reais, com combustível + motorista. "
+        "Como o CW não conhece a frota durante a construção, ele aplica um "
+        "modelo de referência único (o ônibus da capacidade efetiva). O custo "
+        "mostrado é recalculado por ônibus a partir das rotas finais, cobrando "
+        "apenas as rotas que atendem alguém."
     )
 
 

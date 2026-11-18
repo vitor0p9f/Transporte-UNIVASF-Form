@@ -131,10 +131,11 @@ def plan_distance_km(plan: BusPlan, data: InstanceData) -> float:
 class OperationalCost:
     """Fuel + driver cost of one heuristic's routes in one scenario.
 
-    The same vehicle model (km per liter and diesel price) is applied to both
-    heuristics, so the numbers are comparable; the driver rate comes from the
-    scenario. Only routes that carry at least one passenger are charged -- the
-    same set the reports count as "ônibus usados".
+    The same vehicle model (km per liter and diesel price) and the same driver
+    rate are applied to both heuristics, and both heuristics optimise this same
+    fuel + driver total internally, so the numbers are comparable; the driver
+    rate comes from the scenario. Only routes that carry at least one passenger
+    are charged -- the same set the reports count as "ônibus usados".
     """
 
     distance_km: float
