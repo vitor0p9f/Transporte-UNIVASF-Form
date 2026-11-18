@@ -4,9 +4,10 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from algorithms.top_univasf.cost import CostModel
 from entities.bus import Bus
 
-from .constants import RESTRICTIONS
+from .constants import DEFAULT_DRIVER_HOURLY_RATE, RESTRICTIONS
 
 #: One served origin->destination pair and its quantity.
 Pair = tuple[int, int, int]
@@ -48,26 +49,53 @@ class Restrictions:
 
 @dataclass(frozen=True)
 class BusModel:
-    """The vehicle's cost model: km per litre and price per litre.
+    """The vehicle's cost model: km per litre, diesel and driver hour.
 
     The data comes from one row of `fleet.csv` (capacity and autonomy) and from
-    the scenario (diesel price).
+    the scenario (diesel price and driver hourly rate). A route pays the fuel it
+    burns with the vehicle's own autonomy plus the driver for its minutes -- the
+    same convention TOP UNIVASF uses, through the same `CostModel`, so the two
+    heuristics are priced by exactly the same formula.
     """
 
     name: str
     capacity: int
     km_per_liter: float
     diesel_price: float
+    driver_hourly_rate: float = DEFAULT_DRIVER_HOURLY_RATE
+
+    #: Price formula shared with TOP; built once so the savings loop stays cheap.
+    _prices: CostModel = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self,
+            "_prices",
+            CostModel(
+                diesel_price_per_liter=self.diesel_price,
+                driver_hourly_rate=self.driver_hourly_rate,
+            ),
+        )
 
     @property
     def cost_per_km(self) -> float:
+        """Fuel cost of one kilometre; the driver is paid by the route minute."""
         return self.diesel_price / self.km_per_liter
 
-    def route_cost(self, distance_km: float) -> float:
-        return distance_km * self.cost_per_km
+    def route_cost(self, distance_km: float, minutes: float) -> float:
+        """Fuel + driver cost of one route, in BRL."""
+        return self._prices.route_cost(distance_km, minutes, self.km_per_liter)
+
+    def route_breakdown(self, distance_km: float, minutes: float):
+        """Fuel burned and driver hours of one route, priced."""
+        return self._prices.route_breakdown(distance_km, minutes, self.km_per_liter)
 
 
-def bus_model(bus: Bus, diesel_price: float) -> BusModel:
+def bus_model(
+    bus: Bus,
+    diesel_price: float,
+    driver_hourly_rate: float = DEFAULT_DRIVER_HOURLY_RATE,
+) -> BusModel:
     """Turn one row of `fleet.csv` into the algorithm's cost model."""
     if bus.km_autonomy_per_liter <= 0:
         raise ValueError(f"bus {bus.id}: km_autonomy_per_liter deve ser > 0")
@@ -76,6 +104,7 @@ def bus_model(bus: Bus, diesel_price: float) -> BusModel:
         capacity=bus.passenger_capacity,
         km_per_liter=bus.km_autonomy_per_liter,
         diesel_price=diesel_price,
+        driver_hourly_rate=driver_hourly_rate,
     )
 
 
@@ -137,7 +166,7 @@ class Route:
     load: int = 0  # allocated demand (CVRP projection)
     distance_km: float = 0.0  # total route distance (km)
     time_minutes: int = 0  # total route time (min)
-    cost_brl: float = 0.0  # fuel cost (BRL)
+    cost_brl: float = 0.0  # fuel + driver cost (BRL)
     passengers: int = 0  # passengers served (simulation, after the solution)
     peak_load: int = 0  # highest simultaneous occupancy (simulation)
     pairs: Pairs = ()  # (origin, destination, quantity) boarded

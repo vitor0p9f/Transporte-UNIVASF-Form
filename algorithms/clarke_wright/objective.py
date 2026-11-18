@@ -6,7 +6,7 @@ from .model import Context, Route
 
 
 def _obj_total(routes: list[Route]) -> float:
-    """Fuel cost (BRL) of a set of routes."""
+    """Operating cost (fuel + driver, BRL) of a set of routes."""
     return sum(r.cost_brl for r in routes)
 
 
@@ -19,7 +19,8 @@ def solution_key(served: int, cost_brl: float) -> tuple[int, float]:
 
     The cost is the tie-break: among the solutions that carry the same
     passengers, the cheaper one wins -- the report's metric is the cost per
-    passenger, so the two criteria agree.
+    passenger, and that cost is the same fuel + driver total the routes pay
+    here, so the two criteria agree.
     """
     return (-served, cost_brl)
 

@@ -67,6 +67,19 @@ def test_scenario_uses_both_origins_and_both_destinations(monkeypatch):
     assert_plan_geometry(plans, data, {1, 6}, {3, 6}, 100, 1)
 
 
+def test_scenario_prices_the_driver(monkeypatch):
+    data = line_data({(2, 3): 1})
+    scenario = synthetic_scenario(monkeypatch, data, driver_hourly_rate="45.0")
+    _, routes, ctx, _, _ = fast_solve(scenario)
+
+    assert ctx.bus_model.driver_hourly_rate == pytest.approx(45.0)
+    assert routes
+    for route in routes:
+        fuel = route.distance_km * ctx.bus_model.cost_per_km
+        driver = route.time_minutes / 60 * 45.0
+        assert route.cost_brl == pytest.approx(fuel + driver)
+
+
 def test_a_single_allowed_destination_is_really_visited(monkeypatch):
     data = line_data({(2, 6): 1})
     scenario = synthetic_scenario(monkeypatch, data, origins="1", destinations="6")
@@ -182,7 +195,8 @@ def test_savings_include_the_terminal_leg():
     ctx = cw.build_context(data, 1, origins=(1,), destinations=(6,))
     saving, = cw.compute_savings_ovrp([2, 4], ctx, lam=1.0)
     # Each singleton drives five units; their merged route also drives five.
-    assert saving.value == pytest.approx(5 + 5 - 5)
+    # No driver is priced here, so the cost is the distance times R$/km.
+    assert saving.value == pytest.approx((5 + 5 - 5) * ctx.bus_model.cost_per_km)
 
 
 def test_printed_and_saved_routes_include_the_permitted_terminal(monkeypatch, tmp_path, capsys):

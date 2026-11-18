@@ -48,6 +48,8 @@ def print_solution(
 
     total_cost = _obj_total(routes)
     total_distance = sum(r.distance_km for r in routes)
+    total_time = sum(r.time_minutes for r in routes)
+    breakdown = ctx.bus_model.route_breakdown(total_distance, total_time)
     allocated = sum(r.load for r in routes)
     served = sum(r.passengers for r in routes)
     allocated_occupancy = (
@@ -65,6 +67,10 @@ def print_solution(
     print(f"Origens permitidas: {ctx.origins or (ctx.depot,)}")
     print(f"Destinos permitidos: {ctx.destinations or 'livre'}")
     print(f"Modelo    : {ctx.bus_model.name} | R${ctx.bus_model.cost_per_km:.4f}/km")
+    print(
+        f"Preços    : diesel R${ctx.bus_model.diesel_price:.2f}/L | "
+        f"motorista R${ctx.bus_model.driver_hourly_rate:.2f}/h"
+    )
     print(
         f"Restrições: {ctx.restrictions.key} "
         f"(capacidade={'sim' if ctx.restrictions.capacity else 'não'}, "
@@ -88,7 +94,12 @@ def print_solution(
     )
     print(f"  Demanda não atendida : {attendance.unserved} pax")
     print(f"  Distância total      : {total_distance:.1f} km")
-    print(f"  Custo total (comb.)  : R${total_cost:.2f}")
+    print(f"  Tempo total          : {total_time} min")
+    print(f"  Custo total (comb.+mot.): R${total_cost:.2f}")
+    print(
+        f"    combustível / motorista: "
+        f"R${breakdown.fuel:.2f} / R${breakdown.driver:.2f}"
+    )
     print(
         f"  Custo médio/veículo  : "
         f"R${total_cost / max(1, len(routes)):.2f}"
@@ -149,6 +160,10 @@ def save_result(
     output_dir = ROOT / "algorithms" / "output"
     output_dir.mkdir(exist_ok=True)
 
+    total_distance = sum(r.distance_km for r in routes)
+    total_time = sum(r.time_minutes for r in routes)
+    breakdown = ctx.bus_model.route_breakdown(total_distance, total_time)
+
     outcome = {
         "algoritmo": "Clarke-Wright OVRP (Pichpibul & Kawtummachai, 2013)",
         "rotulo": label,
@@ -165,11 +180,16 @@ def save_result(
             "capacidade": ctx.bus_model.capacity,
             "consumo_km_l": ctx.bus_model.km_per_liter,
             "custo_litro": ctx.bus_model.diesel_price,
+            "custo_hora_motorista": ctx.bus_model.driver_hourly_rate,
             "custo_por_km": ctx.bus_model.cost_per_km,
         },
         "gerado_em": datetime.now().isoformat(),
         "num_veiculos": len(routes),
-        "dist_total_km": round(sum(r.distance_km for r in routes), 2),
+        "dist_total_km": round(total_distance, 2),
+        "tempo_total_min": total_time,
+        "litros": round(breakdown.liters, 2),
+        "custo_combustivel_brl": round(breakdown.fuel, 2),
+        "custo_motorista_brl": round(breakdown.driver, 2),
         "custo_total_brl": round(sum(r.cost_brl for r in routes), 2),
         # CVRP projection (one demand per node) vs. the attendance measured by
         # the boarding/alighting simulation. The two numbers differ by

@@ -71,6 +71,28 @@ def _route_distance(
     return round(path_distance(ctx.distance, path), 4)
 
 
+def _route_cost(
+    stops: list[int],
+    ctx: Context,
+    origin: int | None = None,
+    destination: int | None = None,
+) -> float:
+    """Fuel + driver cost of the route, including its endpoints.
+
+    The driver is paid for the whole drive, so the same stop order can cost more
+    or less depending on the minutes each direction takes.
+    """
+    path = _route_path(stops, ctx, origin, destination)
+    return ctx.bus_model.route_cost(
+        path_distance(ctx.distance, path), path_time_minutes(ctx.time, path)
+    )
+
+
+def _arc_cost(i: int, j: int, ctx: Context) -> float:
+    """Cost of driving the single leg i -> j (fuel + driver)."""
+    return ctx.bus_model.route_cost(float(ctx.distance[i, j]), int(ctx.time[i, j]))
+
+
 def _route_time(
     stops: list[int],
     ctx: Context,
@@ -98,7 +120,7 @@ def _update_cost(route: Route, ctx: Context) -> Route:
     path = _route_path(route.stops, ctx, route.origin, route.destination)
     route.distance_km = round(path_distance(ctx.distance, path), 4)
     route.time_minutes = path_time_minutes(ctx.time, path)
-    route.cost_brl = ctx.bus_model.route_cost(route.distance_km)
+    route.cost_brl = ctx.bus_model.route_cost(route.distance_km, route.time_minutes)
     return route
 
 
@@ -123,13 +145,19 @@ def compute_savings_ovrp(
     Compared to the CVRP it drops the c(i, depot) term, because the vehicle does
     not return to the depot after visiting i.
 
+    Every ``c`` is a route cost in BRL -- fuel with the vehicle's own km per
+    litre plus the driver for the minutes driven -- not a distance. The formula
+    is the paper's; only the measure it is applied to changed, so ``lambda``
+    keeps its role of shaping the joining arc while the savings stay in the same
+    unit as the objective function.
+
     With endpoint filters, use complete singleton costs minus the merged cost
     and the lambda adjustment on the joining arc. The formula above is
     recovered for a single depot with no destination filter.
 
     Args:
         stops: list of stops (the depot is not one of them)
-        ctx: distance matrix + depot
+        ctx: distance/time matrices, depot and cost model
         lam: shape parameter, lambda in [0.1, 2.0]
     """
     savings = []
@@ -139,18 +167,18 @@ def compute_savings_ovrp(
 
             if ctx.origins is None and ctx.destinations is None:
                 # Legacy single-depot/open-end equation (paper equation 5).
-                s = float(ctx.distance[ctx.depot, stop_j]) - lam * float(
-                    ctx.distance[stop_i, stop_j]
+                s = _route_cost([stop_j], ctx) - lam * _arc_cost(
+                    stop_i, stop_j, ctx
                 )
             else:
                 # Savings from joining complete routes, with their permitted
                 # endpoints. For one depot and an unrestricted end this reduces
                 # to c(depot,j) - lambda*c(i,j).
                 s = (
-                    _route_distance([stop_i], ctx)
-                    + _route_distance([stop_j], ctx)
-                    - _route_distance([stop_i, stop_j], ctx)
-                    - (lam - 1.0) * float(ctx.distance[stop_i, stop_j])
+                    _route_cost([stop_i], ctx)
+                    + _route_cost([stop_j], ctx)
+                    - _route_cost([stop_i, stop_j], ctx)
+                    - (lam - 1.0) * _arc_cost(stop_i, stop_j, ctx)
                 )
             savings.append(Saving(i=stop_i, j=stop_j, value=round(s, 6)))
 

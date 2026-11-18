@@ -11,6 +11,7 @@ from utils.scenarios import load_scenarios, parse_node_labels
 from .constants import (
     DEFAULT_CAPACITY,
     DEFAULT_DIESEL_PRICE,
+    DEFAULT_DRIVER_HOURLY_RATE,
     DEFAULT_KM_PER_LITER,
     DEFAULT_PERIOD,
     ITER_POSTIMPROVE,
@@ -52,14 +53,18 @@ def _scenario_depot(scenario: dict | None) -> int | None:
 
 
 def reference_model(
-    scenario: dict | None, capacity: int, diesel: float
+    scenario: dict | None,
+    capacity: int,
+    diesel: float,
+    driver: float = DEFAULT_DRIVER_HOURLY_RATE,
 ) -> BusModel:
     """Single cost model of the scenario, applied to BOTH heuristics.
 
     Picks the fleet bus with the effective capacity (the criterion CW always
     used); when no bus matches, the smallest one. Without a declared fleet it
-    returns a generic model. The report's operating cost uses this same model
-    for TOP and for CW, so the values are comparable.
+    returns a generic model. The report's operating cost uses this same
+    formula -- fuel with the bus's autonomy plus the driver hour -- for TOP and
+    for CW, so the values are comparable.
     """
     buses = _scenario_fleet(scenario)
     if not buses:
@@ -68,12 +73,13 @@ def reference_model(
             capacity=capacity,
             km_per_liter=DEFAULT_KM_PER_LITER,
             diesel_price=diesel,
+            driver_hourly_rate=driver,
         )
     reference = next(
         (b for b in buses if b.passenger_capacity == capacity),
         min(buses, key=lambda b: b.passenger_capacity),
     )
-    return bus_model(reference, diesel)
+    return bus_model(reference, diesel, driver)
 
 
 def scenario_context(
@@ -85,6 +91,7 @@ def scenario_context(
     capacity: int | None = None,
     max_time: float | None = None,
     diesel: float | None = None,
+    driver: float | None = None,
     restrictions: str = "ambas",
     sense: str = "auto",
     max_routes: int | None = None,
@@ -94,6 +101,9 @@ def scenario_context(
     Every explicit parameter wins over what the scenario defines; it is the
     same path the CLI walks, so the report runners hand the heuristics exactly
     the same limits.
+
+    `diesel` and `driver` price the route; when omitted they come from the
+    scenario's `diesel_price_per_liter` and `driver_hourly_rate`.
 
     `max_routes` is the vehicle cap; when omitted, it is the size of the
     scenario fleet (None only when no fleet is declared).
@@ -122,6 +132,12 @@ def scenario_context(
             if scenario.get("diesel_price_per_liter")
             else DEFAULT_DIESEL_PRICE
         )
+    if driver is None:
+        driver = (
+            float(scenario["driver_hourly_rate"])
+            if scenario.get("driver_hourly_rate")
+            else DEFAULT_DRIVER_HOURLY_RATE
+        )
     # Without a given capacity, the smallest bus of the fleet sets it: that way
     # every route CW builds fits any bus of the scenario.
     if capacity is None:
@@ -130,7 +146,7 @@ def scenario_context(
             if buses
             else DEFAULT_CAPACITY
         )
-    bus_model = reference_model(scenario, capacity, diesel)
+    bus_model = reference_model(scenario, capacity, diesel, driver)
 
     if max_time is None and scenario.get("max_time_limit"):
         max_time = int(scenario["max_time_limit"])
@@ -162,6 +178,7 @@ def solve_scenario(
     capacity: int | None = None,
     max_time: float | None = None,
     diesel: float | None = None,
+    driver: float | None = None,
     restrictions: str = "ambas",
     sense: str = "auto",
     max_routes: int | None = None,
@@ -186,6 +203,7 @@ def solve_scenario(
         capacity=capacity,
         max_time=max_time,
         diesel=diesel,
+        driver=driver,
         restrictions=restrictions,
         sense=sense,
         max_routes=max_routes,
@@ -220,6 +238,10 @@ def plans_and_summary(
     routes beyond the fleet size, but on a direct call to
     `clarke_wright_ovrp` without that cap the extras still get sequential ids
     after the highest one.
+
+    `score` is passengers per real: the same operating cost the heuristic
+    optimised (fuel + driver) under the scenario's reference model, which is
+    what the report's per-bus "pax/R$" column shows for both heuristics.
     """
     ids = [bus.id for bus in (buses or [])]
     next_id = (max(ids) + 1) if ids else 1
@@ -242,7 +264,7 @@ def plans_and_summary(
                 travel_time_minutes=route.time_minutes,
                 peak_load=route.peak_load,
                 score=(
-                    route.passengers / route.time_minutes if route.time_minutes else 0.0
+                    route.passengers / route.cost_brl if route.cost_brl else 0.0
                 ),
                 served_pairs=tuple(route.pairs),
             )

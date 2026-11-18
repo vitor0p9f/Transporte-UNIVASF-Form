@@ -60,9 +60,13 @@ def manual_data(
     return factories.make_data(time=time, distance=distance, size=size)
 
 
-def bus_model(capacity=10) -> BusModel:
+def bus_model(capacity=10, driver_hourly_rate=0.0) -> BusModel:
     return BusModel(
-        name="test", capacity=capacity, km_per_liter=4.0, diesel_price=8.0
+        name="test",
+        capacity=capacity,
+        km_per_liter=4.0,
+        diesel_price=8.0,
+        driver_hourly_rate=driver_hourly_rate,
     )
 
 
@@ -75,6 +79,7 @@ def make_context(
     stop_loads: dict | None = None,
     depot: int = DEPOT,
     max_routes: int | None = None,
+    driver_hourly_rate: float = 0.0,
 ) -> Context:
     if stop_loads is None:
         stop_loads, _ = build_stop_loads(data.demand, depot)
@@ -84,7 +89,7 @@ def make_context(
         depot=depot,
         capacity=capacity,
         max_time=max_time,
-        bus_model=bus_model(capacity),
+        bus_model=bus_model(capacity, driver_hourly_rate),
         stop_loads=stop_loads,
         demand=data.demand,
         restrictions=Restrictions.from_key(restrictions),
@@ -150,6 +155,21 @@ class TestRouteMeasures:
         assert route.time_minutes == 30
         assert route.distance_km == 3.0
         assert route.cost_brl == pytest.approx(3.0 * 2.0)
+
+    def test_update_cost_charges_the_driver_on_top_of_the_fuel(self):
+        # 3 km at R$2/km plus 30 min at R$60/h (R$1/min)
+        ctx = make_context(linear_data(), driver_hourly_rate=60.0)
+        route = _update_cost(Route(stops=[2, 4]), ctx)
+        assert route.cost_brl == pytest.approx(3.0 * 2.0 + 30 * 1.0)
+
+    def test_the_driver_hour_is_the_shared_top_formula(self):
+        from algorithms.top_univasf.cost import CostModel
+
+        model = bus_model(capacity=10, driver_hourly_rate=30.0)
+        prices = CostModel(diesel_price_per_liter=8.0, driver_hourly_rate=30.0)
+        assert model.route_cost(12.5, 40) == pytest.approx(
+            prices.route_cost(12.5, 40, km_per_liter=4.0)
+        )
 
     def test_best_direction_picks_the_shortest_without_restriction(self):
         ctx = make_context(linear_data(), restrictions="capacidade")
@@ -368,9 +388,16 @@ class TestFullAlgorithm:
     def test_savings_use_the_ovrp_formula(self):
         ctx = make_context(linear_data())
         savings = compute_savings_ovrp([2, 3], ctx, lam=0.5)
-        # s(2,3) = c(depot,3) - 0.5 * c(2,3) = 2 - 0.5*1
-        assert savings[0].value == pytest.approx(1.5)
+        # s(2,3) = c(depot,3) - 0.5 * c(2,3), in BRL: (2 - 0.5*1) km * R$2/km
+        assert savings[0].value == pytest.approx((2 - 0.5 * 1) * 2.0)
         assert (savings[0].i, savings[0].j) == (2, 3)
+
+    def test_savings_charge_the_driver_of_the_joining_arc(self):
+        # same geometry, driver at R$1/min: c(depot,3) = 2*2 + 20*1 = 24 and
+        # c(2,3) = 1*2 + 10*1 = 12, so s = 24 - 0.5*12 = 18
+        ctx = make_context(linear_data(), driver_hourly_rate=60.0)
+        savings = compute_savings_ovrp([2, 3], ctx, lam=0.5)
+        assert savings[0].value == pytest.approx(18.0)
 
 
 class TestBuildContext:
@@ -621,6 +648,18 @@ class TestPlansAndSummary:
         assert plans[0].served_pairs == ((2, 4, 1),)
         assert summary.unserved_passengers == 0
         assert summary.unserved_pairs == ()
+
+    def test_score_is_passengers_per_real(self):
+        ctx = make_context(
+            linear_data({(2, 4): 1}), capacity=10, driver_hourly_rate=60.0
+        )
+        route = _update_cost(Route(stops=[2, 4], load=2), ctx)
+        attendance = evaluate_attendance([route], ctx)
+
+        plans, _ = plans_and_summary([route], ctx, attendance, [self.make_bus(1)])
+
+        assert plans[0].served_passengers == 1
+        assert plans[0].score == pytest.approx(1 / route.cost_brl)
 
     def test_fleet_ids_follow_the_route_order(self):
         ctx = make_context(linear_data({(2, 4): 1, (3, 5): 1}), capacity=10)

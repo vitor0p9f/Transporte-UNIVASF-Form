@@ -77,6 +77,13 @@ def main() -> None:
         help=f"R$/litro (padrão: do cenário ou {DEFAULT_DIESEL_PRICE})",
     )
     parser.add_argument(
+        "--motorista",
+        dest="driver",
+        type=float,
+        default=None,
+        help="R$/hora do motorista (padrão: do cenário)",
+    )
+    parser.add_argument(
         "--lambda-val",
         dest="lambda_val",
         type=float,
@@ -158,6 +165,7 @@ def main() -> None:
             capacity=args.capacity,
             max_time=args.max_time,
             diesel=args.diesel,
+            driver=args.driver,
             restrictions=args.restriction,
             sense=args.sense,
         )
