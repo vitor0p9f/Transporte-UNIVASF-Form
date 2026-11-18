@@ -92,8 +92,8 @@ def scenario_context(
     """Turn a scenario (instance, permitted endpoints, fleet, limits) into a context.
 
     Every explicit parameter wins over what the scenario defines; it is the
-    same path the CLI walks, exposed so `main.py` can run both heuristics with
-    exactly the same limits.
+    same path the CLI walks, so the report runners hand the heuristics exactly
+    the same limits.
 
     `max_routes` is the vehicle cap; when omitted, it is the size of the
     scenario fleet (None only when no fleet is declared).

@@ -137,7 +137,6 @@ from .report import (  # noqa: F401
 from .scenario import (  # noqa: F401
     ROOT,
     _find_scenario,
-    _scenario_depot,
     _scenario_fleet,
     plans_and_summary,
     reference_model,
