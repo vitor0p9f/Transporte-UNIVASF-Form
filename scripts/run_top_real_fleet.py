@@ -124,7 +124,7 @@ def operational_cost(run: reporting.ScenarioRun) -> reporting.OperationalCost:
 def summary_cells(run: reporting.ScenarioRun, cost: reporting.OperationalCost) -> tuple[str, ...]:
     """One summary row, in `SUMMARY_HEADERS` order."""
     scenario = run.scenario
-    metrics = reporting.run_metrics(scenario, run.data, run.plans, run.buses)
+    metrics = reporting.run_metrics(scenario, run.data, run.plans)
     reference = metrics.reference
     capacity = (
         _bus_by_id(run.buses)[reference.bus_id].passenger_capacity

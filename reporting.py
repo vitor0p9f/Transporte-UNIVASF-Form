@@ -332,7 +332,6 @@ def run_metrics(
     scenario: dict,
     data: InstanceData,
     plans: list[BusPlan],
-    buses: list[Bus],
 ) -> RunMetrics:
     """The served/used/route numbers every summary row reads."""
     served, total, percentage = served_ratio(data, plans)

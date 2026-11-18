@@ -207,7 +207,7 @@ def row_cells(
     cost: reporting.OperationalCost,
 ) -> tuple[str, ...]:
     """One table row, in `TABLE_HEADER` order."""
-    metrics = reporting.run_metrics(scenario, data, plans, buses)
+    metrics = reporting.run_metrics(scenario, data, plans)
     time_cell = (
         f"{metrics.longest}/{metrics.limit}"
         if metrics.limit
