@@ -12,7 +12,6 @@ Scenarios reference a subset via a semicolon-separated id list
 
 import csv
 from collections.abc import Iterable
-from dataclasses import replace
 from pathlib import Path
 
 from entities.bus import Bus
@@ -80,39 +79,3 @@ def load_fleet(
     if unknown:
         raise ValueError(f"{path}: unknown bus ids {', '.join(unknown)}")
     return [bus for _, bus in selected if bus is not None]
-
-
-def homogenize_fleet(
-    buses: Iterable[Bus],
-    capacity: int = 24,
-    km_autonomy_per_liter: float | None = None,
-) -> list[Bus]:
-    """Return copies of `buses` running the same vehicle model.
-
-    Used by the controlled comparison: the fleet keeps the scenario's ids and
-    vehicle count, so only the vehicle model changes. Every copy gets
-    `capacity` seats and -- when `km_autonomy_per_liter` is given -- that fuel
-    autonomy, which is how the reports can claim a homogeneous fleet while the
-    cost model charges a single km/L: the reference vehicle's. Omitting the
-    autonomy keeps each bus's own, which is enough for callers that only care
-    about seats.
-    """
-    if capacity <= 0:
-        raise ValueError(f"capacity must be positive, got {capacity}")
-    if km_autonomy_per_liter is not None and km_autonomy_per_liter <= 0:
-        raise ValueError(
-            "km_autonomy_per_liter must be positive, "
-            f"got {km_autonomy_per_liter}"
-        )
-    return [
-        replace(
-            bus,
-            passenger_capacity=capacity,
-            km_autonomy_per_liter=(
-                bus.km_autonomy_per_liter
-                if km_autonomy_per_liter is None
-                else km_autonomy_per_liter
-            ),
-        )
-        for bus in buses
-    ]

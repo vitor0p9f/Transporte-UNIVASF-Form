@@ -8,7 +8,6 @@ from algorithms.top_univasf import (
 )
 from algorithms.top_univasf.draft import best_pair_for_bus
 from tests.factories import make_bus, make_cost_model, make_data
-from utils.fleet import homogenize_fleet
 
 
 def make_instance() -> InstanceData:
@@ -135,18 +134,3 @@ class TestFleetWithDepot:
         assert len(plans) == 1
         assert plans[0].stops == (1, 2)
         assert plans[0].travel_time_minutes == 5
-
-
-class TestHomogenizeFleet:
-    def test_keeps_ids_and_count_and_sets_every_capacity(self):
-        buses = [
-            make_bus(1, capacity=50),
-            make_bus(2, capacity=32),
-            make_bus(3, capacity=24),
-        ]
-
-        homogenized = homogenize_fleet(buses, 24)
-
-        assert [bus.id for bus in homogenized] == [1, 2, 3]
-        assert [bus.passenger_capacity for bus in homogenized] == [24, 24, 24]
-        assert [bus.passenger_capacity for bus in buses] == [50, 32, 24]
