@@ -11,6 +11,7 @@ from utils.scenarios import load_scenarios, parse_node_labels
 from .constants import (
     DEFAULT_CAPACITY,
     DEFAULT_DIESEL_PRICE,
+    DEFAULT_DRIVER_HOURLY_RATE,
     DEFAULT_KM_PER_LITER,
     DEFAULT_PERIOD,
     ITER_POSTIMPROVE,
@@ -52,7 +53,10 @@ def _scenario_depot(scenario: dict | None) -> int | None:
 
 
 def reference_model(
-    scenario: dict | None, capacity: int, diesel: float
+    scenario: dict | None,
+    capacity: int,
+    diesel: float,
+    driver_hourly_rate: float,
 ) -> BusModel:
     """Single cost model of the scenario, applied to BOTH heuristics.
 
@@ -68,12 +72,13 @@ def reference_model(
             capacity=capacity,
             km_per_liter=DEFAULT_KM_PER_LITER,
             diesel_price=diesel,
+            driver_hourly_rate=driver_hourly_rate,
         )
     reference = next(
         (b for b in buses if b.passenger_capacity == capacity),
         min(buses, key=lambda b: b.passenger_capacity),
     )
-    return bus_model(reference, diesel)
+    return bus_model(reference, diesel, driver_hourly_rate)
 
 
 def scenario_context(
@@ -85,6 +90,7 @@ def scenario_context(
     capacity: int | None = None,
     max_time: float | None = None,
     diesel: float | None = None,
+    driver_hourly_rate: float | None = None,
     restrictions: str = "ambas",
     sense: str = "auto",
     max_routes: int | None = None,
@@ -122,6 +128,12 @@ def scenario_context(
             if scenario.get("diesel_price_per_liter")
             else DEFAULT_DIESEL_PRICE
         )
+    if driver_hourly_rate is None:
+        driver_hourly_rate = (
+            float(scenario["driver_hourly_rate"])
+            if scenario.get("driver_hourly_rate")
+            else DEFAULT_DRIVER_HOURLY_RATE
+        )
     # Without a given capacity, the smallest bus of the fleet sets it: that way
     # every route CW builds fits any bus of the scenario.
     if capacity is None:
@@ -130,7 +142,9 @@ def scenario_context(
             if buses
             else DEFAULT_CAPACITY
         )
-    bus_model = reference_model(scenario, capacity, diesel)
+    bus_model = reference_model(
+        scenario, capacity, diesel, driver_hourly_rate
+    )
 
     if max_time is None and scenario.get("max_time_limit"):
         max_time = int(scenario["max_time_limit"])
@@ -162,6 +176,7 @@ def solve_scenario(
     capacity: int | None = None,
     max_time: float | None = None,
     diesel: float | None = None,
+    driver_hourly_rate: float | None = None,
     restrictions: str = "ambas",
     sense: str = "auto",
     max_routes: int | None = None,
@@ -186,6 +201,7 @@ def solve_scenario(
         capacity=capacity,
         max_time=max_time,
         diesel=diesel,
+        driver_hourly_rate=driver_hourly_rate,
         restrictions=restrictions,
         sense=sense,
         max_routes=max_routes,

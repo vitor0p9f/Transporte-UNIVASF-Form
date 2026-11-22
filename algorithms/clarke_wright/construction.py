@@ -3,7 +3,12 @@
 import random
 
 from .constants import ITER_TWO_PHASE
-from .metrics import _route_distance, _route_path, _route_time, _update_cost
+from .metrics import (
+    _route_operational_cost,
+    _route_path,
+    _route_time,
+    _update_cost,
+)
 from .model import Context, Route, Saving
 from .objective import (
     _obj_total,
@@ -48,13 +53,13 @@ def _best_direction(
 
     With the time constraint active both access and terminal legs count, so
     directions that already break the limit are
-    dropped before picking the shortest one. If none fits, the shortest one is
+    dropped before picking the cheapest one. If none fits, the cheapest one is
     returned and the caller rejects the route through `Context.fits`.
 
     Adaptation to the pickup-and-delivery problem: a passenger only boards
     when the bus reaches the origin before the destination, so the direction
-    that carries more passengers comes first. The shortest distance is the
-    tie-break (the CW-2 criterion of the paper).
+    that carries more passengers comes first. The operational cost
+    (fuel + driver) is the tie-break.
     """
     directions = [list(stops), list(reversed(stops))]
     if ctx.restrictions.time:
@@ -69,7 +74,7 @@ def _best_direction(
         directions,
         key=lambda d: (
             -served_bound(_route_path(d, ctx, origin, destination), ctx.demand),
-            _route_distance(d, ctx, origin, destination),
+            _route_operational_cost(d, ctx, origin, destination),
             d,
         ),
     )
@@ -204,8 +209,8 @@ def two_phase_selection(
 
     The best solution is the one that carries the most passengers (the
     boarding simulation is too slow to run on every iteration, so the search
-    ranks the candidates by the demand each route holds), with the fuel cost
-    as the tie-break.
+    ranks the candidates by the demand each route holds), with the operational
+    cost (fuel + driver) as the tie-break.
     """
     best_routes = _merge(savings, active_stops, ctx)
     best_key = solution_key(

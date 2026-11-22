@@ -64,7 +64,11 @@ def print_solution(
     print(f"Depósito de referência: {ctx.depot}")
     print(f"Origens permitidas: {ctx.origins or (ctx.depot,)}")
     print(f"Destinos permitidos: {ctx.destinations or 'livre'}")
-    print(f"Modelo    : {ctx.bus_model.name} | R${ctx.bus_model.cost_per_km:.4f}/km")
+    print(
+        f"Modelo    : {ctx.bus_model.name} | "
+        f"comb. R${ctx.bus_model.cost_per_km:.4f}/km | "
+        f"motorista R${ctx.bus_model.driver_hourly_rate:.2f}/h"
+    )
     print(
         f"Restrições: {ctx.restrictions.key} "
         f"(capacidade={'sim' if ctx.restrictions.capacity else 'não'}, "
@@ -88,7 +92,7 @@ def print_solution(
     )
     print(f"  Demanda não atendida : {attendance.unserved} pax")
     print(f"  Distância total      : {total_distance:.1f} km")
-    print(f"  Custo total (comb.)  : R${total_cost:.2f}")
+    print(f"  Custo operacional   : R${total_cost:.2f} (comb. + motorista)")
     print(
         f"  Custo médio/veículo  : "
         f"R${total_cost / max(1, len(routes)):.2f}"
@@ -166,6 +170,7 @@ def save_result(
             "consumo_km_l": ctx.bus_model.km_per_liter,
             "custo_litro": ctx.bus_model.diesel_price,
             "custo_por_km": ctx.bus_model.cost_per_km,
+            "motorista_hora": ctx.bus_model.driver_hourly_rate,
         },
         "gerado_em": datetime.now().isoformat(),
         "num_veiculos": len(routes),

@@ -388,7 +388,11 @@ def report_note(config: Config, root: str | Path = ROOT) -> str:
         "por real é equivalente a minimizar o custo por passageiro; na "
         "inserção de uma parada, o score marginal minimiza o custo por "
         "passageiro extra. O custo mostrado é recalculado por ônibus a partir "
-        "das rotas finais, cobrando apenas as rotas que atendem alguém."
+        "das rotas finais, cobrando apenas as rotas que atendem alguém.\n\n"
+        "O **Clarke-Wright** usa esse mesmo custo operacional (combustível + "
+        "motorista) no cálculo das economias, na escolha de direção e "
+        "terminais, na seleção por lambda e nas melhorias locais. Assim, o "
+        "critério que constrói as rotas coincide com o custo exibido na tabela."
     )
 
 

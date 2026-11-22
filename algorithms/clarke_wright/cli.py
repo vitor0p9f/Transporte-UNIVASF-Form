@@ -4,6 +4,7 @@ import argparse
 
 from .constants import (
     DEFAULT_DIESEL_PRICE,
+    DEFAULT_DRIVER_HOURLY_RATE,
     DEFAULT_PERIOD,
     ITER_POSTIMPROVE,
     ITER_TWO_PHASE,
@@ -84,6 +85,16 @@ def main() -> None:
         help="valor fixo de λ (padrão: testa 0.1–2.0)",
     )
     parser.add_argument(
+        "--motorista-hora",
+        dest="driver_hourly_rate",
+        type=float,
+        default=None,
+        help=(
+            "R$/hora do motorista (padrão: do cenário ou "
+            f"{DEFAULT_DRIVER_HOURLY_RATE})"
+        ),
+    )
+    parser.add_argument(
         "--sem-two-phase",
         dest="skip_two_phase",
         action="store_true",
@@ -158,6 +169,7 @@ def main() -> None:
             capacity=args.capacity,
             max_time=args.max_time,
             diesel=args.diesel,
+            driver_hourly_rate=args.driver_hourly_rate,
             restrictions=args.restriction,
             sense=args.sense,
         )

@@ -35,10 +35,11 @@ whoever boards is on the route.
 
 The attendance is what the steps SELECT on: the lambda sweep, the two-phase
 selection and the post-improvement keep the solution that carries the most
-passengers, with the fuel cost as the tie-break (`objective.solution_key`). A
-stop belongs to the set when someone boards OR gets off there, and the endpoint
-step (`anchoring`) gives each route the allowed origin/destination that carries
-more passengers. The final figures still come from the TOP UNIVASF
+passengers, with the operational cost (fuel + driver) as the tie-break
+(`objective.solution_key`). A stop belongs to the set when someone boards OR
+gets off there, and the endpoint step (`anchoring`) gives each route the allowed
+origin/destination that carries more passengers. The final figures still come
+from the TOP UNIVASF
 boarding/alighting simulation (`evaluate_attendance`), which is the same
 simulation the selection uses.
 
@@ -48,7 +49,7 @@ Modules:
     model        data structures (context, route, saving, attendance)
     context      trip sense, load per stop and context assembly
     metrics      distance, time and savings (CW-1)
-    objective    solution key, attendance estimates and fuel cost
+    objective    solution key, attendance estimates and operational cost
     construction route merging and two-phase selection (CW-2)
     anchoring    the allowed endpoints that carry the most passengers
     improvement  2-opt, shift and swap (CW-3)
@@ -71,6 +72,7 @@ from .cli import main
 from .constants import (
     DEFAULT_CAPACITY,
     DEFAULT_DIESEL_PRICE,
+    DEFAULT_DRIVER_HOURLY_RATE,
     DEFAULT_KM_PER_LITER,
     DEFAULT_PERIOD,
     INF,
@@ -149,6 +151,7 @@ from .solver import clarke_wright_ovrp
 __all__ = [
     "DEFAULT_CAPACITY",
     "DEFAULT_DIESEL_PRICE",
+    "DEFAULT_DRIVER_HOURLY_RATE",
     "DEFAULT_KM_PER_LITER",
     "DEFAULT_PERIOD",
     "INF",

@@ -4,7 +4,13 @@ import numpy as np
 
 from utils.instances import InstanceData
 
-from .constants import DEFAULT_CAPACITY, DEFAULT_DIESEL_PRICE, DEFAULT_KM_PER_LITER, INF
+from .constants import (
+    DEFAULT_CAPACITY,
+    DEFAULT_DIESEL_PRICE,
+    DEFAULT_DRIVER_HOURLY_RATE,
+    DEFAULT_KM_PER_LITER,
+    INF,
+)
 from .model import BusModel, Context, Restrictions
 
 
@@ -111,6 +117,7 @@ def build_context(
             capacity=model_capacity,
             km_per_liter=DEFAULT_KM_PER_LITER,
             diesel_price=DEFAULT_DIESEL_PRICE,
+            driver_hourly_rate=DEFAULT_DRIVER_HOURLY_RATE,
         )
     if capacity is None:
         capacity = bus_model.capacity

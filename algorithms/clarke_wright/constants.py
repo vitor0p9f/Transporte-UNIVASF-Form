@@ -14,6 +14,8 @@ ITER_POSTIMPROVE = 500
 DEFAULT_PERIOD = "morning_1"
 #: Price per litre used when the scenario has no `diesel_price_per_liter`.
 DEFAULT_DIESEL_PRICE = 6.00
+#: Driver hourly rate used when a scenario does not provide one.
+DEFAULT_DRIVER_HOURLY_RATE = 25.00
 #: Consumption of the generic model (km/L) when the scenario has no fleet.
 DEFAULT_KM_PER_LITER = 3.00
 

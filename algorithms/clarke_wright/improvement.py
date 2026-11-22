@@ -5,7 +5,12 @@ import random
 from .constants import ITER_POSTIMPROVE
 from .construction import _best_direction, _projected_load, _stored_load
 from .evaluation import served_by
-from .metrics import _route_distance, _route_time, _update_cost, _update_route
+from .metrics import (
+    _route_operational_cost,
+    _route_time,
+    _update_cost,
+    _update_route,
+)
 from .model import Context, Route
 from .objective import _obj_total, solution_key
 
@@ -22,9 +27,9 @@ def _try_move(
 
     Both inter-route operators end the same way: take the best direction of
     each new route, keep the pair only if the active constraints accept it,
-    and commit only if the pair's fuel cost drops. The comparison is against
-    the routes' current cost, so the caller does not have to read it
-    beforehand.
+    and commit only if the pair's operational cost (fuel + driver) drops. The
+    comparison is against the routes' current cost, so the caller does not
+    have to read it beforehand.
 
     A move that would carry fewer passengers is rejected: the selection
     criterion of the heuristic is the attendance, so the local search may
@@ -93,7 +98,9 @@ def _two_opt_route(route: Route, ctx: Context) -> Route:
     improved = True
     while improved:
         improved = False
-        current_distance = _route_distance(stops, ctx, origin, destination)
+        current_cost = _route_operational_cost(
+            stops, ctx, origin, destination
+        )
         for i in range(len(stops) - 1):
             for j in range(i + 2, len(stops)):
                 new_stops = (
@@ -106,10 +113,12 @@ def _two_opt_route(route: Route, ctx: Context) -> Route:
                     route.load, _route_time(new_stops, ctx, origin, destination)
                 ):
                     continue
-                new_distance = _route_distance(new_stops, ctx, origin, destination)
-                if new_distance < current_distance - 1e-6:
+                new_cost = _route_operational_cost(
+                    new_stops, ctx, origin, destination
+                )
+                if new_cost < current_cost - 1e-6:
                     stops = new_stops
-                    current_distance = new_distance
+                    current_cost = new_cost
                     improved = True
 
     route.stops = stops
@@ -123,7 +132,7 @@ def _shift_10(
     """Shift 1-0: move one stop from one route to another.
 
     Accepted when it does not break the active constraint(s) and it lowers the
-    objective (fuel cost) without losing passengers.
+    objective (fuel + driver cost) without losing passengers.
     """
     improved = True
     while improved:
@@ -165,7 +174,7 @@ def _swap_11(
     """Swap 1-1: exchange one stop between two routes.
 
     Accepted when it does not break the active constraint(s) and it lowers the
-    objective (fuel cost) without losing passengers.
+    objective (fuel + driver cost) without losing passengers.
     """
     improved = True
     while improved:
@@ -208,8 +217,8 @@ def post_improvement(
       - inter-route swap 1-1
 
     Every attempt runs on a copy, and the solution kept is the one that
-    carries the most passengers, with the fuel cost as the tie-break -- the
-    same criterion the other selection steps use.
+    carries the most passengers, with the operational cost (fuel + driver) as
+    the tie-break -- the same criterion the other selection steps use.
     """
     best_routes = [_copy_route(r) for r in routes]
     best_key = solution_key(served_by(best_routes, ctx), _obj_total(best_routes))

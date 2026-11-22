@@ -181,8 +181,10 @@ def test_savings_include_the_terminal_leg():
     data = line_data()
     ctx = cw.build_context(data, 1, origins=(1,), destinations=(6,))
     saving, = cw.compute_savings_ovrp([2, 4], ctx, lam=1.0)
-    # Each singleton drives five units; their merged route also drives five.
-    assert saving.value == pytest.approx(5 + 5 - 5)
+    # Each singleton and the merged route drive five units/minutes. Savings
+    # therefore equal one route's complete fuel + driver cost.
+    route_cost = ctx.bus_model.route_cost(5, 5)
+    assert saving.value == pytest.approx(route_cost + route_cost - route_cost)
 
 
 def test_printed_and_saved_routes_include_the_permitted_terminal(monkeypatch, tmp_path, capsys):

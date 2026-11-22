@@ -38,8 +38,9 @@ def anchor_routes(routes: list[Route], ctx: Context) -> list[Route]:
 
     Every candidate pair is simulated (the same boarding simulation that
     measures the attendance) against the demand that is still free, and the
-    one that carries the most passengers wins; the fuel cost, the distance and
-    the node labels are the tie-breaks, and they keep the choice deterministic.
+    one that carries the most passengers wins; the operational cost (fuel +
+    driver), the distance and the node labels are the tie-breaks, and they keep
+    the choice deterministic.
 
     The demand served by an anchored route is charged before the next route is
     anchored, which is what spreads the origins across the solution instead of
@@ -73,7 +74,8 @@ def anchor_routes(routes: list[Route], ctx: Context) -> list[Route]:
             outcome = simulate_stops(instance, path, ctx.capacity, remaining)
             distance = path_distance(ctx.distance, path)
             key = solution_key(
-                outcome.passengers, ctx.bus_model.route_cost(distance)
+                outcome.passengers,
+                ctx.bus_model.route_cost(distance, outcome.travel_minutes),
             ) + (
                 distance,
                 origin,

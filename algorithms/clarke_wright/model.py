@@ -48,26 +48,32 @@ class Restrictions:
 
 @dataclass(frozen=True)
 class BusModel:
-    """The vehicle's cost model: km per litre and price per litre.
+    """The vehicle's operational cost model: fuel plus driver time.
 
     The data comes from one row of `fleet.csv` (capacity and autonomy) and from
-    the scenario (diesel price).
+    the scenario (diesel price and driver hourly rate).
     """
 
     name: str
     capacity: int
     km_per_liter: float
     diesel_price: float
+    driver_hourly_rate: float
 
     @property
     def cost_per_km(self) -> float:
         return self.diesel_price / self.km_per_liter
 
-    def route_cost(self, distance_km: float) -> float:
-        return distance_km * self.cost_per_km
+    def route_cost(self, distance_km: float, time_minutes: int | float) -> float:
+        """Fuel plus driver cost for a complete route."""
+        fuel = distance_km * self.cost_per_km
+        driver = time_minutes / 60.0 * self.driver_hourly_rate
+        return fuel + driver
 
 
-def bus_model(bus: Bus, diesel_price: float) -> BusModel:
+def bus_model(
+    bus: Bus, diesel_price: float, driver_hourly_rate: float
+) -> BusModel:
     """Turn one row of `fleet.csv` into the algorithm's cost model."""
     if bus.km_autonomy_per_liter <= 0:
         raise ValueError(f"bus {bus.id}: km_autonomy_per_liter deve ser > 0")
@@ -76,6 +82,7 @@ def bus_model(bus: Bus, diesel_price: float) -> BusModel:
         capacity=bus.passenger_capacity,
         km_per_liter=bus.km_autonomy_per_liter,
         diesel_price=diesel_price,
+        driver_hourly_rate=driver_hourly_rate,
     )
 
 
@@ -137,7 +144,7 @@ class Route:
     load: int = 0  # allocated demand (CVRP projection)
     distance_km: float = 0.0  # total route distance (km)
     time_minutes: int = 0  # total route time (min)
-    cost_brl: float = 0.0  # fuel cost (BRL)
+    cost_brl: float = 0.0  # fuel + driver cost (BRL)
     passengers: int = 0  # passengers served (simulation, after the solution)
     peak_load: int = 0  # highest simultaneous occupancy (simulation)
     pairs: Pairs = ()  # (origin, destination, quantity) boarded

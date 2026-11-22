@@ -6,7 +6,7 @@ from .model import Context, Route
 
 
 def _obj_total(routes: list[Route]) -> float:
-    """Fuel cost (BRL) of a set of routes."""
+    """Operational cost (fuel + driver, in BRL) of a set of routes."""
     return sum(r.cost_brl for r in routes)
 
 

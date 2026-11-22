@@ -60,9 +60,13 @@ def manual_data(
     return factories.make_data(time=time, distance=distance, size=size)
 
 
-def bus_model(capacity=10) -> BusModel:
+def bus_model(capacity=10, driver_hourly_rate=0.0) -> BusModel:
     return BusModel(
-        name="test", capacity=capacity, km_per_liter=4.0, diesel_price=8.0
+        name="test",
+        capacity=capacity,
+        km_per_liter=4.0,
+        diesel_price=8.0,
+        driver_hourly_rate=driver_hourly_rate,
     )
 
 
@@ -75,6 +79,7 @@ def make_context(
     stop_loads: dict | None = None,
     depot: int = DEPOT,
     max_routes: int | None = None,
+    driver_hourly_rate: float = 0.0,
 ) -> Context:
     if stop_loads is None:
         stop_loads, _ = build_stop_loads(data.demand, depot)
@@ -84,7 +89,7 @@ def make_context(
         depot=depot,
         capacity=capacity,
         max_time=max_time,
-        bus_model=bus_model(capacity),
+        bus_model=bus_model(capacity, driver_hourly_rate),
         stop_loads=stop_loads,
         demand=data.demand,
         restrictions=Restrictions.from_key(restrictions),
@@ -144,12 +149,12 @@ class TestRouteMeasures:
         assert _route_distance([], ctx) == 0.0
         assert _route_time([], ctx) == 0
 
-    def test_update_cost_fills_the_time(self):
-        ctx = make_context(linear_data())
+    def test_update_cost_includes_fuel_and_driver_time(self):
+        ctx = make_context(linear_data(), driver_hourly_rate=60.0)
         route = _update_cost(Route(stops=[2, 4]), ctx)
         assert route.time_minutes == 30
         assert route.distance_km == 3.0
-        assert route.cost_brl == pytest.approx(3.0 * 2.0)
+        assert route.cost_brl == pytest.approx(3.0 * 2.0 + 30.0)
 
     def test_best_direction_picks_the_shortest_without_restriction(self):
         ctx = make_context(linear_data(), restrictions="capacidade")
@@ -163,6 +168,18 @@ class TestRouteMeasures:
         )
         ctx = make_context(data, restrictions="capacidade")
         assert _best_direction([4, 2], ctx) == [4, 2]
+
+    def test_best_direction_uses_driver_time_in_the_operational_cost(self):
+        # Forward uses less fuel but takes 120 min; reverse is faster enough
+        # to be cheaper once the driver's time is included.
+        data = manual_data(
+            distance={(1, 4): 10, (4, 2): 1, (1, 2): 1, (2, 4): 40},
+            time={(1, 4): 60, (4, 2): 60, (1, 2): 1, (2, 4): 1},
+        )
+        ctx = make_context(
+            data, restrictions="capacidade", driver_hourly_rate=60.0
+        )
+        assert _best_direction([4, 2], ctx) == [2, 4]
 
     def test_best_direction_prefers_the_direction_that_fits_the_time(self):
         data = manual_data(
@@ -368,9 +385,15 @@ class TestFullAlgorithm:
     def test_savings_use_the_ovrp_formula(self):
         ctx = make_context(linear_data())
         savings = compute_savings_ovrp([2, 3], ctx, lam=0.5)
-        # s(2,3) = c(depot,3) - 0.5 * c(2,3) = 2 - 0.5*1
-        assert savings[0].value == pytest.approx(1.5)
+        # Fuel costs R$2/km: s(2,3) = R$4 - 0.5 * R$2.
+        assert savings[0].value == pytest.approx(3.0)
         assert (savings[0].i, savings[0].j) == (2, 3)
+
+    def test_savings_include_driver_time(self):
+        ctx = make_context(linear_data(), driver_hourly_rate=60.0)
+        savings = compute_savings_ovrp([2, 3], ctx, lam=0.5)
+        # depot->3: R$4 fuel + R$20 driver; 2->3: R$2 + R$10.
+        assert savings[0].value == pytest.approx(24.0 - 0.5 * 12.0)
 
 
 class TestBuildContext:

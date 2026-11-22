@@ -11,8 +11,8 @@ def _route_endpoints(
 ) -> tuple[int, int | None, float, int]:
     """Choose permitted endpoints for this order, including both access legs.
 
-    A feasible endpoint pair always wins over a shorter, over-time pair.
-    If none is feasible we return the shortest one so ``Context.fits`` can
+    A feasible endpoint pair always wins over a cheaper, over-time pair.
+    If none is feasible we return the cheapest one so ``Context.fits`` can
     reject the candidate. Ties use node labels, not the input list order.
     """
     if not stops:
@@ -29,8 +29,12 @@ def _route_endpoints(
             if destination is not None:
                 total_distance += float(ctx.distance[stops[-1], destination])
                 total_time += int(ctx.time[stops[-1], destination])
+            operational_cost = ctx.bus_model.route_cost(
+                total_distance, total_time
+            )
             key = (
                 ctx.restrictions.time and total_time > ctx.max_time,
+                operational_cost,
                 total_distance, total_time, origin,
                 stops[-1] if destination is None else destination,
             )
@@ -81,6 +85,27 @@ def _route_time(
     return path_time_minutes(ctx.time, _route_path(stops, ctx, origin, destination))
 
 
+def _route_operational_cost(
+    stops: list[int],
+    ctx: Context,
+    origin: int | None = None,
+    destination: int | None = None,
+) -> float:
+    """Fuel plus driver cost of a route, including its endpoint legs."""
+    return ctx.bus_model.route_cost(
+        _route_distance(stops, ctx, origin, destination),
+        _route_time(stops, ctx, origin, destination),
+    )
+
+
+def _arc_operational_cost(ctx: Context, origin: int, destination: int) -> float:
+    """Fuel plus driver cost of one directed arc."""
+    return ctx.bus_model.route_cost(
+        float(ctx.distance[origin, destination]),
+        int(ctx.time[origin, destination]),
+    )
+
+
 def _update_cost(route: Route, ctx: Context) -> Route:
     """Recompute the route's distance_km, time_minutes and cost_brl.
 
@@ -98,7 +123,9 @@ def _update_cost(route: Route, ctx: Context) -> Route:
     path = _route_path(route.stops, ctx, route.origin, route.destination)
     route.distance_km = round(path_distance(ctx.distance, path), 4)
     route.time_minutes = path_time_minutes(ctx.time, path)
-    route.cost_brl = ctx.bus_model.route_cost(route.distance_km)
+    route.cost_brl = ctx.bus_model.route_cost(
+        route.distance_km, route.time_minutes
+    )
     return route
 
 
@@ -139,18 +166,21 @@ def compute_savings_ovrp(
 
             if ctx.origins is None and ctx.destinations is None:
                 # Legacy single-depot/open-end equation (paper equation 5).
-                s = float(ctx.distance[ctx.depot, stop_j]) - lam * float(
-                    ctx.distance[stop_i, stop_j]
+                s = _arc_operational_cost(
+                    ctx, ctx.depot, stop_j
+                ) - lam * _arc_operational_cost(
+                    ctx, stop_i, stop_j
                 )
             else:
                 # Savings from joining complete routes, with their permitted
                 # endpoints. For one depot and an unrestricted end this reduces
                 # to c(depot,j) - lambda*c(i,j).
                 s = (
-                    _route_distance([stop_i], ctx)
-                    + _route_distance([stop_j], ctx)
-                    - _route_distance([stop_i, stop_j], ctx)
-                    - (lam - 1.0) * float(ctx.distance[stop_i, stop_j])
+                    _route_operational_cost([stop_i], ctx)
+                    + _route_operational_cost([stop_j], ctx)
+                    - _route_operational_cost([stop_i, stop_j], ctx)
+                    - (lam - 1.0)
+                    * _arc_operational_cost(ctx, stop_i, stop_j)
                 )
             savings.append(Saving(i=stop_i, j=stop_j, value=round(s, 6)))
 

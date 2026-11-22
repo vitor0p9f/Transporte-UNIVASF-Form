@@ -32,8 +32,8 @@ def clarke_wright_ovrp(
 
     When lambda is not given, every value from 0.1 to 2.0 (step 0.1) is tried
     and the best one is used -- the CW-1 procedure of the paper (Table 1).
-    "Best" means the solution that carries the most passengers, with the fuel
-    cost as the tie-break.
+    "Best" means the solution that carries the most passengers, with the
+    operational cost (fuel + driver) as the tie-break.
 
     The pipeline is: the construction (CW-1 and CW-2), the anchoring that
     gives each route the origin and the destination the scenario allows, the
