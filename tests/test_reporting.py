@@ -3,6 +3,7 @@
 from types import SimpleNamespace
 
 import numpy as np
+import pytest
 
 import reporting
 from tests.factories import make_bus, make_data, make_plan, make_summary
@@ -148,6 +149,65 @@ class TestRotaDeReferencia:
 
     def test_empty_fleet_has_no_reference(self):
         assert reporting.reference_plan([]) is None
+
+
+class TestOccupancyAudit:
+    def test_finds_global_peak_even_when_it_is_not_on_longest_route(self):
+        plans = [
+            make_plan(bus_id=1, travel_time_minutes=60, peak_load=8),
+            make_plan(
+                bus_id=2,
+                stops=(4, 5, 6),
+                travel_time_minutes=30,
+                peak_load=19,
+            ),
+        ]
+
+        audit = reporting.occupancy_audit(
+            plans,
+            [make_bus(1, capacity=24), make_bus(2, capacity=24)],
+        )
+
+        assert reporting.reference_plan(plans).bus_id == 1
+        assert (audit.peak, audit.bus_id, audit.route, audit.capacity) == (
+            19,
+            2,
+            (4, 5, 6),
+            24,
+        )
+        assert not audit.has_violation
+
+    def test_uses_physical_capacity_and_reports_worst_excess(self):
+        plans = [
+            make_plan(bus_id=1, stops=(1, 2), peak_load=40),
+            make_plan(bus_id=2, stops=(3, 4), peak_load=35),
+        ]
+
+        audit = reporting.occupancy_audit(
+            plans,
+            [make_bus(1, capacity=50), make_bus(2, capacity=24)],
+        )
+
+        # The route with the largest absolute peak is not the violating route.
+        assert (audit.peak, audit.bus_id, audit.capacity) == (40, 1, 50)
+        assert audit.has_violation
+        assert audit.violating_routes == 1
+        assert audit.max_excess == 11
+        assert audit.max_excess_bus_id == 2
+        assert audit.max_excess_route == (3, 4)
+
+    def test_empty_run_has_a_zero_audit(self):
+        audit = reporting.occupancy_audit([], [make_bus(1, capacity=24)])
+        assert (audit.peak, audit.capacity, audit.violating_routes) == (0, 0, 0)
+        assert audit.bus_id is None
+        assert audit.route == ()
+
+    def test_rejects_a_plan_without_a_physical_bus(self):
+        with pytest.raises(ValueError, match="bus.*2"):
+            reporting.occupancy_audit(
+                [make_plan(bus_id=2)],
+                [make_bus(1, capacity=24)],
+            )
 
 
 def test_lines_return_empty_strings_instead_of_none():

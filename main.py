@@ -98,11 +98,19 @@ def _scenario_detail(
                 for plan in run.plans
             ),
         )
+        audit = reporting.occupancy_audit(run.plans, run.buses)
+        occupancy_line = (
+            f"Global occupancy: peak {audit.peak}/{audit.capacity} on bus "
+            f"{audit.bus_id if audit.bus_id is not None else '—'} · route "
+            f"{reporting.stops_text(audit.route)} · capacity violations "
+            f"{audit.violating_routes} · maximum excess {audit.max_excess}."
+        )
         lines += reporting.scenario_detail_lines(
             run,
             heading=heading,
             metrics_line=metrics_line,
             plan_table=plan_table,
+            occupancy_line=occupancy_line,
         )
     return lines
 

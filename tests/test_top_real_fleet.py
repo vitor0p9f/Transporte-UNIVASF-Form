@@ -11,6 +11,7 @@ from entities.bus import Bus
 from reporting import OperationalCost, ScenarioRun
 from scripts.run_top_real_fleet import (
     PLAN_HEADERS,
+    occupancy_cells,
     operational_cost,
     plan_cells,
     run_scenario,
@@ -128,6 +129,22 @@ class TestPlanCells:
         assert cells[1] == "24"
         assert cells[2] == "4.61"
         assert cells[6] == "3/24"  # peak against this bus's capacity
+
+
+class TestOccupancyCells:
+    def test_reports_global_peak_and_violation_without_changing_summary(self):
+        buses = [make_bus(1, capacity=50), make_bus(2, capacity=24)]
+        plans = [
+            factories.make_plan(bus_id=1, stops=(1, 2), peak_load=40),
+            factories.make_plan(bus_id=2, stops=(3, 4), peak_load=35),
+        ]
+        run = make_run(buses, plans, make_data({}))
+
+        cells = occupancy_cells(run)
+
+        assert cells[:4] == ("1", "40/50", "1", "1 -> 2")
+        assert cells[4:6] == ("1", "11")
+        assert cells[6] == "2: 3 -> 4"
 
 
 class TestRunScenario:

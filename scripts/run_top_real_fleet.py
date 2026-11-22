@@ -63,6 +63,16 @@ SUMMARY_HEADERS = (
     "Exec (s)",
 )
 
+OCCUPANCY_HEADERS = (
+    "Cenário",
+    "Pico global / Capacidade física",
+    "Ônibus do pico",
+    "Rota do pico",
+    "Rotas acima da capacidade",
+    "Maior excedente",
+    "Ônibus/rota do maior excedente",
+)
+
 #: Header of the per-bus table, in the same order as `plan_cells`.
 PLAN_HEADERS = (
     "bus",
@@ -149,6 +159,25 @@ def summary_cells(run: reporting.ScenarioRun, cost: reporting.OperationalCost) -
     )
 
 
+def occupancy_cells(run: reporting.ScenarioRun) -> tuple[str, ...]:
+    """Complementary global peak and physical-capacity verification."""
+    audit = reporting.occupancy_audit(run.plans, run.buses)
+    worst = (
+        f"{audit.max_excess_bus_id}: {reporting.stops_text(audit.max_excess_route)}"
+        if audit.max_excess_bus_id is not None
+        else "—"
+    )
+    return (
+        str(run.scenario["scenario_id"]),
+        f"{audit.peak}/{audit.capacity}",
+        str(audit.bus_id) if audit.bus_id is not None else "—",
+        reporting.stops_text(audit.route),
+        str(audit.violating_routes),
+        str(audit.max_excess),
+        worst,
+    )
+
+
 def plan_cells(plan: BusPlan, bus: Bus, time_limit_minutes: int) -> tuple[str, ...]:
     """One plan's cells, in `PLAN_HEADERS` order (capacity and km/L added)."""
     cells = reporting.plan_cells(plan, time_limit_minutes, bus.passenger_capacity)
@@ -225,6 +254,21 @@ def render_markdown(runs: list[reporting.ScenarioRun], generated_at: str) -> str
             for run, cost in zip(runs, costs, strict=True)
         ),
     )
+    lines += [
+        "",
+        "## Verificação global de ocupação",
+        "",
+        (
+            "Esta tabela é complementar. O indicador `Pico / Capacidade do "
+            "ônibus` acima continua associado à rota mais longa; aqui o pico "
+            "simultâneo é procurado em todas as rotas."
+        ),
+        "",
+    ]
+    lines += reporting.markdown_table(
+        OCCUPANCY_HEADERS,
+        (occupancy_cells(run) for run in runs),
+    )
     lines.append("")
     for run in runs:
         lines += _scenario_markdown(run)
@@ -236,11 +280,14 @@ def _print_progress(index: int, total: int, run: reporting.ScenarioRun) -> None:
     scenario = run.scenario
     served, total_pax, percentage = reporting.served_ratio(run.data, run.plans)
     used = sum(1 for plan in run.plans if plan.served_passengers > 0)
+    audit = reporting.occupancy_audit(run.plans, run.buses)
     print(
         f"[{index}/{total}] cenário {scenario['scenario_id']} "
         f"({scenario['instance_id']}/{scenario['period']}): "
         f"{served}/{total_pax} pax ({percentage:.0f}%) · "
-        f"{used}/{len(run.buses)} ônibus · {run.elapsed:.1f}s",
+        f"{used}/{len(run.buses)} ônibus · "
+        f"pico global {audit.peak}/{audit.capacity} · "
+        f"violações {audit.violating_routes} · {run.elapsed:.1f}s",
         flush=True,
     )
 

@@ -94,6 +94,30 @@ class RunMetrics:
     reference: BusPlan | None
 
 
+@dataclass(frozen=True)
+class OccupancyAudit:
+    """Global occupancy check across every route produced by one run.
+
+    ``peak`` remains the simultaneous, per-leg occupancy already computed by
+    the boarding simulation.  ``capacity`` always comes from the physical
+    fleet supplied to :func:`occupancy_audit`, even when a solver ran with an
+    artificial infinite capacity for an unconstrained experiment.
+    """
+
+    peak: int
+    bus_id: int | None
+    route: tuple[int, ...]
+    capacity: int
+    violating_routes: int
+    max_excess: int
+    max_excess_bus_id: int | None
+    max_excess_route: tuple[int, ...]
+
+    @property
+    def has_violation(self) -> bool:
+        return self.violating_routes > 0
+
+
 def served_ratio(data: InstanceData, plans: list[BusPlan]) -> tuple[int, int, float]:
     """(passengers served, total demand, percentage) of one scenario."""
     total = int(data.demand.sum())
@@ -116,6 +140,61 @@ def reference_plan(plans: list[BusPlan]) -> BusPlan | None:
     served = [plan for plan in plans if plan.served_passengers > 0]
     candidates = served or plans
     return max(candidates, key=lambda plan: plan.travel_time_minutes, default=None)
+
+
+def occupancy_audit(
+    plans: list[BusPlan], physical_buses: list[Bus]
+) -> OccupancyAudit:
+    """Check every route peak against its vehicle's physical capacity.
+
+    Route peaks are not recomputed here: ``BusPlan.peak_load`` is produced by
+    the ordered boarding/alighting simulation and therefore already represents
+    the busiest driven leg.  Keeping this function in the reporting layer
+    makes the check complementary and leaves both heuristics untouched.
+    """
+    capacity_by_id = {bus.id: bus.passenger_capacity for bus in physical_buses}
+    missing = sorted({plan.bus_id for plan in plans} - capacity_by_id.keys())
+    if missing:
+        raise ValueError(f"missing physical capacity for buses: {missing}")
+
+    if not plans:
+        return OccupancyAudit(
+            peak=0,
+            bus_id=None,
+            route=(),
+            capacity=0,
+            violating_routes=0,
+            max_excess=0,
+            max_excess_bus_id=None,
+            max_excess_route=(),
+        )
+
+    peak_plan = max(plans, key=lambda plan: plan.peak_load)
+    violations = [
+        (plan, plan.peak_load - capacity_by_id[plan.bus_id])
+        for plan in plans
+        if plan.peak_load > capacity_by_id[plan.bus_id]
+    ]
+    worst_plan, max_excess = (
+        max(violations, key=lambda item: item[1])
+        if violations
+        else (None, 0)
+    )
+    return OccupancyAudit(
+        peak=peak_plan.peak_load,
+        bus_id=peak_plan.bus_id,
+        route=tuple(peak_plan.stops),
+        capacity=capacity_by_id[peak_plan.bus_id],
+        violating_routes=len(violations),
+        max_excess=max_excess,
+        max_excess_bus_id=worst_plan.bus_id if worst_plan else None,
+        max_excess_route=tuple(worst_plan.stops) if worst_plan else (),
+    )
+
+
+def stops_text(stops: Sequence[int]) -> str:
+    """A compact route representation shared by occupancy audit tables."""
+    return " -> ".join(str(node) for node in stops) if stops else "—"
 
 
 def plan_distance_km(plan: BusPlan, data: InstanceData) -> float:
@@ -367,6 +446,7 @@ def scenario_detail_lines(
     heading: list[str],
     metrics_line: str,
     plan_table: list[str],
+    occupancy_line: str = "",
 ) -> list[str]:
     """One run's detail block: heading, bus table and the shared tail.
 
@@ -383,6 +463,8 @@ def scenario_detail_lines(
         ]
 
     lines = [*heading, "", metrics_line, "", *plan_table, ""]
+    if occupancy_line:
+        lines += [occupancy_line, ""]
     for line in (
         served_pairs_line(run.plans),
         unserved_line(run.summary),

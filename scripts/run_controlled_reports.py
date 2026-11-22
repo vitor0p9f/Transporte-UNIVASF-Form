@@ -99,6 +99,17 @@ TABLE_HEADER = (
     "Custo por passageiro (R$)",
 )
 
+OCCUPANCY_HEADER = (
+    "Cenário",
+    "Heurística",
+    "Pico global / Capacidade física",
+    "Ônibus do pico",
+    "Rota do pico",
+    "Rotas acima da capacidade",
+    "Maior excedente",
+    "Ônibus/rota do maior excedente",
+)
+
 
 @dataclass(frozen=True)
 class Config:
@@ -111,6 +122,14 @@ class Config:
     @property
     def cw_restricao(self) -> str:
         return "tempo" if self.ignore_capacity else "ambas"
+
+
+@dataclass(frozen=True)
+class ControlledResult:
+    """One existing report row plus its complementary occupancy audit."""
+
+    row: tuple[str, ...]
+    audit_row: tuple[str, ...]
 
 
 CONFIGS = {
@@ -229,53 +248,88 @@ def row_cells(
     )
 
 
-def scenario_rows(scenario: dict, config: Config) -> list[tuple[str, ...]]:
-    """The two heuristic rows of one scenario, in TOP-custo/CW order."""
+def occupancy_cells(
+    scenario: dict,
+    heuristic: str,
+    audit: reporting.OccupancyAudit,
+) -> tuple[str, ...]:
+    """One complementary global-occupancy row."""
+    peak_bus = str(audit.bus_id) if audit.bus_id is not None else "—"
+    worst = (
+        f"{audit.max_excess_bus_id}: {reporting.stops_text(audit.max_excess_route)}"
+        if audit.max_excess_bus_id is not None
+        else "—"
+    )
+    return (
+        str(scenario["scenario_id"]),
+        heuristic,
+        f"{audit.peak}/{audit.capacity}",
+        peak_bus,
+        reporting.stops_text(audit.route),
+        str(audit.violating_routes),
+        str(audit.max_excess),
+        worst,
+    )
+
+
+def scenario_results(scenario: dict, config: Config) -> list[ControlledResult]:
+    """Both heuristic rows and audits, in TOP-custo/CW order."""
     buses = scenario_buses(scenario, config)
-    reference = controlled_fleet()
-    capacity_reference = reference[0].passenger_capacity
-    rows = []
+    physical_buses = report_common.scenario_buses(
+        scenario, ROOT, fleet=CONTROLLED_FLEET
+    )
+    capacity_reference = physical_buses[0].passenger_capacity
+    results = []
     for heuristic in (TOP_COST, CW):
         data, plans = run_heuristic(scenario, buses, config, heuristic)
         cost = scenario_operational_cost(scenario, data, plans, buses)
-        rows.append(
-            row_cells(
-                scenario,
-                heuristic,
-                data,
-                plans,
-                buses,
-                capacity_reference,
-                cost,
+        audit = reporting.occupancy_audit(plans, physical_buses)
+        results.append(
+            ControlledResult(
+                row=row_cells(
+                    scenario,
+                    heuristic,
+                    data,
+                    plans,
+                    buses,
+                    capacity_reference,
+                    cost,
+                ),
+                audit_row=occupancy_cells(scenario, heuristic, audit),
             )
         )
-    return rows
+    return results
 
 
-def _scenario_rows_indexed(
+def scenario_rows(scenario: dict, config: Config) -> list[tuple[str, ...]]:
+    """The two legacy indicator rows, kept as a stable public helper."""
+    return [result.row for result in scenario_results(scenario, config)]
+
+
+def _scenario_results_indexed(
     item: tuple[int, dict, Config],
-) -> tuple[int, list[tuple[str, ...]]]:
-    """Picklable worker: rows of one scenario, tagged with its index."""
+) -> tuple[int, list[ControlledResult]]:
+    """Picklable worker: results of one scenario, tagged with its index."""
     index, scenario, config = item
-    return index, scenario_rows(scenario, config)
+    return index, scenario_results(scenario, config)
 
 
-def build_rows(
+def build_results(
     config: Config,
     scenarios: list[dict],
     workers: int = 1,
-) -> list[tuple[str, ...]]:
-    """Every scenario x heuristic row of one configuration, in scenario order."""
+) -> list[ControlledResult]:
+    """Every scenario x heuristic result, preserving scenario order."""
     if workers <= 1:
-        rows: list[tuple[str, ...]] = []
+        results: list[ControlledResult] = []
         for scenario in scenarios:
-            rows.extend(scenario_rows(scenario, config))
-        return rows
+            results.extend(scenario_results(scenario, config))
+        return results
 
-    blocks: dict[int, list[tuple[str, ...]]] = {}
+    blocks: dict[int, list[ControlledResult]] = {}
     with ProcessPoolExecutor(max_workers=workers) as executor:
         futures = [
-            executor.submit(_scenario_rows_indexed, (index, scenario, config))
+            executor.submit(_scenario_results_indexed, (index, scenario, config))
             for index, scenario in enumerate(scenarios)
         ]
         for done, future in enumerate(as_completed(futures), start=1):
@@ -286,7 +340,16 @@ def build_rows(
                 f"{scenarios[index]['scenario_id']}",
                 flush=True,
             )
-    return [row for index in range(len(scenarios)) for row in blocks[index]]
+    return [result for index in range(len(scenarios)) for result in blocks[index]]
+
+
+def build_rows(
+    config: Config,
+    scenarios: list[dict],
+    workers: int = 1,
+) -> list[tuple[str, ...]]:
+    """Every legacy indicator row, preserving the existing helper contract."""
+    return [result.row for result in build_results(config, scenarios, workers)]
 
 
 def fleet_note(root: str | Path = ROOT) -> str:
@@ -333,8 +396,9 @@ def render_report(
     config: Config,
     rows: list[tuple[str, ...]],
     generated_at: str,
+    occupancy_rows: list[tuple[str, ...]] | None = None,
 ) -> str:
-    """Full markdown report: title, date, note and the summary table."""
+    """Full report with the unchanged indicators and a complementary audit."""
     lines = [
         f"# {config.title}",
         "",
@@ -344,6 +408,20 @@ def render_report(
         "",
     ]
     lines += reporting.markdown_table(TABLE_HEADER, rows)
+    if occupancy_rows is not None:
+        lines += [
+            "",
+            "## Verificação global de ocupação",
+            "",
+            (
+                "Esta tabela é complementar. O indicador `Pico / Capacidade de "
+                "referência` acima continua associado à rota mais longa; aqui "
+                "o pico simultâneo é procurado em todas as rotas e comparado "
+                "com a capacidade física original do ônibus."
+            ),
+            "",
+        ]
+        lines += reporting.markdown_table(OCCUPANCY_HEADER, occupancy_rows)
     return "\n".join(lines) + "\n\n"
 
 
@@ -387,10 +465,13 @@ def main() -> None:
     args.out_dir.mkdir(parents=True, exist_ok=True)
     for config in CONFIGS.values():
         print(f"== {config.filename} ({len(scenarios)} cenários)", flush=True)
-        rows = build_rows(config, scenarios, workers=args.workers)
+        results = build_results(config, scenarios, workers=args.workers)
+        rows = [result.row for result in results]
+        occupancy_rows = [result.audit_row for result in results]
         path = args.out_dir / config.filename
         path.write_text(
-            render_report(config, rows, generated_at), encoding="utf-8"
+            render_report(config, rows, generated_at, occupancy_rows),
+            encoding="utf-8",
         )
         print(f"OK: {path} ({len(rows)} rows)", flush=True)
 

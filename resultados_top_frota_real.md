@@ -1,6 +1,6 @@
 # Resultados — TOP na frota real
 
-Gerado em 2026-11-14 09:31 · 5 cenários.
+Gerado em 2026-11-21 22:48 · 5 cenários.
 
 O TOP roda na frota heterogênea do `fleet.csv`: cada ônibus mantém a capacidade e a autonomia do seu próprio modelo, sem homogeneização. Não há origem nem depósito forçados: o draft escolhe o par origem-destino sozinho, respeitando as colunas `origin` e `destination_labels` do cenário (que fazem parte da definição dele), e a rota nasce no nó de origem do par, sem deadhead. As restrições de tempo e de capacidade estão ativas.
 
@@ -13,6 +13,18 @@ O custo operacional é calculado por ônibus: combustível = km percorridos / (k
 | 32 | p1_3_h | morning_2 | [1;2;3;4;5;6;7;8;9;10;11;12] | 146 | 45/54 | 83% | 6/12 | 139/146 | 5/24 | 767.99 | 17.07 | 46 | 0.0 |
 | 65 | base | morning_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | 196/198 | 99% | 8/12 | 118/120 | 20/24 | 964.13 | 4.92 | 58 | 0.1 |
 | 69 | base | night_1 | [1;2;3;4;5;6;7;8;9;10;11;12] | 120 | 158/158 | 100% | 9/12 | 118/120 | 24/24 | 798.20 | 5.05 | 53 | 0.1 |
+
+## Verificação global de ocupação
+
+Esta tabela é complementar. O indicador `Pico / Capacidade do ônibus` acima continua associado à rota mais longa; aqui o pico simultâneo é procurado em todas as rotas.
+
+| Cenário | Pico global / Capacidade física | Ônibus do pico | Rota do pico | Rotas acima da capacidade | Maior excedente | Ônibus/rota do maior excedente |
+|---|---|---|---|---|---|---|
+| 16 | 8/24 | 10 | 1 -> 16 -> 13 -> 6 -> 4 -> 15 -> 14 -> 7 | 0 | 0 | — |
+| 19 | 8/24 | 1 | 5 -> 18 -> 1 -> 20 -> 26 -> 30 -> 29 -> 31 -> 25 -> 10 -> 4 -> 3 | 0 | 0 | — |
+| 32 | 7/24 | 10 | 27 -> 21 -> 8 -> 5 -> 7 -> 10 -> 17 -> 32 -> 23 -> 26 -> 31 | 0 | 0 | — |
+| 65 | 32/32 | 6 | 44 -> 11 -> 2 -> 10 -> 35 -> 39 -> 8 -> 7 -> 44 | 0 | 0 | — |
+| 69 | 24/24 | 1 | 44 -> 9 -> 37 -> 7 -> 29 -> 20 -> 40 -> 45 -> 21 -> 34 -> 45 | 0 | 0 | — |
 
 ## Cenário 16 — p1_4_b / night_2
 
