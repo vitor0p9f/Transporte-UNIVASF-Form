@@ -12,6 +12,8 @@ SCENARIO = {
     "period": "morning_2",
     "fleet_bus_ids": "1;4;5;10",
     "max_time_limit": 56,
+    "diesel_price_per_liter": 6.0,
+    "driver_hourly_rate": 60.0,
 }
 
 
@@ -65,11 +67,11 @@ class TestRenderMarkdown:
         assert md.startswith("# Results")
         assert md.count("| 1 | p1_4_e | morning_2 | [1;4;5;10] | 56 |") == 2
         assert (
-            "| 1 | p1_4_e | morning_2 | [1;4;5;10] | 56 | TOP (Greedy OD) | 1/1 | 4/4 | 0 | 100% | 3 | 0.0 |"
+            "| 1 | p1_4_e | morning_2 | [1;4;5;10] | 56 | TOP (Greedy OD) | 1/1 | 4/4 | 0 | 100% | 15/56 | 2/24 | 15.00 | 3.75 | 3 | 0.0 |"
             in md
         )
         assert (
-            "| 1 | p1_4_e | morning_2 | [1;4;5;10] | 56 | Clarke-Wright | 1/1 | 4/4 | 0 | 100% | 3 | 12.5 |"
+            "| 1 | p1_4_e | morning_2 | [1;4;5;10] | 56 | Clarke-Wright | 1/1 | 4/4 | 0 | 100% | 15/56 | 2/24 | 15.00 | 3.75 | 3 | 12.5 |"
             in md
         )
 
@@ -97,7 +99,7 @@ class TestRenderMarkdown:
         )
 
         assert (
-            "| 1 | p1_4_e | morning_2 | [1;4;5;10] | 56 | Clarke-Wright | 1/1 | 1/1 | 3 | 100% | 3 | 12.5 |"
+            "| 1 | p1_4_e | morning_2 | [1;4;5;10] | 56 | Clarke-Wright | 1/1 | 1/1 | 3 | 100% | 15/56 | 2/24 | 15.00 | 15.00 | 3 | 12.5 |"
             in md
         )
         assert "Unserved (3 pax):" in md

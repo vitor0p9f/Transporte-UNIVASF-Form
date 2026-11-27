@@ -107,19 +107,48 @@ def _scenario_detail(
     return lines
 
 
+def _reference_capacity(
+    run: reporting.ScenarioRun, metrics: reporting.RunMetrics
+) -> int:
+    """Passenger capacity of the bus that drove the summary's reference route."""
+    if metrics.reference is None:
+        return 0
+    by_id = {bus.id: bus.passenger_capacity for bus in run.buses}
+    return by_id.get(metrics.reference.bus_id, 0)
+
+
 def _summary_row(run: reporting.ScenarioRun) -> str:
-    """One row of the summary table (scenario × heuristic)."""
+    """One row of the summary table (scenario × heuristic).
+
+    The time and the peak come from the longest route that served someone (the
+    same reference the per-bus table and the other reports use); the peak is
+    that route's highest simultaneous occupancy over the capacity of the bus
+    that drove it. The costs charge each route its own bus's fuel autonomy, so
+    the heterogeneous fleet is priced per vehicle.
+    """
     prefix = (
         f"| {run.scenario_id} | {run.instance_id} | {run.period} | "
         f"[{run.fleet}] | {run.limit} | {run.heuristic} | "
     )
     if run.error:
-        return prefix + "ERROR | — | — | — | — | — | " f"{run.elapsed:.1f} |"
-    served, total, percentage = reporting.served_ratio(run.data, run.plans)
+        return prefix + "ERROR | — | — | — | — | — | — | — | — | " f"{run.elapsed:.1f} |"
+    metrics = reporting.run_metrics(run.scenario, run.data, run.plans)
+    cost = report_common.scenario_operational_cost(
+        run.scenario, run.data, run.plans, run.buses
+    )
+    time_cell = (
+        f"{metrics.longest}/{metrics.limit}"
+        if metrics.limit
+        else str(metrics.longest)
+    )
+    capacity = _reference_capacity(run, metrics)
     return (
         prefix
-        + f"{len(run.plans)}/{len(run.buses)} | {served}/{total} | "
-        f"{run.summary.unserved_passengers} | {percentage:.0f}% | "
+        + f"{len(run.plans)}/{len(run.buses)} | "
+        f"{metrics.served}/{metrics.total} | "
+        f"{run.summary.unserved_passengers} | {metrics.percentage:.0f}% | "
+        f"{time_cell} | {metrics.peak}/{capacity} | {cost.total:.2f} | "
+        f"{cost.per_passenger(metrics.served):.2f} | "
         f"{run.summary.rounds} | {run.elapsed:.1f} |"
     )
 
@@ -138,10 +167,22 @@ def render_markdown(
         ),
         "",
         (
-            "| scenario | instance | period | fleet | limit | heuristic | used | "
-            "pax atendidos / total | pax não atendidos | % | rounds | exec (s) |"
+            "The costs are recomputed per bus from the final routes: fuel uses "
+            "each bus's own km/L (the heterogeneous fleet of `fleet.csv`) and "
+            "the driver the route hours, both priced by the scenario. Only "
+            "routes that serve someone are charged, and the longest route is "
+            "the longest one that served someone (shown as route/limit); the "
+            "peak is that route's highest simultaneous occupancy over the "
+            "capacity of the bus that drove it."
         ),
-        "|---|---|---|---|---|---|---|---|---|---|---|---|",
+        "",
+        (
+            "| scenario | instance | period | fleet | limit | heuristic | used | "
+            "pax atendidos / total | pax não atendidos | % | maior rota / "
+            "limite (min) | pico / capacidade | custo operacional (R$) | "
+            "custo por passageiro (R$) | rounds | exec (s) |"
+        ),
+        "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     lines += [_summary_row(run) for run in runs]
     lines.append("")
